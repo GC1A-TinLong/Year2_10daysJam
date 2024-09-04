@@ -12,7 +12,7 @@ public:
 
 	void Update();
 
-	void DestroyIfUOB();
+	void DestroyIfOOB(); // out of bounds
 
 	void LoopWall();
 

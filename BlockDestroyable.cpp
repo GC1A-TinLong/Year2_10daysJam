@@ -14,10 +14,10 @@ void BlockDestroyable::Initialize(Vector2 pos)
 void BlockDestroyable::Update()
 {
 	pos_.y -= 1;
-	DestroyIfUOB();
+	DestroyIfOOB();
 }
 
-void BlockDestroyable::DestroyIfUOB()
+void BlockDestroyable::DestroyIfOOB()
 {
 	if (pos_.y <= -48)
 	{

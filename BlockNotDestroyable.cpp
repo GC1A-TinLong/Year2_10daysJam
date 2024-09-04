@@ -18,7 +18,6 @@ void BlockNotDestroyable::Initialize(Vector2 pos,bool isMoss, bool isWall)
 	else 
 	{
 		blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/Block.png");
-
 	}
 }
 
@@ -31,11 +30,11 @@ void BlockNotDestroyable::Update()
 	}
 	else 
 	{
-		DestroyIfUOB();
+		DestroyIfOOB();
 	}
 }
 
-void BlockNotDestroyable::DestroyIfUOB()
+void BlockNotDestroyable::DestroyIfOOB()
 {
 	if (pos_.y <= -48) 
 	{
