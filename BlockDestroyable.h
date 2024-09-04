@@ -14,6 +14,10 @@ public:
 
 	void Update();
 
+	void DestroyIfUOB();
+
+	bool GetIsAboveScreen() { return isAboveScreen_; };
+
 	void Draw();
 
 
@@ -26,6 +30,8 @@ private:
 	int blockHandle_;
 
 	bool isDestroyed = false;
+
+	bool isAboveScreen_ = false;
 
 
 

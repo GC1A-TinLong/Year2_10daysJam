@@ -33,6 +33,18 @@ void BlockNotDestroyable::Update()
 	{
 		LoopWall();
 	}
+	else 
+	{
+		DestroyIfUOB();
+	}
+}
+
+void BlockNotDestroyable::DestroyIfUOB()
+{
+	if (pos_.y <= -48) 
+	{
+		isAboveScreen_ = true;
+	}
 }
 
 void BlockNotDestroyable::LoopWall()
@@ -45,5 +57,7 @@ void BlockNotDestroyable::LoopWall()
 
 void BlockNotDestroyable::Draw()
 {
-	Novice::DrawSprite(pos_.x, pos_.y, blockHandle_, (float)size.x, (float)size.y, 0.0f, WHITE);
-}
+	if (pos_.y >= -48 && pos_.y <= 720)
+	{
+		Novice::DrawSprite(pos_.x, pos_.y, blockHandle_, (float)size.x, (float)size.y, 0.0f, WHITE);
+	}}

@@ -127,16 +127,39 @@ void StageScene::Update()
 		}
 
 		//Destroyable Blocks
-		for (auto* destroyableBlock : destroyableBlocks_)
+
+		for (int i = 0; i < destroyableBlocks_.size();)
 		{
-			destroyableBlock->Update();
+			destroyableBlocks_[i]->Update();
+
+			if (destroyableBlocks_[i]->GetIsAboveScreen())
+			{
+				delete destroyableBlocks_[i];
+				destroyableBlocks_.erase(destroyableBlocks_.begin() + i);
+			}
+			else
+			{
+				++i;
+			}
 		}
 
 		//Blocks
-		for (auto* block : blocks_)
+
+		for (int i = 0; i < blocks_.size();)
 		{
-			block->Update();
+			blocks_[i]->Update();
+
+			if (blocks_[i]->GetIsAboveScreen())
+			{
+				delete blocks_[i];
+				blocks_.erase(blocks_.begin() + i);
+			}
+			else
+			{
+				++i;
+			}
 		}
+
 
 		//WallBlocks
 		for (auto* wallblock : leftWallBlocks_)
