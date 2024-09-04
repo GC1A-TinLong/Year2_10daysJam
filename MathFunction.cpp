@@ -1,4 +1,6 @@
 #include "MathFunction.h"
+#include "Player.h"
+#include "Spike.h"
 
 Vector2& operator+=(Vector2& v1, const Vector2& v2) {
 	v1.x += v2.x;
@@ -36,6 +38,11 @@ Vector2 operator*(const Vector2& v, float scalar) {
 
 Vector2Int operator-(const Vector2Int& v1, const Vector2Int& v2) { return { v1.x - v2.x, v1.y - v2.y }; }
 
+float Length(const Vector2& v)
+{
+	return sqrtf(v.x * v.x + v.y * v.y);
+}
+
 float Length(const Vector2Int& v) { return sqrtf(float(v.x * v.x + v.y * v.y)); }
 
 Vector2 Normalize(const Vector2Int& v) {
@@ -44,6 +51,15 @@ Vector2 Normalize(const Vector2Int& v) {
 		v.x / Length(v),
 		v.y / Length(v),
 	};
+}
+
+bool isCollidePlayerSpike(Player& player, Spike& spike)
+{
+	if ((player.GetPos().x <= spike.GetPos().x + spike.GetSize().width && player.GetPos().x + player.GetSize().width >= spike.GetPos().x) &&
+		(player.GetPos().y <= spike.GetPos().y + spike.GetSize().height && player.GetPos().y + player.GetSize().height >= spike.GetPos().y)) {
+		return true;
+	}
+	return false;
 }
 
 float Dot(const Vector3& v1, const Vector3& v2) { return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z); }

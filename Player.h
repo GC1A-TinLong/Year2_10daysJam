@@ -1,6 +1,5 @@
 #pragma once
 #include "MathFunction.h"
-#include "Input.h"
 
 class Player
 {
@@ -13,8 +12,9 @@ private:
 	// Left & Right Direction
 	LRDirection direction = LRDirection::right;
 	// Size
-	static inline const int height = 32;
-	static inline const int width = 32;
+	static inline const int height = 72;
+	static inline const int width = 48;
+	Size size = { width,height };
 	// HP
 	static inline const uint8_t kMaxHp = 10;
 	uint8_t hp = kMaxHp;
@@ -39,14 +39,18 @@ private:
 	uint32_t texture_;
 	
 public:
-	void Initialize(const Vector2& pos, const uint32_t &texture);
+	void Initialize(const Vector2& pos);
 	void Update();
 	void Draw();
 
 	void MovementInput();
 
+	void OnCollision();
+
 	// Getter
 	bool IsHit() const { return isHit; }
 	bool IsDead() const { return isDead; }
+	Vector2 GetPos() const { return pos_; }
+	Size GetSize() const { return size; }
 };
 

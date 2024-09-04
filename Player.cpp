@@ -1,10 +1,11 @@
 #include "Player.h"
 #include "Novice.h"
+#include "Input.h"
 
-void Player::Initialize(const Vector2& pos, const uint32_t& texture)
+void Player::Initialize(const Vector2& pos)
 {
 	pos_ = pos;
-	texture_ = texture;
+	//texture_ = texture;
 }
 
 void Player::Update()
@@ -56,4 +57,9 @@ void Player::MovementInput()
 		}
 	}
 	pos_ += velocity_;
+}
+
+void Player::OnCollision()
+{
+	isDead = true;
 }
