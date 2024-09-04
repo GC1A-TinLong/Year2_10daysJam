@@ -14,7 +14,7 @@ public:
 
 	void LoopWall();
 
-	bool GetIsAboveScreen() { return isAboveScreen_; };
+	bool GetIsAboveScreen() const { return isAboveScreen_; };
 
 	void Draw();
 
