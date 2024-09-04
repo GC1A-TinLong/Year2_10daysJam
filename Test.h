@@ -1,5 +1,5 @@
 #pragma once
-class Test
+class Test //Test
 {
 public:
 
