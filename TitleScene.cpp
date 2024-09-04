@@ -1,5 +1,10 @@
 #include "TitleScene.h"
 
+TitleScene::~TitleScene()
+{
+	delete fade_;
+}
+
 void TitleScene::Initialize()
 {
 	phase_ = Phase::kFadeIn;
@@ -29,7 +34,7 @@ void TitleScene::Update()
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
 		sceneNo = STAGE;
 	}
-	
+
 }
 
 void TitleScene::Draw()

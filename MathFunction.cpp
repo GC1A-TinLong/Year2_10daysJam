@@ -1,48 +1,36 @@
 #include "MathFunction.h"
 
-Vector3& operator+=(Vector3& v1, const Vector3& v2) {
+Vector2& operator+=(Vector2& v1, const Vector2& v2) {
 	v1.x += v2.x;
 	v1.y += v2.y;
-	v1.z += v2.z;
 	return v1;
 }
 
-Vector3 operator+(const Vector3& v1, const Vector3& v2) {
-	Vector3 result{};
+Vector2 operator+(const Vector2& v1, const Vector2& v2) {
+	Vector2 result{};
 	result.x = v1.x + v2.x;
 	result.y = v1.y + v2.y;
-	result.z = v1.z + v2.z;
 	return result;
 }
 
-Vector3 operator-(const Vector3& v1, const Vector3& v2) {
-	Vector3 result{};
+Vector2 operator-(const Vector2& v1, const Vector2& v2) {
+	Vector2 result{};
 	result.x = v1.x - v2.x;
 	result.y = v1.y - v2.y;
-	result.z = v1.z - v2.z;
 	return result;
 }
 
-Vector3 operator*(float scalar, const Vector3& v) {
-	Vector3 result{};
+Vector2 operator*(float scalar, const Vector2& v) {
+	Vector2 result{};
 	result.x = scalar * v.x;
 	result.y = scalar * v.y;
-	result.z = scalar * v.z;
 	return result;
 }
 
-Vector3 operator*(const Vector3& v, float scalar) {
-	Vector3 result{};
+Vector2 operator*(const Vector2& v, float scalar) {
+	Vector2 result{};
 	result.x = scalar * v.x;
 	result.y = scalar * v.y;
-	result.z = scalar * v.z;
-	return result;
-}
-
-Vector3 Vector2ToVector3(Vector2& v) {
-	Vector3 result{};
-	result.x = v.x;
-	result.y = v.y;
 	return result;
 }
 

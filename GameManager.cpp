@@ -9,6 +9,7 @@ GameManager::GameManager()
 
 	currentSceneNo_ = TITLE;
 	prevSceneNo_ = TITLE;
+	sceneArr_[currentSceneNo_]->Initialize();
 }
 
 GameManager::~GameManager()
