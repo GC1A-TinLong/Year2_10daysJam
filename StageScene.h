@@ -48,7 +48,7 @@ private:
 	// Destroyable Block
 	static inline const uint8_t kDestroyableBlockNum = 10;
 	std::vector<BlockDestroyable*>destroyableBlocks_;
-	Vector2Int desBlockPos_[kDestroyableBlockNum]
+	Vector2 desBlockPos_[kDestroyableBlockNum]
 	{
 		{0, 500}, {48, 500}, {96, 500},
 		{144, 500}, {192, 500},
@@ -57,7 +57,7 @@ private:
 	// Block
 	static inline const uint8_t kBlockNum = 10;
 	std::vector<BlockNotDestroyable*>blocks_;
-	Vector2Int BlockPos_[kBlockNum]
+	Vector2 BlockPos_[kBlockNum]
 	{
 		{0, 300}, {48, 300}, {96, 300 },
 		{144,300}, {192, 300}, {240, 300},

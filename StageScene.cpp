@@ -55,12 +55,11 @@ void StageScene::Initialize()
 	for (int i = 0; i < kDestroyableBlockNum; i++)
 	{
 		destroyableBlocks_[i] = new BlockDestroyable;
-		Vector2Int desBlockPos = desBlockPos_[i];
+		Vector2 desBlockPos = desBlockPos_[i];
 		destroyableBlocks_[i]->Initialize(desBlockPos);
 	}
 
 #pragma endregion
-
 
 #pragma region Blocks
 
@@ -68,7 +67,7 @@ void StageScene::Initialize()
 	for (int i = 0; i < kBlockNum; i++)
 	{
 		blocks_[i] = new BlockNotDestroyable;
-		Vector2Int blockPos = BlockPos_[i];
+		Vector2 blockPos = BlockPos_[i];
 		blocks_[i]->Initialize(BlockPos_[i], isMoss[i], false);
 	}
 #pragma endregion
@@ -79,7 +78,7 @@ void StageScene::Initialize()
 	for (int i = 0; i < kWallBlockNum; i++)
 	{
 		leftWallBlocks_[i] = new BlockNotDestroyable;
-		Vector2Int leftWallPos_ = { 0,0 };
+		Vector2 leftWallPos_ = { 0,0 };
 		leftWallBlocks_[i]->Initialize({ leftWallPos_.x, leftWallPos_.y + 48 * i }, false, true);
 	}
 
@@ -91,7 +90,7 @@ void StageScene::Initialize()
 	for (int i = 0; i < kWallBlockNum; i++)
 	{
 		rightWallBlocks_[i] = new BlockNotDestroyable;
-		Vector2Int rightWallPos_ = { 1232,0 };
+		Vector2 rightWallPos_ = { 1232,0 };
 		rightWallBlocks_[i]->Initialize({ rightWallPos_.x, rightWallPos_.y + 48 * i }, false, true);
 	}
 
@@ -105,7 +104,6 @@ void StageScene::Initialize()
 	fade_->Start(Status::FadeIn, duration_);
 
 #pragma endregion
-
 }
 
 void StageScene::Update()
@@ -126,19 +124,19 @@ void StageScene::Update()
 			spike->Update();
 		}
 
-		//Destroyable Blocks
+		// Destroyable Blocks
 		for (auto* destroyableBlock : destroyableBlocks_)
 		{
 			destroyableBlock->Update();
 		}
 
-		//Blocks
+		// Blocks
 		for (auto* block : blocks_)
 		{
 			block->Update();
 		}
 
-		//WallBlocks
+		// WallBlocks
 		for (auto* wallblock : leftWallBlocks_)
 		{
 			wallblock->Update();

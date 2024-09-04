@@ -1,15 +1,11 @@
 #include "BlockNotDestroyable.h"
 #include "Novice.h"
 
-BlockNotDestroyable::BlockNotDestroyable()
-{
-}
-
 BlockNotDestroyable::~BlockNotDestroyable()
 {
 }
 
-void BlockNotDestroyable::Initialize(Vector2Int pos,bool isMoss, bool isWall)
+void BlockNotDestroyable::Initialize(Vector2 pos,bool isMoss, bool isWall)
 {
 	pos_ = pos;
 	isMoss_ = isMoss;
@@ -45,5 +41,5 @@ void BlockNotDestroyable::LoopWall()
 
 void BlockNotDestroyable::Draw()
 {
-	Novice::DrawSprite(pos_.x, pos_.y, blockHandle_, (float)size.x, (float)size.y, 0.0f, WHITE);
+	Novice::DrawSprite((int)pos_.x, (int)pos_.y, blockHandle_, scale.x, scale.y, 0.0f, WHITE);
 }

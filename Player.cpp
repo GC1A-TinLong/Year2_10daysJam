@@ -65,6 +65,17 @@ void Player::OnCollision()
 	isDead = true;
 }
 
+Vector2 Player::CameraOffset()
+{
+	Vector2 offset{};
+	/*prevPos_ = pos_;
+
+	pos_ += velocity_;
+	offset = pos_ - prevPos_;*/
+
+	return offset;
+}
+
 const Object Player::GetObject_() const
 {
 	Object result{};

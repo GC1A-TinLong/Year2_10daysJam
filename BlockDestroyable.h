@@ -6,11 +6,9 @@ class BlockDestroyable
 
 public:
 
-	BlockDestroyable();
-
 	~BlockDestroyable();
 
-	void Initialize(Vector2Int pos);
+	void Initialize(Vector2 pos);
 
 	void Update();
 
@@ -19,16 +17,13 @@ public:
 
 private:
 
-	Vector2Int pos_ = {};
+	Vector2 pos_ = {};
 
-	Vector2Int size = { 1,1 };
+	Vector2 scale = { 1.f,1.f };
 
-	int blockHandle_;
+	uint32_t blockHandle_;
 
 	bool isDestroyed = false;
-
-
-
 
 };
 

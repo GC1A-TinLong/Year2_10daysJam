@@ -29,6 +29,7 @@ private:
 
 	// Player Status
 	Vector2 pos_{};
+	Vector2 prevPos_{};
 	Vector2 velocity_{};
 	// OnGround
 	static inline const float kAcceleration = 0.5f;
@@ -46,6 +47,8 @@ public:
 	void MovementInput();
 
 	void OnCollision();
+
+	Vector2 CameraOffset();
 
 	// Getter
 	bool IsHit() const { return isHit; }

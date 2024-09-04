@@ -6,11 +6,9 @@ class BlockNotDestroyable
 
 public:
 
-	BlockNotDestroyable();
-
 	~BlockNotDestroyable();
 
-	void Initialize(Vector2Int pos, bool isMoss, bool isWall);
+	void Initialize(Vector2 pos, bool isMoss, bool isWall);
 
 	void Update();
 
@@ -20,18 +18,18 @@ public:
 
 private:
 
-	Vector2Int pos_ = {};
+	Vector2 pos_ = {};
 
-	Vector2Int size = { 1,1 };
+	Vector2 scale = { 1.f,1.f };
 
-	int blockHandle_;
+	uint32_t blockHandle_;
 
 	bool isMoss_ = false;
 
 	bool isWall_ = false;
 
-	int wallMinY = -48;
+	float wallMinY = -48.f;
 
-	int wallMaxY = 720;
+	float wallMaxY = 720.f;
 };
 
