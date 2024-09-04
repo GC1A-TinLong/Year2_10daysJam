@@ -22,6 +22,7 @@ private:
 
 	Vector2 pos_ = {};
 	Vector2 scale = { 1.f,1.f };
+	Size size = { 48,48 };
 
 	uint32_t blockHandle_;
 
@@ -29,7 +30,7 @@ private:
 
 	bool isWall_ = false;
 
-	float wallMinY = -48.f;
+	float wallMinY = -float(size.height);
 
 	float wallMaxY = 720.f;
 

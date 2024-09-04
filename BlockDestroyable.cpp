@@ -19,7 +19,7 @@ void BlockDestroyable::Update()
 
 void BlockDestroyable::DestroyIfOOB()
 {
-	if (pos_.y <= -48.f)
+	if (pos_.y <= -float(size.height))
 	{
 		isAboveScreen_ = true;
 	}
@@ -28,7 +28,7 @@ void BlockDestroyable::DestroyIfOOB()
 void BlockDestroyable::Draw()
 {
 	
-	if (pos_.y >= -48.f && pos_.y <= 720.f)
+	if (pos_.y >= -float(size.height) && pos_.y <= 720.f)
 	{
 		Novice::DrawSprite((int)pos_.x, (int)pos_.y, blockHandle_, scale.x, scale.y, 0.0f, WHITE);
 	}
