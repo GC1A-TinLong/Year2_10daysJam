@@ -4,35 +4,39 @@
 void Fade::Initialize()
 {
 	textureHandle_ = Novice::LoadTexture("./Resources/Sprites/blackfade.png");
-	color_ = WHITE;
+	seethrough_ = 0xFFFFFF00;
 }
 
 void Fade::Update()
 {
+	counter_ += 1.0f / 60.0f;
+
+	if (counter_ >= duration_) {
+		counter_ = duration_;
+	}
+
+	float progress = counter_ / duration_;
+	int alpha = 0;
+
 	switch (status_)
 	{
 	case Status::None:
 		break;
 	case Status::FadeIn:
 
-		counter_ += 1.0f / 60.0f;
-		if (counter_ >= duration_)
-		{
-			counter_ = duration_;
-
-		}
+		alpha = static_cast<int>(progress * 255);
+		//seethrough_ += 6;
 
 		break;
 	case Status::FadeOut:
-		counter_ += 1.0f / 60.0f;
-		if (counter_ >= duration_)
-		{
-			counter_ = duration_;
-		}
+
+		alpha = static_cast<int>((1.0f - progress) * 255);
+		
 		break;
 	default:
 		break;
 	}
+	seethrough_ = (seethrough_ & 0x00FFFFFF) | (alpha << 24);
 }
 
 void Fade::Start(Status status, float duration)
@@ -83,5 +87,5 @@ void Fade::Draw()
 	{
 		return;
 	}
-	Novice::DrawSprite(pos_.x, pos_.y, textureHandle_, (float)size_.x, (float)size_.y, 0.0f, color_);
+	Novice::DrawSprite(pos_.x, pos_.y, textureHandle_, (float)size_.x, (float)size_.y, 0.0f, seethrough_);
 }

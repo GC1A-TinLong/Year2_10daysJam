@@ -35,9 +35,11 @@ class Fade
 		Vector2Int pos_ = { 0,0 };
 		Vector2Int size_ = { 1080,1080 };
 		int textureHandle_ = 0;
-		int color_;
-		Status status_ = Status::FadeIn; //Set this to none
+		Status status_ = Status::None; //Set this to none
 		float duration_ = 0.0f;
 		float counter_ = 0.0f;
+		int seethrough_;
+		int seethroughTimer_;
+
 };
 
