@@ -52,5 +52,6 @@ public:
 	bool IsDead() const { return isDead; }
 	Vector2 GetPos() const { return pos_; }
 	Size GetSize() const { return size; }
+	const Object GetObject_() const;
 };
 

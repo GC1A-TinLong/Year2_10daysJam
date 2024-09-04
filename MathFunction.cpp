@@ -1,6 +1,11 @@
 #include "MathFunction.h"
 #include "Player.h"
 #include "Spike.h"
+#include <random>
+
+std::random_device seed; // random device
+std::default_random_engine eng(seed());
+std::uniform_real_distribution<float> randOutput(-20.f, 20.f);
 
 Vector2& operator+=(Vector2& v1, const Vector2& v2) {
 	v1.x += v2.x;
@@ -53,31 +58,18 @@ Vector2 Normalize(const Vector2Int& v) {
 	};
 }
 
-bool isCollidePlayerSpike(Player& player, Spike& spike)
+bool isCollideObject(Object& a, Object& b)
 {
-	if ((player.GetPos().x <= spike.GetPos().x + spike.GetSize().width && player.GetPos().x + player.GetSize().width >= spike.GetPos().x) &&
-		(player.GetPos().y <= spike.GetPos().y + spike.GetSize().height && player.GetPos().y + player.GetSize().height >= spike.GetPos().y)) {
+	if ((a.pos.x <= b.pos.x + b.size.width && a.pos.x + a.size.width >= b.pos.x) &&
+		(a.pos.y <= b.pos.y + b.size.height && a.pos.y + a.size.height >= b.pos.y)) {
 		return true;
 	}
 	return false;
 }
 
-float Dot(const Vector3& v1, const Vector3& v2) { return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z); }
-
-float Length(const Vector3& v) { return sqrtf(v.x * v.x + v.y * v.y + v.z * v.z); }
-
-Vector3 Normalize(const Vector3& v) {
-	assert(Length(v));
-	return { v.x / Length(v), v.y / Length(v), v.z / Length(v) };
-}
-
-Vector3 Cross(const Vector3& v1, const Vector3& v2) { return { (v1.y * v2.z) - (v1.z * v2.y), (v1.z * v2.x) - (v1.x * v2.z), (v1.x * v2.y) - (v1.y * v2.x) }; }
-
-Vector3 Project(const Vector3& v1, const Vector3& v2) {
-	Vector3 normalV2 = Normalize(v2);
-	return {
-		(v1.x * v2.x * normalV2.x) / Length(v2),
-		(v1.y * v2.y * normalV2.y) / Length(v2),
-		(v1.z * v2.z * normalV2.z) / Length(v2),
-	};
+Vector2 ScreenShakeRandDistance()
+{
+	//Vector2 result{};
+	Vector2 randDistance = { randOutput(eng),randOutput(eng) };
+	return randDistance;
 }

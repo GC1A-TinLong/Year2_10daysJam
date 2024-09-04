@@ -2,7 +2,7 @@
 #include "Novice.h"
 #include "Input.h"
 
-void Spike::Initialize(const Vector2Int& pos)
+void Spike::Initialize(const Vector2& pos)
 {
 	pos_ = pos;
 	plainTexture_ = Novice::LoadTexture("./Resources/StageAssets/Spike.png");
@@ -21,5 +21,13 @@ void Spike::Update()
 
 void Spike::Draw()
 {
-	Novice::DrawSprite(pos_.x, pos_.y, bloodTexture_, 1.f, 1.f, 0, WHITE);
+	Novice::DrawSprite((int)pos_.x, (int)pos_.y, bloodTexture_, 1.f, 1.f, 0, WHITE);
+}
+
+const Object Spike::GetObject_() const
+{
+	Object result{};
+	result.pos = pos_;
+	result.size = size;
+	return result;
 }

@@ -15,9 +15,10 @@ void Player::Update()
 
 void Player::Draw()
 {
-	Novice::DrawBox((int)pos_.x, (int)pos_.y, width, height, 0, WHITE, kFillModeSolid);
-	//Novice::DrawSprite(pos_.x, pos_.y, texture_, 1.f, 1.f, 0, WHITE);
-
+	if (!isDead) {
+		Novice::DrawBox((int)pos_.x, (int)pos_.y, width, height, 0, WHITE, kFillModeSolid);
+		//Novice::DrawSprite(pos_.x, pos_.y, texture_, 1.f, 1.f, 0, WHITE);
+	}
 	Novice::ScreenPrintf(0, 0, "player.velocity.x = %f", velocity_.x);
 	Novice::ScreenPrintf(0, 20, "player.velocity.y = %f", velocity_.y);
 }
@@ -26,7 +27,7 @@ void Player::MovementInput()
 {
 	// LR Movement
 	if (Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->PushKey(DIK_A)) {
-		Vector3 acceleration = {};
+		Vector2 acceleration = {};
 		if (Input::GetInstance()->PushKey(DIK_D)) {
 			if (direction != LRDirection::right) { // player direction
 				direction = LRDirection::right;
@@ -62,4 +63,12 @@ void Player::MovementInput()
 void Player::OnCollision()
 {
 	isDead = true;
+}
+
+const Object Player::GetObject_() const
+{
+	Object result{};
+	result.pos = pos_;
+	result.size = size;
+	return result;
 }

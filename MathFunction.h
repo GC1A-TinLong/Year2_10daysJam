@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <assert.h>
 #include <cmath>
-
 class Player;
 class Spike;
 
@@ -19,7 +18,7 @@ struct Vector2Int {
 
 struct Object {
 	Size size;
-	Vector2Int pos;
+	Vector2 pos;
 };
 
 Vector2& operator+=(Vector2& v1, const Vector2& v2);
@@ -33,11 +32,5 @@ float Length(const Vector2& v);
 float Length(const Vector2Int& v);
 Vector2 Normalize(const Vector2Int& v);
 
-bool isCollidePlayerSpike(Player& player, Spike& spike);
-
-
-
-float Dot(const Vector3& v1, const Vector3& v2);
-float Length(const Vector3& v);
-Vector3 Normalize(const Vector3& v);
-Vector3 Cross(const Vector3& v1, const Vector3& v2);
+bool isCollideObject(Object& a, Object& b);
+Vector2 ScreenShakeRandDistance();
