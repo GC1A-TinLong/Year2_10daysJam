@@ -11,5 +11,5 @@ public:
 	void Draw() override;
 
 private:
-	uint32_t textureHandle_ = Novice::LoadTexture("./Resources/title.png");
+
 };

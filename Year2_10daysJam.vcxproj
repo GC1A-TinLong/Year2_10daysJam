@@ -123,6 +123,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MathFunction.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Spike.cpp" />
     <ClCompile Include="StageScene.cpp" />
     <ClCompile Include="TitleScene.cpp" />
@@ -162,6 +163,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="IScene.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="MathFunction.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Spike.h" />
     <ClInclude Include="StageScene.h" />
     <ClInclude Include="TitleScene.h" />

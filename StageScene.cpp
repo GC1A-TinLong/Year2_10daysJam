@@ -1,11 +1,20 @@
 #include "StageScene.h"
 
+StageScene::~StageScene()
+{
+	delete player_;
+}
+
 void StageScene::Initialize()
 {
+	player_ = new Player;
+	player_->Initialize({ 640,400 }, playerTexture);
 }
 
 void StageScene::Update()
 {
+	player_->Update();
+
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
 		sceneNo = CLEAR;
 	}
@@ -13,5 +22,5 @@ void StageScene::Update()
 
 void StageScene::Draw()
 {
-	Novice::DrawSprite(0, 0, textureHandle_, 1.0f, 1.0f, 0, WHITE);
+	player_->Draw();
 }
