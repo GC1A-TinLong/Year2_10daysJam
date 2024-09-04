@@ -14,6 +14,15 @@ public:
 	void Draw() override;
 
 private:
+	enum class Phase
+	{
+		kFadeIn,
+		kPlay,
+		kDeath,
+		kStageClear,
+		kFadeOut,
+	};
+
 	//uint32_t textureHandle_ = Novice::LoadTexture("./Resources/title.png");
 	Fade* fade_ = nullptr;
 	float duration_ = 1.0f;

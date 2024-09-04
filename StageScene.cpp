@@ -20,8 +20,6 @@ void StageScene::Initialize()
 		int initPosX = 300;
 		spike_[i]->Initialize({ initPosX + i * 48,0 });
 	}
-}
-	player_->Initialize({ 640,400 }, playerTexture);
 
 #pragma region Fade
 
@@ -42,18 +40,24 @@ void StageScene::Update()
 	case StageScene::Phase::kFadeIn:
 		fade_->Update();
 		break;
+
 	case StageScene::Phase::kPlay:
+		// Player
 		player_->Update();
+
+		// Spike
+		for (auto* spike : spike_) {
+			spike->Update();
+		}
 		
 		break;
 	case StageScene::Phase::kDeath:
 		break;
 	case StageScene::Phase::kStageClear:
 		break;
+
 	case StageScene::Phase::kFadeOut:
 		fade_->Update();
-		break;
-	default:
 		break;
 	}
 
@@ -70,6 +74,7 @@ void StageScene::ChangePhase()
 			phase_ = Phase::kPlay;
 		}
 		break;
+
 	case StageScene::Phase::kPlay:
 		if (Input::GetInstance()->TriggerKey(DIK_SPACE))
 		{
@@ -77,6 +82,7 @@ void StageScene::ChangePhase()
 			phase_ = Phase::kFadeOut;
 		}
 		break;
+
 	case StageScene::Phase::kDeath:
 		break;
 	case StageScene::Phase::kStageClear:
@@ -86,19 +92,6 @@ void StageScene::ChangePhase()
 			sceneNo = CLEAR;
 		}
 		break;
-	default:
-		break;
-	}
-	// Player
-	player_->Update();
-
-	// Spike
-	for (auto* spike : spike_) {
-		spike->Update();
-	}
-
-	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-		sceneNo = CLEAR;
 	}
 }
 
@@ -107,31 +100,30 @@ void StageScene::Draw()
 	switch (phase_)
 	{
 	case StageScene::Phase::kFadeIn:
+		// Player
 		player_->Draw();
+		// Fade
 		fade_->Draw();
 		break;
 	case StageScene::Phase::kPlay:
+		// Player
 		player_->Draw();
+
+		// Spike
+		for (auto* spike : spike_) {
+			spike->Draw();
+		}
 		break;
 	case StageScene::Phase::kDeath:
 		break;
 	case StageScene::Phase::kStageClear:
 		break;
+
 	case StageScene::Phase::kFadeOut:
 		fade_->Draw();
-
-		break;
-	default:
 		break;
 	}
 	
-	// Player
-	player_->Draw();
-
-	// Spike
-	for (auto* spike : spike_) {
-		spike->Draw();
-	}
 }
 
 void StageScene::CheckAllCollision()

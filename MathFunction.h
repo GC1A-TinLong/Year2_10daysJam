@@ -8,15 +8,6 @@
 class Player;
 class Spike;
 
-enum class Phase
-{
-	kFadeIn,
-	kPlay,
-	kDeath,
-	kStageClear,
-	kFadeOut,
-};
-
 struct Size {
 	int width;
 	int height;

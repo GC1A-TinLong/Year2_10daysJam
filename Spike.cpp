@@ -12,7 +12,7 @@ void Spike::Initialize(const Vector2Int& pos)
 void Spike::Update()
 {
 	if (Input::GetInstance()->TriggerKey(DIK_F)) {
-		isStart = true;
+		isStart ^= true;
 	}
 	if (isStart) {
 		pos_.y += kSpeed;

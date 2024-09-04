@@ -20,12 +20,24 @@ public:
 	void CheckAllCollision();
 
 private:
+	enum class Phase
+	{
+		kFadeIn,
+		kPlay,
+		kDeath,
+		kStageClear,
+		kFadeOut,
+	};
+
+	// Phase
+	Phase phase_;
+	// Fade
+	Fade* fade_ = nullptr;
+	float duration_ = 1.0f;
+
 	// Player
 	Player* player_ = nullptr;
 	uint32_t playerTexture = Novice::LoadTexture("./Resources/player.png");
-	Fade* fade_ = nullptr;
-	float duration_ = 1.0f;
-	Phase phase_;
 
 	// Spike
 	static inline const uint8_t kSpikeNum = 15;
