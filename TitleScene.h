@@ -27,6 +27,5 @@ private:
 	Fade* fade_ = nullptr;
 	float duration_ = 1.0f;
 	Phase phase_;
-	int clicks_ = 0;
 	bool finished_ = false;
 };
