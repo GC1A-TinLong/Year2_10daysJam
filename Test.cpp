@@ -16,4 +16,6 @@ void Test::Initialize()
 void Test::Update()
 {
 	hoge++;
+
+	
 }
