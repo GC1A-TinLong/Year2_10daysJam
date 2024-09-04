@@ -15,45 +15,27 @@ void TitleScene::Initialize()
 
 void TitleScene::Update()
 {
-	switch (phase_)
-	{
-	case Phase::kFadeIn:
-		fade_->Update();
-		break;
-	case Phase::kPlay:
-		break;
-	case Phase::kDeath:
-		break;
-	case Phase::kStageClear:
-		break;
-	case Phase::kFadeOut:
-		break;
-	default:
-		break;
+	fade_->Update();
+
+	if (Input::GetInstance()->TriggerKey(DIK_SPACE) && fade_->IsFinished()) {
+		fade_->Start(Status::FadeOut, duration_);
+		clicks_ = 1;
 	}
-	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+
+	if (fade_->IsFinished() && clicks_ == 1) {
+		finished_ = true;
+		clicks_ = 0;
 		sceneNo = STAGE;
 	}
 
+
 }
+
+
 
 void TitleScene::Draw()
 {
 	//Novice::DrawSprite(0, 0, textureHandle_, 1.0f, 1.0f, 0, WHITE);
-	switch (phase_)
-	{
-	case Phase::kFadeIn:
-		fade_->Draw();
-		break;
-	case Phase::kPlay:
-		break;
-	case Phase::kDeath:
-		break;
-	case Phase::kStageClear:
-		break;
-	case Phase::kFadeOut:
-		break;
-	default:
-		break;
-	}
+	fade_->Draw();
+
 }
