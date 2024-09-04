@@ -125,7 +125,6 @@ void StageScene::Update()
 		}
 
 		//Destroyable Blocks
-
 		for (int i = 0; i < destroyableBlocks_.size();)
 		{
 			destroyableBlocks_[i]->Update();
@@ -142,7 +141,6 @@ void StageScene::Update()
 		}
 
 		//Blocks
-
 		for (int i = 0; i < blocks_.size();)
 		{
 			blocks_[i]->Update();
