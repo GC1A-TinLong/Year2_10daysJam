@@ -21,7 +21,7 @@ private:
 
 	Vector2Int pos_ = {};
 
-	Vector2Int size = { 48,48 };
+	Vector2Int size = { 1,1 };
 
 	int blockHandle_;
 
