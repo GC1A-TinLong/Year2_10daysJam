@@ -3,7 +3,7 @@
 
 void Fade::Initialize()
 {
-	textureHandle_ = Novice::LoadTexture("./Resources/Sprites/blackfade.png");
+	textureHandle_ = Novice::LoadTexture("./Resources/Fade/blackfade.png");
 	seethrough_ = 0xFFFFFF00;
 }
 
