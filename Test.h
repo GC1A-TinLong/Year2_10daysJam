@@ -6,7 +6,7 @@ public:
 
 	Test();
 
-	~Test();
+	~Test(); //
 
 	void Initialize();
 
