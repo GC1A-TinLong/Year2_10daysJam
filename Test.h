@@ -9,7 +9,7 @@ public:
 	~Test(); //
 
 	void Initialize(int bb); //New push
-
+	void Test();
 	void hoge();
 	void aaa();
 	void afe();
