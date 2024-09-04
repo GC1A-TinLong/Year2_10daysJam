@@ -12,7 +12,11 @@ public:
 
 	void Update();
 
+	void DestroyIfUOB();
+
 	void LoopWall();
+
+	bool GetIsAboveScreen() { return isAboveScreen_; };
 
 	void Draw();
 
@@ -31,5 +35,7 @@ private:
 	float wallMinY = -48.f;
 
 	float wallMaxY = 720.f;
+
+	bool isAboveScreen_ = false;
 };
 
