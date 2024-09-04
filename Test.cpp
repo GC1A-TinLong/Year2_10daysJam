@@ -8,9 +8,9 @@ Test::~Test()
 {
 }
 
-void Test::Initialize()
+void Test::Initialize(int bb)
 {
-	//Init test
+	//Init test 222
 }
 
 void Test::Update()

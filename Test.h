@@ -8,7 +8,7 @@ public:
 
 	~Test(); //
 
-	void Initialize(); //New push
+	void Initialize(int bb); //New push
 
 	void hoge();
 	void aaa();
