@@ -2,6 +2,6 @@
 class Test //Test
 {
 public:
-
+	int a;
 };
 
