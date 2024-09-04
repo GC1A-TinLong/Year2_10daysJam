@@ -3,9 +3,7 @@
 
 class BlockDestroyable
 {
-
 public:
-
 	~BlockDestroyable();
 
 	void Initialize(Vector2 pos);
