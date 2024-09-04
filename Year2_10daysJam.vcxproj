@@ -108,6 +108,8 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BlockDestroyable.cpp" />
+    <ClCompile Include="BlockNotDestroyable.cpp" />
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\StringUtility.cpp" />
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\DirectXCommon.cpp" />
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\WinApp.cpp" />
@@ -118,6 +120,8 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BlockDestroyable.h" />
+    <ClInclude Include="BlockNotDestroyable.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\base\StringUtility.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\math\Matrix4x4.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\math\Vector2.h" />
@@ -145,6 +149,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="C:\KamataEngine\DirectXGame\input\Input.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\scene\GameScene.h" />
     <ClInclude Include="C:\KamataEngine\Adapter\Novice.h" />
+    <ClInclude Include="struct.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
