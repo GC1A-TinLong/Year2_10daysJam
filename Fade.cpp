@@ -24,19 +24,20 @@ void Fade::Update()
 		break;
 	case Status::FadeIn:
 
-		alpha = static_cast<int>(progress * 255);
-		//seethrough_ += 6;
+		alpha = static_cast<int>((1.0f - progress) * 255);
+		seethrough_ = +alpha;
 
 		break;
 	case Status::FadeOut:
 
-		alpha = static_cast<int>((1.0f - progress) * 255);
-		
+		alpha = static_cast<int>(progress * 255);
+		seethrough_ = +alpha;
+
 		break;
 	default:
 		break;
 	}
-	seethrough_ = (seethrough_ & 0x00FFFFFF) | (alpha << 24);
+	//seethrough_ = (seethrough_ & 0x00FFFFFF) | (alpha << 24);
 }
 
 void Fade::Start(Status status, float duration)
