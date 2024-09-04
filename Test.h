@@ -9,6 +9,8 @@ public:
 	~Test(); //
 
 	void Initialize(int bb); //New push
+	void REEE();
+
 	void Test();
 	void hoge();
 	void aaa();
