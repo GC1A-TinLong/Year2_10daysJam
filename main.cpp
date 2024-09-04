@@ -1,6 +1,6 @@
 #include <Novice.h>
 #include "list"
-#include "BlockDestroyable.h"
+#include "Fade.h"
 
 const char kWindowTitle[] = "6005_タイトル";
 
@@ -9,7 +9,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// ライブラリの初期化
 	Novice::Initialize(kWindowTitle, 1280, 768);
-
+	Fade* fade_ = new Fade();
+	fade_->Initialize();
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
 	char preKeys[256] = {0};
@@ -33,7 +34,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓描画処理ここから
 		///
-		//Novice::DrawBox(100,100,48,48,0.0f,WHITE,kFillModeSolid);
+		fade_->Draw();
 		///
 		/// ↑描画処理ここまで
 		///

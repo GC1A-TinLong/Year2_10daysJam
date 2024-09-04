@@ -9,7 +9,7 @@ BlockDestroyable::~BlockDestroyable()
 {
 }
 
-void BlockDestroyable::Initialize(Vector2 pos)
+void BlockDestroyable::Initialize(Vector2Int pos)
 {
 	pos_ = pos;
 }

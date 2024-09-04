@@ -1,5 +1,5 @@
 #pragma once
-#include "struct.h"
+#include "MathFunction.h"
 
 class BlockNotDestroyable
 {
@@ -10,7 +10,7 @@ public:
 
 	~BlockNotDestroyable();
 
-	void Initialize(Vector2 pos);
+	void Initialize(Vector2Int pos);
 
 	void Update();
 
@@ -18,9 +18,9 @@ public:
 
 private:
 
-	Vector2 pos_ = {};
+	Vector2Int pos_ = {};
 
-	Vector2 size = { 48,48 };
+	Vector2Int size = { 48,48 };
 
 	int blockHandle_;
 };
