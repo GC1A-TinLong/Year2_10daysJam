@@ -4,6 +4,36 @@ StageScene::~StageScene()
 {
 	delete player_;
 	delete fade_;
+	
+	for (Spike* spike : spike_) 
+	{
+		delete spike;
+	}
+	spike_.clear();
+
+	for (BlockDestroyable* blocks : destroyableBlocks_) 
+	{
+		delete blocks;
+	}
+	destroyableBlocks_.clear();
+
+	for (BlockNotDestroyable* blocks : blocks_) 
+	{
+		delete blocks;
+	}
+	blocks_.clear();
+
+	for (BlockNotDestroyable* leftBlocks : leftWallBlocks_)
+	{
+		delete leftBlocks;
+	}
+	leftWallBlocks_.clear();
+
+	for (BlockNotDestroyable* rightBlocks : rightWallBlocks_)
+	{
+		delete rightBlocks;
+	}
+	rightWallBlocks_.clear();
 }
 
 void StageScene::Initialize()
@@ -20,6 +50,54 @@ void StageScene::Initialize()
 		int initPosX = 300;
 		spike_[i]->Initialize({ initPosX + i * 48,0 });
 	}
+
+#pragma region Destroyable Blocks
+
+	destroyableBlocks_.resize(kDestroyableBlockNum);
+	for (int i = 0; i < kDestroyableBlockNum; i++)
+	{
+		destroyableBlocks_[i] = new BlockDestroyable;
+		Vector2Int desBlockPos = desBlockPos_[i];
+		destroyableBlocks_[i]->Initialize(desBlockPos);
+	}
+
+#pragma endregion
+
+
+#pragma region Blocks
+
+	blocks_.resize(kBlockNum);
+	for (int i = 0; i < kBlockNum; i++)
+	{	
+		blocks_[i] = new BlockNotDestroyable;
+		Vector2Int blockPos = BlockPos_[i];
+		blocks_[i]->Initialize(BlockPos_[i], isMoss[i], false);
+	}
+#pragma endregion
+
+#pragma region LeftWall
+
+	leftWallBlocks_.resize(kWallBlockNum);
+	for (int i = 0; i < kWallBlockNum; i++)
+	{
+		leftWallBlocks_[i] = new BlockNotDestroyable;
+		Vector2Int leftWallPos_ = { 0,0 };
+		leftWallBlocks_[i]->Initialize({ leftWallPos_.x, leftWallPos_.y + 48 * i  }, false, true);
+	}
+
+#pragma endregion
+
+#pragma region RightWall
+
+	rightWallBlocks_.resize(kWallBlockNum);
+	for (int i = 0; i < kWallBlockNum; i++)
+	{
+		rightWallBlocks_[i] = new BlockNotDestroyable;
+		Vector2Int rightWallPos_ = { 1232,0 };
+		rightWallBlocks_[i]->Initialize({ rightWallPos_.x, rightWallPos_.y + 48 * i }, false, true);
+	}
+
+#pragma endregion
 
 #pragma region Fade
 
@@ -48,6 +126,29 @@ void StageScene::Update()
 		// Spike
 		for (auto* spike : spike_) {
 			spike->Update();
+		}
+
+		//Destroyable Blocks
+		for (auto* destroyableBlock : destroyableBlocks_) 
+		{
+			destroyableBlock->Update();
+		}
+
+		//Blocks
+		for (auto* block : blocks_) 
+		{
+			block->Update();
+		}
+
+		//WallBlocks
+		for (auto* wallblock : leftWallBlocks_) 
+		{
+			wallblock->Update();
+		}
+
+		for (auto* wallblock : rightWallBlocks_)
+		{
+			wallblock->Update();
 		}
 		
 		break;
@@ -109,10 +210,35 @@ void StageScene::Draw()
 		// Player
 		player_->Draw();
 
+		//Destroyable Blocks
+		for (auto* destroyableBlock : destroyableBlocks_)
+		{
+			destroyableBlock->Draw();
+		}
+
+		//Blocks
+		for (auto* block : blocks_)
+		{
+			block->Draw();
+		}
+
+		//Wall Blocks
+		for (auto* wallblock : leftWallBlocks_)
+		{
+			wallblock->Draw();
+		}
+
+		for (auto* wallblock : rightWallBlocks_)
+		{
+			wallblock->Draw();
+		}
+
+
 		// Spike
 		for (auto* spike : spike_) {
 			spike->Draw();
 		}
+
 		break;
 	case StageScene::Phase::kDeath:
 		break;
