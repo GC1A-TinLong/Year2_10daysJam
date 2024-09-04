@@ -13,13 +13,13 @@ void BlockDestroyable::Initialize(Vector2 pos)
 
 void BlockDestroyable::Update()
 {
-	pos_.y -= 1;
+	pos_.y -= 1.f;
 	DestroyIfOOB();
 }
 
 void BlockDestroyable::DestroyIfOOB()
 {
-	if (pos_.y <= -48)
+	if (pos_.y <= -48.f)
 	{
 		isAboveScreen_ = true;
 	}
@@ -28,7 +28,7 @@ void BlockDestroyable::DestroyIfOOB()
 void BlockDestroyable::Draw()
 {
 	
-	if (pos_.y >= -48 && pos_.y <= 720)
+	if (pos_.y >= -48.f && pos_.y <= 720.f)
 	{
 		Novice::DrawSprite((int)pos_.x, (int)pos_.y, blockHandle_, scale.x, scale.y, 0.0f, WHITE);
 	}
