@@ -9,9 +9,7 @@ public:
 	~BlockDestroyable();
 
 	void Initialize(Vector2 pos);
-
 	void Update();
-
 	void DestroyIfOOB(); // out of bounds
 
 	bool GetIsAboveScreen() { return isAboveScreen_; };
@@ -22,7 +20,6 @@ public:
 private:
 
 	Vector2 pos_ = {};
-
 	Vector2 scale = { 1.f,1.f };
 
 	uint32_t blockHandle_;

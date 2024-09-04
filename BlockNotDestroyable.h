@@ -9,9 +9,7 @@ public:
 	~BlockNotDestroyable();
 
 	void Initialize(Vector2 pos, bool isMoss, bool isWall);
-
 	void Update();
-
 	void DestroyIfOOB(); // out of bounds
 
 	void LoopWall();
@@ -23,7 +21,6 @@ public:
 private:
 
 	Vector2 pos_ = {};
-
 	Vector2 scale = { 1.f,1.f };
 
 	uint32_t blockHandle_;
