@@ -11,3 +11,8 @@ Test::~Test()
 void Test::Initialize()
 {
 }
+
+void Test::Update()
+{
+	hoge++;
+}

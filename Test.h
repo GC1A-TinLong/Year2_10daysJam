@@ -10,7 +10,9 @@ public:
 
 	void Initialize(); //New push
 
+	void Update();
 
-
+private:
+	int hoge;
 };
 
