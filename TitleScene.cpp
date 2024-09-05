@@ -19,9 +19,10 @@ void TitleScene::Update()
 
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE) && fade_->IsFinished()) {
 		fade_->Start(Status::FadeOut, duration_);
+		isSpaceClicked = true;
 	}
 
-	if (fade_->IsFinished()) {
+	if (fade_->IsFinished() && isSpaceClicked) {
 		finished_ = true;
 		sceneNo = STAGE;
 	}
