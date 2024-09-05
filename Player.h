@@ -24,6 +24,7 @@ private:
 	// Movement Flag
 	bool isPressingSpace = false;
 	bool isReleasedSpace = false;
+	bool isFreeFalling = false;
 	bool isJump = false;
 	bool isHitGround = true;
 	// OnGround

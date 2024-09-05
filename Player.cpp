@@ -80,9 +80,13 @@ void Player::MovementInput()
 			isPressingSpace = true;
 			velocity_.y -= kContinuousJumpAcceleration;
 		}
-		else {	// released SPACE key
+		else if (!Input::GetInstance()->PushKey(DIK_SPACE)) {	// released SPACE key
 			isPressingSpace = false;
 			isReleasedSpace = true;
+			if (!isFreeFalling && velocity_.y < 0) {
+				velocity_.y = -8.f;
+			}
+			isFreeFalling = true;
 		}
 
 		if (velocity_.y <= kMaxJumpSpeed) {
@@ -108,6 +112,7 @@ void Player::MovementInput()
 			isMaxSpeed = false;
 			isPressingSpace = false;
 			isReleasedSpace = false;
+			isFreeFalling = false;
 		}
 	}
 	pos_ += velocity_;
