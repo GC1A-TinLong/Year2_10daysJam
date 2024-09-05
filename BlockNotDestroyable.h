@@ -1,6 +1,8 @@
 #pragma once
 #include "MathFunction.h"
 
+class Player;
+
 class BlockNotDestroyable
 {
 public:
@@ -9,7 +11,7 @@ public:
 	void Initialize(Vector2 pos, bool isMoss, bool isWall);
 	void Update();
 	void DestroyIfOOB(); // out of bounds
-
+	void OnCollision(Player* player);
 	void LoopWall();
 
 	bool GetIsAboveScreen() const { return isAboveScreen_; };
@@ -28,9 +30,9 @@ private:
 
 	bool isWall_ = false;
 
-	float wallMinY = -float(size.height);
+	float wallMinY = 0;
 
-	float wallMaxY = 720.f;
+	float wallMaxY = float(size.height)*22;
 
 	bool isAboveScreen_ = false;
 };
