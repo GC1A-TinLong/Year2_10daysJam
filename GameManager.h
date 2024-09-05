@@ -6,6 +6,7 @@
 #include "ClearScene.h"
 #include "Novice.h"
 #include "Input.h"
+#include "Pause.h"
 
 class GameManager
 {
@@ -21,7 +22,9 @@ private:
 public:
 	GameManager();
 	~GameManager();
-
+	Pause* pause_ = nullptr;
 	int Run();
+	int pauseTimer = 0;
+	bool isPaused = false;
 };
 

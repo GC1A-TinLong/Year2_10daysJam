@@ -74,13 +74,13 @@ private:
 
 	bool isMoss[kBlockNum] =
 	{
-		0,1,0,1,1,0,0,0,1,
+		0,1,0,1,1,0,0,0,1,0,
 	};
 
 	static inline const uint8_t kWallBlockNum = 22;
 	std::vector<BlockNotDestroyable*>leftWallBlocks_;
-	Vector2 leftWallPos_ = { 48.f,0 };
+	Vector2 leftWallPos_ = { 144.f,0 };
 	std::vector<BlockNotDestroyable*>rightWallBlocks_;
-	Vector2 rightWallPos_ = { 1232,0 };
+	Vector2 rightWallPos_ = { 1392,0 };
 };
 
