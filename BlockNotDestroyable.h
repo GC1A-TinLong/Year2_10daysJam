@@ -3,9 +3,7 @@
 
 class BlockNotDestroyable
 {
-
 public:
-
 	~BlockNotDestroyable();
 
 	void Initialize(Vector2 pos, bool isMoss, bool isWall);

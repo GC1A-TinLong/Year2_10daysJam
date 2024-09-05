@@ -14,6 +14,15 @@
     <Filter Include="KamataEngine\Adapter">
       <UniqueIdentifier>{c6468eb4-788b-4a83-b207-a5f4804e56c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="KamataEngine\Scene">
+      <UniqueIdentifier>{6b7937b7-f0fb-429d-a366-4874faba888f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KamataEngine\Scene\header">
+      <UniqueIdentifier>{1c0071c2-fdf8-40cc-bb10-bfa0ee20706b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KamataEngine\Scene\cpp">
+      <UniqueIdentifier>{febe7723-dece-4252-aaa9-e421cdb6e1ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\DirectXCommon.cpp">
@@ -43,6 +52,33 @@
     </ClCompile>
     <ClCompile Include="MathFunction.cpp">
       <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockDestroyable.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockNotDestroyable.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Fade.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearScene.cpp">
+      <Filter>KamataEngine\Scene\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IScene.cpp">
+      <Filter>KamataEngine\Scene\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="StageScene.cpp">
+      <Filter>KamataEngine\Scene\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>KamataEngine\Scene\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,5 +155,22 @@
     </ClInclude>
     <ClInclude Include="Spike.h" />
     <ClInclude Include="MathFunction.h" />
+    <ClInclude Include="BlockDestroyable.h" />
+    <ClInclude Include="BlockNotDestroyable.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Fade.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="IScene.h">
+      <Filter>KamataEngine\Scene\header</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearScene.h">
+      <Filter>KamataEngine\Scene\header</Filter>
+    </ClInclude>
+    <ClInclude Include="StageScene.h">
+      <Filter>KamataEngine\Scene\header</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>KamataEngine\Scene\header</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
