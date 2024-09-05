@@ -67,7 +67,7 @@ void Player::MovementInput()
 		}
 
 		//if (velocity_.y < 0) {
-		if (prevPos_.y - pos_.y >= 60.f) {
+		if (prevPos_.y - pos_.y >= kMinInitHeight) {
 			onGround = false;
 			isPressingSpace = false;
 		}

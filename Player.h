@@ -41,6 +41,7 @@ private:
 	static inline const float kContinuousJumpAcceleration = 4.f;
 	static inline const float kMaxJumpSpeed = -22.f;
 	bool isMaxSpeed = false;
+	static inline const float kMinInitHeight = 40.f;
 	/////////////////////////////////////////////
 	// IsHit Flag
 	bool isHit = false;
