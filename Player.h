@@ -67,6 +67,16 @@ private:
 
 	// Block
 	BlockNotDestroyable* notDesBlock;
+
+
+	#pragma region Animation
+
+	int playerHandleHolder_;
+	int playerIdleHandle_;
+	Vector2 animationPos_ = { 0.f, 0.f };
+	int animationTimer_ = 0;
+
+	#pragma endregion
 	
 public:
 	void Initialize(const Vector2& pos);
@@ -74,7 +84,7 @@ public:
 	void Draw();
 
 	void MovementInput();
-
+	void AnimationHolder();
 	void OnCollision();
 	void CollisionWithBlock(BlockNotDestroyable* nonDesBlock);
 

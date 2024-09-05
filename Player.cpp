@@ -14,18 +14,21 @@ void Player::InitializeFlag()
 void Player::Initialize(const Vector2& pos)
 {
 	pos_ = pos;
+	playerIdleHandle_ = Novice::LoadTexture("./Resources/Player/player.png");
 }
 
 void Player::Update()
 {
+	AnimationHolder();
 	MovementInput();
 }
 
 void Player::Draw()
 {
 	if (!isDead) {
-		Novice::DrawBox((int)pos_.x, (int)pos_.y, width, height, 0, WHITE, kFillModeSolid);
+		//Novice::DrawBox((int)pos_.x, (int)pos_.y, width, height, 0, WHITE, kFillModeSolid);
 		//Novice::DrawSprite(pos_.x, pos_.y, texture_, 1.f, 1.f, 0, WHITE);
+		Novice::DrawSpriteRect((int)pos_.x, (int)pos_.y, (int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / 504.f, 1.f, 0.0f, WHITE);
 	}
 	Novice::ScreenPrintf(0, 0, "player.velocity.x = %f", velocity_.x);
 	Novice::ScreenPrintf(0, 20, "player.velocity.y = %f", velocity_.y);
@@ -124,6 +127,24 @@ void Player::MovementInput()
 		//}
 	}
 	pos_ += velocity_;
+}
+
+void Player::AnimationHolder()
+{
+	animationTimer_++;
+
+	playerHandleHolder_ = playerIdleHandle_;
+	if (animationTimer_ >= 4) 
+	{
+		animationPos_.x += 42;
+		animationTimer_ = 0;
+	}
+	
+
+	if (animationPos_.x >= 504) 
+	{
+		animationPos_.x = 0;
+	}
 }
 
 void Player::OnCollision()
