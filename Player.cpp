@@ -100,8 +100,8 @@ void Player::MovementInput()
 		// is falling? Collision with ground
 		if (velocity_.y > 0.0f) {
 			// if translation Y is lower than the ground, landed
-			if (pos_.y + velocity_.y >= 500.0f) {
-				pos_.y = 500.0f; // prevent going underground
+			if (pos_.y + velocity_.y >= 400.0f) {
+				pos_.y = 400.0f; // prevent going underground
 				isLand = true;
 			}
 		}
