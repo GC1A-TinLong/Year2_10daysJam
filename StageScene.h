@@ -56,7 +56,7 @@ private:
 	};
 
 	// Block
-	static inline const uint8_t kBlockNum = 26;
+	static inline const uint8_t kBlockNum = 25;
 	std::vector<BlockNotDestroyable*>blocks_;
 	Vector2 BlockPos_[kBlockNum]
 	{
@@ -74,7 +74,7 @@ private:
 
 	bool isMoss[kBlockNum] =
 	{
-		0,1,0,1,1,0,0,0,1,
+		0,1,0,1,1,0,0,0,1,0,
 	};
 
 	static inline const uint8_t kWallBlockNum = 22;

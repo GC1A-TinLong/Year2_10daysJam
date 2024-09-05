@@ -78,7 +78,7 @@ void StageScene::Initialize()
 	for (int i = 0; i < kWallBlockNum; i++)
 	{
 		leftWallBlocks_[i] = new BlockNotDestroyable;
-		Vector2 leftWallPos_ = { 48,0 };
+		Vector2 leftWallPos_ = { 144,0 };
 		leftWallBlocks_[i]->Initialize({ leftWallPos_.x, leftWallPos_.y + 48 * i }, false, true);
 	}
 
@@ -90,7 +90,7 @@ void StageScene::Initialize()
 	for (int i = 0; i < kWallBlockNum; i++)
 	{
 		rightWallBlocks_[i] = new BlockNotDestroyable;
-		Vector2 rightWallPos_ = { 1232,0 };
+		Vector2 rightWallPos_ = { 1392,0 };
 		rightWallBlocks_[i]->Initialize({ rightWallPos_.x, rightWallPos_.y + 48 * i }, false, true);
 	}
 
@@ -260,10 +260,10 @@ void StageScene::Draw()
 		for (auto* spike : spike_) {
 			spike->Draw();
 		}
-		Novice::DrawBox(0, 0, 48, 1080, 0.0f, BLACK, kFillModeSolid);
-		Novice::DrawBox(0, 1032, 1296, 1032, 0.0f, BLACK, kFillModeSolid);
-		Novice::DrawBox(0, 0, 1296, 48, 0.0f, BLACK, kFillModeSolid);
-		Novice::DrawBox(1280, 0, 1920, 1080, 0.0f, BLACK, kFillModeSolid);
+		Novice::DrawBox(0, 0, 144, 1080, 0.0f, BLACK, kFillModeSolid);
+		Novice::DrawBox(0, 1032, 1440, 1032, 0.0f, BLACK, kFillModeSolid);
+		Novice::DrawBox(0, 0, 1440, 96, 0.0f, BLACK, kFillModeSolid);
+		Novice::DrawBox(1440, 0, 1920, 1080, 0.0f, BLACK, kFillModeSolid);
 
 		break;
 	case StageScene::Phase::kDeath:
