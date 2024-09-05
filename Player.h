@@ -33,15 +33,15 @@ private:
 	static inline const float kMaxVelocity = 12.5f;
 	/// Airborne ///
 	// Gravity
-	static inline const float kGravityAcceleration  = 2.f;
-	static inline const float kFreeFallAcceleration = 2.f;
-	static inline const float kLimitFallSpeed = 20.f;
+	//static inline const float kGravityAcceleration  = 2.f;
+	static inline const float kFreeFallAcceleration = 1.8f;
+	static inline const float kMaxFallSpeed = 14.f;
 	// Jump Acceleration
 	static inline const float kInitJumpAcceleration = 14.f;
-	static inline const float kContinuousJumpAcceleration = 4.f;
+	static inline const float kContinuousJumpAcceleration = 7.f;
 	static inline const float kMaxJumpSpeed = -22.f;
 	bool isMaxSpeed = false;
-	static inline const float kMinInitHeight = 40.f;
+	static inline const float kMinInitHeight = 18.f;
 	/////////////////////////////////////////////
 	// IsHit Flag
 	bool isHit = false;

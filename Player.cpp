@@ -91,7 +91,7 @@ void Player::MovementInput()
 		if (!isPressingSpace || isMaxSpeed) {
 			// Fall speed
 			velocity_.y += kFreeFallAcceleration;
-			velocity_.y = (std::min)(velocity_.y, kLimitFallSpeed);
+			velocity_.y = (std::min)(velocity_.y, kMaxFallSpeed);
 		}
 		// is falling? Collision with ground
 		if (velocity_.y > 0.0f) {
