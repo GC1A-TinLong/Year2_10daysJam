@@ -23,9 +23,10 @@ void BlockNotDestroyable::Initialize(Vector2 pos,bool isMoss, bool isWall)
 
 void BlockNotDestroyable::Update()
 {
-	pos_.y -= 1.f;
+	
 	if (isWall_) 
 	{
+		pos_.y -= 1.f;
 		LoopWall();
 	}
 	else 
@@ -42,6 +43,11 @@ void BlockNotDestroyable::DestroyIfOOB()
 	}
 }
 
+void BlockNotDestroyable::OnCollision(Player* player)
+{
+	(void)player;
+}
+
 void BlockNotDestroyable::LoopWall()
 {
 	if (pos_.y <= wallMinY) 
@@ -52,7 +58,7 @@ void BlockNotDestroyable::LoopWall()
 
 void BlockNotDestroyable::Draw()
 {
-	if (pos_.y >= -48.f && pos_.y <= 720.f)
+	if (pos_.y >= -48.f && pos_.y <= 1080.f)
 	{
 		Novice::DrawSprite((int)pos_.x, (int)pos_.y, blockHandle_, scale.x, scale.y, 0.0f, WHITE);
 	}
