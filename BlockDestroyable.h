@@ -1,6 +1,8 @@
 #pragma once
 #include "MathFunction.h"
 
+class Player;
+
 class BlockDestroyable
 {
 public:
@@ -9,7 +11,7 @@ public:
 	void Initialize(Vector2 pos);
 	void Update();
 	void DestroyIfOOB(); // out of bounds
-
+	void OnCollision(Player* player);
 	bool GetIsAboveScreen() const { return isAboveScreen_; };
 
 	void Draw();

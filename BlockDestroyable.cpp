@@ -25,6 +25,11 @@ void BlockDestroyable::DestroyIfOOB()
 	}
 }
 
+void BlockDestroyable::OnCollision(Player* player)
+{
+	(void)player;
+}
+
 void BlockDestroyable::Draw()
 {
 	if (pos_.y >= -float(size.height) && pos_.y <= 720.f)
