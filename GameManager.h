@@ -16,6 +16,8 @@ private:
 	int currentSceneNo_;
 	int prevSceneNo_;
 
+	bool isFullScreen = false;
+
 public:
 	GameManager();
 	~GameManager();

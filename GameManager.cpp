@@ -1,4 +1,4 @@
-#include "GameManager.h"
+﻿#include "GameManager.h"
 
 GameManager::GameManager()
 {
@@ -10,6 +10,7 @@ GameManager::GameManager()
 	currentSceneNo_ = TITLE;
 	prevSceneNo_ = TITLE;
 	sceneArr_[currentSceneNo_]->Initialize();
+
 }
 
 GameManager::~GameManager()
@@ -32,6 +33,16 @@ int GameManager::Run()
 		sceneArr_[currentSceneNo_]->Update();
 
 		sceneArr_[currentSceneNo_]->Draw();
+
+		if (Input::GetInstance()->TriggerKey(DIK_F)) {
+			isFullScreen ^= true;
+		}
+		if (isFullScreen) {
+			Novice::SetWindowMode(kFullscreen);
+		}
+		else {
+			Novice::SetWindowMode(kWindowed);
+		}
 
 		Novice::EndFrame();
 

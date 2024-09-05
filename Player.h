@@ -23,6 +23,12 @@ private:
 
 	// Movement Flag
 	bool isJump = false;
+	// OnGround
+	bool onGround = false;
+	static inline const float kAcceleration = 0.5f;
+	static inline const float kAttenuation = 0.1f;
+	static inline const float kMaxVelocity = 10.f;
+	/////////////////////////////////////////////
 	// IsHit Flag
 	bool isHit = false;
 	bool isDead = false;
@@ -31,10 +37,6 @@ private:
 	Vector2 pos_{};
 	Vector2 prevPos_{};
 	Vector2 velocity_{};
-	// OnGround
-	static inline const float kAcceleration = 0.5f;
-	static inline const float kAttenuation = 0.1f;
-	static inline const float kMaxVelocity = 10.f;
 
 	// Sprite Handle
 	uint32_t texture_;

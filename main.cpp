@@ -6,8 +6,8 @@ const char kWindowTitle[] = "6005_タイトル";
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
-	// ライブラリの初期化
-	Novice::Initialize(kWindowTitle, 1280, 720);
+	// Initialize library
+	Novice::Initialize(kWindowTitle, 1280, 796);
 
 	std::unique_ptr<GameManager>gameManager = std::make_unique<GameManager>();
 
