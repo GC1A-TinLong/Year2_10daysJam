@@ -17,7 +17,7 @@ void TitleScene::Update()
 {
 	fade_->Update();
 
-	if (Input::GetInstance()->TriggerKey(DIK_SPACE) && fade_->IsFinished()) {
+	if (Input::GetInstance()->TriggerKey(DIK_C) && fade_->IsFinished()) {
 		fade_->Start(Status::FadeOut, duration_);
 		isSpaceClicked = true;
 	}

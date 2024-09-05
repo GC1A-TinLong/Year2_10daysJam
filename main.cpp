@@ -7,7 +7,7 @@ const char kWindowTitle[] = "6005_タイトル";
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// Initialize library
-	Novice::Initialize(kWindowTitle, 1280, 796);
+	Novice::Initialize(kWindowTitle, 1920, 1080);
 
 	std::unique_ptr<GameManager>gameManager = std::make_unique<GameManager>();
 

@@ -57,6 +57,59 @@ void Player::MovementInput()
 			velocity_.x = 0;
 		}
 	}
+	// Jump
+	bool isLand = false;
+	if (onGround) {
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+			velocity_.y -= kInitJumpAcceleration;
+			isPressingSpace = true;
+			prevPos_ = pos_;
+		}
+
+		//if (velocity_.y < 0) {
+		if (prevPos_.y - pos_.y >= 60.f) {
+			onGround = false;
+			isPressingSpace = false;
+		}
+	}
+	else {
+		if (Input::GetInstance()->PushKey(DIK_SPACE) && !isMaxSpeed && !isReleasedSpace) {	// if continuously pressing SPACE, add jump force
+			if (!isPressingSpace) {
+				velocity_.y -= kContinuousJumpAcceleration;
+			}
+			isPressingSpace = true;
+			velocity_.y -= kContinuousJumpAcceleration;
+		}
+		else {	// released SPACE key
+			isPressingSpace = false;
+			isReleasedSpace = true;
+		}
+
+		if (velocity_.y <= kMaxJumpSpeed) {
+			isMaxSpeed = true;
+		}
+		if (!isPressingSpace || isMaxSpeed) {
+			// Fall speed
+			velocity_.y += kFreeFallAcceleration;
+			velocity_.y = (std::min)(velocity_.y, kLimitFallSpeed);
+		}
+		// is falling? Collision with ground
+		if (velocity_.y > 0.0f) {
+			// if translation Y is lower than the ground, landed
+			if (pos_.y + velocity_.y >= 500.0f) {
+				pos_.y = 500.0f; // prevent going underground
+				isLand = true;
+			}
+		}
+		if (isLand) {
+			velocity_.x *= (1.0f - kAttenuation);
+			velocity_.y = 0.0f; // reseting fall speed
+			onGround = true;
+			isMaxSpeed = false;
+			isPressingSpace = false;
+			isReleasedSpace = false;
+		}
+	}
 	pos_ += velocity_;
 }
 

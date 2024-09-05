@@ -24,7 +24,7 @@ void ClearScene::ChangePhase()
 		}
 		break;
 	case ClearScene::Phase::kPlay:
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE))
+		if (Input::GetInstance()->TriggerKey(DIK_C))
 		{
 			fade_->Start(Status::FadeOut, duration_);
 			phase_ = Phase::kFadeOut;

@@ -22,12 +22,25 @@ private:
 	uint16_t collideBuffer = 0;
 
 	// Movement Flag
+	bool isPressingSpace = false;
+	bool isReleasedSpace = false;
 	bool isJump = false;
+	bool isHitGround = true;
 	// OnGround
-	bool onGround = false;
-	static inline const float kAcceleration = 0.5f;
+	bool onGround = true;
+	static inline const float kAcceleration = 0.8f;
 	static inline const float kAttenuation = 0.1f;
-	static inline const float kMaxVelocity = 10.f;
+	static inline const float kMaxVelocity = 12.5f;
+	/// Airborne ///
+	// Gravity
+	static inline const float kGravityAcceleration  = 2.f;
+	static inline const float kFreeFallAcceleration = 2.f;
+	static inline const float kLimitFallSpeed = 20.f;
+	// Jump Acceleration
+	static inline const float kInitJumpAcceleration = 14.f;
+	static inline const float kContinuousJumpAcceleration = 4.f;
+	static inline const float kMaxJumpSpeed = -22.f;
+	bool isMaxSpeed = false;
 	/////////////////////////////////////////////
 	// IsHit Flag
 	bool isHit = false;
