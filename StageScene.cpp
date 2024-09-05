@@ -78,7 +78,7 @@ void StageScene::Initialize()
 	for (int i = 0; i < kWallBlockNum; i++)
 	{
 		leftWallBlocks_[i] = new BlockNotDestroyable;
-		leftWallPos_.y = 144.f * i;
+		leftWallPos_.y = 48.f * i;
 		leftWallBlocks_[i]->Initialize(leftWallPos_, false, true);
 	}
 

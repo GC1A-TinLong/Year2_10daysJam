@@ -81,6 +81,6 @@ private:
 	std::vector<BlockNotDestroyable*>leftWallBlocks_;
 	Vector2 leftWallPos_ = { 144.f,0 };
 	std::vector<BlockNotDestroyable*>rightWallBlocks_;
-	Vector2 rightWallPos_ = { 1392,0 };
+	Vector2 rightWallPos_ = { 1392.f,0 };
 };
 
