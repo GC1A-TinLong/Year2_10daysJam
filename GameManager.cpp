@@ -10,6 +10,8 @@ GameManager::GameManager()
 	currentSceneNo_ = TITLE;
 	prevSceneNo_ = TITLE;
 	sceneArr_[currentSceneNo_]->Initialize();
+	pause_ = new Pause();
+	pause_->Initialize();
 
 }
 
@@ -29,10 +31,39 @@ int GameManager::Run()
 		if (prevSceneNo_ != currentSceneNo_) {
 			sceneArr_[currentSceneNo_]->Initialize();
 		}
+		if (!pause_->GetIsPaused()) 
+		{
+			sceneArr_[currentSceneNo_]->Update();
 
-		sceneArr_[currentSceneNo_]->Update();
-
+			
+		}
 		sceneArr_[currentSceneNo_]->Draw();
+
+		 if(pause_->GetIsPaused())
+		{
+			pause_->Update();
+
+			pause_->Draw();
+		}
+		
+		
+
+		if (Input::GetInstance()->TriggerKey(DIK_ESCAPE) && !isPaused)
+		{
+			pause_->SetIsPaused(true);
+			isPaused = true;
+			pauseTimer = 1;
+		}
+
+		if (!pause_->GetIsPaused() && pauseTimer > 0)
+		{
+			pauseTimer++;
+		}
+
+		if (pauseTimer > 5) 
+		{
+			isPaused = false;
+		}
 
 		if (Input::GetInstance()->TriggerKey(DIK_F)) {
 			isFullScreen ^= true;
@@ -46,7 +77,7 @@ int GameManager::Run()
 
 		Novice::EndFrame();
 
-		if (Input::GetInstance()->TriggerKey(DIK_ESCAPE)) {
+		if (pause_->GetCloseGame()) {
 			break;
 		}
 	}
