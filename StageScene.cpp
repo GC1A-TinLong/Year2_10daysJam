@@ -46,7 +46,7 @@ void StageScene::Initialize()
 	{
 		spike_[i] = new Spike;
 		float initPosX = 300.f;
-		spike_[i]->Initialize({ initPosX + i * 48,48, });
+		spike_[i]->Initialize({ initPosX + i * 48,48 });
 	}
 
 #pragma region Destroyable Blocks
@@ -67,7 +67,7 @@ void StageScene::Initialize()
 	for (int i = 0; i < kBlockNum; i++)
 	{
 		blocks_[i] = new BlockNotDestroyable;
-		Vector2 blockPos = BlockPos_[i];
+		//Vector2 blockPos = BlockPos_[i];
 		blocks_[i]->Initialize(BlockPos_[i], isMoss[i], false);
 	}
 #pragma endregion
@@ -78,8 +78,8 @@ void StageScene::Initialize()
 	for (int i = 0; i < kWallBlockNum; i++)
 	{
 		leftWallBlocks_[i] = new BlockNotDestroyable;
-		Vector2 leftWallPos_ = { 48,0 };
-		leftWallBlocks_[i]->Initialize({ leftWallPos_.x, leftWallPos_.y + 48 * i }, false, true);
+		leftWallPos_.y = 48.f * i;
+		leftWallBlocks_[i]->Initialize(leftWallPos_, false, true);
 	}
 
 #pragma endregion
@@ -90,8 +90,8 @@ void StageScene::Initialize()
 	for (int i = 0; i < kWallBlockNum; i++)
 	{
 		rightWallBlocks_[i] = new BlockNotDestroyable;
-		Vector2 rightWallPos_ = { 1232,0 };
-		rightWallBlocks_[i]->Initialize({ rightWallPos_.x, rightWallPos_.y + 48 * i }, false, true);
+		rightWallPos_.y = 48.f * i;
+		rightWallBlocks_[i]->Initialize(rightWallPos_, false, true);
 	}
 
 #pragma endregion
@@ -118,6 +118,12 @@ void StageScene::Update()
 	case StageScene::Phase::kPlay:
 		// Player
 		player_->Update();
+		for (auto* nonDesBlock : blocks_) {
+			player_->CollisionWithBlock(nonDesBlock);
+
+			Novice::ScreenPrintf(300, 0, "block.pos.x = %f", nonDesBlock->GetPos().x);
+			Novice::ScreenPrintf(300, 20, "block.pos.y = %f", nonDesBlock->GetPos().y);
+		}
 
 		// Spike
 		for (auto* spike : spike_) {

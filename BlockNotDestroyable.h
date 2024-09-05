@@ -13,8 +13,8 @@ public:
 	void DestroyIfOOB(); // out of bounds
 	void OnCollision(Player* player);
 	void LoopWall();
-	Vector2 GetPos() { return pos_; };
-	Size GetSize() { return size; };
+	Vector2 GetPos() const { return pos_; };
+	Size GetSize() const { return size; };
 	bool GetIsAboveScreen() const { return isAboveScreen_; };
 
 	void Draw();

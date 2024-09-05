@@ -2,10 +2,18 @@
 #include "Novice.h"
 #include "Input.h"
 
+void Player::InitializeFlag()
+{
+	isMaxSpeed = false;
+	isPressingSpace = false;
+	isReleasedSpace = false;
+	isFreeFalling = false;
+	isOnTopOfBlock = true;
+}
+
 void Player::Initialize(const Vector2& pos)
 {
 	pos_ = pos;
-	//texture_ = texture;
 }
 
 void Player::Update()
@@ -21,6 +29,8 @@ void Player::Draw()
 	}
 	Novice::ScreenPrintf(0, 0, "player.velocity.x = %f", velocity_.x);
 	Novice::ScreenPrintf(0, 20, "player.velocity.y = %f", velocity_.y);
+	Novice::ScreenPrintf(0, 40, "player.pos.x = %f", pos_.x);
+	Novice::ScreenPrintf(0, 60, "player.pos.y = %f", pos_.y);
 }
 
 void Player::MovementInput()
@@ -58,7 +68,7 @@ void Player::MovementInput()
 		}
 	}
 	// Jump
-	bool isLand = false;
+	//bool isLand = false;
 	if (onGround) {
 		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
 			velocity_.y -= kInitJumpAcceleration;
@@ -66,10 +76,10 @@ void Player::MovementInput()
 			prevPos_ = pos_;
 		}
 
-		//if (velocity_.y < 0) {
 		if (prevPos_.y - pos_.y >= kMinInitHeight) {
 			onGround = false;
 			isPressingSpace = false;
+			//isOnTopOfBlock = false;
 		}
 	}
 	else {
@@ -98,22 +108,20 @@ void Player::MovementInput()
 			velocity_.y = (std::min)(velocity_.y, kMaxFallSpeed);
 		}
 		// is falling? Collision with ground
-		if (velocity_.y > 0.0f) {
-			// if translation Y is lower than the ground, landed
-			if (pos_.y + velocity_.y >= 400.0f) {
-				pos_.y = 400.0f; // prevent going underground
-				isLand = true;
-			}
-		}
-		if (isLand) {
-			velocity_.x *= (1.0f - kAttenuation);
-			velocity_.y = 0.0f; // reseting fall speed
-			onGround = true;
-			isMaxSpeed = false;
-			isPressingSpace = false;
-			isReleasedSpace = false;
-			isFreeFalling = false;
-		}
+		//if (velocity_.y > 0.0f) {
+		//	// if translation Y is lower than the ground, landed
+		//	if (pos_.y + velocity_.y >= 400.0f) {
+		//		pos_.y = 400.0f; // prevent going underground
+		//		isLand = true;
+		//	}
+		//}
+
+		//if (isLand) {
+		//	velocity_.x *= (1.0f - kAttenuation);
+		//	velocity_.y = 0.0f; // reseting fall speed
+		//	onGround = true;
+		//	InitializeFlag();
+		//}
 	}
 	pos_ += velocity_;
 }
@@ -121,6 +129,32 @@ void Player::MovementInput()
 void Player::OnCollision()
 {
 	isDead = true;
+}
+
+void Player::CollisionWithBlock(BlockNotDestroyable* nonDesBlock)
+{
+	isOnTopOfBlock = false;
+
+	if (velocity_.y < 0) {
+		return;
+	}
+	// when playing is falling
+	// when player.bottom is below block.top
+	if (velocity_.y > 0 &&
+		(pos_.y + size.height + velocity_.y >= nonDesBlock->GetPos().y)) {	
+		// when player is within block size
+		if (pos_.x <= nonDesBlock->GetPos().x + nonDesBlock->GetSize().width || pos_.x + size.width >= nonDesBlock->GetPos().x) {
+			isOnTopOfBlock = true;
+			pos_.y = nonDesBlock->GetPos().y - size.height;
+			onGround = true;
+		}
+	}
+	if (isOnTopOfBlock) {
+		velocity_.x *= (1.0f - kAttenuation);
+		velocity_.y = 0.0f; // reseting fall speed
+		onGround = true;
+		InitializeFlag();
+	}
 }
 
 Vector2 Player::CameraOffset()

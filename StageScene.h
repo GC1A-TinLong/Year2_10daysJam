@@ -56,7 +56,7 @@ private:
 	};
 
 	// Block
-	static inline const uint8_t kBlockNum = 26;
+	static inline const uint8_t kBlockNum = 20;
 	std::vector<BlockNotDestroyable*>blocks_;
 	Vector2 BlockPos_[kBlockNum]
 	{
@@ -67,8 +67,8 @@ private:
 		 {576, 500},  {624, 500},  {672, 500},
 		 {720, 500},  {768, 500},  {816, 500},
 		 {864, 500},  {912, 500},  {960, 500},
-		{1008, 500}, {1056, 500}, {1104, 500},
-		{1152, 500}, {1200, 500}, /*{1248, 300},*/
+		/*{1008, 500}, {1056, 500}, {1104, 500},
+		{1152, 500}, {1200, 500},*/ /*{1248, 300},*/
 
 	};
 
@@ -79,6 +79,8 @@ private:
 
 	static inline const uint8_t kWallBlockNum = 22;
 	std::vector<BlockNotDestroyable*>leftWallBlocks_;
+	Vector2 leftWallPos_ = { 48.f,0 };
 	std::vector<BlockNotDestroyable*>rightWallBlocks_;
+	Vector2 rightWallPos_ = { 1232,0 };
 };
 

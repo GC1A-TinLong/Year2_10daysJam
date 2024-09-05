@@ -1,5 +1,6 @@
 #pragma once
 #include "MathFunction.h"
+#include "BlockNotDestroyable.h"
 
 class Player
 {
@@ -21,17 +22,20 @@ private:
 	// Collide with enemy
 	uint16_t collideBuffer = 0;
 
+#pragma region Movement
 	// Movement Flag
 	bool isPressingSpace = false;
 	bool isReleasedSpace = false;
 	bool isFreeFalling = false;
 	bool isJump = false;
 	bool isHitGround = true;
+	void InitializeFlag();
 	// OnGround
 	bool onGround = true;
 	static inline const float kAcceleration = 0.8f;
 	static inline const float kAttenuation = 0.1f;
 	static inline const float kMaxVelocity = 12.5f;
+
 	/// Airborne ///
 	// Gravity
 	//static inline const float kGravityAcceleration  = 2.f;
@@ -44,6 +48,11 @@ private:
 	bool isMaxSpeed = false;
 	static inline const float kMinInitHeight = 18.f;
 	/////////////////////////////////////////////
+#pragma endregion
+
+	// Block Collision
+	bool isOnTopOfBlock = true;
+
 	// IsHit Flag
 	bool isHit = false;
 	bool isDead = false;
@@ -55,6 +64,9 @@ private:
 
 	// Sprite Handle
 	uint32_t texture_;
+
+	// Block
+	BlockNotDestroyable* notDesBlock;
 	
 public:
 	void Initialize(const Vector2& pos);
@@ -64,6 +76,7 @@ public:
 	void MovementInput();
 
 	void OnCollision();
+	void CollisionWithBlock(BlockNotDestroyable* nonDesBlock);
 
 	Vector2 CameraOffset();
 
