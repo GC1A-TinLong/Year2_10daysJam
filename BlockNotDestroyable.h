@@ -6,14 +6,15 @@ class Player;
 class BlockNotDestroyable
 {
 public:
-	~BlockNotDestroyable();
 
+	~BlockNotDestroyable();
 	void Initialize(Vector2 pos, bool isMoss, bool isWall);
 	void Update();
 	void DestroyIfOOB(); // out of bounds
 	void OnCollision(Player* player);
 	void LoopWall();
-
+	Vector2 GetPos() { return pos_; };
+	Size GetSize() { return size; };
 	bool GetIsAboveScreen() const { return isAboveScreen_; };
 
 	void Draw();
@@ -32,7 +33,7 @@ private:
 
 	float wallMinY = 0;
 
-	float wallMaxY = float(size.height)*22;
+	float wallMaxY = float(size.height) * 22;
 
 	bool isAboveScreen_ = false;
 };

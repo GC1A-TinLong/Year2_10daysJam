@@ -6,13 +6,15 @@ class Player;
 class BlockDestroyable
 {
 public:
-	~BlockDestroyable();
 
+	~BlockDestroyable();
 	void Initialize(Vector2 pos);
 	void Update();
 	void DestroyIfOOB(); // out of bounds
 	void OnCollision(Player* player);
 	bool GetIsAboveScreen() const { return isAboveScreen_; };
+	Vector2 GetPos() { return pos_; };
+	Size GetSize() { return size; };
 
 	void Draw();
 
