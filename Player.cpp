@@ -162,7 +162,6 @@ void Player::SwitchPlayerAnimationStatus()
 	else if (Input::GetInstance()->PushKey(DIK_A))
 	{
 		playerAnimation_ = PlayerAnimation::Left;
-
 	}
 	else
 	{
@@ -179,7 +178,6 @@ void Player::SwitchPlayerAnimationStatus()
 	case Player::PlayerAnimation::Idle:
 		playerHandleHolder_ = playerIdleHandle_;
 		currentAnimationFrames = 504.f;;
-
 		break;
 	case Player::PlayerAnimation::Right:
 		playerHandleHolder_ = playerMovingRightHandle_;
