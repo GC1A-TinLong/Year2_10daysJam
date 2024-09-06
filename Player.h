@@ -100,13 +100,14 @@ public:
 	void Update();
 	void Draw();
 
-	void MovementInput();
 	void AnimationHolder();
 	void SwitchPlayerAnimationStatus();
 
+	void MovementInput();
+
 	void OnCollision();
 	void CollisionWithBlock(BlockNotDestroyable* nonDesBlock);
-	//void SwitchToAirborne(BlockNotDestroyable* nonDesBlock);
+	void SwitchToAirborne(BlockNotDestroyable* nonDesBlock);
 
 	Vector2 CameraOffset();
 

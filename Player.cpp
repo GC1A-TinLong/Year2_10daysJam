@@ -55,6 +55,66 @@ void Player::Draw()
 	Novice::ScreenPrintf(0, 60, "player.pos.y = %f", pos_.y);
 }
 
+void Player::AnimationHolder()
+{
+	animationTimer_++;
+
+	if (animationPos_.x >= currentAnimationFrames - 42)
+	{
+		animationPos_.x = 0;
+	}
+
+	if (animationTimer_ >= 4)
+	{
+		animationPos_.x += 42;
+		animationTimer_ = 0;
+	}
+
+	SwitchPlayerAnimationStatus();
+}
+
+void Player::SwitchPlayerAnimationStatus()
+{
+	previousPlayerAnimation_ = playerAnimation_; // record prev animation
+
+	if (Input::GetInstance()->PushKey(DIK_D))
+	{
+		playerAnimation_ = PlayerAnimation::Right;
+	}
+	else if (Input::GetInstance()->PushKey(DIK_A))
+	{
+		playerAnimation_ = PlayerAnimation::Left;
+	}
+	else
+	{
+		playerAnimation_ = PlayerAnimation::Idle;
+	}
+
+	if (previousPlayerAnimation_ != playerAnimation_)
+	{
+		animationPos_.x = 0; // Reset animation position when the animation state changes
+	}
+
+	switch (playerAnimation_)
+	{
+	case Player::PlayerAnimation::Idle:
+		playerHandleHolder_ = playerIdleHandle_;
+		currentAnimationFrames = 504.f;;
+
+		break;
+	case Player::PlayerAnimation::Right:
+		playerHandleHolder_ = playerMovingRightHandle_;
+		currentAnimationFrames = 126.f;
+		break;
+	case Player::PlayerAnimation::Left:
+		playerHandleHolder_ = playerMovingLeftHandle_;
+		currentAnimationFrames = 126.f;
+		break;
+	default:
+		break;
+	}
+}
+
 void Player::MovementInput()
 {
 	// LR Movement
@@ -133,65 +193,6 @@ void Player::MovementInput()
 	pos_ += velocity_;
 }
 
-void Player::AnimationHolder()
-{
-	animationTimer_++;
-
-	if (animationPos_.x >= currentAnimationFrames - 42)
-	{
-		animationPos_.x = 0;
-	}
-
-	if (animationTimer_ >= 4)
-	{
-		animationPos_.x += 42;
-		animationTimer_ = 0;
-	}
-
-	SwitchPlayerAnimationStatus();
-}
-
-void Player::SwitchPlayerAnimationStatus()
-{
-	previousPlayerAnimation_ = playerAnimation_; // record prev animation
-
-	if (Input::GetInstance()->PushKey(DIK_D))
-	{
-		playerAnimation_ = PlayerAnimation::Right;
-	}
-	else if (Input::GetInstance()->PushKey(DIK_A))
-	{
-		playerAnimation_ = PlayerAnimation::Left;
-	}
-	else
-	{
-		playerAnimation_ = PlayerAnimation::Idle;
-	}
-
-	if (previousPlayerAnimation_ != playerAnimation_)
-	{
-		animationPos_.x = 0; // Reset animation position when the animation state changes
-	}
-
-	switch (playerAnimation_)
-	{
-	case Player::PlayerAnimation::Idle:
-		playerHandleHolder_ = playerIdleHandle_;
-		currentAnimationFrames = 504.f;;
-		break;
-	case Player::PlayerAnimation::Right:
-		playerHandleHolder_ = playerMovingRightHandle_;
-		currentAnimationFrames = 126.f;
-		break;
-	case Player::PlayerAnimation::Left:
-		playerHandleHolder_ = playerMovingLeftHandle_;
-		currentAnimationFrames = 126.f;
-		break;
-	default:
-		break;
-	}
-}
-
 void Player::OnCollision()
 {
 	isDead = true;
@@ -208,7 +209,7 @@ void Player::CollisionWithBlock(BlockNotDestroyable* nonDesBlock)
 	}
 	// when playing is falling
 	if (velocity_.y > 0 &&
-		(pos_.y + size.height + velocity_.y >= nonDesBlock->GetPos().y)) {	// when player.bottom is below block.top
+		nonDesBlock->GetPos().y - pos_.y + size.height + velocity_.y <= 5.f) {	// when player.bottom is below block.top
 		// when player is within block size
 		if (pos_.x <= nonDesBlock->GetPos().x + nonDesBlock->GetSize().width || pos_.x + size.width >= nonDesBlock->GetPos().x) {
 			isOnTopOfBlock = true;
@@ -224,9 +225,10 @@ void Player::CollisionWithBlock(BlockNotDestroyable* nonDesBlock)
 	}
 }
 
-//void Player::SwitchToAirborne(BlockNotDestroyable* nonDesBlock)
-//{
-//}
+void Player::SwitchToAirborne(BlockNotDestroyable* nonDesBlock)
+{
+	(void)(nonDesBlock);
+}
 
 Vector2 Player::CameraOffset()
 {
