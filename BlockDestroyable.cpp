@@ -28,6 +28,7 @@ void BlockDestroyable::DestroyIfOOB()
 void BlockDestroyable::OnCollision(Player* player)
 {
 	(void)player;
+	isTouched = true;
 }
 
 void BlockDestroyable::Draw()

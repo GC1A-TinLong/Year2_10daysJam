@@ -7,6 +7,8 @@ void Pause::Initialize()
 	pause1Handle_ = Novice::LoadTexture("./Resources/Pause/pauseText1.png");
 	pause2Handle_ = Novice::LoadTexture("./Resources/Pause/pauseText2.png");
 	pauseTextOnlyHandle_ = Novice::LoadTexture("./Resources/Pause/pauseTextOnly1.png");
+
+	
 }
 
 void Pause::Update()

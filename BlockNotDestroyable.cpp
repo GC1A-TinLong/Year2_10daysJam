@@ -23,6 +23,7 @@ void BlockNotDestroyable::Initialize(Vector2 pos,bool isMoss, bool isWall)
 
 void BlockNotDestroyable::Update()
 {
+
 	
 	if (isWall_) 
 	{
@@ -46,6 +47,7 @@ void BlockNotDestroyable::DestroyIfOOB()
 void BlockNotDestroyable::OnCollision(Player* player)
 {
 	(void)player;
+	isTouched = true;
 }
 
 void BlockNotDestroyable::LoopWall()

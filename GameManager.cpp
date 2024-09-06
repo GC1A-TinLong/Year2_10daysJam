@@ -34,8 +34,6 @@ int GameManager::Run()
 		if (!pause_->GetIsPaused()) 
 		{
 			sceneArr_[currentSceneNo_]->Update();
-
-			
 		}
 		sceneArr_[currentSceneNo_]->Draw();
 
@@ -48,7 +46,7 @@ int GameManager::Run()
 		
 		
 
-		if (Input::GetInstance()->TriggerKey(DIK_ESCAPE) && !isPaused)
+		if (Input::GetInstance()->TriggerKey(DIK_ESCAPE) && !isPaused && currentSceneNo_ != TITLE)
 		{
 			pause_->SetIsPaused(true);
 			isPaused = true;

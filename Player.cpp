@@ -14,18 +14,40 @@ void Player::InitializeFlag()
 void Player::Initialize(const Vector2& pos)
 {
 	pos_ = pos;
+	playerIdleHandle_ = Novice::LoadTexture("./Resources/Player/player.png");
+	playerMovingRightHandle_ = Novice::LoadTexture("./Resources/Player/digPlayer(R).png");
+	playerMovingLeftHandle_ = Novice::LoadTexture("./Resources/Player/digPlayer(L).png");
+
+	jumpAudioHandle = Novice::LoadAudio("./Resources/Audio/jump2.wav");
+}
+
+void Player::Audio()
+{
+	if (isPressingSpace && onGround) 
+	{
+		if (Novice::IsPlayingAudio(jumpPlayHandle) == 0 || jumpPlayHandle == -1) {
+
+			jumpPlayHandle = Novice::PlayAudio(jumpAudioHandle, 0, 0.5f);
+
+		}
+	}
 }
 
 void Player::Update()
 {
+	Audio();
+	AnimationHolder();
 	MovementInput();
+	
 }
 
 void Player::Draw()
 {
+
 	if (!isDead) {
-		Novice::DrawBox((int)pos_.x, (int)pos_.y, width, height, 0, WHITE, kFillModeSolid);
+		//Novice::DrawBox((int)pos_.x, (int)pos_.y, width, height, 0, WHITE, kFillModeSolid);
 		//Novice::DrawSprite(pos_.x, pos_.y, texture_, 1.f, 1.f, 0, WHITE);
+		Novice::DrawSpriteRect((int)pos_.x, (int)pos_.y, (int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, WHITE);
 	}
 	Novice::ScreenPrintf(0, 0, "player.velocity.x = %f", velocity_.x);
 	Novice::ScreenPrintf(0, 20, "player.velocity.y = %f", velocity_.y);
@@ -109,6 +131,63 @@ void Player::MovementInput()
 		}
 	}
 	pos_ += velocity_;
+}
+
+void Player::AnimationHolder()
+{
+	animationTimer_++;
+
+	if (animationPos_.x >= currentAnimationFrames - 42)
+	{
+		animationPos_.x = 0;
+	}
+
+	if (animationTimer_ >= 4)
+	{
+		animationPos_.x += 42;
+		animationTimer_ = 0;
+	}
+
+	//if (playerAnimation_ != previousPlayerAnimation_)
+	//{
+	//	animationPos_.x = 0; // Reset animation position when the animation state changes
+	//}
+	//previousPlayerAnimation_ = playerAnimation_;
+
+
+	if (Input::GetInstance()->PushKey(DIK_D))
+	{
+		playerAnimation_ = PlayerAnimation::Right;
+	}
+	else if (Input::GetInstance()->PushKey(DIK_A))
+	{
+		playerAnimation_ = PlayerAnimation::Left;
+
+	}
+	else 
+	{
+		playerAnimation_ = PlayerAnimation::Idle;
+	}
+
+	switch (playerAnimation_)
+	{
+	case Player::PlayerAnimation::Idle:
+		playerHandleHolder_ = playerIdleHandle_;
+		currentAnimationFrames = 504.f;;
+
+		break;
+	case Player::PlayerAnimation::Right:
+		playerHandleHolder_ = playerMovingRightHandle_;
+		currentAnimationFrames = 126.f;
+		break;
+	case Player::PlayerAnimation::Left:
+		playerHandleHolder_ = playerMovingLeftHandle_;
+		currentAnimationFrames = 126.f;
+		break;
+	default:
+		break;
+	}
+	
 }
 
 void Player::OnCollision()
