@@ -86,7 +86,7 @@ private:
 	int animationTimer_ = 0;
 	float currentAnimationFrames = 504.f;
 	PlayerAnimation playerAnimation_ = PlayerAnimation::Idle;
-	//PlayerAnimation previousPlayerAnimation_ = PlayerAnimation::Idle;
+	PlayerAnimation previousPlayerAnimation_ = PlayerAnimation::Idle;
 
 	#pragma endregion
 
@@ -102,8 +102,11 @@ public:
 
 	void MovementInput();
 	void AnimationHolder();
+	void SwitchPlayerAnimationStatus();
+
 	void OnCollision();
 	void CollisionWithBlock(BlockNotDestroyable* nonDesBlock);
+	//void SwitchToAirborne(BlockNotDestroyable* nonDesBlock);
 
 	Vector2 CameraOffset();
 

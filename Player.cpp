@@ -148,12 +148,12 @@ void Player::AnimationHolder()
 		animationTimer_ = 0;
 	}
 
-	//if (playerAnimation_ != previousPlayerAnimation_)
-	//{
-	//	animationPos_.x = 0; // Reset animation position when the animation state changes
-	//}
-	//previousPlayerAnimation_ = playerAnimation_;
+	SwitchPlayerAnimationStatus();
+}
 
+void Player::SwitchPlayerAnimationStatus()
+{
+	previousPlayerAnimation_ = playerAnimation_; // record prev animation
 
 	if (Input::GetInstance()->PushKey(DIK_D))
 	{
@@ -164,9 +164,14 @@ void Player::AnimationHolder()
 		playerAnimation_ = PlayerAnimation::Left;
 
 	}
-	else 
+	else
 	{
 		playerAnimation_ = PlayerAnimation::Idle;
+	}
+
+	if (previousPlayerAnimation_ != playerAnimation_)
+	{
+		animationPos_.x = 0; // Reset animation position when the animation state changes
 	}
 
 	switch (playerAnimation_)
@@ -187,7 +192,6 @@ void Player::AnimationHolder()
 	default:
 		break;
 	}
-	
 }
 
 void Player::OnCollision()
@@ -221,6 +225,10 @@ void Player::CollisionWithBlock(BlockNotDestroyable* nonDesBlock)
 		InitializeFlag();
 	}
 }
+
+//void Player::SwitchToAirborne(BlockNotDestroyable* nonDesBlock)
+//{
+//}
 
 Vector2 Player::CameraOffset()
 {
