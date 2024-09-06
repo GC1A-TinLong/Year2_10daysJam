@@ -5,45 +5,12 @@
 
 void Shake::Initialize()
 {
-	
 	seed = (unsigned int)time(nullptr);
 	srand(seed);
-	
 }
 
-void Shake::ActivateShake(Vector2& pos)
+void Shake::ActivateShake(int amplitude, int maxTimer)
 {
-	/*srand(seed);
-	Vector2 randDistance{};
-	float shrinkrate = shakeAmplitude_ * 0.245f;
-
-	if (shakeAmplitude_ >= 1)
-	{
-		randDistance.x = rand() % (int)shakeAmplitude_ - shakeAmplitude_ / 2.0f;
-
-		randDistance.y = rand() % (int)shakeAmplitude_ - shakeAmplitude_ / 2.0f;
-	}
-
-	if (shakeEndTimer_ >= 0 && shakeEndTimer_ < shakeEndTimer_ * 0.2f)
-	{
-		shakeAmplitude_ -= shrinkrate;
-	}
-	else if (shakeEndTimer_ >= shakeEndTimer_ * 0.2f && shakeEndTimer_ < shakeEndTimer_ * 0.6f)
-	{
-		shakeAmplitude_ -= shrinkrate * 0.75f;
-	}
-	else if (shakeEndTimer_ >= shakeEndTimer_ * 0.6f)
-	{
-		shakeAmplitude_ -= shrinkrate * 0.25f;
-	}
-
-	if (shrinkrate <= 0.1f)
-	{
-		isShakeFinished_ = true;
-	}
-
-	pos.x += randDistance.x;
-	pos.y += randDistance.y;*/
 	if (Input::GetInstance()->TriggerKey(DIK_X))
 	{
 		shake = true;
@@ -72,7 +39,6 @@ void Shake::ActivateShake(Vector2& pos)
 		shake = false;
 		timer = 0;
 	}
-
 }
 
 void Shake::InfiniteShake(int amplitude)

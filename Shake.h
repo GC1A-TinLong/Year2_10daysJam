@@ -11,12 +11,12 @@ public:
 
 	void InfiniteShake(int amplitude);
 
-	bool GetIsFinished() { return isShakeFinished_; };
+	bool GetIsFinished() const { return isShakeFinished_; };
 
 	void SetIsFinished(bool isShakeFinished) { isShakeFinished_ = isShakeFinished; };
 
-	int GetRandX() { return randX; };
-	int GetRandY() { return randY; };
+	int GetRandX() const { return randX; };
+	int GetRandY() const { return randY; };
 
 private:
 
