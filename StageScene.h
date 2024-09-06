@@ -8,6 +8,7 @@
 #include <vector>
 #include "BlockDestroyable.h"
 #include "BlockNotDestroyable.h"
+#include "Backgroud.h"
 
 class StageScene :public IScene
 {
@@ -56,18 +57,20 @@ private:
 	};
 
 	// Block
-	static inline const uint8_t kBlockNum = 22;
+	static inline const uint8_t kBlockNum = 28;
 	std::vector<BlockNotDestroyable*>blocks_;
 	Vector2 BlockPos_[kBlockNum]
 	{
-		/* {144,300},*/  {192, 300},  {240, 300},
-			{288, 300},   {336,300},  {384, 500},
-			{432, 500},  {480, 500},  {528, 500},
-			{576, 500},  {624, 500},  {672, 500},
-			{720, 500},  {768, 500},  {816, 500},
-			{864, 500},  {912, 500},  {960, 600},
-		   {1008, 600}, {1056, 600}, {1104, 600},
-		   {1152, 600}, {1200, 600},
+		/*{0, 300}, */ {48, 500},   {96, 500},
+		  {144,500},  {192, 500},  {240, 500},
+		 {288, 500},   {336,500},  {384, 500},
+		 {432, 500},  {480, 500},  {528, 500},
+		 {576, 500},  {624, 500},  {672, 500},
+		 {720, 500},  {768, 500},  {816, 500},
+		 {864, 500},  {912, 500},  {960, 700},
+		{1008, 700}, {1056, 700}, {1104, 700},
+		{1152, 700}, {1200, 700}, {912, 900},
+		{864, 900} ,{816, 900},
 
 	};
 
@@ -91,6 +94,9 @@ private:
 	int rightPlayer = Novice::LoadTexture("./Resources/Player/digPlayer(R).gif");
 	int leftPlayer = Novice::LoadTexture("./Resources/Player/digPlayer(L).gif");
 	int spaceHandle = Novice::LoadTexture("./Resources/StageText/SPACE.png");
+
+	//Background
+	Background* background_ = nullptr;
 
 };
 

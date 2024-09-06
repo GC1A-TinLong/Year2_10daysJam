@@ -32,6 +32,8 @@ StageScene::~StageScene()
 		delete rightBlocks;
 	}
 	rightWallBlocks_.clear();
+
+	delete background_;
 }
 
 void StageScene::Initialize()
@@ -104,20 +106,30 @@ void StageScene::Initialize()
 	fade_->Start(Status::FadeIn, duration_);
 
 #pragma endregion
+
+#pragma region Background
+
+	background_ = new Background();
+	background_->Initialize();
+
+#pragma endregion
 }
 
 void StageScene::Update()
 {
 	ChangePhase();
+
 	switch (phase_)
 	{
 	case StageScene::Phase::kFadeIn:
+		background_->Update();
 		fade_->Update();
 		break;
 
 	case StageScene::Phase::kPlay:
 		// Player
 		player_->Update();
+		background_->Update();
 		for (auto* nonDesBlock : blocks_) {
 			player_->CollisionWithBlock(nonDesBlock);
 		}
@@ -174,11 +186,14 @@ void StageScene::Update()
 
 		break;
 	case StageScene::Phase::kDeath:
+		background_->Update();
 		break;
 	case StageScene::Phase::kStageClear:
+		background_->Update();
 		break;
 
 	case StageScene::Phase::kFadeOut:
+		background_->Update();
 		fade_->Update();
 		break;
 	}
@@ -223,9 +238,11 @@ void StageScene::Draw()
 	{
 	case StageScene::Phase::kFadeIn:
 		// Fade
+		background_->Draw();
 		fade_->Draw();
 		// Player
 		player_->Draw();
+
 		// Spike
 		for (auto* spike : spike_) {
 			spike->Draw();
@@ -233,6 +250,7 @@ void StageScene::Draw()
 		break;
 	case StageScene::Phase::kPlay:
 		// Player
+		background_->Draw();
 		player_->Draw();
 
 		//Destroyable Blocks
@@ -282,8 +300,10 @@ void StageScene::Draw()
 
 		break;
 	case StageScene::Phase::kDeath:
+		background_->Draw();
 		break;
 	case StageScene::Phase::kStageClear:
+		background_->Draw();
 		break;
 
 	case StageScene::Phase::kFadeOut:

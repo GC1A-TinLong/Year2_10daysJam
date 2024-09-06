@@ -103,6 +103,7 @@ private:
 	bool isShaking_ = false;
 	
 	
+	
 public:
 	void Initialize(const Vector2& pos);
 	void Update();

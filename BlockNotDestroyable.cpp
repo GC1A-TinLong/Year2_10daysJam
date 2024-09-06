@@ -19,12 +19,12 @@ void BlockNotDestroyable::Initialize(Vector2 pos,bool isMoss, bool isWall)
 	{
 		blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/Block.png");
 	}
+	shake_ = new Shake();
+	shake_->Initialize();
 }
 
 void BlockNotDestroyable::Update()
 {
-
-	
 	if (isWall_) 
 	{
 		pos_.y -= 1.f;
@@ -33,6 +33,7 @@ void BlockNotDestroyable::Update()
 	else 
 	{
 		DestroyIfOOB();
+		shake_->ActivateShake(5, 30);
 	}
 }
 
@@ -62,6 +63,6 @@ void BlockNotDestroyable::Draw()
 {
 	if (pos_.y >= -48.f && pos_.y <= 1080.f)
 	{
-		Novice::DrawSprite((int)pos_.x, (int)pos_.y, blockHandle_, scale.x, scale.y, 0.0f, WHITE);
+		Novice::DrawSprite((int)pos_.x + shake_->GetRandX(), (int)pos_.y + shake_->GetRandY(), blockHandle_, scale.x, scale.y, 0.0f, WHITE);
 	}
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "MathFunction.h"
+#include "Shake.h"
 
 class Player;
 
@@ -38,5 +39,7 @@ private:
 	float wallMaxY = float(size.height) * 22;
 
 	bool isAboveScreen_ = false;
+
+	Shake* shake_ = nullptr;
 };
 
