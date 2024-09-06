@@ -38,15 +38,11 @@ void Player::Update()
 	Audio();
 	AnimationHolder();
 	MovementInput();
-	
 }
 
 void Player::Draw()
 {
-
 	if (!isDead) {
-		//Novice::DrawBox((int)pos_.x, (int)pos_.y, width, height, 0, WHITE, kFillModeSolid);
-		//Novice::DrawSprite(pos_.x, pos_.y, texture_, 1.f, 1.f, 0, WHITE);
 		Novice::DrawSpriteRect((int)pos_.x, (int)pos_.y, (int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, WHITE);
 	}
 	Novice::ScreenPrintf(0, 0, "player.velocity.x = %f", velocity_.x);
@@ -70,10 +66,10 @@ void Player::AnimationHolder()
 		animationTimer_ = 0;
 	}
 
-	SwitchPlayerAnimationStatus();
+	SwitchPlayerAnimationState();
 }
 
-void Player::SwitchPlayerAnimationStatus()
+void Player::SwitchPlayerAnimationState()
 {
 	previousPlayerAnimation_ = playerAnimation_; // record prev animation
 

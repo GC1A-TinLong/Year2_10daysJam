@@ -101,7 +101,7 @@ public:
 	void Draw();
 
 	void AnimationHolder();
-	void SwitchPlayerAnimationStatus();
+	void SwitchPlayerAnimationState();
 
 	void MovementInput();
 
