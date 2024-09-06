@@ -27,6 +27,8 @@ private:
 
 	uint32_t blockHandle_;
 
+	bool isTouched = false;
+
 	bool isMoss_ = false;
 
 	bool isWall_ = false;

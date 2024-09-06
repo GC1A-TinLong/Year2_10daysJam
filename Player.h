@@ -10,6 +10,13 @@ private:
 		right,
 	};
 
+	enum class PlayerAnimation 
+	{
+		Idle,
+		Right,
+		Left,
+	};
+
 	// Left & Right Direction
 	LRDirection direction = LRDirection::right;
 	// Size
@@ -73,10 +80,19 @@ private:
 
 	int playerHandleHolder_;
 	int playerIdleHandle_;
+	int playerMovingRightHandle_;
+	int playerMovingLeftHandle_;
 	Vector2 animationPos_ = { 0.f, 0.f };
 	int animationTimer_ = 0;
+	float currentAnimationFrames = 504.f;
+	PlayerAnimation playerAnimation_ = PlayerAnimation::Idle;
+	//PlayerAnimation previousPlayerAnimation_ = PlayerAnimation::Idle;
 
 	#pragma endregion
+
+	//Audio
+	int jumpAudioHandle;
+	int jumpPlayHandle = -1;
 	
 public:
 	void Initialize(const Vector2& pos);
@@ -89,6 +105,8 @@ public:
 	void CollisionWithBlock(BlockNotDestroyable* nonDesBlock);
 
 	Vector2 CameraOffset();
+
+	void Audio();
 
 	// Getter
 	bool IsHit() const { return isHit; }

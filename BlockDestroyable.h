@@ -29,6 +29,8 @@ private:
 
 	bool isDestroyed = false;
 
+	bool isTouched = false;
+
 	bool isAboveScreen_ = false;
 };
 

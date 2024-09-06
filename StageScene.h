@@ -82,5 +82,9 @@ private:
 	Vector2 leftWallPos_ = { 144.f,0 };
 	std::vector<BlockNotDestroyable*>rightWallBlocks_;
 	Vector2 rightWallPos_ = { 1392.f,0 };
+
+	int stageTextHandle = Novice::LoadTexture("./Resources/StageText/STAGE.png");
+	int stage0Handle = Novice::LoadTexture("./Resources/StageText/0.png");
+
 };
 

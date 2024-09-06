@@ -270,6 +270,8 @@ void StageScene::Draw()
 		Novice::DrawBox(0, 1032, 1440, 1032, 0.0f, BLACK, kFillModeSolid);
 		Novice::DrawBox(0, 0, 1440, 96, 0.0f, BLACK, kFillModeSolid);
 		Novice::DrawBox(1440, 0, 1920, 1080, 0.0f, BLACK, kFillModeSolid);
+		Novice::DrawSprite(200, 10, stageTextHandle, 1.0f, 1.0f, 0.0f, WHITE);
+		Novice::DrawSprite(420, 5, stage0Handle, 1.0f, 1.0f, 0.0f, WHITE);
 
 		break;
 	case StageScene::Phase::kDeath:
