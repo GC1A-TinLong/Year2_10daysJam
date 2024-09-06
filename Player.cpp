@@ -107,21 +107,6 @@ void Player::MovementInput()
 			velocity_.y += kFreeFallAcceleration;
 			velocity_.y = (std::min)(velocity_.y, kMaxFallSpeed);
 		}
-		// is falling? Collision with ground
-		//if (velocity_.y > 0.0f) {
-		//	// if translation Y is lower than the ground, landed
-		//	if (pos_.y + velocity_.y >= 400.0f) {
-		//		pos_.y = 400.0f; // prevent going underground
-		//		isLand = true;
-		//	}
-		//}
-
-		//if (isLand) {
-		//	velocity_.x *= (1.0f - kAttenuation);
-		//	velocity_.y = 0.0f; // reseting fall speed
-		//	onGround = true;
-		//	InitializeFlag();
-		//}
 	}
 	pos_ += velocity_;
 }
@@ -133,15 +118,16 @@ void Player::OnCollision()
 
 void Player::CollisionWithBlock(BlockNotDestroyable* nonDesBlock)
 {
-	isOnTopOfBlock = false;
+	if (!onGround) {
+		isOnTopOfBlock = false;
+	}
 
 	if (velocity_.y < 0) {
 		return;
 	}
 	// when playing is falling
-	// when player.bottom is below block.top
 	if (velocity_.y > 0 &&
-		(pos_.y + size.height + velocity_.y >= nonDesBlock->GetPos().y)) {	
+		(pos_.y + size.height + velocity_.y >= nonDesBlock->GetPos().y)) {	// when player.bottom is below block.top
 		// when player is within block size
 		if (pos_.x <= nonDesBlock->GetPos().x + nonDesBlock->GetSize().width || pos_.x + size.width >= nonDesBlock->GetPos().x) {
 			isOnTopOfBlock = true;

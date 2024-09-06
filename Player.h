@@ -14,7 +14,7 @@ private:
 	LRDirection direction = LRDirection::right;
 	// Size
 	static inline const int height = 72;
-	static inline const int width = 48;
+	static inline const int width = 42;
 	Size size = { width,height };
 	// HP
 	static inline const uint8_t kMaxHp = 10;
