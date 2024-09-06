@@ -316,10 +316,10 @@ void StageScene::DeleteBlocks()
 {
 	for (int i = 0; i < blocks_.size();)
 	{
-		if (blocks_[i]->GetHp() == 0) 
+		if (blocks_[i]->GetHp() == 0) //if block is destroyed
 		{
-			delete blocks_[i];
-			blocks_.erase(blocks_.begin() + i);
+			delete blocks_[i]; //delete block
+			blocks_.erase(blocks_.begin() + i); //erase it from the vector
 			break;
 		}
 		else 
@@ -347,7 +347,7 @@ void StageScene::CheckAllCollision()
 #pragma endregion
 
 #pragma region player & block collision
-	Object obj3 = player_->GetDrillPointObject_();
+	Object obj3 = player_->GetDrillPointObject_(); //collision on the drill
 	for (int i = 0; i < blocks_.size();)
 	{
 		Object obj4 = blocks_[i]->GetObject_();
@@ -363,7 +363,7 @@ void StageScene::CheckAllCollision()
 		}
 		else 
 		{
-			blocks_[i]->SetIsTouched(false);
+			blocks_[i]->SetIsTouched(false); //not on top of the block anymore
 		}
 		++i; // Increment if no collision or block was not removed
 	}
