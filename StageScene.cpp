@@ -328,6 +328,29 @@ void StageScene::CheckAllCollision()
 
 #pragma endregion
 
+#pragma region player & block collision
+	Object obj3 = player_->GetDrillPointObject_();
+	for (int i = 0; i < blocks_.size();)
+	{
+		Object obj4 = blocks_[i]->GetObject_();
+		if (isCollideObject(obj3, obj4) && blocks_[i]->GetHp() != 0)
+		{
+			blocks_[i]->OnCollision(player_);
+
+			if (blocks_.empty() || blocks_[i] == nullptr) {
+				// If block was destroyed or blocks_ changed, avoid incrementing `i`
+				continue;
+			}
+			break;
+		}
+		else 
+		{
+			blocks_[i]->SetIsTouched(false);
+		}
+		++i; // Increment if no collision or block was not removed
+	}
+
+
 #pragma region player & item collision
 
 #pragma endregion

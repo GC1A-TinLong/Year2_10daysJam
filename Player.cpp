@@ -34,7 +34,8 @@ void Player::Update()
 
 void Player::Draw()
 {
-	if (!isDead) {
+	if (!isDead) 
+	{
 		Novice::DrawSpriteRect((int)pos_.x + shake_->GetRandX(), (int)pos_.y + shake_->GetRandY(), (int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, WHITE);
 	}
 	Novice::ScreenPrintf(0, 0, "player.velocity.x = %f", velocity_.x);
@@ -42,6 +43,7 @@ void Player::Draw()
 	Novice::ScreenPrintf(0, 40, "player.pos.x = %f", pos_.x);
 	Novice::ScreenPrintf(0, 60, "player.pos.y = %f", pos_.y);
 	Novice::ScreenPrintf(0, 80, "onGround = %d", onGround);
+	//Novice::DrawBox((int)pos_.x + (int)drillPosOffset.x, (int)pos_.y + (int)drillPosOffset.y, drillSize.width, drillSize.height, 0.0f, WHITE, kFillModeWireFrame);
 }
 
 void Player::Audio()
@@ -265,5 +267,13 @@ const Object Player::GetObject_() const
 	Object result{};
 	result.pos = pos_;
 	result.size = size;
+	return result;
+}
+
+const Object Player::GetDrillPointObject_() const
+{
+	Object result{};
+	result.pos = { pos_.x + drillPosOffset.x, pos_.y + drillPosOffset.y };
+	result.size = { drillSize.width, drillSize.height };
 	return result;
 }

@@ -17,7 +17,10 @@ public:
 	void LoopWall();
 	Vector2 GetPos() const { return pos_; };
 	Size GetSize() const { return size; };
+	const Object GetObject_() const;
 	bool GetIsAboveScreen() const { return isAboveScreen_; };
+	void SetIsTouched(bool isTouched) { isTouched_ = isTouched; };
+	int GetHp() { return hp; };
 
 	void Draw();
 
@@ -29,7 +32,7 @@ private:
 
 	uint32_t blockHandle_;
 
-	bool isTouched = false;
+	bool isTouched_ = false;
 
 	bool isMoss_ = false;
 
@@ -43,8 +46,8 @@ private:
 
 	Shake* shake_ = nullptr;
 
-	int hp = {};
+	int hp = 40;
 
-	int hpHalf = {};
+	int hpHalf = 20;
 };
 

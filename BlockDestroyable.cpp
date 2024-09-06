@@ -27,7 +27,7 @@ void BlockDestroyable::DestroyIfOOB()
 
 void BlockDestroyable::HP()
 {
-	if (isTouched) //player is on top of the block
+	if (isTouched && hp >= 0) //player is on top of the block
 	{
 		hp--;
 	}
@@ -35,6 +35,7 @@ void BlockDestroyable::HP()
 	if (hp <= 0)
 	{
 		//Block destroyed animation handle?
+		hp = 0;
 	}
 }
 
@@ -46,7 +47,7 @@ void BlockDestroyable::OnCollision(Player* player)
 
 void BlockDestroyable::Draw()
 {
-	if (pos_.y >= -float(size.height) && pos_.y <= 720.f)
+	if (pos_.y >= -float(size.height) && pos_.y <= 720.f  && hp != 0)
 	{
 		Novice::DrawSprite((int)pos_.x, (int)pos_.y, blockHandle_, scale.x, scale.y, 0.0f, WHITE);
 	}
