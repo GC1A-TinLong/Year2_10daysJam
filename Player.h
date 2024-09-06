@@ -25,6 +25,7 @@ private:
 	static inline const int height = 72;
 	static inline const int width = 42;
 	Size size = { width,height };
+	Size drillSize{ size.width - 22, size.height - 65 };
 	// HP
 	static inline const uint8_t kMaxHp = 10;
 	uint8_t hp = kMaxHp;
@@ -70,6 +71,7 @@ private:
 
 	// Player Status
 	Vector2 pos_{};
+	Vector2 drillPosOffset = { 12,65 };
 	Vector2 prevPos_{};
 	Vector2 velocity_{};
 
@@ -129,5 +131,6 @@ public:
 	Vector2 GetPos() const { return pos_; }
 	Size GetSize() const { return size; }
 	const Object GetObject_() const;
+	const Object GetDrillPointObject_() const;
 };
 

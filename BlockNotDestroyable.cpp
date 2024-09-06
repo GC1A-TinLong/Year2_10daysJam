@@ -34,6 +34,7 @@ void BlockNotDestroyable::Update()
 	{
 		DestroyIfOOB();
 		shake_->ActivateShake(5, 30);
+		HP();
 	}
 }
 
@@ -47,7 +48,7 @@ void BlockNotDestroyable::DestroyIfOOB()
 
 void BlockNotDestroyable::HP()
 {
-	if (isTouched) //player is on top of the block
+	if (isTouched_ && hp >= 0) //player is on top of the block
 	{
 		hp--;
 	}
@@ -66,6 +67,7 @@ void BlockNotDestroyable::HP()
 
 	if (hp <= 0) 
 	{
+		hp = 0;
 		//Block destroyed animation handle?
 	}
 }
@@ -73,7 +75,7 @@ void BlockNotDestroyable::HP()
 void BlockNotDestroyable::OnCollision(Player* player)
 {
 	(void)player;
-	isTouched = true;
+	isTouched_ = true;
 }
 
 void BlockNotDestroyable::LoopWall()
@@ -84,9 +86,17 @@ void BlockNotDestroyable::LoopWall()
 	}
 }
 
+const Object BlockNotDestroyable::GetObject_() const
+{
+	Object result{};
+	result.pos = pos_;
+	result.size = size;
+	return result;
+}
+
 void BlockNotDestroyable::Draw()
 {
-	if (pos_.y >= -48.f && pos_.y <= 1080.f)
+	if (pos_.y >= -48.f && pos_.y <= 1080.f && hp != 0)
 	{
 		Novice::DrawSprite((int)pos_.x + shake_->GetRandX(), (int)pos_.y + shake_->GetRandY(), blockHandle_, scale.x, scale.y, 0.0f, WHITE);
 	}
