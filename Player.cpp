@@ -210,10 +210,8 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 
 	for (BlockNotDestroyable* nonDesBlock : nonDesBlocks) {
 		float playerBottom = pos_.y + size.height + velocity_.y;
-		//float playerTop = pos_.y;
 		float playerRightPos = pos_.x + size.width;
 		float blockTop = nonDesBlock->GetPos().y;
-		//float blockBottom = nonDesBlock->GetPos().y + nonDesBlock->GetSize().height;
 		float leftPosBlock = nonDesBlock->GetPos().x;
 		float rightPosBlock = nonDesBlock->GetPos().x + nonDesBlock->GetSize().width;
 		if (velocity_.y < 0) {
@@ -222,13 +220,15 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 		// Conditions
 		bool isWithinHorizontalBounds = (pos_.x < rightPosBlock) && (playerRightPos > leftPosBlock);
 		bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);
-		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 5.f);
+		// player.bot without velocity && blockTop + small amount to prevent passing through
+		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
 
 		if (isWithinHorizontalBounds && isCloseEnoughVertically && !isPlayerBelowBlock) {
-			if (velocity_.y > 0) {
+			if (velocity_.y > 0) {	// only when falling
 				pos_.y = blockTop - size.height;
 				velocity_.y = 0;
 			}
+			// within the 3 conditions
 			InitializeFlag();
 			tempIsOnTopOfBlock = true;
 			tempOnGround = true;
