@@ -42,6 +42,17 @@ void Player::Draw()
 	Novice::ScreenPrintf(0, 20, "player.velocity.y = %f", velocity_.y);
 	Novice::ScreenPrintf(0, 40, "player.pos.x = %f", pos_.x);
 	Novice::ScreenPrintf(0, 60, "player.pos.y = %f", pos_.y);
+	Novice::ScreenPrintf(0, 80, "onGround = %d", onGround);
+}
+
+void Player::Audio()
+{
+	if (isPressingSpace && onGround)
+	{
+		if (Novice::IsPlayingAudio(jumpPlayHandle) == 0 || jumpPlayHandle == -1) {
+			jumpPlayHandle = Novice::PlayAudio(jumpAudioHandle, 0, kJumpAudioVolume);
+		}
+	}
 }
 
 void Player::AnimationHolder()
@@ -154,23 +165,22 @@ void Player::MovementInput()
 	}
 	else {
 		// if continuously pressing SPACE, add jump force
-		if (Input::GetInstance()->PushKey(DIK_SPACE) && !isMaxSpeed && !isReleasedSpace) {	
+		if (Input::GetInstance()->PushKey(DIK_SPACE) && !isMaxSpeed && !isReleasedSpace) {
 			velocity_.y -= kContinuousJumpAcceleration;
 			isPressingSpace = true;
 		}
 		else if (!Input::GetInstance()->PushKey(DIK_SPACE)) {	// released SPACE key
 			isPressingSpace = false;
 			isReleasedSpace = true;
-			if (!isFreeFalling && velocity_.y < 0) {
-				velocity_.y = -8.f;	// limiting Jump speed, slowing it to X amount
+			if (velocity_.y < 0) {
+				velocity_.y = (std::max)(velocity_.y, -8.0f);	// limiting Jump speed, slowing it to X amount (returning the bigger amount)
 			}
-			isFreeFalling = true;
 		}
 
 		if (velocity_.y <= kMaxJumpSpeed) {
 			isMaxSpeed = true;
 		}
-		if (!isPressingSpace || isMaxSpeed || isFreeFalling) {
+		if (!onGround || isMaxSpeed) {
 			// Fall speed
 			velocity_.y += kFreeFallAcceleration;
 			velocity_.y = (std::min)(velocity_.y, kMaxFallSpeed);
@@ -185,114 +195,49 @@ void Player::OnCollision()
 	//isDead = true;
 }
 
-void Player::Audio()
-{
-	if (isPressingSpace && onGround)
-	{
-		if (Novice::IsPlayingAudio(jumpPlayHandle) == 0 || jumpPlayHandle == -1) {
-
-			jumpPlayHandle = Novice::PlayAudio(jumpAudioHandle, 0, kJumpAudioVolume);
-
-		}
-	}
-}
-
 void Player::Shakeing()
 {
-	/*if (Input::GetInstance()->TriggerKey(DIK_X) && !isShaking_)
-	{
-		isShaking_ = true;
-	}*/
 	shake_->ActivateShake(10, 60);
-
-	/*if (isShaking_)
-	{
-	}
-
-	if (shake_->GetIsFinished())
-	{
-		isShaking_ = false;
-		shake_->Initialize(20.f, 0.5f);
-		shake_->SetIsFinished(false);
-	}*/
 }
 
-void Player::CollisionWithBlock(BlockNotDestroyable* nonDesBlock)
+void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 {
+	bool tempOnGround = false;		// temp flag, when its confirmed(ended loop), apply it to the origin flag
+	bool tempIsOnTopOfBlock = false;
 
-#pragma region beforeGPT
-
-	//if (!onGround) {
-	//	isOnTopOfBlock = false;
-	//}
-
-	//if (velocity_.y < 0) {
-	//	return;
-	//}
-	//// when playing is falling
-	//if (velocity_.y > 0 &&
-	//	nonDesBlock->GetPos().y - pos_.y + size.height + velocity_.y <= 5.f) {	// when player.bottom is below block.top
-	//	// when player is within block size
-	//	if (pos_.x <= nonDesBlock->GetPos().x + nonDesBlock->GetSize().width || pos_.x + size.width >= nonDesBlock->GetPos().x) {
-	//		isOnTopOfBlock = true;
-	//		pos_.y = nonDesBlock->GetPos().y - size.height;
-	//		onGround = true;
-	//		velocity_.x *= (1.0f - kAttenuation);
-	//	}
-	//}
-	//if (isOnTopOfBlock) {
-	//	velocity_.y = 0.0f; // reseting fall speed
-	//	onGround = true;
-	//	InitializeFlag();
-	//}
-
-#pragma endregion
-
-	float playerBottom = pos_.y + size.height + velocity_.y;
-	float playerTop = pos_.y;
-	float playerRightPos = pos_.x + size.width;
-	float blockTop = nonDesBlock->GetPos().y;
-	float blockBottom = nonDesBlock->GetPos().y + nonDesBlock->GetSize().height;
-	float leftPosBlock = nonDesBlock->GetPos().x;
-	float rightPosBlock = nonDesBlock->GetPos().x + nonDesBlock->GetSize().width;
-	if (velocity_.y < 0) {
-		return;
-	}
-
-	bool isWithinHorizontalBounds = (pos_.x < rightPosBlock) && (playerRightPos > leftPosBlock);
-	bool isCloseEnoughVertically = (blockTop - playerBottom <= 1.f);
-	bool isPlayerBelowBlock = (playerTop >= blockBottom);
-
-	if (velocity_.y > 0) {
-		if (isWithinHorizontalBounds && isCloseEnoughVertically && !isPlayerBelowBlock) {
-			pos_.y = blockTop - size.height;
-			velocity_.y = 0;
-			isOnTopOfBlock = true;
-			onGround = true;
-			InitializeFlag();
+	for (BlockNotDestroyable* nonDesBlock : nonDesBlocks) {
+		float playerBottom = pos_.y + size.height + velocity_.y;
+		float playerTop = pos_.y;
+		float playerRightPos = pos_.x + size.width;
+		float blockTop = nonDesBlock->GetPos().y;
+		float blockBottom = nonDesBlock->GetPos().y + nonDesBlock->GetSize().height;
+		float leftPosBlock = nonDesBlock->GetPos().x;
+		float rightPosBlock = nonDesBlock->GetPos().x + nonDesBlock->GetSize().width;
+		if (velocity_.y < 0) {
+			continue;
 		}
-		else {
-			isOnTopOfBlock = false;
-			onGround = false;
+		// conditions
+		bool isWithinHorizontalBounds = (pos_.x < rightPosBlock) && (playerRightPos > leftPosBlock);
+		bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);
+		bool isPlayerBelowBlock = (playerTop >= blockBottom);
+
+		if (velocity_.y > 0) {
+			if (isWithinHorizontalBounds && isCloseEnoughVertically && !isPlayerBelowBlock) {
+				pos_.y = blockTop - size.height;
+				velocity_.y = 0;
+				tempIsOnTopOfBlock = true;
+				tempOnGround = true;
+				InitializeFlag();
+			}
 		}
 	}
+	isOnTopOfBlock = tempIsOnTopOfBlock;
+	onGround = tempOnGround;
 
-
-	if (!isWithinHorizontalBounds || isPlayerBelowBlock) {
-		isOnTopOfBlock = false;
-		onGround = false;
-	}
-
-
-	if (isOnTopOfBlock) {
-		velocity_.y = 0.0f;
-		onGround = true;
-	}
-	else {
-
+	/*if (!onGround) {
 		velocity_.y += kFreeFallAcceleration;
-		velocity_.y = min(velocity_.y, kMaxFallSpeed);
-	}
+		velocity_.y = (std::min)(velocity_.y, kMaxFallSpeed);
+	}*/
 }
 
 void Player::SwitchToAirborne(BlockNotDestroyable* nonDesBlock)

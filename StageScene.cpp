@@ -127,12 +127,11 @@ void StageScene::Update()
 		break;
 
 	case StageScene::Phase::kPlay:
+		background_->Update();
+
 		// Player
 		player_->Update();
-		background_->Update();
-		for (auto* nonDesBlock : blocks_) {
-			player_->CollisionWithBlock(nonDesBlock);
-		}
+		player_->CollisionWithBlock(blocks_);
 
 		// Spike
 		for (auto* spike : spike_) {

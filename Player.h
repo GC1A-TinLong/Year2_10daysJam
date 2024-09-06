@@ -2,6 +2,7 @@
 #include "MathFunction.h"
 #include "BlockNotDestroyable.h"
 #include "Shake.h"
+#include <vector>
 
 class Player
 {
@@ -59,7 +60,7 @@ private:
 
 	// Block Collision
 	bool isOnTopOfBlock = true;
-	static inline const float kCloseEnoughDistanceWithBlock = 5.f;
+	static inline const float kCloseEnoughDistanceWithBlock = 1.f;
 	bool isCloseEnoughToBlock = false;
 	bool isWithinBlockWidth = false;
 
@@ -77,7 +78,6 @@ private:
 
 	// Block
 	BlockNotDestroyable* notDesBlock;
-
 
 	#pragma region Animation
 
@@ -108,6 +108,7 @@ public:
 	void Initialize(const Vector2& pos);
 	void Update();
 	void Draw();
+	void Audio();
 
 	void AnimationHolder();
 	void SwitchPlayerAnimationState();
@@ -115,12 +116,11 @@ public:
 	void MovementInput();
 
 	void OnCollision();
-	void CollisionWithBlock(BlockNotDestroyable* nonDesBlock);
+	void CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks);
 	void SwitchToAirborne(BlockNotDestroyable* nonDesBlock);
 
 	Vector2 CameraOffset();
 
-	void Audio();
 	void Shakeing();
 
 	// Getter
