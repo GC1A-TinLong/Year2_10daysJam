@@ -24,14 +24,6 @@ void Player::Initialize(const Vector2& pos)
 	shake_->Initialize();
 }
 
-void Player::Audio()
-{
-	if (isPressingSpace && onGround)
-	{
-		if (Novice::IsPlayingAudio(jumpPlayHandle) == 0 || jumpPlayHandle == -1) {
-
-
-
 
 void Player::Update()
 {
