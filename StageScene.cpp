@@ -46,7 +46,7 @@ void StageScene::Initialize()
 	{
 		spike_[i] = new Spike;
 		float initPosX = 300.f;
-		spike_[i]->Initialize({ initPosX + i * 48,48 });
+		spike_[i]->Initialize({ initPosX + i * 48,96 });
 	}
 
 #pragma region Destroyable Blocks

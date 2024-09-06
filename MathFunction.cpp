@@ -73,3 +73,4 @@ Vector2 ScreenShakeRandDistance()
 	Vector2 randDistance = { randOutput(eng),randOutput(eng) };
 	return randDistance;
 }
+
