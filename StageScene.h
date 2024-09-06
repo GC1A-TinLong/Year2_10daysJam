@@ -83,8 +83,15 @@ private:
 	std::vector<BlockNotDestroyable*>rightWallBlocks_;
 	Vector2 rightWallPos_ = { 1392.f,0 };
 
+	//UI Handles
 	int stageTextHandle = Novice::LoadTexture("./Resources/StageText/STAGE.png");
-	int stage0Handle = Novice::LoadTexture("./Resources/StageText/0.png");
+	int stage1Handle = Novice::LoadTexture("./Resources/StageText/1.png");
+	int controlsHandle = Novice::LoadTexture("./Resources/StageText/CONTROLS.png");
+	int letterDHandle = Novice::LoadTexture("./Resources/StageText/D.png");
+	int letterAHandle = Novice::LoadTexture("./Resources/StageText/A.png");
+	int rightPlayer = Novice::LoadTexture("./Resources/Player/digPlayer(R).gif");
+	int leftPlayer = Novice::LoadTexture("./Resources/Player/digPlayer(L).gif");
+	int spaceHandle = Novice::LoadTexture("./Resources/StageText/SPACE.png");
 
 };
 
