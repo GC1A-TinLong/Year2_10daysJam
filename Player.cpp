@@ -8,7 +8,6 @@ void Player::InitializeFlag()
 	isPressingSpace = false;
 	isReleasedSpace = false;
 	isFreeFalling = false;
-	isOnTopOfBlock = true;
 }
 
 void Player::Initialize(const Vector2& pos)
@@ -47,7 +46,7 @@ void Player::Draw()
 
 void Player::Audio()
 {
-	if (isPressingSpace && onGround)
+	if (Input::GetInstance()->TriggerKey(DIK_SPACE) && onGround)
 	{
 		if (Novice::IsPlayingAudio(jumpPlayHandle) == 0 || jumpPlayHandle == -1) {
 			jumpPlayHandle = Novice::PlayAudio(jumpAudioHandle, 0, kJumpAudioVolume);
@@ -152,10 +151,12 @@ void Player::MovementInput()
 	// Jump
 	if (onGround) {
 		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-			velocity_.y -= kInitJumpAcceleration;
 			isPressingSpace = true;
 			isReleasedSpace = false;
 			prevPos_ = pos_;
+		}
+		if (isPressingSpace) {
+			velocity_.y -= kInitJumpAcceleration;
 		}
 
 		if (prevPos_.y - pos_.y >= kMinInitHeight) {
@@ -164,7 +165,7 @@ void Player::MovementInput()
 		}
 	}
 	else {
-		// if continuously pressing SPACE, add jump force
+		// if pressing SPACE continuously, add jump force
 		if (Input::GetInstance()->PushKey(DIK_SPACE) && !isMaxSpeed && !isReleasedSpace) {
 			velocity_.y -= kContinuousJumpAcceleration;
 			isPressingSpace = true;
@@ -216,19 +217,19 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 		if (velocity_.y < 0) {
 			continue;
 		}
-		// conditions
+		// Conditions
 		bool isWithinHorizontalBounds = (pos_.x < rightPosBlock) && (playerRightPos > leftPosBlock);
 		bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);
 		bool isPlayerBelowBlock = (playerTop >= blockBottom);
 
-		if (velocity_.y > 0) {
-			if (isWithinHorizontalBounds && isCloseEnoughVertically && !isPlayerBelowBlock) {
+		if (isWithinHorizontalBounds && isCloseEnoughVertically && !isPlayerBelowBlock) {
+			if (velocity_.y > 0) {
 				pos_.y = blockTop - size.height;
 				velocity_.y = 0;
-				tempIsOnTopOfBlock = true;
-				tempOnGround = true;
-				InitializeFlag();
 			}
+			InitializeFlag();
+			tempIsOnTopOfBlock = true;
+			tempOnGround = true;
 		}
 	}
 	isOnTopOfBlock = tempIsOnTopOfBlock;

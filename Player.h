@@ -51,7 +51,7 @@ private:
 	static inline const float kMaxFallSpeed = 14.f;
 	// Jump Acceleration
 	static inline const float kInitJumpAcceleration = 14.f;
-	static inline const float kContinuousJumpAcceleration = 7.f;
+	static inline const float kContinuousJumpAcceleration = 3.f;
 	static inline const float kMaxJumpSpeed = -22.f;
 	bool isMaxSpeed = false;
 	static inline const float kMinInitHeight = 18.f;

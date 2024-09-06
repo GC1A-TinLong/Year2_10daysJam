@@ -22,7 +22,7 @@ public:
 
 	void Stop();
 
-	bool IsFinished();
+	bool IsFinished() const;
 
 	void ResetCounter();
 
