@@ -180,7 +180,7 @@ void StageScene::Update()
 		{
 			wallblock->Update();
 		}
-
+		DeleteBlocks();
 		CheckAllCollision();
 
 		break;
@@ -310,6 +310,24 @@ void StageScene::Draw()
 		break;
 	}
 
+}
+
+void StageScene::DeleteBlocks()
+{
+	for (int i = 0; i < blocks_.size();)
+	{
+		if (blocks_[i]->GetHp() == 0) 
+		{
+			delete blocks_[i];
+			blocks_.erase(blocks_.begin() + i);
+			break;
+		}
+		else 
+		{
+			i++;
+		}
+		
+	}
 }
 
 void StageScene::CheckAllCollision()

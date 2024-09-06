@@ -46,8 +46,8 @@ private:
 
 	Shake* shake_ = nullptr;
 
-	int hp = 40;
+	int hp = 100;
 
-	int hpHalf = 20;
+	int hpHalf = 50;
 };
 
