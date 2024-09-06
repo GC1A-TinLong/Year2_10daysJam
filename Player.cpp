@@ -43,7 +43,7 @@ void Player::Draw()
 	Novice::ScreenPrintf(0, 40, "player.pos.x = %f", pos_.x);
 	Novice::ScreenPrintf(0, 60, "player.pos.y = %f", pos_.y);
 	Novice::ScreenPrintf(0, 80, "onGround = %d", onGround);
-	//Novice::DrawBox((int)pos_.x + (int)drillPosOffset.x, (int)pos_.y + (int)drillPosOffset.y, drillSize.width, drillSize.height, 0.0f, WHITE, kFillModeWireFrame);
+	Novice::DrawBox((int)pos_.x + (int)drillPosOffset.x, (int)pos_.y + (int)drillPosOffset.y, drillSize.width, drillSize.height, 0.0f, WHITE, kFillModeWireFrame);
 }
 
 void Player::Audio()

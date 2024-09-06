@@ -25,7 +25,7 @@ private:
 	static inline const int height = 72;
 	static inline const int width = 42;
 	Size size = { width,height };
-	Size drillSize{ size.width - 22, size.height - 65 };
+	Size drillSize{ 20, size.height - 65 };
 	// HP
 	static inline const uint8_t kMaxHp = 10;
 	uint8_t hp = kMaxHp;
