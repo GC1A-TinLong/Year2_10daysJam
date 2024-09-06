@@ -25,6 +25,19 @@ void BlockDestroyable::DestroyIfOOB()
 	}
 }
 
+void BlockDestroyable::HP()
+{
+	if (isTouched) //player is on top of the block
+	{
+		hp--;
+	}
+
+	if (hp <= 0)
+	{
+		//Block destroyed animation handle?
+	}
+}
+
 void BlockDestroyable::OnCollision(Player* player)
 {
 	(void)player;

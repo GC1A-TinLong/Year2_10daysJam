@@ -199,22 +199,7 @@ void Player::Audio()
 
 void Player::Shakeing()
 {
-	/*if (Input::GetInstance()->TriggerKey(DIK_X) && !isShaking_)
-	{
-		isShaking_ = true;
-	}*/
 	shake_->ActivateShake(10, 60);
-
-	/*if (isShaking_)
-	{
-	}
-
-	if (shake_->GetIsFinished())
-	{
-		isShaking_ = false;
-		shake_->Initialize(20.f, 0.5f);
-		shake_->SetIsFinished(false);
-	}*/
 }
 
 void Player::CollisionWithBlock(BlockNotDestroyable* nonDesBlock)

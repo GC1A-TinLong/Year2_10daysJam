@@ -11,6 +11,7 @@ public:
 	void Initialize(Vector2 pos);
 	void Update();
 	void DestroyIfOOB(); // out of bounds
+	void HP();
 	void OnCollision(Player* player);
 	bool GetIsAboveScreen() const { return isAboveScreen_; };
 	Vector2 GetPos() { return pos_; };
@@ -32,5 +33,7 @@ private:
 	bool isTouched = false;
 
 	bool isAboveScreen_ = false;
+
+	int hp = {};
 };
 
