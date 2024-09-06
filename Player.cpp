@@ -27,7 +27,7 @@ void Player::Audio()
 	{
 		if (Novice::IsPlayingAudio(jumpPlayHandle) == 0 || jumpPlayHandle == -1) {
 
-			jumpPlayHandle = Novice::PlayAudio(jumpAudioHandle, 0, 0.5f);
+			jumpPlayHandle = Novice::PlayAudio(jumpAudioHandle, 0, kJumpAudioVolume);
 
 		}
 	}
@@ -68,7 +68,7 @@ void Player::MovementInput()
 			if (velocity_.x < 0.0f) { // when pushing opposing input, attenuate velocity
 				velocity_.x *= (1.0f - kAttenuation);
 			}
-			acceleration.x += kAcceleration;
+			acceleration.x += kLRAcceleration;
 		}
 		else if (Input::GetInstance()->PushKey(DIK_A)) {
 			if (direction != LRDirection::left) { // player direction
@@ -78,7 +78,7 @@ void Player::MovementInput()
 			if (velocity_.x > 0.0f) { // when pushing opposing input, attenuate velocity
 				velocity_.x *= (1.0f - kAttenuation);
 			}
-			acceleration.x -= kAcceleration;
+			acceleration.x -= kLRAcceleration;
 		}
 		velocity_.x = velocity_.x + acceleration.x;
 		velocity_.x = std::clamp(velocity_.x, -kMaxVelocity, kMaxVelocity);
@@ -212,10 +212,10 @@ void Player::CollisionWithBlock(BlockNotDestroyable* nonDesBlock)
 			isOnTopOfBlock = true;
 			pos_.y = nonDesBlock->GetPos().y - size.height;
 			onGround = true;
+			velocity_.x *= (1.0f - kAttenuation);
 		}
 	}
 	if (isOnTopOfBlock) {
-		velocity_.x *= (1.0f - kAttenuation);
 		velocity_.y = 0.0f; // reseting fall speed
 		onGround = true;
 		InitializeFlag();

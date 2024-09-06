@@ -39,7 +39,7 @@ private:
 	void InitializeFlag();
 	// OnGround
 	bool onGround = true;
-	static inline const float kAcceleration = 0.8f;
+	static inline const float kLRAcceleration = 0.8f;
 	static inline const float kAttenuation = 0.1f;
 	static inline const float kMaxVelocity = 12.5f;
 
@@ -93,6 +93,7 @@ private:
 	//Audio
 	int jumpAudioHandle;
 	int jumpPlayHandle = -1;
+	static inline const float kJumpAudioVolume = 0.05f;
 	
 public:
 	void Initialize(const Vector2& pos);

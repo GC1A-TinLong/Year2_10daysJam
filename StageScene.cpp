@@ -120,9 +120,6 @@ void StageScene::Update()
 		player_->Update();
 		for (auto* nonDesBlock : blocks_) {
 			player_->CollisionWithBlock(nonDesBlock);
-
-			Novice::ScreenPrintf(300, 0, "block.pos.x = %f", nonDesBlock->GetPos().x);
-			Novice::ScreenPrintf(300, 20, "block.pos.y = %f", nonDesBlock->GetPos().y);
 		}
 
 		// Spike
