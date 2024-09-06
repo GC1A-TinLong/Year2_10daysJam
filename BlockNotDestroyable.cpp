@@ -75,7 +75,7 @@ void BlockNotDestroyable::HP()
 void BlockNotDestroyable::OnCollision(Player* player)
 {
 	(void)player;
-	isTouched_ = true;
+	//isTouched_ = true;
 }
 
 void BlockNotDestroyable::LoopWall()

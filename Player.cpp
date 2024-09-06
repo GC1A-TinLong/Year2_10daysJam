@@ -210,10 +210,10 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 
 	for (BlockNotDestroyable* nonDesBlock : nonDesBlocks) {
 		float playerBottom = pos_.y + size.height + velocity_.y;
-		float playerTop = pos_.y;
+		//float playerTop = pos_.y;
 		float playerRightPos = pos_.x + size.width;
 		float blockTop = nonDesBlock->GetPos().y;
-		float blockBottom = nonDesBlock->GetPos().y + nonDesBlock->GetSize().height;
+		//float blockBottom = nonDesBlock->GetPos().y + nonDesBlock->GetSize().height;
 		float leftPosBlock = nonDesBlock->GetPos().x;
 		float rightPosBlock = nonDesBlock->GetPos().x + nonDesBlock->GetSize().width;
 		if (velocity_.y < 0) {
@@ -222,7 +222,7 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 		// Conditions
 		bool isWithinHorizontalBounds = (pos_.x < rightPosBlock) && (playerRightPos > leftPosBlock);
 		bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);
-		bool isPlayerBelowBlock = (playerTop >= blockBottom);
+		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 5.f);
 
 		if (isWithinHorizontalBounds && isCloseEnoughVertically && !isPlayerBelowBlock) {
 			if (velocity_.y > 0) {
@@ -236,11 +236,6 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 	}
 	isOnTopOfBlock = tempIsOnTopOfBlock;
 	onGround = tempOnGround;
-
-	/*if (!onGround) {
-		velocity_.y += kFreeFallAcceleration;
-		velocity_.y = (std::min)(velocity_.y, kMaxFallSpeed);
-	}*/
 }
 
 void Player::SwitchToAirborne(BlockNotDestroyable* nonDesBlock)
