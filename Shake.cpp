@@ -11,8 +11,7 @@ void Shake::Initialize()
 	
 }
 
-
-void Shake::ActivateShake(int amplitude, int maxTimer)
+void Shake::ActivateShake(Vector2& pos)
 {
 	/*srand(seed);
 	Vector2 randDistance{};
