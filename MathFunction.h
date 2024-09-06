@@ -34,3 +34,5 @@ Vector2 Normalize(const Vector2Int& v);
 
 bool isCollideObject(Object& a, Object& b);
 Vector2 ScreenShakeRandDistance();
+
+

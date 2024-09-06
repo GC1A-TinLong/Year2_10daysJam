@@ -66,3 +66,4 @@ Vector2 ScreenShakeRandDistance()
 {
 	return Vector2();
 }
+

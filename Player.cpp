@@ -19,6 +19,9 @@ void Player::Initialize(const Vector2& pos)
 	playerMovingLeftHandle_ = Novice::LoadTexture("./Resources/Player/digPlayer(L).png");
 
 	jumpAudioHandle = Novice::LoadAudio("./Resources/Audio/jump2.wav");
+
+	shake_ = new Shake();
+	shake_->Initialize(30.f,1.f);
 }
 
 void Player::Audio()
@@ -33,11 +36,28 @@ void Player::Audio()
 	}
 }
 
+void Player::Shakeing()
+{
+	if (Input::GetInstance()->TriggerKey(DIK_X) && !isShaking_) 
+	{
+		isShaking_ = true;
+	}
+
+	if (isShaking_) 
+	{
+		shake_->ActivateShake(pos_);
+
+	} 
+}
+
+
+
 void Player::Update()
 {
 	Audio();
 	AnimationHolder();
 	MovementInput();
+	Shakeing();
 }
 
 void Player::Draw()

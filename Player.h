@@ -1,6 +1,7 @@
 #pragma once
 #include "MathFunction.h"
 #include "BlockNotDestroyable.h"
+#include "Shake.h"
 
 class Player
 {
@@ -96,6 +97,11 @@ private:
 	int jumpAudioHandle;
 	int jumpPlayHandle = -1;
 	static inline const float kJumpAudioVolume = 0.05f;
+
+	//Shake
+	Shake* shake_ = nullptr;
+	bool isShaking_ = false;
+	
 	
 public:
 	void Initialize(const Vector2& pos);
@@ -114,6 +120,7 @@ public:
 	Vector2 CameraOffset();
 
 	void Audio();
+	void Shakeing();
 
 	// Getter
 	bool IsHit() const { return isHit; }
