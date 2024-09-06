@@ -45,7 +45,6 @@ private:
 
 	/// Airborne ///
 	// Gravity
-	//static inline const float kGravityAcceleration  = 2.f;
 	static inline const float kFreeFallAcceleration = 1.8f;
 	static inline const float kMaxFallSpeed = 14.f;
 	// Jump Acceleration
@@ -59,6 +58,9 @@ private:
 
 	// Block Collision
 	bool isOnTopOfBlock = true;
+	static inline const float kCloseEnoughDistanceWithBlock = 5.f;
+	bool isCloseEnoughToBlock = false;
+	bool isWithinBlockWidth = false;
 
 	// IsHit Flag
 	bool isHit = false;

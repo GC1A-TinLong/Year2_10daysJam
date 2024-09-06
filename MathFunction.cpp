@@ -1,11 +1,6 @@
 #include "MathFunction.h"
 #include "Player.h"
 #include "Spike.h"
-#include <random>
-
-std::random_device seed; // random device
-std::default_random_engine eng(seed());
-std::uniform_real_distribution<float> randOutput(-20.f, 20.f);
 
 Vector2& operator+=(Vector2& v1, const Vector2& v2) {
 	v1.x += v2.x;
@@ -69,7 +64,5 @@ bool isCollideObject(Object& a, Object& b)
 
 Vector2 ScreenShakeRandDistance()
 {
-	//Vector2 result{};
-	Vector2 randDistance = { randOutput(eng),randOutput(eng) };
-	return randDistance;
+	return Vector2();
 }

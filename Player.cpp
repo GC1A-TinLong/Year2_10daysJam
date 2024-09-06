@@ -23,7 +23,7 @@ void Player::Initialize(const Vector2& pos)
 
 void Player::Audio()
 {
-	if (isPressingSpace && onGround) 
+	if (isPressingSpace && onGround)
 	{
 		if (Novice::IsPlayingAudio(jumpPlayHandle) == 0 || jumpPlayHandle == -1) {
 
@@ -141,38 +141,35 @@ void Player::MovementInput()
 	}
 	else {
 		velocity_.x *= (1.0f - kAttenuation);
-		if (fabsf(velocity_.x) < 0.1f) {
+		if (fabsf(velocity_.x) < 0.3f) {
 			velocity_.x = 0;
 		}
 	}
 	// Jump
-	//bool isLand = false;
 	if (onGround) {
 		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
 			velocity_.y -= kInitJumpAcceleration;
 			isPressingSpace = true;
+			isReleasedSpace = false;
 			prevPos_ = pos_;
 		}
 
 		if (prevPos_.y - pos_.y >= kMinInitHeight) {
 			onGround = false;
 			isPressingSpace = false;
-			//isOnTopOfBlock = false;
 		}
 	}
 	else {
-		if (Input::GetInstance()->PushKey(DIK_SPACE) && !isMaxSpeed && !isReleasedSpace) {	// if continuously pressing SPACE, add jump force
-			if (!isPressingSpace) {
-				velocity_.y -= kContinuousJumpAcceleration;
-			}
-			isPressingSpace = true;
+		// if continuously pressing SPACE, add jump force
+		if (Input::GetInstance()->PushKey(DIK_SPACE) && !isMaxSpeed && !isReleasedSpace) {	
 			velocity_.y -= kContinuousJumpAcceleration;
+			isPressingSpace = true;
 		}
 		else if (!Input::GetInstance()->PushKey(DIK_SPACE)) {	// released SPACE key
 			isPressingSpace = false;
 			isReleasedSpace = true;
 			if (!isFreeFalling && velocity_.y < 0) {
-				velocity_.y = -8.f;
+				velocity_.y = -8.f;	// limiting Jump speed, slowing it to X amount
 			}
 			isFreeFalling = true;
 		}
@@ -180,7 +177,7 @@ void Player::MovementInput()
 		if (velocity_.y <= kMaxJumpSpeed) {
 			isMaxSpeed = true;
 		}
-		if (!isPressingSpace || isMaxSpeed) {
+		if (!isPressingSpace || isMaxSpeed || isFreeFalling) {
 			// Fall speed
 			velocity_.y += kFreeFallAcceleration;
 			velocity_.y = (std::min)(velocity_.y, kMaxFallSpeed);
@@ -191,28 +188,46 @@ void Player::MovementInput()
 
 void Player::OnCollision()
 {
-	isDead = true;
+	hp--;
+	//isDead = true;
 }
 
 void Player::CollisionWithBlock(BlockNotDestroyable* nonDesBlock)
 {
-	if (!onGround) {
-		isOnTopOfBlock = false;
-	}
+	//isOnTopOfBlock = false;
+	float playerBottom = pos_.y + size.height + velocity_.y; // if didnt create a variable, resulted in inaccurate value
+	float playerRightPos = pos_.x + size.width;
+	float blockTop = nonDesBlock->GetPos().y;
+	float blockBottom = nonDesBlock->GetPos().y + nonDesBlock->GetSize().height;
+	float leftPosBlock = nonDesBlock->GetPos().x;
+	float rightPosBlock = nonDesBlock->GetPos().x + nonDesBlock->GetSize().width;	// too long
 
 	if (velocity_.y < 0) {
 		return;
 	}
 	// when playing is falling
-	if (velocity_.y > 0 &&
-		nonDesBlock->GetPos().y - pos_.y + size.height + velocity_.y <= 5.f) {	// when player.bottom is below block.top
-		// when player is within block size
-		if (pos_.x <= nonDesBlock->GetPos().x + nonDesBlock->GetSize().width || pos_.x + size.width >= nonDesBlock->GetPos().x) {
+	// when player.bottom is below block.top && close enough
+	// when player is within block size (left bot or right bot) (bracket needed)
+	bool isWithinHorizontalBounds = (pos_.x < rightPosBlock) && (playerRightPos > leftPosBlock);
+	bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);
+	bool isPlayerBelowBlock = (pos_.y >= blockBottom);
+	if (velocity_.y > 0) {
+		if (isWithinHorizontalBounds && isCloseEnoughVertically && !isPlayerBelowBlock)
+		{
+			pos_.y = blockTop - size.height;
+			velocity_.y = 0;
 			isOnTopOfBlock = true;
-			pos_.y = nonDesBlock->GetPos().y - size.height;
 			onGround = true;
-			velocity_.x *= (1.0f - kAttenuation);
+			InitializeFlag();
 		}
+		else {
+			isOnTopOfBlock = false;
+		}
+	}
+	if (!isCloseEnoughVertically || !isWithinHorizontalBounds) {
+		isCloseEnoughToBlock = false;
+		isWithinBlockWidth = false;
+		onGround = false;
 	}
 	if (isOnTopOfBlock) {
 		velocity_.y = 0.0f; // reseting fall speed
@@ -224,6 +239,9 @@ void Player::CollisionWithBlock(BlockNotDestroyable* nonDesBlock)
 void Player::SwitchToAirborne(BlockNotDestroyable* nonDesBlock)
 {
 	(void)(nonDesBlock);
+	if (!isCloseEnoughToBlock && !isWithinBlockWidth) {
+		onGround = false;
+	}
 }
 
 Vector2 Player::CameraOffset()
