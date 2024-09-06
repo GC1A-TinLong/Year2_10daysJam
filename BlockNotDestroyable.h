@@ -12,6 +12,7 @@ public:
 	void Initialize(Vector2 pos, bool isMoss, bool isWall);
 	void Update();
 	void DestroyIfOOB(); // out of bounds
+	void HP();
 	void OnCollision(Player* player);
 	void LoopWall();
 	Vector2 GetPos() const { return pos_; };
@@ -41,5 +42,9 @@ private:
 	bool isAboveScreen_ = false;
 
 	Shake* shake_ = nullptr;
+
+	int hp = {};
+
+	int hpHalf = {};
 };
 

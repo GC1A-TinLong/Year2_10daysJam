@@ -45,6 +45,31 @@ void BlockNotDestroyable::DestroyIfOOB()
 	}
 }
 
+void BlockNotDestroyable::HP()
+{
+	if (isTouched) //player is on top of the block
+	{
+		hp--;
+	}
+
+	if (hp < hpHalf) 
+	{
+		if (isMoss_) 
+		{
+			blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/BrokenBlock.png"); //ask Kouta to make broken moss block
+		}
+		else 
+		{
+			blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/BrokenBlock.png");
+		}
+	}
+
+	if (hp <= 0) 
+	{
+		//Block destroyed animation handle?
+	}
+}
+
 void BlockNotDestroyable::OnCollision(Player* player)
 {
 	(void)player;

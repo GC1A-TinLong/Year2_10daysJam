@@ -13,10 +13,15 @@ void Background::Initialize()
 void Background::Update()
 {
 	RandomizeX();
+	ResetY();
+}
+
+void Background::ResetY()
+{
 	for (int i = 0; i < 2; i++)
 	{
 		pos_[i].y -= 4;
-		if (pos_[i].y <= -1080) 
+		if (pos_[i].y <= -1080)
 		{
 			pos_[i].y = 1080;
 		}
