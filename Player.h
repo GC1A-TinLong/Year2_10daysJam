@@ -108,7 +108,6 @@ private:
 	bool isDrilling = false;
 
 	//dont go Out Of Bounds
-	bool OOB = false;
 	float minXPos = 196.f;
 	float maxXPos = 1347.f;
 	
@@ -121,9 +120,9 @@ public:
 	void AnimationHolder();
 	void SwitchPlayerAnimationState();
 	void Drilling();
+	void Scrolling();
 
 	void MovementInput();
-	void DontGoOOB(); //Out Of Bounds
 	void OnCollision();
 	void CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks);
 	void CollisiontWithConveyor(std::vector<Conveyor*>& conveyor);
@@ -136,10 +135,9 @@ public:
 	bool IsDead() const { return isDead; }
 	Vector2 GetPos() const { return pos_; }
 	Size GetSize() const { return size; }
-	const Object GetObject_() const;
-	const Object GetDrillPointObject_() const;
+	Object GetObject_() const;
+	Object GetDrillPointObject_() const;
 	bool GetIsDrilling() const { return isDrilling; };
-	bool GetIsDead() { return isDead; };
 
 	// Setter
 	void SetVelocity(Vector2 velocity) { velocity_ = velocity; };

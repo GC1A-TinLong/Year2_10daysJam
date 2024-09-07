@@ -1,4 +1,5 @@
 #include "Conveyor.h"
+#include "Player.h"
 
 void Conveyor::Initialize(Vector2 pos, Size size)
 {
@@ -11,6 +12,10 @@ void Conveyor::Update()
 }
 
 void Conveyor::Draw()
+{
+}
+
+void Conveyor::OnCollisionPlayer(Player* player)
 {
 }
 

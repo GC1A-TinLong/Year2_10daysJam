@@ -10,10 +10,21 @@ public:
 	void Update();
 	void Draw();
 
+	void OnCollisionPlayer(Player* player);
+
 	// Getter
 	Object GetObject();
 	Vector2 GetPos() const { return pos_; }
 	Size GetSize() const { return size_; }
+
+private:
+	enum class LRDirection {
+		left,
+		right,
+	};
+	LRDirection direction = LRDirection::left;
+public:
+	LRDirection GetDirection() const { return direction; }
 
 private:
 	Vector2 pos_;

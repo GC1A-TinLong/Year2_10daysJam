@@ -266,7 +266,7 @@ void StageScene::ChangePhase()
 			fade_->Start(Status::FadeOut, duration_);
 			phase_ = Phase::kFadeOut;
 		}
-		if (player_->GetIsDead()) 
+		if (player_->IsDead()) 
 		{
 			phase_ = Phase::kDeath;
 		}
@@ -278,10 +278,10 @@ void StageScene::ChangePhase()
 	case StageScene::Phase::kStageClear:
 		break;
 	case StageScene::Phase::kFadeOut:
-		if (fade_->IsFinished() && !player_->GetIsDead()) {
+		if (fade_->IsFinished() && !player_->IsDead()) {
 			sceneNo = CLEAR;
 		} 
-		else if (fade_->IsFinished() && player_->GetIsDead()) 
+		else if (fade_->IsFinished() && player_->IsDead()) 
 		{
 			Initialize();
 		}

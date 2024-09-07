@@ -24,23 +24,26 @@ void Player::Initialize(const Vector2& pos)
 
 void Player::Update()
 {
-	pos_.y -= 1.f;
-	if (pos_.y >= 1080) 
-	{
-		isDead = true;
-	}
 	Audio();
 	AnimationHolder();
+
+	Scrolling();
 	MovementInput();
-	Shakeing();
+
 	Drilling();
+	Shakeing();
 }
 
 void Player::Draw()
 {
-	if (!isDead && !isDrilling) 
+	if (!isDead && !isDrilling)
 	{
-		Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + shake_->GetRandY(), 
+		Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + shake_->GetRandY(),
+			(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, WHITE);
+	}
+	else if (!isDead && isDrilling && onGround)	// go down a little bit
+	{
+		Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + 15 + shake_->GetRandY(),
 			(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, WHITE);
 	}
 	Novice::ScreenPrintf(0, 0, "player.velocity.x = %f", velocity_.x);
@@ -121,15 +124,23 @@ void Player::SwitchPlayerAnimationState()
 	}
 }
 
-void Player::Drilling() 
+void Player::Drilling()
 {
 	isDrilling = Input::GetInstance()->PushKey(DIK_S);
 }
 
+void Player::Scrolling()
+{
+	pos_.y -= 1.f;
+	if (pos_.y >= 1080)
+	{
+		isDead = true;
+	}
+
+}
+
 void Player::MovementInput()
 {
-	DontGoOOB();
-
 	// LR Movement
 	if (Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->PushKey(DIK_A)) {
 		Vector2 acceleration = {};
@@ -154,16 +165,8 @@ void Player::MovementInput()
 			}
 			acceleration.x -= kLRAcceleration;
 		}
-		if (!OOB) 
-		{
-			velocity_.x = velocity_.x + acceleration.x;
-			velocity_.x = std::clamp(velocity_.x, -kMaxVelocity, kMaxVelocity);
-		}
-		else 
-		{
-			velocity_.x = 0;
-		}
-		
+		velocity_.x = velocity_.x + acceleration.x;
+		velocity_.x = std::clamp(velocity_.x, -kMaxVelocity, kMaxVelocity);
 	}
 	else {
 		velocity_.x *= (1.0f - kAttenuation);
@@ -211,28 +214,7 @@ void Player::MovementInput()
 		}
 	}
 	pos_ += velocity_;
-}
-
-void Player::DontGoOOB()
-{
-	if (Input::GetInstance()->PushKey(DIK_A) && pos_.x < minXPos || Input::GetInstance()->PushKey(DIK_D) && pos_.x > maxXPos)
-	{
-		OOB = true;
-	}
-	else 
-	{
-		OOB = false;
-
-	}
-
-	if (pos_.x <= minXPos) 
-	{
-		pos_.x = minXPos;
-	}
-	else if (pos_.x >= maxXPos)
-	{
-		pos_.x = maxXPos;
-	}
+	pos_.x = std::clamp(pos_.x, minXPos, maxXPos);
 }
 
 void Player::OnCollision()
@@ -259,13 +241,12 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 		//float blockBottom = nonDesBlock->GetPos().y + nonDesBlock->GetSize().height;
 		float leftPosBlock = nonDesBlock->GetPos().x;
 		float rightPosBlock = nonDesBlock->GetPos().x + nonDesBlock->GetSize().width;
-		/*if (velocity_.y < 0) {
+		if (velocity_.y < 0) {
 			continue;
-		}*/
+		}
 		// Conditions
 		bool isWithinHorizontalBounds = (playerLeftPos <= rightPosBlock) && (playerRightPos >= leftPosBlock);
 		bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);	// above block
-		//bool isCloseEnoughVerticallyBottom = (playerTop - blockBottom <= kCloseEnoughDistanceWithBlock);	// above block
 		// player.bot without velocity && blockTop + small amount to prevent falling through
 		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
 
@@ -278,15 +259,6 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 			// within the 3 conditions
 			tempOnGround = true;
 		}
-		/*if (isWithinHorizontalBounds && isCloseEnoughVerticallyBottom && isPlayerBelowBlock)
-		{
-			if (velocity_.y < 0)
-			{
-				pos_.y = blockBottom;
-				velocity_.y = 0;
-				tempOnGround = true;
-			}
-		}*/
 	}
 	onGround = tempOnGround;
 
@@ -317,7 +289,7 @@ void Player::CollisiontWithConveyor(std::vector<Conveyor*>& conveyor)
 				pos_.y = blockTop - size.height;
 				velocity_.y = 0;
 				isPressingSpace = false;
-				isOnConveyor = true;
+				isOnConveyor = true;	// conveyor flag
 			}
 			// within the 3 conditions
 			tempOnGround = true;
@@ -339,7 +311,7 @@ Vector2 Player::CameraOffset()
 
 
 
-const Object Player::GetObject_() const
+Object Player::GetObject_() const
 {
 	Object result{};
 	result.pos.x = pos_.x + widthOffset;
@@ -348,7 +320,7 @@ const Object Player::GetObject_() const
 	return result;
 }
 
-const Object Player::GetDrillPointObject_() const
+Object Player::GetDrillPointObject_() const
 {
 	Object result{};
 	Vector2 position = { pos_.x + drillPosOffset.x,pos_.y + drillPosOffset.y };
