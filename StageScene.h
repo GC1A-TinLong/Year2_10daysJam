@@ -76,7 +76,7 @@ private:
 		{kBlockSize * 14, 900},  {kBlockSize * 15, 900},  {kBlockSize * 16, 900},
 		{kBlockSize * 17, 900},  {kBlockSize * 18, 900},  {kBlockSize * 19, 900},
 
-		{kBlockSize * 3, 900},  {kBlockSize * 4, 900},  {kBlockSize * 5, 900},
+		{kBlockSize * 3, 1300},  {kBlockSize * 4, 1300},  {kBlockSize * 5, 1300},
 	};
 
 	bool isMoss[kBlockNum] =

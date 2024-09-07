@@ -4,6 +4,7 @@
 #include "Shake.h"
 #include <vector>
 
+
 class Player
 {
 private:
@@ -140,5 +141,8 @@ public:
 	const Object GetDrillPointObject_() const;
 	bool GetIsDrilling() const { return isDrilling; };
 	bool GetIsDead() { return isDead; };
+
+	// Setter
+	void SetVelocity(Vector2 velocity) { velocity_ = velocity; };
 };
 

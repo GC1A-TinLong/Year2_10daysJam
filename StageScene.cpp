@@ -273,12 +273,17 @@ void StageScene::ChangePhase()
 		break;
 
 	case StageScene::Phase::kDeath:
+			phase_ = Phase::kFadeOut;
 		break;
 	case StageScene::Phase::kStageClear:
 		break;
 	case StageScene::Phase::kFadeOut:
-		if (fade_->IsFinished()) {
+		if (fade_->IsFinished() && !player_->GetIsDead()) {
 			sceneNo = CLEAR;
+		} 
+		else if (fade_->IsFinished() && player_->GetIsDead()) 
+		{
+			Initialize();
 		}
 		break;
 	}
@@ -291,14 +296,57 @@ void StageScene::Draw()
 	case StageScene::Phase::kFadeIn:
 		// Fade
 		background_->Draw();
-		fade_->Draw();
+		
 		// Player
 		player_->Draw();
+
+		//Destroyable Blocks
+		for (auto* destroyableBlock : destroyableBlocks_)
+		{
+			destroyableBlock->Draw();
+		}
+
+		//Blocks
+		for (auto* block : blocks_)
+		{
+			block->Draw();
+		}
+
+		//Wall Blocks
+		for (auto* wallblock : leftWallBlocks_)
+		{
+			wallblock->Draw();
+		}
+
+		for (auto* wallblock : rightWallBlocks_)
+		{
+			wallblock->Draw();
+		}
+
 
 		// Spike
 		for (auto* spike : spike_) {
 			spike->Draw();
 		}
+
+		//UI
+		Novice::DrawBox(0, 0, 144, 1080, 0.0f, BLACK, kFillModeSolid);
+		Novice::DrawBox(0, 1032, 1440, 1032, 0.0f, BLACK, kFillModeSolid);
+		Novice::DrawBox(0, 0, 1440, 96, 0.0f, BLACK, kFillModeSolid);
+		Novice::DrawBox(1440, 0, 1920, 1080, 0.0f, BLACK, kFillModeSolid);
+
+		//UI TEXT
+		Novice::DrawSprite(200, 10, stageTextHandle, 1.0f, 1.0f, 0.0f, WHITE); //TEXT
+		Novice::DrawSprite(420, 5, stage1Handle, 1.0f, 1.0f, 0.0f, WHITE); //1
+		Novice::DrawSprite(1520, 200, controlsHandle, 1.0f, 1.0f, 0.0f, WHITE); //CONROLS
+		Novice::DrawSprite(1520, 350, letterDHandle, 1.0f, 1.0f, 0.0f, WHITE); //D
+		Novice::DrawSprite(1520, 450, letterAHandle, 1.0f, 1.0f, 0.0f, WHITE); //A
+		Novice::DrawSprite(1620, 350, rightPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Right
+		Novice::DrawSprite(1620, 450, leftPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Left
+		Novice::DrawSprite(1520, 550, spaceHandle, 1.0f, 1.0f, 0.0f, WHITE); //SPACE
+
+		fade_->Draw();
+
 		break;
 	case StageScene::Phase::kPlay:
 		// Player
@@ -404,10 +452,103 @@ void StageScene::Draw()
 
 		break;
 	case StageScene::Phase::kStageClear:
+
 		background_->Draw();
+
+		//Destroyable Blocks
+		for (auto* destroyableBlock : destroyableBlocks_)
+		{
+			destroyableBlock->Draw();
+		}
+
+		//Blocks
+		for (auto* block : blocks_)
+		{
+			block->Draw();
+		}
+
+		//Wall Blocks
+		for (auto* wallblock : leftWallBlocks_)
+		{
+			wallblock->Draw();
+		}
+
+		for (auto* wallblock : rightWallBlocks_)
+		{
+			wallblock->Draw();
+		}
+
+
+		// Spike
+		for (auto* spike : spike_) {
+			spike->Draw();
+		}
+
+		//UI
+		Novice::DrawBox(0, 0, 144, 1080, 0.0f, BLACK, kFillModeSolid);
+		Novice::DrawBox(0, 1032, 1440, 1032, 0.0f, BLACK, kFillModeSolid);
+		Novice::DrawBox(0, 0, 1440, 96, 0.0f, BLACK, kFillModeSolid);
+		Novice::DrawBox(1440, 0, 1920, 1080, 0.0f, BLACK, kFillModeSolid);
+
+		//UI TEXT
+		Novice::DrawSprite(200, 10, stageTextHandle, 1.0f, 1.0f, 0.0f, WHITE); //TEXT
+		Novice::DrawSprite(420, 5, stage1Handle, 1.0f, 1.0f, 0.0f, WHITE); //1
+		Novice::DrawSprite(1520, 200, controlsHandle, 1.0f, 1.0f, 0.0f, WHITE); //CONROLS
+		Novice::DrawSprite(1520, 350, letterDHandle, 1.0f, 1.0f, 0.0f, WHITE); //D
+		Novice::DrawSprite(1520, 450, letterAHandle, 1.0f, 1.0f, 0.0f, WHITE); //A
+		Novice::DrawSprite(1620, 350, rightPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Right
+		Novice::DrawSprite(1620, 450, leftPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Left
+		Novice::DrawSprite(1520, 550, spaceHandle, 1.0f, 1.0f, 0.0f, WHITE); //SPACE
 		break;
 
 	case StageScene::Phase::kFadeOut:
+
+		background_->Draw();
+
+		//Destroyable Blocks
+		for (auto* destroyableBlock : destroyableBlocks_)
+		{
+			destroyableBlock->Draw();
+		}
+
+		//Blocks
+		for (auto* block : blocks_)
+		{
+			block->Draw();
+		}
+
+		//Wall Blocks
+		for (auto* wallblock : leftWallBlocks_)
+		{
+			wallblock->Draw();
+		}
+
+		for (auto* wallblock : rightWallBlocks_)
+		{
+			wallblock->Draw();
+		}
+
+
+		// Spike
+		for (auto* spike : spike_) {
+			spike->Draw();
+		}
+
+		//UI
+		Novice::DrawBox(0, 0, 144, 1080, 0.0f, BLACK, kFillModeSolid);
+		Novice::DrawBox(0, 1032, 1440, 1032, 0.0f, BLACK, kFillModeSolid);
+		Novice::DrawBox(0, 0, 1440, 96, 0.0f, BLACK, kFillModeSolid);
+		Novice::DrawBox(1440, 0, 1920, 1080, 0.0f, BLACK, kFillModeSolid);
+
+		//UI TEXT
+		Novice::DrawSprite(200, 10, stageTextHandle, 1.0f, 1.0f, 0.0f, WHITE); //TEXT
+		Novice::DrawSprite(420, 5, stage1Handle, 1.0f, 1.0f, 0.0f, WHITE); //1
+		Novice::DrawSprite(1520, 200, controlsHandle, 1.0f, 1.0f, 0.0f, WHITE); //CONROLS
+		Novice::DrawSprite(1520, 350, letterDHandle, 1.0f, 1.0f, 0.0f, WHITE); //D
+		Novice::DrawSprite(1520, 450, letterAHandle, 1.0f, 1.0f, 0.0f, WHITE); //A
+		Novice::DrawSprite(1620, 350, rightPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Right
+		Novice::DrawSprite(1620, 450, leftPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Left
+		Novice::DrawSprite(1520, 550, spaceHandle, 1.0f, 1.0f, 0.0f, WHITE); //SPACE
 		fade_->Draw();
 		break;
 	}
@@ -491,6 +632,8 @@ void StageScene::CheckAllCollision()
 		}
 		++i; // Increment if no collision or block was not removed
 	}
+
+
 
 #pragma region player & item collision
 

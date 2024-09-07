@@ -16,7 +16,7 @@ void BlockDestroyable::Initialize(Vector2 pos)
 
 void BlockDestroyable::Update()
 {
-	//pos_.y -= 1.f;
+	pos_.y -= 1.f;
 	DestroyIfOOB();
 	shake_->ActivateShake(5, 30);
 	HP();

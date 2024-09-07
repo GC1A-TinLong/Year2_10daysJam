@@ -50,11 +50,11 @@ private:
 	bool isMoss_ = false;
 	bool isWall_ = false;
 
-	int hpMax = 1000;
+	int hpMax = 100;
 	int hp = hpMax;
 	int hpHalf = 50;
 	int takenDamage_ = 1;
-	int hpLow = 990;
+	int hpLow = 90;
 	bool startShake_ = false;
 
 	Shake* shake_ = nullptr;

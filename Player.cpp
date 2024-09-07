@@ -25,7 +25,10 @@ void Player::Initialize(const Vector2& pos)
 void Player::Update()
 {
 	pos_.y -= 1.f;
-
+	if (pos_.y >= 1080) 
+	{
+		isDead = true;
+	}
 	Audio();
 	AnimationHolder();
 	MovementInput();
@@ -133,6 +136,7 @@ void Player::Drilling()
 void Player::MovementInput()
 {
 	DontGoOOB();
+
 	// LR Movement
 	if (Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->PushKey(DIK_A)) {
 		Vector2 acceleration = {};
@@ -257,15 +261,18 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 		float playerLeftPos = pos_.x + widthOffset;
 		float playerRightPos = playerLeftPos + size.width;
 		float playerBottom = pos_.y + size.height + velocity_.y;
+		//float playerTop = pos_.y + velocity_.y;
 		float blockTop = nonDesBlock->GetPos().y;
+		//float blockBottom = nonDesBlock->GetPos().y + nonDesBlock->GetSize().height;
 		float leftPosBlock = nonDesBlock->GetPos().x;
 		float rightPosBlock = nonDesBlock->GetPos().x + nonDesBlock->GetSize().width;
-		if (velocity_.y < 0) {
+		/*if (velocity_.y < 0) {
 			continue;
-		}
+		}*/
 		// Conditions
 		bool isWithinHorizontalBounds = (playerLeftPos <= rightPosBlock) && (playerRightPos >= leftPosBlock);
 		bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);	// above block
+		//bool isCloseEnoughVerticallyBottom = (playerTop - blockBottom <= kCloseEnoughDistanceWithBlock);	// above block
 		// player.bot without velocity && blockTop + small amount to prevent falling through
 		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
 
@@ -279,9 +286,19 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 			tempIsOnTopOfBlock = true;
 			tempOnGround = true;
 		}
+		/*if (isWithinHorizontalBounds && isCloseEnoughVerticallyBottom && isPlayerBelowBlock)
+		{
+			if (velocity_.y < 0)
+			{
+				pos_.y = blockBottom;
+				velocity_.y = 0;
+				tempOnGround = true;
+			}
+		}*/
 	}
 	isOnTopOfBlock = tempIsOnTopOfBlock;
 	onGround = tempOnGround;
+
 }
 
 void Player::SwitchToAirborne(BlockNotDestroyable* nonDesBlock)
