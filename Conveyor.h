@@ -24,7 +24,6 @@ private:
 	};
 	LRDirection direction = LRDirection::left;
 
-private:
 	Vector2 pos_;
 	Size size_;
 
