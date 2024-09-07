@@ -24,7 +24,7 @@ private:
 	};
 	unsigned int seed;
 	unsigned int randX[2] = {0,0};
-	int amplitude = 150;
+	int amplitude = 100;
 
 
 };

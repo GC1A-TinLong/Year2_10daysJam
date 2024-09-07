@@ -132,6 +132,7 @@ void Player::Drilling()
 
 void Player::MovementInput()
 {
+	DontGoOOB();
 	// LR Movement
 	if (Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->PushKey(DIK_A)) {
 		Vector2 acceleration = {};
@@ -143,6 +144,7 @@ void Player::MovementInput()
 			if (velocity_.x < 0.0f) { // when pushing opposing input, attenuate velocity
 				velocity_.x *= (1.0f - kAttenuation);
 			}
+
 			acceleration.x += kLRAcceleration;
 		}
 		else if (Input::GetInstance()->PushKey(DIK_A)) {
@@ -155,8 +157,16 @@ void Player::MovementInput()
 			}
 			acceleration.x -= kLRAcceleration;
 		}
-		velocity_.x = velocity_.x + acceleration.x;
-		velocity_.x = std::clamp(velocity_.x, -kMaxVelocity, kMaxVelocity);
+		if (!OOB) 
+		{
+			velocity_.x = velocity_.x + acceleration.x;
+			velocity_.x = std::clamp(velocity_.x, -kMaxVelocity, kMaxVelocity);
+		}
+		else 
+		{
+			velocity_.x = 0;
+		}
+		
 	}
 	else {
 		velocity_.x *= (1.0f - kAttenuation);
@@ -203,6 +213,28 @@ void Player::MovementInput()
 		}
 	}
 	pos_ += velocity_;
+}
+
+void Player::DontGoOOB()
+{
+	if (Input::GetInstance()->PushKey(DIK_A) && pos_.x < minXPos || Input::GetInstance()->PushKey(DIK_D) && pos_.x > maxXPos)
+	{
+		OOB = true;
+	}
+	else 
+	{
+		OOB = false;
+
+	}
+
+	if (pos_.x <= minXPos) 
+	{
+		pos_.x = minXPos;
+	}
+	else if (pos_.x >= maxXPos)
+	{
+		pos_.x = maxXPos;
+	}
 }
 
 void Player::OnCollision()
@@ -270,6 +302,8 @@ Vector2 Player::CameraOffset()
 
 	return offset;
 }
+
+
 
 const Object Player::GetObject_() const
 {

@@ -105,6 +105,11 @@ private:
 	bool isShaking_ = false;
 	
 	bool isDrilling = false;
+
+	//dont go Out Of Bounds
+	bool OOB = false;
+	float minXPos = 196.f;
+	float maxXPos = 1347.f;
 	
 public:
 	void Initialize(const Vector2& pos);
@@ -117,7 +122,7 @@ public:
 	void Drilling();
 
 	void MovementInput();
-
+	void DontGoOOB(); //Out Of Bounds
 	void OnCollision();
 	void CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks);
 	void SwitchToAirborne(BlockNotDestroyable* nonDesBlock);
@@ -134,5 +139,6 @@ public:
 	const Object GetObject_() const;
 	const Object GetDrillPointObject_() const;
 	bool GetIsDrilling() const { return isDrilling; };
+	bool GetIsDead() { return isDead; };
 };
 

@@ -3,6 +3,7 @@
 
 BlockNotDestroyable::~BlockNotDestroyable()
 {
+	delete shake_;
 }
 
 void BlockNotDestroyable::Initialize(Vector2 pos,bool isMoss, bool isWall)
@@ -36,6 +37,7 @@ void BlockNotDestroyable::Update()
 		DestroyIfOOB();
 		shake_->ActivateShake(5, 30);
 		HP();
+		Shakeing();
 	}
 }
 
@@ -56,7 +58,7 @@ void BlockNotDestroyable::HP()
 
 	//Return to max HP
 
-	if (!isTouched_ && hp > hpHalf) 
+	if (!isTouched_ && hp > 0) 
 	{
 		hp = hpMax;
 	}
@@ -86,10 +88,19 @@ void BlockNotDestroyable::HP()
 	}
 }
 
+void BlockNotDestroyable::Shakeing()
+{
+	if (startShake_) 
+	{
+		shake_->InfiniteShake(2);
+	}
+}
+
 void BlockNotDestroyable::OnCollision(Player* player)
 {
 	(void)player;
 	isTouched_ = true;
+	
 }
 
 void BlockNotDestroyable::LoopWall()

@@ -15,12 +15,14 @@ public:
 
 	void DestroyIfOOB(); // out of bounds
 	void HP();
+	void Shakeing();
 	void OnCollision(Player* player);
 	void LoopWall();
 
 	// Setter
 	void SetIsTouched(bool isTouched) { isTouched_ = isTouched; };
 	void SetTakenDamage(int takenDamage) { takenDamage_ = takenDamage; };
+	void SetStartShake(bool startShake) { startShake_ = startShake; };
 
 
 	// Getter
@@ -48,10 +50,12 @@ private:
 	bool isMoss_ = false;
 	bool isWall_ = false;
 
-	int hpMax = 100;
+	int hpMax = 1000;
 	int hp = hpMax;
 	int hpHalf = 50;
 	int takenDamage_ = 1;
+	int hpLow = 990;
+	bool startShake_ = false;
 
 	Shake* shake_ = nullptr;
 };

@@ -1,5 +1,6 @@
 #pragma once
 #include "MathFunction.h"
+#include "Shake.h"
 
 class Player;
 
@@ -12,10 +13,23 @@ public:
 	void Update();
 	void DestroyIfOOB(); // out of bounds
 	void HP();
+	void Shakeing();
 	void OnCollision(Player* player);
+
+
+	//Getter
 	bool GetIsAboveScreen() const { return isAboveScreen_; };
 	Vector2 GetPos() { return pos_; };
 	Size GetSize() { return size; };
+	const Object GetObject_() const;
+	int GetHp() const { return hp; };
+	bool IsDestroyed() const { return hp <= 0; }
+
+
+	//Setter
+	void SetIsTouched(bool isTouched) { isTouched_ = isTouched; };
+	void SetTakenDamage(int takenDamage) { takenDamage_ = takenDamage; };
+	void SetStartShake(bool startShake) { startShake_ = startShake; };
 
 	void Draw();
 
@@ -30,10 +44,16 @@ private:
 
 	bool isDestroyed = false;
 
-	bool isTouched = false;
+	bool isTouched_ = false;
 
 	bool isAboveScreen_ = false;
 
-	int hp = {};
+	int hpMax = 50;
+	int hp = hpMax;
+	int takenDamage_ = 1;
+	int hpLow = 990;
+	bool startShake_ = false;
+
+	Shake* shake_ = nullptr;
 };
 
