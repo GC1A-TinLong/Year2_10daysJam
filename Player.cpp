@@ -182,7 +182,7 @@ void Player::MovementInput()
 	}
 	else {
 		// if pressing SPACE continuously, add jump force
-		if (Input::GetInstance()->PushKey(DIK_SPACE) && !isMaxSpeed) {
+		if (Input::GetInstance()->PushKey(DIK_SPACE) && !isMaxSpeed && isPressingSpace) {
 			velocity_.y -= kContinuousJumpAcceleration;
 			isPressingSpace = true;
 		}
