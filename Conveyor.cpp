@@ -15,9 +15,10 @@ void Conveyor::Draw()
 {
 }
 
-//void Conveyor::OnCollisionPlayer(Player* player)
-//{
-//}
+void Conveyor::OnCollisionPlayer(Player* player)
+{
+	(void)player;
+}
 
 Object Conveyor::GetObject()
 {

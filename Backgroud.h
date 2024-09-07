@@ -1,11 +1,13 @@
 #pragma once
 #include "MathFunction.h"
+#define MAXBACKGROUNDS 2
 
 class Background
 {
 public:
 
-	void Initialize();
+	void Initialize(int backgroundHandle[MAXBACKGROUNDS]);
+
 	void Update();
 	void Draw();
 
@@ -16,13 +18,14 @@ public:
 
 private:
 
-	int backgroundHandle[2] = {};
-	Vector2 pos_[2] =
+
+	int backgroundHandle_[MAXBACKGROUNDS] = {};
+	Vector2 pos_[MAXBACKGROUNDS] =
 	{
 		{0,0}, {0,1080}
 	};
 	unsigned int seed;
-	unsigned int randX[2] = {0,0};
+	unsigned int randX[MAXBACKGROUNDS] = {0,0};
 	int amplitude = 100;
 
 

@@ -9,6 +9,7 @@
 #include "BlockDestroyable.h"
 #include "BlockNotDestroyable.h"
 #include "Backgroud.h"
+#include "SpikeTrap.h"
 
 class StageScene :public IScene
 {
@@ -101,6 +102,21 @@ private:
 	int spaceHandle = Novice::LoadTexture("./Resources/StageText/SPACE.png");
 
 	//Background
+
 	Background* background_ = nullptr;
+	int backgroundHandle_[MAXBACKGROUNDS] =
+	{
+		{Novice::LoadTexture("./Resources/Background/Bg1.png")},
+		{Novice::LoadTexture("./Resources/Background/Bg2.png")},
+	};
+
+	// Spike Trap
+	static inline const uint8_t kSpikeTrapNum = 3;
+	std::vector<SpikeTrap*>spikeTrap_;
+	Vector2 spikeTrapPos_[kSpikeTrapNum] =
+	{
+		{kBlockSize * 16, 748}, {kBlockSize * 17, 748}, {kBlockSize * 18, 748}
+	};
+
 
 };

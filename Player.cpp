@@ -126,7 +126,23 @@ void Player::SwitchPlayerAnimationState()
 
 void Player::Drilling()
 {
-	isDrilling = Input::GetInstance()->PushKey(DIK_S);
+	if (onGround) 
+	{
+		isDrilling = Input::GetInstance()->PushKey(DIK_S);
+	}
+	else 
+	{
+		isDrilling = false;
+	}
+
+	if (isDrilling) 
+	{
+		kMaxVelocity = 4.5f;
+	}
+	else 
+	{
+		kMaxVelocity = 12.5f;
+	}
 }
 
 void Player::Scrolling()

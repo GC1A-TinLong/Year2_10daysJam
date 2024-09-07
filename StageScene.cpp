@@ -34,6 +34,12 @@ StageScene::~StageScene()
 	rightWallBlocks_.clear();
 
 	delete background_;
+
+	for (auto* spike : spikeTrap_) {
+		delete spike;
+	}
+	spikeTrap_.clear();
+
 }
 
 void StageScene::Initialize()
@@ -110,7 +116,18 @@ void StageScene::Initialize()
 #pragma region Background
 
 	background_ = new Background();
-	background_->Initialize();
+	background_->Initialize(backgroundHandle_);
+
+#pragma endregion
+
+#pragma region Spike Trap
+
+	spikeTrap_.resize(kSpikeTrapNum);
+	for (int i = 0; i < kSpikeTrapNum; i++)
+	{
+		spikeTrap_[i] = new SpikeTrap;
+		spikeTrap_[i]->Initialize(spikeTrapPos_[i]);
+	}
 
 #pragma endregion
 }
@@ -180,6 +197,12 @@ void StageScene::Update()
 		{
 			wallblock->Update();
 		}
+
+		// Spike Trap
+		for (auto* spike : spikeTrap_) {
+			spike->Update();
+		}
+
 		DeleteBlocks();
 		CheckAllCollision();
 
@@ -321,7 +344,6 @@ void StageScene::Draw()
 			wallblock->Draw();
 		}
 
-
 		// Spike
 		for (auto* spike : spike_) {
 			spike->Draw();
@@ -375,6 +397,10 @@ void StageScene::Draw()
 			wallblock->Draw();
 		}
 
+		// Spike Trap
+		for (auto* spike : spikeTrap_) {
+			spike->Draw();
+		}
 
 		// Spike
 		for (auto* spike : spike_) {

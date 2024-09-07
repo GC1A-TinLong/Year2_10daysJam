@@ -46,7 +46,7 @@ private:
 	bool onGround = true;
 	static inline const float kLRAcceleration = 0.8f;
 	static inline const float kAttenuation = 0.1f;
-	static inline const float kMaxVelocity = 12.5f;
+	static inline float kMaxVelocity = 12.5f;
 
 	/// Airborne ///
 	// Gravity
