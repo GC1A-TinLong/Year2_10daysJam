@@ -245,8 +245,6 @@ void StageScene::Update()
 		fade_->Update();
 		break;
 	}
-
-
 }
 
 void StageScene::ChangePhase()
