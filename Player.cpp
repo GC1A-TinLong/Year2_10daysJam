@@ -6,14 +6,12 @@ void Player::InitializeFlag()
 {
 	isMaxSpeed = false;
 	isPressingSpace = false;
-	isReleasedSpace = false;
-	isFreeFalling = false;
 }
 
 void Player::Initialize(const Vector2& pos)
 {
 	pos_ = pos;
-	playerIdleHandle_ = Novice::LoadTexture("./Resources/Player/player.png");
+	playerIdleHandle_ = Novice::LoadTexture("./Resources/Player/digPlayer.png");
 	playerMovingRightHandle_ = Novice::LoadTexture("./Resources/Player/digPlayer(R).png");
 	playerMovingLeftHandle_ = Novice::LoadTexture("./Resources/Player/digPlayer(L).png");
 
@@ -43,6 +41,7 @@ void Player::Draw()
 	Novice::ScreenPrintf(0, 40, "player.pos.x = %f", pos_.x);
 	Novice::ScreenPrintf(0, 60, "player.pos.y = %f", pos_.y);
 	Novice::ScreenPrintf(0, 80, "onGround = %d", onGround);
+
 	Novice::DrawBox((int)pos_.x + (int)drillPosOffset.x, (int)pos_.y + (int)drillPosOffset.y, drillSize.width, drillSize.height, 0.0f, WHITE, kFillModeWireFrame);
 }
 
@@ -100,8 +99,7 @@ void Player::SwitchPlayerAnimationState()
 	{
 	case Player::PlayerAnimation::Idle:
 		playerHandleHolder_ = playerIdleHandle_;
-		currentAnimationFrames = 504.f;;
-
+		currentAnimationFrames = 126.f;
 		break;
 	case Player::PlayerAnimation::Right:
 		playerHandleHolder_ = playerMovingRightHandle_;
@@ -146,7 +144,7 @@ void Player::MovementInput()
 	}
 	else {
 		velocity_.x *= (1.0f - kAttenuation);
-		if (fabsf(velocity_.x) < 0.3f) {
+		if (fabsf(velocity_.x) < 0.4f) {
 			velocity_.x = 0;
 		}
 	}
@@ -154,7 +152,7 @@ void Player::MovementInput()
 	if (onGround) {
 		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
 			isPressingSpace = true;
-			isReleasedSpace = false;
+			isMaxSpeed = false;
 			prevPos_ = pos_;
 		}
 		if (isPressingSpace) {
@@ -168,13 +166,12 @@ void Player::MovementInput()
 	}
 	else {
 		// if pressing SPACE continuously, add jump force
-		if (Input::GetInstance()->PushKey(DIK_SPACE) && !isMaxSpeed && !isReleasedSpace) {
+		if (Input::GetInstance()->PushKey(DIK_SPACE) && !isMaxSpeed) {
 			velocity_.y -= kContinuousJumpAcceleration;
 			isPressingSpace = true;
 		}
 		else if (!Input::GetInstance()->PushKey(DIK_SPACE)) {	// released SPACE key
 			isPressingSpace = false;
-			isReleasedSpace = true;
 			if (velocity_.y < 0) {
 				velocity_.y = (std::max)(velocity_.y, -8.0f);	// limiting Jump speed, slowing it to X amount (returning the bigger amount)
 			}
@@ -183,8 +180,8 @@ void Player::MovementInput()
 		if (velocity_.y <= kMaxJumpSpeed) {
 			isMaxSpeed = true;
 		}
+		// Start free fall
 		if (!onGround || isMaxSpeed) {
-			// Fall speed
 			velocity_.y += kFreeFallAcceleration;
 			velocity_.y = (std::min)(velocity_.y, kMaxFallSpeed);
 		}
@@ -195,7 +192,7 @@ void Player::MovementInput()
 void Player::OnCollision()
 {
 	hp--;
-	//isDead = true;
+	isDead = true;
 }
 
 void Player::Shakeing()
@@ -218,18 +215,18 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 			continue;
 		}
 		// Conditions
-		bool isWithinHorizontalBounds = (pos_.x < rightPosBlock) && (playerRightPos > leftPosBlock);
-		bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);
-		// player.bot without velocity && blockTop + small amount to prevent passing through
+		bool isWithinHorizontalBounds = (pos_.x <= rightPosBlock) && (playerRightPos >= leftPosBlock);
+		bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);	// above block
+		// player.bot without velocity && blockTop + small amount to prevent falling through
 		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
 
 		if (isWithinHorizontalBounds && isCloseEnoughVertically && !isPlayerBelowBlock) {
 			if (velocity_.y > 0) {	// only when falling
 				pos_.y = blockTop - size.height;
 				velocity_.y = 0;
+				isPressingSpace = false;
 			}
 			// within the 3 conditions
-			InitializeFlag();
 			tempIsOnTopOfBlock = true;
 			tempOnGround = true;
 		}
@@ -268,7 +265,8 @@ const Object Player::GetObject_() const
 const Object Player::GetDrillPointObject_() const
 {
 	Object result{};
-	result.pos = { pos_.x + drillPosOffset.x, pos_.y + drillPosOffset.y };
-	result.size = { drillSize.width, drillSize.height };
+	Vector2 position = { pos_.x + drillPosOffset.x,pos_.y + drillPosOffset.y };
+	result.pos = position;
+	result.size = drillSize;
 	return result;
 }

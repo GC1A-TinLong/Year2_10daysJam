@@ -25,6 +25,7 @@ private:
 	static inline const int height = 72;
 	static inline const int width = 42;
 	Size size = { width,height };
+	Vector2 drillPosOffset = { 11,65 };
 	Size drillSize{ 20, size.height - 65 };
 	// HP
 	static inline const uint8_t kMaxHp = 10;
@@ -35,8 +36,6 @@ private:
 #pragma region Movement
 	// Movement Flag
 	bool isPressingSpace = false;
-	bool isReleasedSpace = false;
-	bool isFreeFalling = false;
 	bool isJump = false;
 	bool isHitGround = true;
 	void InitializeFlag();
@@ -71,7 +70,6 @@ private:
 
 	// Player Status
 	Vector2 pos_{};
-	Vector2 drillPosOffset = { 12,65 };
 	Vector2 prevPos_{};
 	Vector2 velocity_{};
 
@@ -89,7 +87,7 @@ private:
 	int playerMovingLeftHandle_;
 	Vector2 animationPos_ = { 0.f, 0.f };
 	int animationTimer_ = 0;
-	float currentAnimationFrames = 504.f;
+	float currentAnimationFrames = 126.f;
 	PlayerAnimation playerAnimation_ = PlayerAnimation::Idle;
 	PlayerAnimation previousPlayerAnimation_ = PlayerAnimation::Idle;
 

@@ -65,10 +65,9 @@ void BlockNotDestroyable::HP()
 		}
 	}
 
-	if (hp <= 0) 
+	if (hp <= 0)
 	{
-		hp = 0;
-		//Block destroyed animation handle?
+		hp = 0; //Block destroyed animation handle?
 	}
 }
 
@@ -80,7 +79,7 @@ void BlockNotDestroyable::OnCollision(Player* player)
 
 void BlockNotDestroyable::LoopWall()
 {
-	if (pos_.y <= wallMinY) 
+	if (pos_.y <= wallMinY)
 	{
 		pos_.y = wallMaxY;
 	}
