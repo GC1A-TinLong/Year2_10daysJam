@@ -34,15 +34,16 @@ void Player::Draw()
 {
 	if (!isDead) 
 	{
-		Novice::DrawSpriteRect((int)pos_.x + shake_->GetRandX(), (int)pos_.y + shake_->GetRandY(), (int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, WHITE);
+		Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + shake_->GetRandY(), 
+			(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, WHITE);
 	}
 	Novice::ScreenPrintf(0, 0, "player.velocity.x = %f", velocity_.x);
 	Novice::ScreenPrintf(0, 20, "player.velocity.y = %f", velocity_.y);
-	Novice::ScreenPrintf(0, 40, "player.pos.x = %f", pos_.x);
+	Novice::ScreenPrintf(0, 40, "player.pos.x = %f", (pos_.x + widthOffset));
 	Novice::ScreenPrintf(0, 60, "player.pos.y = %f", pos_.y);
 	Novice::ScreenPrintf(0, 80, "onGround = %d", onGround);
 
-	Novice::DrawBox((int)pos_.x + (int)drillPosOffset.x, (int)pos_.y + (int)drillPosOffset.y, drillSize.width, drillSize.height, 0.0f, WHITE, kFillModeWireFrame);
+	Novice::DrawBox((int)(pos_.x + widthOffset), (int)(pos_.y + drillPosOffset.y), drillSize.width, drillSize.height, 0.0f, WHITE, kFillModeWireFrame);
 }
 
 void Player::Audio()
@@ -206,8 +207,9 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 	bool tempIsOnTopOfBlock = false;
 
 	for (BlockNotDestroyable* nonDesBlock : nonDesBlocks) {
+		float playerLeftPos = pos_.x + widthOffset;
+		float playerRightPos = playerLeftPos + size.width;
 		float playerBottom = pos_.y + size.height + velocity_.y;
-		float playerRightPos = pos_.x + size.width;
 		float blockTop = nonDesBlock->GetPos().y;
 		float leftPosBlock = nonDesBlock->GetPos().x;
 		float rightPosBlock = nonDesBlock->GetPos().x + nonDesBlock->GetSize().width;
@@ -215,7 +217,7 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 			continue;
 		}
 		// Conditions
-		bool isWithinHorizontalBounds = (pos_.x <= rightPosBlock) && (playerRightPos >= leftPosBlock);
+		bool isWithinHorizontalBounds = (playerLeftPos <= rightPosBlock) && (playerRightPos >= leftPosBlock);
 		bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);	// above block
 		// player.bot without velocity && blockTop + small amount to prevent falling through
 		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
@@ -257,7 +259,8 @@ Vector2 Player::CameraOffset()
 const Object Player::GetObject_() const
 {
 	Object result{};
-	result.pos = pos_;
+	result.pos.x = pos_.x + widthOffset;
+	result.pos.y = pos_.y;
 	result.size = size;
 	return result;
 }

@@ -23,10 +23,11 @@ private:
 	LRDirection direction = LRDirection::right;
 	// Size
 	static inline const int height = 72;
-	static inline const int width = 42;
+	static inline const int width = 20;
+	static inline const int widthOffset = 11;
 	Size size = { width,height };
 	Vector2 drillPosOffset = { 11,65 };
-	Size drillSize{ 20, size.height - 65 };
+	Size drillSize = { 20, size.height - 65 };
 	// HP
 	static inline const uint8_t kMaxHp = 10;
 	uint8_t hp = kMaxHp;
