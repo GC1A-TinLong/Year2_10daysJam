@@ -35,7 +35,7 @@ void Player::Update()
 
 void Player::Draw()
 {
-	if (!isDead) 
+	if (!isDead && !isDrilling) 
 	{
 		Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + shake_->GetRandY(), 
 			(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, WHITE);
@@ -120,14 +120,7 @@ void Player::SwitchPlayerAnimationState()
 
 void Player::Drilling() 
 {
-	if (/*playerAnimation_ = PlayerAnimation::Drilling*/ Input::GetInstance()->PushKey(DIK_S))
-	{
-		isDrilling = true;
-	}
-	else 
-	{
-		isDrilling = false;
-	}
+	isDrilling = Input::GetInstance()->PushKey(DIK_S);
 }
 
 void Player::MovementInput()
@@ -200,6 +193,7 @@ void Player::MovementInput()
 		if (!onGround || isMaxSpeed) {
 			velocity_.y += kFreeFallAcceleration;
 			velocity_.y = (std::min)(velocity_.y, kMaxFallSpeed);
+			isOnConveyor = false;
 		}
 	}
 	pos_ += velocity_;
@@ -219,7 +213,6 @@ void Player::Shakeing()
 void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 {
 	bool tempOnGround = false;		// temp flag, when its confirmed(ended loop), apply it to the origin flag
-	bool tempIsOnTopOfBlock = false;
 
 	for (BlockNotDestroyable* nonDesBlock : nonDesBlocks) {
 		float playerLeftPos = pos_.x + widthOffset;
@@ -244,20 +237,44 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 				isPressingSpace = false;
 			}
 			// within the 3 conditions
-			tempIsOnTopOfBlock = true;
 			tempOnGround = true;
 		}
 	}
-	isOnTopOfBlock = tempIsOnTopOfBlock;
 	onGround = tempOnGround;
 }
 
-void Player::SwitchToAirborne(BlockNotDestroyable* nonDesBlock)
+void Player::CollisiontWithConveyor(std::vector<Conveyor*>& conveyor)
 {
-	(void)(nonDesBlock);
-	if (!isCloseEnoughToBlock && !isWithinBlockWidth) {
-		onGround = false;
+	bool tempOnGround = false;		// temp flag, when its confirmed(ended loop), apply it to the origin flag
+
+	for (auto* convey : conveyor) {
+		float playerLeftPos = pos_.x + widthOffset;
+		float playerRightPos = playerLeftPos + size.width;
+		float playerBottom = pos_.y + size.height + velocity_.y;
+		float blockTop = convey->GetPos().y;
+		float leftPosBlock = convey->GetPos().x;
+		float rightPosBlock = convey->GetPos().x + convey->GetSize().width;
+		if (velocity_.y < 0) {
+			continue;
+		}
+		// Conditions
+		bool isWithinHorizontalBounds = (playerLeftPos <= rightPosBlock) && (playerRightPos >= leftPosBlock);
+		bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);	// above block
+		// player.bot without velocity && blockTop + small amount to prevent falling through
+		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
+
+		if (isWithinHorizontalBounds && isCloseEnoughVertically && !isPlayerBelowBlock) {
+			if (velocity_.y > 0) {	// only when falling
+				pos_.y = blockTop - size.height;
+				velocity_.y = 0;
+				isPressingSpace = false;
+				isOnConveyor = true;
+			}
+			// within the 3 conditions
+			tempOnGround = true;
+		}
 	}
+	onGround = tempOnGround;
 }
 
 Vector2 Player::CameraOffset()

@@ -17,8 +17,8 @@ struct Vector2Int {
 };
 
 struct Object {
-	Size size;
 	Vector2 pos;
+	Size size;
 };
 
 Vector2& operator+=(Vector2& v1, const Vector2& v2);

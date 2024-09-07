@@ -22,7 +22,6 @@ public:
 	void SetIsTouched(bool isTouched) { isTouched_ = isTouched; };
 	void SetTakenDamage(int takenDamage) { takenDamage_ = takenDamage; };
 
-
 	// Getter
 	Vector2 GetPos() const { return pos_; };
 	Size GetSize() const { return size; };

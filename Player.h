@@ -1,6 +1,7 @@
 #pragma once
 #include "MathFunction.h"
 #include "BlockNotDestroyable.h"
+#include "Conveyor.h"
 #include "Shake.h"
 #include <vector>
 
@@ -60,10 +61,9 @@ private:
 #pragma endregion
 
 	// Block Collision
-	bool isOnTopOfBlock = true;
 	static inline const float kCloseEnoughDistanceWithBlock = 1.f;
-	bool isCloseEnoughToBlock = false;
-	bool isWithinBlockWidth = false;
+	
+	bool isOnConveyor = false;
 
 	// IsHit Flag
 	bool isHit = false;
@@ -120,10 +120,9 @@ public:
 
 	void OnCollision();
 	void CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks);
-	void SwitchToAirborne(BlockNotDestroyable* nonDesBlock);
+	void CollisiontWithConveyor(std::vector<Conveyor*>& conveyor);
 
 	Vector2 CameraOffset();
-
 	void Shakeing();
 
 	// Getter

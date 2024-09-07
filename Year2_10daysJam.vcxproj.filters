@@ -86,6 +86,12 @@
     <ClCompile Include="Shake.cpp">
       <Filter>KamataEngine</Filter>
     </ClCompile>
+    <ClCompile Include="Backgroud.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Conveyor.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\KamataEngine\DirectXGame\audio\Audio.h">
@@ -180,5 +186,7 @@
     </ClInclude>
     <ClInclude Include="Pause.h" />
     <ClInclude Include="Shake.h" />
+    <ClInclude Include="Backgroud.h" />
+    <ClInclude Include="Conveyor.h" />
   </ItemGroup>
 </Project>
