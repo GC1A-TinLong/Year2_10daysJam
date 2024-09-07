@@ -23,8 +23,6 @@ private:
 		right,
 	};
 	LRDirection direction = LRDirection::left;
-public:
-	LRDirection GetDirection() const { return direction; }
 
 private:
 	Vector2 pos_;
