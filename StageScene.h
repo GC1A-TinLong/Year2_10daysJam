@@ -42,7 +42,7 @@ private:
 	Player* player_ = nullptr;
 
 	// Spike
-	static inline const uint8_t kSpikeNum = 15;
+	static inline const uint8_t kSpikeNum = 25;
 	std::vector<Spike*>spike_;
 
 	// Block Size
@@ -57,7 +57,7 @@ private:
 	};
 
 	// Block
-	static inline const uint8_t kBlockNum = 30;
+	static inline const uint8_t kBlockNum = 36;
 	std::vector<BlockNotDestroyable*>blocks_;
 	Vector2 BlockPos_[kBlockNum]
 	{
@@ -68,12 +68,15 @@ private:
 		{kBlockSize * 7,  500},  {kBlockSize * 8,  500},  {kBlockSize * 9,  500},
 		{kBlockSize * 10, 500},  {kBlockSize * 11, 500},  {kBlockSize * 12, 500},
 		{kBlockSize * 13, 500},  {kBlockSize * 14, 500},  {kBlockSize * 15, 500},
+		{kBlockSize * 26, 500},  {kBlockSize * 27, 500},  {kBlockSize * 28, 500},
 
 		{kBlockSize * 15, 700},  {kBlockSize * 16, 700},  {kBlockSize * 17, 700},
 		{kBlockSize * 18, 700},  {kBlockSize * 19, 700},  {kBlockSize * 20, 700},
 
 		{kBlockSize * 14, 900},  {kBlockSize * 15, 900},  {kBlockSize * 16, 900},
 		{kBlockSize * 17, 900},  {kBlockSize * 18, 900},  {kBlockSize * 19, 900},
+
+		{kBlockSize * 3, 1300},  {kBlockSize * 4, 1300},  {kBlockSize * 5, 1300},
 	};
 
 	bool isMoss[kBlockNum] =

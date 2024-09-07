@@ -25,7 +25,10 @@ void Player::Initialize(const Vector2& pos)
 void Player::Update()
 {
 	pos_.y -= 1.f;
-
+	if (pos_.y >= 1080) 
+	{
+		isDead = true;
+	}
 	Audio();
 	AnimationHolder();
 	MovementInput();
@@ -125,6 +128,8 @@ void Player::Drilling()
 
 void Player::MovementInput()
 {
+	DontGoOOB();
+
 	// LR Movement
 	if (Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->PushKey(DIK_A)) {
 		Vector2 acceleration = {};
@@ -136,6 +141,7 @@ void Player::MovementInput()
 			if (velocity_.x < 0.0f) { // when pushing opposing input, attenuate velocity
 				velocity_.x *= (1.0f - kAttenuation);
 			}
+
 			acceleration.x += kLRAcceleration;
 		}
 		else if (Input::GetInstance()->PushKey(DIK_A)) {
@@ -148,8 +154,16 @@ void Player::MovementInput()
 			}
 			acceleration.x -= kLRAcceleration;
 		}
-		velocity_.x = velocity_.x + acceleration.x;
-		velocity_.x = std::clamp(velocity_.x, -kMaxVelocity, kMaxVelocity);
+		if (!OOB) 
+		{
+			velocity_.x = velocity_.x + acceleration.x;
+			velocity_.x = std::clamp(velocity_.x, -kMaxVelocity, kMaxVelocity);
+		}
+		else 
+		{
+			velocity_.x = 0;
+		}
+		
 	}
 	else {
 		velocity_.x *= (1.0f - kAttenuation);
@@ -199,6 +213,28 @@ void Player::MovementInput()
 	pos_ += velocity_;
 }
 
+void Player::DontGoOOB()
+{
+	if (Input::GetInstance()->PushKey(DIK_A) && pos_.x < minXPos || Input::GetInstance()->PushKey(DIK_D) && pos_.x > maxXPos)
+	{
+		OOB = true;
+	}
+	else 
+	{
+		OOB = false;
+
+	}
+
+	if (pos_.x <= minXPos) 
+	{
+		pos_.x = minXPos;
+	}
+	else if (pos_.x >= maxXPos)
+	{
+		pos_.x = maxXPos;
+	}
+}
+
 void Player::OnCollision()
 {
 	hp--;
@@ -218,15 +254,18 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 		float playerLeftPos = pos_.x + widthOffset;
 		float playerRightPos = playerLeftPos + size.width;
 		float playerBottom = pos_.y + size.height + velocity_.y;
+		//float playerTop = pos_.y + velocity_.y;
 		float blockTop = nonDesBlock->GetPos().y;
+		//float blockBottom = nonDesBlock->GetPos().y + nonDesBlock->GetSize().height;
 		float leftPosBlock = nonDesBlock->GetPos().x;
 		float rightPosBlock = nonDesBlock->GetPos().x + nonDesBlock->GetSize().width;
-		if (velocity_.y < 0) {
+		/*if (velocity_.y < 0) {
 			continue;
-		}
+		}*/
 		// Conditions
 		bool isWithinHorizontalBounds = (playerLeftPos <= rightPosBlock) && (playerRightPos >= leftPosBlock);
 		bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);	// above block
+		//bool isCloseEnoughVerticallyBottom = (playerTop - blockBottom <= kCloseEnoughDistanceWithBlock);	// above block
 		// player.bot without velocity && blockTop + small amount to prevent falling through
 		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
 
@@ -239,8 +278,18 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 			// within the 3 conditions
 			tempOnGround = true;
 		}
+		/*if (isWithinHorizontalBounds && isCloseEnoughVerticallyBottom && isPlayerBelowBlock)
+		{
+			if (velocity_.y < 0)
+			{
+				pos_.y = blockBottom;
+				velocity_.y = 0;
+				tempOnGround = true;
+			}
+		}*/
 	}
 	onGround = tempOnGround;
+
 }
 
 void Player::CollisiontWithConveyor(std::vector<Conveyor*>& conveyor)
@@ -287,6 +336,8 @@ Vector2 Player::CameraOffset()
 
 	return offset;
 }
+
+
 
 const Object Player::GetObject_() const
 {

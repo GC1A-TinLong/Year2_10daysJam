@@ -5,6 +5,7 @@
 #include "Shake.h"
 #include <vector>
 
+
 class Player
 {
 private:
@@ -105,6 +106,11 @@ private:
 	bool isShaking_ = false;
 	
 	bool isDrilling = false;
+
+	//dont go Out Of Bounds
+	bool OOB = false;
+	float minXPos = 196.f;
+	float maxXPos = 1347.f;
 	
 public:
 	void Initialize(const Vector2& pos);
@@ -117,7 +123,7 @@ public:
 	void Drilling();
 
 	void MovementInput();
-
+	void DontGoOOB(); //Out Of Bounds
 	void OnCollision();
 	void CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks);
 	void CollisiontWithConveyor(std::vector<Conveyor*>& conveyor);
@@ -133,5 +139,9 @@ public:
 	const Object GetObject_() const;
 	const Object GetDrillPointObject_() const;
 	bool GetIsDrilling() const { return isDrilling; };
+	bool GetIsDead() { return isDead; };
+
+	// Setter
+	void SetVelocity(Vector2 velocity) { velocity_ = velocity; };
 };
 

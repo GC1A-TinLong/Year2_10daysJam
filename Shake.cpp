@@ -43,9 +43,7 @@ void Shake::ActivateShake(int amplitude, int maxTimer)
 
 void Shake::InfiniteShake(int amplitude)
 {
-	if (infiniteShake) 
-	{
+	
 		randX = rand() % amplitude - amplitude / 2;
 		randY = rand() % amplitude - amplitude / 2;
-	}
 }

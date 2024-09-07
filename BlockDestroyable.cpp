@@ -3,18 +3,24 @@
 
 BlockDestroyable::~BlockDestroyable()
 {
+	delete shake_;
 }
 
 void BlockDestroyable::Initialize(Vector2 pos)
 {
 	pos_ = pos;
 	blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/BrokenBlock.png");
+	shake_ = new Shake();
+	shake_->Initialize();
 }
 
 void BlockDestroyable::Update()
 {
-	//pos_.y -= 1.f;
+	pos_.y -= 1.f;
 	DestroyIfOOB();
+	shake_->ActivateShake(5, 30);
+	HP();
+	Shakeing();
 }
 
 void BlockDestroyable::DestroyIfOOB()
@@ -27,9 +33,14 @@ void BlockDestroyable::DestroyIfOOB()
 
 void BlockDestroyable::HP()
 {
-	if (isTouched && hp >= 0) //player is on top of the block
+	if (isTouched_ && hp >= 0) //player is on top of the block
 	{
 		hp--;
+	}
+
+	if (!isTouched_ && hp > 0)
+	{
+		hp = hpMax;
 	}
 
 	if (hp <= 0)
@@ -39,10 +50,26 @@ void BlockDestroyable::HP()
 	}
 }
 
+void BlockDestroyable::Shakeing()
+{
+	if (startShake_)
+	{
+		shake_->InfiniteShake(2);
+	}
+}
+
 void BlockDestroyable::OnCollision(Player* player)
 {
 	(void)player;
-	isTouched = true;
+	isTouched_ = true;
+}
+
+const Object BlockDestroyable::GetObject_() const
+{
+	Object result{};
+	result.pos = pos_;
+	result.size = size;
+	return result;
 }
 
 void BlockDestroyable::Draw()
