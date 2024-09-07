@@ -6,14 +6,13 @@ class Background
 public:
 
 	void Initialize();
-
 	void Update();
+	void Draw();
 
 	void ResetY();
 
 	void RandomizeX();
 
-	void Draw();
 
 private:
 

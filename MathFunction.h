@@ -4,8 +4,9 @@
 #include <algorithm>
 #include <assert.h>
 #include <cmath>
-class Player;
-class Spike;
+
+//class Player;
+//class Spike;
 
 struct Size {
 	int width;

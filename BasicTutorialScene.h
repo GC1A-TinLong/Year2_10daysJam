@@ -30,6 +30,10 @@ private:
 	};
 	Phase phase_;
 
+	// Fade
+	Fade* fade_ = nullptr;
+	float duration_ = 1.0f;
+
 	// Player
 	Player* player_ = nullptr;
 
@@ -39,6 +43,11 @@ private:
 	static inline const uint8_t kBlockNum = 15;
 	std::vector<BlockNotDestroyable*>blocks_;
 	std::vector<Vector2>blockPos_;
-
+	// Wall
+	static inline const uint8_t kWallBlockNum = 22;
+	std::vector<BlockNotDestroyable*>leftWallBlocks_;
+	Vector2 leftWallPos_ = { 144.f,0 };
+	std::vector<BlockNotDestroyable*>rightWallBlocks_;
+	Vector2 rightWallPos_ = { 1392.f,0 };
 };
 

@@ -1,6 +1,4 @@
 #include "MathFunction.h"
-#include "Player.h"
-#include "Spike.h"
 
 Vector2& operator+=(Vector2& v1, const Vector2& v2) {
 	v1.x += v2.x;

@@ -7,7 +7,6 @@ class Player;
 class BlockDestroyable
 {
 public:
-
 	~BlockDestroyable();
 	void Initialize(Vector2 pos);
 	void Update();
@@ -15,7 +14,6 @@ public:
 	void HP();
 	void Shakeing();
 	void OnCollision(Player* player);
-
 
 	//Getter
 	bool GetIsAboveScreen() const { return isAboveScreen_; };
@@ -25,14 +23,12 @@ public:
 	int GetHp() const { return hp; };
 	bool IsDestroyed() const { return hp <= 0; }
 
-
 	//Setter
 	void SetIsTouched(bool isTouched) { isTouched_ = isTouched; };
 	void SetTakenDamage(int takenDamage) { takenDamage_ = takenDamage; };
 	void SetStartShake(bool startShake) { startShake_ = startShake; };
 
 	void Draw();
-
 
 private:
 
