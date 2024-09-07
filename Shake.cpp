@@ -18,7 +18,7 @@ void Shake::ActivateShake(int amplitude, int maxTimer)
 	if (shake) {
 		timer++;
 	}
-	if (timer >= 0 && timer < 20) {
+	if (timer >= 1 && timer < 20) {
 		randX = rand() % amplitude - amplitude / 2;
 		randY = rand() % amplitude - amplitude / 2;
 	}

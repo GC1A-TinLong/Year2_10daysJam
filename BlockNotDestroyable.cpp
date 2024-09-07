@@ -100,7 +100,6 @@ void BlockNotDestroyable::OnCollision(Player* player)
 {
 	(void)player;
 	isTouched_ = true;
-	
 }
 
 void BlockNotDestroyable::LoopWall()

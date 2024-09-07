@@ -608,13 +608,11 @@ void StageScene::CheckAllCollision()
 			{
 				blocks_[i]->SetTakenDamage(5); //damage is 5
 				blocks_[i]->SetStartShake(true); //shake
-				
 			}
 			else 
 			{
 				blocks_[i]->SetTakenDamage(1); //damage is 1
 				blocks_[i]->SetStartShake(false); 
-
 			}
 
 			if (blocks_.empty() || blocks_[i] == nullptr) {

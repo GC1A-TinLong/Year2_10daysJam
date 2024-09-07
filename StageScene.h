@@ -56,7 +56,7 @@ private:
 		{1056, 300}
 	};
 
-	// Block
+	// Normal Block
 	static inline const uint8_t kBlockNum = 36;
 	std::vector<BlockNotDestroyable*>blocks_;
 	Vector2 BlockPos_[kBlockNum]

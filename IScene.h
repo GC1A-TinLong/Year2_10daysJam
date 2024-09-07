@@ -2,6 +2,7 @@
 
 enum Scene { 
 	TITLE,
+	BASIC_TUTORIAL,
 	STAGE,
 	CLEAR 
 };
