@@ -25,9 +25,10 @@ void BlockNotDestroyable::Initialize(Vector2 pos,bool isMoss, bool isWall)
 
 void BlockNotDestroyable::Update()
 {
+	pos_.y -= 1.f;
 	if (isWall_) 
 	{
-		pos_.y -= 1.f;
+		
 		LoopWall();
 	}
 	else 
@@ -50,7 +51,21 @@ void BlockNotDestroyable::HP()
 {
 	if (isTouched_ && hp >= 0) //player is on top of the block
 	{
-		hp--;
+		hp -= takenDamage_;
+	}
+
+	//Return to max HP
+
+	if (!isTouched_ && hp > hpHalf) 
+	{
+		hp = hpMax;
+	}
+
+	//Return to half HP
+
+	if (!isTouched_ && hp < hpHalf && hp > 0) 
+	{
+		hp = hpHalf;
 	}
 
 	if (hp < hpHalf) 
@@ -74,7 +89,7 @@ void BlockNotDestroyable::HP()
 void BlockNotDestroyable::OnCollision(Player* player)
 {
 	(void)player;
-	//isTouched_ = true;
+	isTouched_ = true;
 }
 
 void BlockNotDestroyable::LoopWall()

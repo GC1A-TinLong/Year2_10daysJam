@@ -86,6 +86,7 @@ private:
 	int playerIdleHandle_;
 	int playerMovingRightHandle_;
 	int playerMovingLeftHandle_;
+	//int playerDrillingHandle_;
 	Vector2 animationPos_ = { 0.f, 0.f };
 	int animationTimer_ = 0;
 	float currentAnimationFrames = 126.f;
@@ -103,7 +104,7 @@ private:
 	Shake* shake_ = nullptr;
 	bool isShaking_ = false;
 	
-	
+	bool isDrilling = false;
 	
 public:
 	void Initialize(const Vector2& pos);
@@ -113,6 +114,7 @@ public:
 
 	void AnimationHolder();
 	void SwitchPlayerAnimationState();
+	void Drilling();
 
 	void MovementInput();
 
@@ -131,5 +133,6 @@ public:
 	Size GetSize() const { return size; }
 	const Object GetObject_() const;
 	const Object GetDrillPointObject_() const;
+	bool GetIsDrilling() const { return isDrilling; };
 };
 

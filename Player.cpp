@@ -24,10 +24,13 @@ void Player::Initialize(const Vector2& pos)
 
 void Player::Update()
 {
+	pos_.y -= 1.f;
+
 	Audio();
 	AnimationHolder();
 	MovementInput();
 	Shakeing();
+	Drilling();
 }
 
 void Player::Draw()
@@ -112,6 +115,18 @@ void Player::SwitchPlayerAnimationState()
 		break;
 	default:
 		break;
+	}
+}
+
+void Player::Drilling() 
+{
+	if (/*playerAnimation_ = PlayerAnimation::Drilling*/ Input::GetInstance()->PushKey(DIK_S))
+	{
+		isDrilling = true;
+	}
+	else 
+	{
+		isDrilling = false;
 	}
 }
 

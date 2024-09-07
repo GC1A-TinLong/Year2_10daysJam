@@ -349,12 +349,27 @@ void StageScene::CheckAllCollision()
 #pragma region player & block collision
 	Object obj3 = player_->GetDrillPointObject_();	// collision on the drill
 	Object obj4;
+
+	for (int i = 0; i < blocks_.size(); ++i) //reset all blocks to not being touched
+	{
+		blocks_[i]->SetIsTouched(false);
+	}
+
 	for (int i = 0; i < blocks_.size();)
 	{
 		obj4 = blocks_[i]->GetObject_();
 		if (isCollideObject(obj3, obj4) && !blocks_[i]->IsDestroyed())
 		{
 			blocks_[i]->OnCollision(player_);
+
+			if (player_->GetIsDrilling()) //if we're drilling
+			{
+				blocks_[i]->SetTakenDamage(5); //damage is 5
+			}
+			else 
+			{
+				blocks_[i]->SetTakenDamage(1); //damage is 1
+			}
 
 			if (blocks_.empty() || blocks_[i] == nullptr) {
 				continue;	// If block was destroyed or blocks_ changed, avoid incrementing "i"

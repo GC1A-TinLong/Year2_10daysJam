@@ -17,8 +17,12 @@ public:
 	void HP();
 	void OnCollision(Player* player);
 	void LoopWall();
+
 	// Setter
 	void SetIsTouched(bool isTouched) { isTouched_ = isTouched; };
+	void SetTakenDamage(int takenDamage) { takenDamage_ = takenDamage; };
+
+
 	// Getter
 	Vector2 GetPos() const { return pos_; };
 	Size GetSize() const { return size; };
@@ -44,8 +48,10 @@ private:
 	bool isMoss_ = false;
 	bool isWall_ = false;
 
-	int hp = 100;
+	int hpMax = 100;
+	int hp = hpMax;
 	int hpHalf = 50;
+	int takenDamage_ = 1;
 
 	Shake* shake_ = nullptr;
 };
