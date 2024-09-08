@@ -40,7 +40,7 @@ void Player::Draw()
 {
 	if (drawCount <= kMaxDrawCount / 2)	// if taking damage, blink the character
 	{
-		if (!isDead && !isDrilling)
+		if (!isDead && !isDrilling || !isDead && !onGround)
 		{
 			Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + shake_->GetRandY(),
 				(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, WHITE);
@@ -134,13 +134,17 @@ void Player::SwitchPlayerAnimationState()
 
 void Player::Drilling()
 {
-	if (onGround && Input::GetInstance()->PushKey(DIK_S))
+	if (Input::GetInstance()->PushKey(DIK_S))
 	{
 		isDrilling = true;
 	}
-	else if(!Input::GetInstance()->PushKey(DIK_S) || !onGround) {
+	else 
+	{
 		isDrilling = false;
 	}
+	/*else if(!Input::GetInstance()->PushKey(DIK_S) || !onGround) {
+		isDrilling = false;
+	}*/
 
 	if (isDrilling)  { kMaxVelocity = 4.5f; }
 	else  { kMaxVelocity = 12.5f; }
@@ -284,6 +288,7 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 			tempOnGround = true;
 		}
 	}
+
 	onGround = tempOnGround;
 
 }
@@ -320,7 +325,7 @@ void Player::CollisionWithExplodingBlock(std::vector<BlockExplodingTrap*>& explo
 			tempOnGround = true;
 		}
 	}
-	//onGround = tempOnGround;
+	onGround = tempOnGround;
 
 }
 

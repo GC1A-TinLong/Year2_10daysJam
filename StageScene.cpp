@@ -383,6 +383,11 @@ void StageScene::Draw()
 		wallblock->Draw();
 	}
 
+	for (auto* explodingBlock : explodingBlocks_)
+	{
+		explodingBlock->Draw();
+	}
+
 	// Spike
 	for (auto* spike : spike_) {
 		spike->Draw();
