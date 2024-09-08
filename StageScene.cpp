@@ -49,6 +49,22 @@ StageScene::~StageScene()
 
 void StageScene::Initialize()
 {
+#pragma region Fade
+
+	phase_ = Phase::kFadeIn;
+	fade_ = new Fade();
+	fade_->Initialize();
+	fade_->Start(Status::FadeIn, duration_);
+
+#pragma endregion
+
+#pragma region Background
+
+	background_ = new Background();
+	background_->Initialize(backgroundHandle_);
+
+#pragma endregion
+
 	// UI
 	UI = new UserInterface;
 
@@ -109,22 +125,6 @@ void StageScene::Initialize()
 		rightWallPos_.y = 48.f * i;
 		rightWallBlocks_[i]->Initialize(rightWallPos_, false, true);
 	}
-
-#pragma endregion
-
-#pragma region Fade
-
-	phase_ = Phase::kFadeIn;
-	fade_ = new Fade();
-	fade_->Initialize();
-	fade_->Start(Status::FadeIn, duration_);
-
-#pragma endregion
-
-#pragma region Background
-
-	background_ = new Background();
-	background_->Initialize(backgroundHandle_);
 
 #pragma endregion
 

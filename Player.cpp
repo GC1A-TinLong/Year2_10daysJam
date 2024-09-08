@@ -38,7 +38,6 @@ void Player::Update()
 	Exploded();
 
 	TakingDamage();
-
 }
 
 void Player::Draw()
@@ -175,7 +174,7 @@ void Player::Exploded()
 		pos_.x += randX;
 		explodedTimer++;
 		kMaxFallSpeed = 7.f;
-	} 
+	}
 
 	if (onGround) 
 	{

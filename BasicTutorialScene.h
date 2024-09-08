@@ -38,8 +38,13 @@ private:
 	// Fade
 	Fade* fade_ = nullptr;
 	float duration_ = 1.0f;
-
+	// Background
 	Background* background_ = nullptr;
+	int backgroundHandle_[MAXBACKGROUNDS] =
+	{
+		{Novice::LoadTexture("./Resources/Background/Bg1.png")},
+		{Novice::LoadTexture("./Resources/Background/Bg2.png")},
+	};
 
 	// UI
 	UserInterface* UI = nullptr;

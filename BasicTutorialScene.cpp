@@ -29,9 +29,11 @@ void BasicTutorialScene::Initialize()
 
 	// Background
 	background_ = new Background;
+	background_->Initialize(backgroundHandle_);
 	UI = new UserInterface;
 	// Player
 	player_ = new Player;
+	player_->Initialize({ 640.f,400.f });
 
 	// Normal Block
 	blocks_.resize(kBlockNum);
@@ -124,8 +126,6 @@ void BasicTutorialScene::Update()
 		break;
 	}
 
-
-	fade_->Update();
 
 	if (Input::GetInstance()->TriggerKey(DIK_C)) {
 		sceneNo = STAGE;
