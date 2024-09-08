@@ -46,9 +46,10 @@ void BasicTutorialScene::Initialize()
 	// Normal Block
 	blocks_.resize(kBlockNum);
 	blockPos_.resize(kBlockNum);
-	for (int i = 0; i < kBlockNum; i++) {
+	for (int i = 0; i < kBlockNum; i++) 
+	{
 		blocks_[i] = new BlockNotDestroyable;
-		blockPos_[i] = { (kBlockSize * 4) + (kBlockSize * i),500.f };
+		//blockPos_[i] = { (kBlockSize * 4) + (kBlockSize * i),500.f };
 		blocks_[i]->Initialize(blockPos_[i], false, false);
 	}
 #pragma region LeftWall
@@ -186,6 +187,63 @@ void BasicTutorialScene::DeleteBlocks()
 
 void BasicTutorialScene::CheckAllCollision()
 {
+#pragma region player & spike collision
+	Object obj1, obj2;
+	obj1 = player_->GetObject_();
+	for (int i = 0; i < kSpikeNum; i++)
+	{
+		obj2 = spike_[i]->GetObject_();
+		if (isCollideObject(obj1, obj2)) {
+			player_->OnCollision();
+			break;
+		}
+	}
+
+#pragma endregion
+
+#pragma region player & block collision
+	Object obj3 = player_->GetDrillPointObject_();	// collision on the drill
+	Object obj4;
+
+	for (int i = 0; i < blocks_.size(); ++i) //reset all blocks to not being touched
+	{
+		blocks_[i]->SetIsTouched(false);
+		blocks_[i]->SetStartShake(false);
+	}
+
+	for (int i = 0; i < blocks_.size();)
+	{
+		obj4 = blocks_[i]->GetObject_();
+		if (isCollideObject(obj3, obj4) && !blocks_[i]->IsDestroyed())
+		{
+			blocks_[i]->OnCollision(player_);
+
+			if (player_->GetIsDrilling()) //if we're drilling
+			{
+				blocks_[i]->SetTakenDamage(5); //damage is 5
+				blocks_[i]->SetStartShake(true); //shake
+			}
+			else
+			{
+				blocks_[i]->SetTakenDamage(0); //damage is 1
+				blocks_[i]->SetStartShake(false);
+			}
+
+			if (blocks_.empty() || blocks_[i] == nullptr) {
+				continue;	// If block was destroyed or blocks_ changed, avoid incrementing "i"
+			}
+			break;
+		}
+		else
+		{
+			blocks_[i]->SetIsTouched(false); //not on top of the block anymore
+			blocks_[i]->SetStartShake(false);
+
+		}
+		++i; // Increment if no collision or block was not removed
+	}
+
+#pragma endregion
 }
 
 void BasicTutorialScene::ChangePhase()
