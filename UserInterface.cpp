@@ -27,6 +27,6 @@ void UserInterface::Draw() const
 	Novice::DrawSprite(1520, 550, spaceHandle, 1.0f, 1.0f, 0.0f, WHITE); //SPACE
 
 	//HP
-	Novice::DrawSprite(1550, 100, hpHandle[hpFrames_], 1.0f, 1.0f, 0.0f, WHITE); //HP
+	Novice::DrawSprite(1510, 100, hpHandle[hpFrames_], 1.0f, 1.0f, 0.0f, WHITE); //HP
 
 }
