@@ -19,7 +19,10 @@ public:
 	void Update() override;
 	void Draw() override;
 
+	void DeleteBlocks();
+
 	void CheckAllCollision();
+	void ChangePhase();
 
 private:
 	enum class Phase

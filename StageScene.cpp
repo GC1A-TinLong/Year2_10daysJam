@@ -279,10 +279,8 @@ void StageScene::ChangePhase()
 			fade_->Start(Status::FadeOut, duration_);
 			phase_ = Phase::kFadeOut;
 		}
-		if (player_->IsDead())
-		{
-			phase_ = Phase::kDeath;
-		}
+		if (player_->IsDead()) { phase_ = Phase::kDeath; }
+
 		break;
 
 	case StageScene::Phase::kDeath:

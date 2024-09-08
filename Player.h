@@ -141,6 +141,8 @@ public:
 	// Getter
 	bool IsHit() const { return isHit; }
 	bool IsDead() const { return isDead; }
+	bool IsOnGround() const{ return onGround; }
+
 	Vector2 GetPos() const { return pos_; }
 	Size GetSize() const { return size; }
 	Object GetObject_() const;

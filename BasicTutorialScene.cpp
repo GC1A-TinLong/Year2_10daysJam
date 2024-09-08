@@ -6,6 +6,14 @@ BasicTutorialScene::~BasicTutorialScene()
 	delete fade_;
 	delete player_;
 	delete UI;
+#pragma region BLOCK
+	for (auto* blocks : blocks_) { delete blocks; }
+	blocks_.clear();
+	for (auto* leftWall : leftWallBlocks_) { delete leftWall; }
+	leftWallBlocks_.clear();
+	for (auto* rightWall : rightWallBlocks_) { delete rightWall; }
+	rightWallBlocks_.clear();
+#pragma endregion
 }
 
 void BasicTutorialScene::Initialize()
@@ -59,7 +67,32 @@ void BasicTutorialScene::Initialize()
 
 void BasicTutorialScene::Update()
 {
+	background_->Update();
+	// Player
+	player_->Update();
+	player_->CollisionWithBlock(blocks_);
+
+	// Normal Blocks
+	for (int i = 0; i < blocks_.size();)
+	{
+		blocks_[i]->Update();
+
+		if (blocks_[i]->GetIsAboveScreen())
+		{
+			delete blocks_[i];
+			blocks_.erase(blocks_.begin() + i);
+		}
+		else { ++i; }
+	}
+	// WallBlocks
+	for (auto* wallblock : leftWallBlocks_) { wallblock->Update(); }
+	for (auto* wallblock : rightWallBlocks_) { wallblock->Update(); }
+
+
 	fade_->Update();
+
+	DeleteBlocks();
+	CheckAllCollision();
 
 	if (Input::GetInstance()->TriggerKey(DIK_C)) {
 		sceneNo = STAGE;
@@ -111,6 +144,53 @@ void BasicTutorialScene::Draw()
 	}
 }
 
+void BasicTutorialScene::DeleteBlocks()
+{
+	for (int i = 0; i < blocks_.size();)
+	{
+		if (blocks_[i]->IsDestroyed())
+		{
+			delete blocks_[i]; //delete block
+			blocks_.erase(blocks_.begin() + i); //erase it from the vector
+			break;
+		}
+		else { i++; }
+	}
+}
+
 void BasicTutorialScene::CheckAllCollision()
 {
+}
+
+void BasicTutorialScene::ChangePhase()
+{
+	switch (phase_)
+	{
+	case BasicTutorialScene::Phase::kFadeIn:
+		if (fade_->IsFinished()) { phase_ = Phase::kPlay; }
+		break;
+
+	case BasicTutorialScene::Phase::kPlay:
+		if (Input::GetInstance()->TriggerKey(DIK_C))
+		{
+			fade_->Start(Status::FadeOut, duration_);
+			phase_ = Phase::kFadeOut;
+		}
+		if (player_->IsDead()) { phase_ = Phase::kDeath; }
+		break;
+
+	case BasicTutorialScene::Phase::kDeath:
+		phase_ = Phase::kFadeOut;
+		break;
+	case BasicTutorialScene::Phase::kStageClear:
+		break;
+	case BasicTutorialScene::Phase::kFadeOut:
+		if (fade_->IsFinished() && !player_->IsDead()) {
+			sceneNo = STAGE;
+		}
+		else if (fade_->IsFinished() && player_->IsDead()) {
+			Initialize();
+		}
+		break;
+	}
 }
