@@ -18,6 +18,7 @@ GameManager::GameManager()
 
 GameManager::~GameManager()
 {
+	delete pause_;
 }
 
 int GameManager::Run()
@@ -32,20 +33,18 @@ int GameManager::Run()
 		if (prevSceneNo_ != currentSceneNo_) {
 			sceneArr_[currentSceneNo_]->Initialize();
 		}
-		if (!pause_->GetIsPaused()) 
+		if (!pause_->GetIsPaused())
 		{
 			sceneArr_[currentSceneNo_]->Update();
 		}
 		sceneArr_[currentSceneNo_]->Draw();
 
-		 if(pause_->GetIsPaused())
+		// PAUSE
+		if (pause_->GetIsPaused())
 		{
 			pause_->Update();
-
 			pause_->Draw();
 		}
-		
-		
 
 		if (Input::GetInstance()->TriggerKey(DIK_ESCAPE) && !isPaused && currentSceneNo_ != TITLE)
 		{
@@ -54,25 +53,14 @@ int GameManager::Run()
 			pauseTimer = 1;
 		}
 
-		if (!pause_->GetIsPaused() && pauseTimer > 0)
-		{
-			pauseTimer++;
-		}
-
-		if (pauseTimer > 5) 
-		{
-			isPaused = false;
-		}
+		if (!pause_->GetIsPaused() && pauseTimer > 0) { pauseTimer++; }
+		if (pauseTimer > 5) { isPaused = false; }
 
 		if (Input::GetInstance()->TriggerKey(DIK_F)) {
 			isFullScreen ^= true;
 		}
-		if (isFullScreen) {
-			Novice::SetWindowMode(kFullscreen);
-		}
-		else {
-			Novice::SetWindowMode(kWindowed);
-		}
+		if (isFullScreen) { Novice::SetWindowMode(kFullscreen); }
+		else { Novice::SetWindowMode(kWindowed); }
 
 		Novice::EndFrame();
 

@@ -1,6 +1,6 @@
 #pragma once
 
-enum Scene { 
+enum Scene {
 	TITLE,
 	BASIC_TUTORIAL,
 	STAGE,

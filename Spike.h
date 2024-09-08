@@ -15,7 +15,7 @@ private:
 
 	Vector2 pos_;
 
-	uint32_t plainTexture_; 
+	uint32_t plainTexture_;
 	uint32_t bloodTexture_;
 
 public:

@@ -156,16 +156,15 @@ void StageScene::Initialize()
 void StageScene::Update()
 {
 	ChangePhase();
+	background_->Update();
 
 	switch (phase_)
 	{
 	case StageScene::Phase::kFadeIn:
-		background_->Update();
 		fade_->Update();
 		break;
 
 	case StageScene::Phase::kPlay:
-		background_->Update();
 
 		// Player
 		player_->Update();
@@ -206,15 +205,8 @@ void StageScene::Update()
 		}
 
 		// WallBlocks
-		for (auto* wallblock : leftWallBlocks_)
-		{
-			wallblock->Update();
-		}
-
-		for (auto* wallblock : rightWallBlocks_)
-		{
-			wallblock->Update();
-		}
+		for (auto* wallblock : leftWallBlocks_) { wallblock->Update(); }
+		for (auto* wallblock : rightWallBlocks_) { wallblock->Update(); }
 
 		// Spike Trap
 		for (auto* spike : spikeTrap_) {
@@ -242,7 +234,6 @@ void StageScene::Update()
 
 		break;
 	case StageScene::Phase::kDeath:
-		background_->Update();
 
 		// Spike
 		for (auto* spike : spike_) {
@@ -304,11 +295,9 @@ void StageScene::Update()
 
 		break;
 	case StageScene::Phase::kStageClear:
-		background_->Update();
 		break;
 
 	case StageScene::Phase::kFadeOut:
-		background_->Update();
 		fade_->Update();
 		break;
 	}
@@ -361,41 +350,21 @@ void StageScene::Draw()
 	player_->Draw();
 
 	// Destroyable Blocks
-	for (auto* destroyableBlock : destroyableBlocks_)
-	{
-		destroyableBlock->Draw();
-	}
+	for (auto* destroyableBlock : destroyableBlocks_) { destroyableBlock->Draw(); }
 
 	//Blocks
-	for (auto* block : blocks_)
-	{
-		block->Draw();
-	}
+	for (auto* block : blocks_) { 	block->Draw(); }
 
 	//Wall Blocks
-	for (auto* wallblock : leftWallBlocks_)
-	{
-		wallblock->Draw();
-	}
+	for (auto* wallblock : leftWallBlocks_) { wallblock->Draw(); }
+	for (auto* wallblock : rightWallBlocks_) { wallblock->Draw(); }
 
-	for (auto* wallblock : rightWallBlocks_)
-	{
-		wallblock->Draw();
-	}
-
-	for (auto* explodingBlock : explodingBlocks_)
-	{
-		explodingBlock->Draw();
-	}
+	for (auto* explodingBlock : explodingBlocks_) { explodingBlock->Draw(); }
 
 	// Spike
-	for (auto* spike : spike_) {
-		spike->Draw();
-	}
+	for (auto* spike : spike_) { spike->Draw(); }
 	// Spike Trap
-	for (auto* spike : spikeTrap_) {
-		spike->Draw();
-	}
+	for (auto* spike : spikeTrap_) { spike->Draw(); }
 
 	UI->Draw();
 

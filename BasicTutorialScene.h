@@ -55,8 +55,8 @@ private:
 	std::vector<Vector2>blockPos_;
 	// Destroyable Block
 	static inline const uint8_t kDestroyableBlockNum = 4;
-	std::vector<BlockDestroyable*>destroyableBlocks_;
-	std::vector<Vector2> desBlockPos_;
+	/*std::vector<BlockDestroyable*>destroyableBlocks_;
+	std::vector<Vector2> desBlockPos_;*/
 	/*{
 		{144, 300}, {192, 300},{672, 300},
 		{1056, 300}

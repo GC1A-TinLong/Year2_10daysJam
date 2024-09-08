@@ -19,11 +19,11 @@ private:
 	int prevSceneNo_;
 
 	bool isFullScreen = false;
+	Pause* pause_ = nullptr;
 
 public:
 	GameManager();
 	~GameManager();
-	Pause* pause_ = nullptr;
 	int Run();
 	int pauseTimer = 0;
 	bool isPaused = false;

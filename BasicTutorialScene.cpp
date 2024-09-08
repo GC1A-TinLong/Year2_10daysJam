@@ -67,32 +67,65 @@ void BasicTutorialScene::Initialize()
 
 void BasicTutorialScene::Update()
 {
+	ChangePhase();
+
 	background_->Update();
-	// Player
-	player_->Update();
-	player_->CollisionWithBlock(blocks_);
-
-	// Normal Blocks
-	for (int i = 0; i < blocks_.size();)
-	{
-		blocks_[i]->Update();
-
-		if (blocks_[i]->GetIsAboveScreen())
-		{
-			delete blocks_[i];
-			blocks_.erase(blocks_.begin() + i);
-		}
-		else { ++i; }
-	}
 	// WallBlocks
 	for (auto* wallblock : leftWallBlocks_) { wallblock->Update(); }
 	for (auto* wallblock : rightWallBlocks_) { wallblock->Update(); }
 
+	switch (phase_) 
+	{
+	case BasicTutorialScene::Phase::kFadeIn:
+		fade_->Update();
+		break;
+
+	case BasicTutorialScene::Phase::kPlay:
+		// Player
+		player_->Update();
+		player_->CollisionWithBlock(blocks_);
+		// Normal Blocks
+		for (int i = 0; i < blocks_.size();)
+		{
+			blocks_[i]->Update();
+
+			if (blocks_[i]->GetIsAboveScreen())
+			{
+				delete blocks_[i];
+				blocks_.erase(blocks_.begin() + i);
+			}
+			else { ++i; }
+		}
+
+		DeleteBlocks();
+		CheckAllCollision();
+
+		break;
+	case BasicTutorialScene::Phase::kDeath:
+		// Normal Blocks
+		for (int i = 0; i < blocks_.size();)
+		{
+			blocks_[i]->Update();
+
+			if (blocks_[i]->GetIsAboveScreen())
+			{
+				delete blocks_[i];
+				blocks_.erase(blocks_.begin() + i);
+			}
+			else { ++i; }
+		}
+		break;
+
+	case BasicTutorialScene::Phase::kStageClear:
+		break;
+
+	case BasicTutorialScene::Phase::kFadeOut:
+		fade_->Update();
+		break;
+	}
+
 
 	fade_->Update();
-
-	DeleteBlocks();
-	CheckAllCollision();
 
 	if (Input::GetInstance()->TriggerKey(DIK_C)) {
 		sceneNo = STAGE;
@@ -106,37 +139,19 @@ void BasicTutorialScene::Draw()
 
 	// Player
 	player_->Draw();
+	//Blocks
+	for (auto* block : blocks_) { block->Draw(); }
+	//Wall Blocks
+	for (auto* wallblock : leftWallBlocks_) { wallblock->Draw(); }
+	for (auto* wallblock : rightWallBlocks_) { wallblock->Draw(); }
+
+	UI->Draw();
 
 	switch (phase_)
 	{
 	case BasicTutorialScene::Phase::kFadeIn:
 		// Fade
 		fade_->Draw();
-
-		// Destroyable Blocks
-		for (auto* destroyableBlock : destroyableBlocks_)
-		{
-			destroyableBlock->Draw();
-		}
-
-		//Blocks
-		for (auto* block : blocks_)
-		{
-			block->Draw();
-		}
-
-		//Wall Blocks
-		for (auto* wallblock : leftWallBlocks_)
-		{
-			wallblock->Draw();
-		}
-
-		for (auto* wallblock : rightWallBlocks_)
-		{
-			wallblock->Draw();
-		}
-
-		UI->Draw();
 
 		break;
 	case BasicTutorialScene::Phase::kPlay:

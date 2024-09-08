@@ -43,7 +43,6 @@ private:
 	bool isPressingSpace = false;
 	bool isJump = false;
 	bool isHitGround = true;
-	void InitializeFlag();
 	// OnGround
 	bool onGround = true;
 	static inline const float kLRAcceleration = 0.8f;
@@ -79,9 +78,6 @@ private:
 
 	// Sprite Handle
 	uint32_t texture_;
-
-	// Block
-	BlockNotDestroyable* notDesBlock;
 
 	//Exploding Block
 	BlockExplodingTrap* explodingBlock;
@@ -123,6 +119,8 @@ private:
 	uint8_t drawCount = 0;
 	
 public:
+	~Player();
+
 	void Initialize(const Vector2& pos);
 	void Update();
 	void Draw();

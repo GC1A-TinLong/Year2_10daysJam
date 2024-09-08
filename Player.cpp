@@ -2,10 +2,9 @@
 #include "Novice.h"
 #include "Input.h"
 
-void Player::InitializeFlag()
+Player::~Player()
 {
-	isMaxSpeed = false;
-	isPressingSpace = false;
+	delete shake_;
 }
 
 void Player::Initialize(const Vector2& pos)
