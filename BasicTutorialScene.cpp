@@ -225,7 +225,7 @@ void BasicTutorialScene::CheckAllCollision()
 			}
 			else
 			{
-				blocks_[i]->SetTakenDamage(0); //damage is 1
+				blocks_[i]->SetTakenDamage(0); //damage is 0
 				blocks_[i]->SetStartShake(false);
 			}
 
