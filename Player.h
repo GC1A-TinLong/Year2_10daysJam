@@ -4,6 +4,7 @@
 #include "Conveyor.h"
 #include "Shake.h"
 #include <vector>
+#include "BlockExplodingTrap.h"
 
 class SpikeTrap;
 
@@ -82,6 +83,9 @@ private:
 	// Block
 	BlockNotDestroyable* notDesBlock;
 
+	//Exploding Block
+	BlockExplodingTrap* explodingBlock;
+
 	#pragma region Animation
 
 	int playerHandleHolder_;
@@ -131,7 +135,9 @@ public:
 
 	void MovementInput();
 	void OnCollision();
+	void OnCollision(BlockExplodingTrap* explodingblock);
 	void CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks);
+	void CollisionWithExplodingBlock(std::vector<BlockExplodingTrap*>& explodingBlocks);
 	void CollisiontWithConveyor(std::vector<Conveyor*>& conveyor);
 
 	Vector2 CameraOffset();

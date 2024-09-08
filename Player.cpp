@@ -40,7 +40,7 @@ void Player::Draw()
 {
 	if (drawCount <= kMaxDrawCount / 2)	// if taking damage, blink the character
 	{
-		if (!isDead && !isDrilling)
+		if (!isDead && !isDrilling || !isDead && !onGround)
 		{
 			Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + shake_->GetRandY(),
 				(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, WHITE);
@@ -134,13 +134,17 @@ void Player::SwitchPlayerAnimationState()
 
 void Player::Drilling()
 {
-	if (onGround && Input::GetInstance()->PushKey(DIK_S))
+	if (Input::GetInstance()->PushKey(DIK_S))
 	{
 		isDrilling = true;
 	}
-	else if(!Input::GetInstance()->PushKey(DIK_S) || !onGround) {
+	else 
+	{
 		isDrilling = false;
 	}
+	/*else if(!Input::GetInstance()->PushKey(DIK_S) || !onGround) {
+		isDrilling = false;
+	}*/
 
 	if (isDrilling)  { kMaxVelocity = 4.5f; }
 	else  { kMaxVelocity = 12.5f; }
@@ -241,6 +245,12 @@ void Player::OnCollision()
 	isTakingDamage_ = true;
 }
 
+void Player::OnCollision(BlockExplodingTrap* explodingblock)
+{
+	(void)explodingblock;
+	velocity_.y += 5.f;
+}
+
 void Player::Shakeing()
 {
 	shake_->ActivateShake(10, 60);
@@ -259,6 +269,43 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 		//float blockBottom = nonDesBlock->GetPos().y + nonDesBlock->GetSize().height;
 		float leftPosBlock = nonDesBlock->GetPos().x;
 		float rightPosBlock = nonDesBlock->GetPos().x + nonDesBlock->GetSize().width;
+		if (velocity_.y < 0) {
+			continue;
+		}
+		// Conditions
+		bool isWithinHorizontalBounds = (playerLeftPos <= rightPosBlock) && (playerRightPos >= leftPosBlock);
+		bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);	// above block
+		// player.bot without velocity && blockTop + small amount to prevent falling through
+		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
+
+		if (isWithinHorizontalBounds && isCloseEnoughVertically && !isPlayerBelowBlock) {
+			if (velocity_.y > 0) {	// only when falling
+				pos_.y = blockTop - size.height;
+				velocity_.y = 0;
+				isPressingSpace = false;
+			}
+			// within the 3 conditions
+			tempOnGround = true;
+		}
+	}
+
+	onGround = tempOnGround;
+
+}
+
+void Player::CollisionWithExplodingBlock(std::vector<BlockExplodingTrap*>& explodingBlocks)
+{
+	bool tempOnGround = false;		// temp flag, when its confirmed(ended loop), apply it to the origin flag
+
+	for (BlockExplodingTrap* explBlock : explodingBlocks) {
+		float playerLeftPos = pos_.x + widthOffset;
+		float playerRightPos = playerLeftPos + size.width;
+		float playerBottom = pos_.y + size.height + velocity_.y;
+		//float playerTop = pos_.y + velocity_.y;
+		float blockTop = explBlock->GetPos().y;
+		//float blockBottom = nonDesBlock->GetPos().y + nonDesBlock->GetSize().height;
+		float leftPosBlock = explBlock->GetPos().x;
+		float rightPosBlock = explBlock->GetPos().x + explBlock->GetSize().width;
 		if (velocity_.y < 0) {
 			continue;
 		}

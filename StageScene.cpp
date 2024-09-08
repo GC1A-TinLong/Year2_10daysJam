@@ -41,6 +41,10 @@ StageScene::~StageScene()
 	}
 	spikeTrap_.clear();
 
+	for (auto* explodingBlock : explodingBlocks_) {
+		delete explodingBlock;
+	}
+	explodingBlocks_.clear();
 }
 
 void StageScene::Initialize()
@@ -134,6 +138,19 @@ void StageScene::Initialize()
 	}
 
 #pragma endregion
+
+#pragma region Exploding Block
+
+	explodingBlocks_.resize(kExplodingBlockNum);
+	for (int i = 0; i < kExplodingBlockNum; i++)
+	{
+		explodingBlocks_[i] = new BlockExplodingTrap;
+		//Vector2 blockPos = BlockPos_[i];
+		explodingBlocks_[i]->Initialize(explodingBlockPos_[i], isExplodingBlockMoss[i]);
+	}
+
+#pragma endregion
+
 }
 
 void StageScene::Update()
@@ -153,6 +170,7 @@ void StageScene::Update()
 		// Player
 		player_->Update();
 		player_->CollisionWithBlock(blocks_);
+		//player_->CollisionWithExplodingBlock(explodingBlocks_);
 
 		// Spike
 		for (auto* spike : spike_) {
@@ -199,6 +217,22 @@ void StageScene::Update()
 		// Spike Trap
 		for (auto* spike : spikeTrap_) {
 			spike->Update();
+		}
+
+		//Exploding Blocks
+		for (int i = 0; i < explodingBlocks_.size();)
+		{
+			explodingBlocks_[i]->Update();
+
+			if (explodingBlocks_[i]->GetIsAboveScreen())
+			{
+				delete explodingBlocks_[i];
+				explodingBlocks_.erase(explodingBlocks_.begin() + i);
+			}
+			else
+			{
+				++i;
+			}
 		}
 
 		DeleteBlocks();
@@ -248,6 +282,22 @@ void StageScene::Update()
 		for (auto* wallblock : rightWallBlocks_)
 		{
 			wallblock->Update();
+		}
+
+		//Exploding Blocks
+		for (int i = 0; i < explodingBlocks_.size();)
+		{
+			explodingBlocks_[i]->Update();
+
+			if (explodingBlocks_[i]->GetIsAboveScreen())
+			{
+				delete explodingBlocks_[i];
+				explodingBlocks_.erase(explodingBlocks_.begin() + i);
+			}
+			else
+			{
+				++i;
+			}
 		}
 
 		break;
@@ -329,6 +379,11 @@ void StageScene::Draw()
 	for (auto* wallblock : rightWallBlocks_)
 	{
 		wallblock->Draw();
+	}
+
+	for (auto* explodingBlock : explodingBlocks_)
+	{
+		explodingBlock->Draw();
 	}
 
 	// Spike
@@ -447,6 +502,55 @@ void StageScene::CheckAllCollision()
 		{
 			player_->OnCollision();
 		}
+	}
+
+#pragma endregion
+
+#pragma region  player & exploding block
+
+	Object obj6;
+
+	for (int i = 0; i < explodingBlocks_.size(); ++i) //reset all blocks to not being touched
+	{
+		explodingBlocks_[i]->SetIsTouched(false);
+		explodingBlocks_[i]->SetStartShake(false);
+	}
+
+	for (int i = 0; i < explodingBlocks_.size();)
+	{
+		obj6 = explodingBlocks_[i]->GetObject_();
+		if (isCollideObject(obj3, obj6))
+		{
+			explodingBlocks_[i]->OnCollision(player_);
+
+			if (player_->GetIsDrilling()) //if we're drilling
+			{
+				explodingBlocks_[i]->SetTakenDamage(5); //damage is 5
+				explodingBlocks_[i]->SetStartShake(true); //shake
+			}
+			else
+			{
+				explodingBlocks_[i]->SetTakenDamage(0); //damage is 1
+				explodingBlocks_[i]->SetStartShake(false);
+			}
+
+			if (explodingBlocks_.empty() || explodingBlocks_[i] == nullptr) {
+				continue;	// If block was destroyed or blocks_ changed, avoid incrementing "i"
+			}
+
+			if (explodingBlocks_[i]->IsDestroyed()) 
+			{
+				player_->OnCollision(explodingBlocks_[i]);
+			}
+			break;
+		}
+		else
+		{
+			explodingBlocks_[i]->SetIsTouched(false); //not on top of the block anymore
+			explodingBlocks_[i]->SetStartShake(false);
+
+		}
+		++i; // Increment if no collision or block was not removed
 	}
 
 #pragma endregion
