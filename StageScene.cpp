@@ -170,7 +170,9 @@ void StageScene::Update()
 		// Player
 		player_->Update();
 		player_->CollisionWithBlock(blocks_);
-		//player_->CollisionWithExplodingBlock(explodingBlocks_);
+		if (!player_->IsOnGround()) {
+			player_->CollisionWithExplodingBlock(explodingBlocks_);
+		}
 
 		// Spike
 		for (auto* spike : spike_) {
