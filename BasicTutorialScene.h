@@ -7,6 +7,7 @@
 #include "BlockDestroyable.h"
 #include "BlockNotDestroyable.h"
 #include "Backgroud.h"
+#include "UserInterface.h"
 #include <vector>
 
 class BasicTutorialScene : public IScene
@@ -35,6 +36,11 @@ private:
 	Fade* fade_ = nullptr;
 	float duration_ = 1.0f;
 
+	Background* background_ = nullptr;
+
+	// UI
+	UserInterface* UI = nullptr;
+
 	// Player
 	Player* player_ = nullptr;
 
@@ -44,6 +50,14 @@ private:
 	static inline const uint8_t kBlockNum = 15;
 	std::vector<BlockNotDestroyable*>blocks_;
 	std::vector<Vector2>blockPos_;
+	// Destroyable Block
+	static inline const uint8_t kDestroyableBlockNum = 4;
+	std::vector<BlockDestroyable*>destroyableBlocks_;
+	std::vector<Vector2> desBlockPos_;
+	/*{
+		{144, 300}, {192, 300},{672, 300},
+		{1056, 300}
+	};*/
 	// Wall
 	static inline const uint8_t kWallBlockNum = 22;
 	std::vector<BlockNotDestroyable*>leftWallBlocks_;

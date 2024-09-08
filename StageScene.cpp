@@ -169,10 +169,7 @@ void StageScene::Update()
 				delete destroyableBlocks_[i];
 				destroyableBlocks_.erase(destroyableBlocks_.begin() + i);
 			}
-			else
-			{
-				++i;
-			}
+			else { ++i; }
 		}
 
 		//Blocks
@@ -185,10 +182,7 @@ void StageScene::Update()
 				delete blocks_[i];
 				blocks_.erase(blocks_.begin() + i);
 			}
-			else
-			{
-				++i;
-			}
+			else { ++i; }
 		}
 
 		// WallBlocks
@@ -229,10 +223,7 @@ void StageScene::Update()
 				delete destroyableBlocks_[i];
 				destroyableBlocks_.erase(destroyableBlocks_.begin() + i);
 			}
-			else
-			{
-				++i;
-			}
+			else { ++i; }
 		}
 
 		//Blocks
@@ -245,10 +236,7 @@ void StageScene::Update()
 				delete blocks_[i];
 				blocks_.erase(blocks_.begin() + i);
 			}
-			else
-			{
-				++i;
-			}
+			else { ++i; }
 		}
 
 		// WallBlocks
@@ -316,200 +304,61 @@ void StageScene::ChangePhase()
 
 void StageScene::Draw()
 {
+	// Background
+	background_->Draw();
+
+	// Player
+	player_->Draw();
+
+	// Destroyable Blocks
+	for (auto* destroyableBlock : destroyableBlocks_)
+	{
+		destroyableBlock->Draw();
+	}
+
+	//Blocks
+	for (auto* block : blocks_)
+	{
+		block->Draw();
+	}
+
+	//Wall Blocks
+	for (auto* wallblock : leftWallBlocks_)
+	{
+		wallblock->Draw();
+	}
+
+	for (auto* wallblock : rightWallBlocks_)
+	{
+		wallblock->Draw();
+	}
+
+	// Spike
+	for (auto* spike : spike_) {
+		spike->Draw();
+	}
+	// Spike Trap
+	for (auto* spike : spikeTrap_) {
+		spike->Draw();
+	}
+
+	UI->Draw();
+
 	switch (phase_)
 	{
 	case StageScene::Phase::kFadeIn:
 		// Fade
 		fade_->Draw();
-
-		// Player
-		player_->Draw();
-
-		// Background
-		background_->Draw();
-
-		// Destroyable Blocks
-		for (auto* destroyableBlock : destroyableBlocks_)
-		{
-			destroyableBlock->Draw();
-		}
-
-		//Blocks
-		for (auto* block : blocks_)
-		{
-			block->Draw();
-		}
-
-		//Wall Blocks
-		for (auto* wallblock : leftWallBlocks_)
-		{
-			wallblock->Draw();
-		}
-
-		for (auto* wallblock : rightWallBlocks_)
-		{
-			wallblock->Draw();
-		}
-
-		// Spike
-		for (auto* spike : spike_) {
-			spike->Draw();
-		}
-
-
-		UI->Draw();
-
 		break;
+
 	case StageScene::Phase::kPlay:
-		// Background
-		background_->Draw();
-
-		// Player
-		player_->Draw();
-
-		//Destroyable Blocks
-		for (auto* destroyableBlock : destroyableBlocks_)
-		{
-			destroyableBlock->Draw();
-		}
-
-		//Blocks
-		for (auto* block : blocks_)
-		{
-			block->Draw();
-		}
-
-		//Wall Blocks
-		for (auto* wallblock : leftWallBlocks_)
-		{
-			wallblock->Draw();
-		}
-
-		for (auto* wallblock : rightWallBlocks_)
-		{
-			wallblock->Draw();
-		}
-
-		// Spike Trap
-		for (auto* spike : spikeTrap_) {
-			spike->Draw();
-		}
-
-		// Spike
-		for (auto* spike : spike_) {
-			spike->Draw();
-		}
-
-		UI->Draw();
-
 		break;
 	case StageScene::Phase::kDeath:
-
-		background_->Draw();
-
-		//Destroyable Blocks
-		for (auto* destroyableBlock : destroyableBlocks_)
-		{
-			destroyableBlock->Draw();
-		}
-
-		//Blocks
-		for (auto* block : blocks_)
-		{
-			block->Draw();
-		}
-
-		//Wall Blocks
-		for (auto* wallblock : leftWallBlocks_)
-		{
-			wallblock->Draw();
-		}
-
-		for (auto* wallblock : rightWallBlocks_)
-		{
-			wallblock->Draw();
-		}
-
-
-		// Spike
-		for (auto* spike : spike_) {
-			spike->Draw();
-		}
-
-		UI->Draw();
-
 		break;
 	case StageScene::Phase::kStageClear:
-
-		background_->Draw();
-
-		//Destroyable Blocks
-		for (auto* destroyableBlock : destroyableBlocks_)
-		{
-			destroyableBlock->Draw();
-		}
-
-		//Blocks
-		for (auto* block : blocks_)
-		{
-			block->Draw();
-		}
-
-		//Wall Blocks
-		for (auto* wallblock : leftWallBlocks_)
-		{
-			wallblock->Draw();
-		}
-
-		for (auto* wallblock : rightWallBlocks_)
-		{
-			wallblock->Draw();
-		}
-
-
-		// Spike
-		for (auto* spike : spike_) {
-			spike->Draw();
-		}
-
-		UI->Draw();
-
 		break;
-
 	case StageScene::Phase::kFadeOut:
 
-		background_->Draw();
-
-		//Destroyable Blocks
-		for (auto* destroyableBlock : destroyableBlocks_)
-		{
-			destroyableBlock->Draw();
-		}
-
-		//Blocks
-		for (auto* block : blocks_)
-		{
-			block->Draw();
-		}
-
-		//Wall Blocks
-		for (auto* wallblock : leftWallBlocks_)
-		{
-			wallblock->Draw();
-		}
-
-		for (auto* wallblock : rightWallBlocks_)
-		{
-			wallblock->Draw();
-		}
-
-
-		// Spike
-		for (auto* spike : spike_) {
-			spike->Draw();
-		}
-
-		UI->Draw();
 		fade_->Draw();
 		break;
 	}
@@ -525,10 +374,7 @@ void StageScene::DeleteBlocks()
 			blocks_.erase(blocks_.begin() + i); //erase it from the vector
 			break;
 		}
-		else
-		{
-			i++;
-		}
+		else { i++; }
 	}
 }
 

@@ -70,6 +70,7 @@ private:
 		{1056, 300}
 	};
 
+#pragma region Normal Block
 	// Normal Block
 	static inline const uint8_t kBlockNum = 36;
 	std::vector<BlockNotDestroyable*>blocks_;
@@ -97,6 +98,7 @@ private:
 	{
 		0,1,0,1,1,0,0,0,1,0,
 	};
+#pragma endregion
 
 	static inline const uint8_t kWallBlockNum = 22;
 	std::vector<BlockNotDestroyable*>leftWallBlocks_;

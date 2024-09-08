@@ -2,8 +2,10 @@
 
 BasicTutorialScene::~BasicTutorialScene()
 {
-	delete player_;
+	delete background_;
 	delete fade_;
+	delete player_;
+	delete UI;
 }
 
 void BasicTutorialScene::Initialize()
@@ -17,6 +19,9 @@ void BasicTutorialScene::Initialize()
 
 #pragma endregion
 
+	// Background
+	background_ = new Background;
+	UI = new UserInterface;
 	// Player
 	player_ = new Player;
 
@@ -63,6 +68,47 @@ void BasicTutorialScene::Update()
 
 void BasicTutorialScene::Draw()
 {
+	// Background
+	background_->Draw();
+
+	// Player
+	player_->Draw();
+
+	switch (phase_)
+	{
+	case BasicTutorialScene::Phase::kFadeIn:
+		// Fade
+		fade_->Draw();
+
+		// Destroyable Blocks
+		for (auto* destroyableBlock : destroyableBlocks_)
+		{
+			destroyableBlock->Draw();
+		}
+
+		//Blocks
+		for (auto* block : blocks_)
+		{
+			block->Draw();
+		}
+
+		//Wall Blocks
+		for (auto* wallblock : leftWallBlocks_)
+		{
+			wallblock->Draw();
+		}
+
+		for (auto* wallblock : rightWallBlocks_)
+		{
+			wallblock->Draw();
+		}
+
+		UI->Draw();
+
+		break;
+	case BasicTutorialScene::Phase::kPlay:
+		break;
+	}
 }
 
 void BasicTutorialScene::CheckAllCollision()

@@ -57,7 +57,7 @@ void Player::Draw()
 	Novice::ScreenPrintf(0, 60, "player.pos.y = %f", pos_.y);
 	Novice::ScreenPrintf(0, 80, "onGround = %d", onGround);
 	Novice::ScreenPrintf(0, 100, "isTakingDamage = %d", isTakingDamage_);
-	Novice::ScreenPrintf(0, 120, "IFrames = %d", iFrames);
+	Novice::ScreenPrintf(0, 120, "isDrilling = %d", isDrilling);
 	Novice::ScreenPrintf(0, 140, "hp = %d", hp);
 
 	Novice::DrawBox((int)(pos_.x + widthOffset), (int)(pos_.y + drillPosOffset.y), drillSize.width, drillSize.height, 0.0f, WHITE, kFillModeWireFrame);
@@ -134,23 +134,16 @@ void Player::SwitchPlayerAnimationState()
 
 void Player::Drilling()
 {
-	if (onGround) 
+	if (onGround && Input::GetInstance()->PushKey(DIK_S))
 	{
-		isDrilling = Input::GetInstance()->PushKey(DIK_S);
+		isDrilling = true;
 	}
-	else 
-	{
+	else if(!Input::GetInstance()->PushKey(DIK_S) || !onGround) {
 		isDrilling = false;
 	}
 
-	if (isDrilling) 
-	{
-		kMaxVelocity = 4.5f;
-	}
-	else 
-	{
-		kMaxVelocity = 12.5f;
-	}
+	if (isDrilling)  { kMaxVelocity = 4.5f; }
+	else  { kMaxVelocity = 12.5f; }
 }
 
 void Player::Scrolling()
