@@ -64,27 +64,27 @@ private:
 	std::vector<BlockNotDestroyable*>blocks_;
 	std::vector<Vector2>blockPos_ = 
 	{
-		{kBlockSize *4, 500.f}, {kBlockSize * 5, 500.f},{kBlockSize * 6, 500.f},
-		{kBlockSize *7, 500.f}, {kBlockSize * 8, 500.f},{kBlockSize * 9, 500.f},
-		{kBlockSize * 10, 500.f}, {kBlockSize * 11, 500.f},{kBlockSize * 12, 500.f},
-		{kBlockSize * 13, 500.f}, {kBlockSize * 14, 500.f},{kBlockSize * 15, 500.f},
-		{kBlockSize * 16, 500.f}, {kBlockSize * 17, 500.f},{kBlockSize * 18, 500.f},
-		{kBlockSize * 19, 500.f}, {kBlockSize * 20, 500.f},{kBlockSize * 21, 500.f},
-		{kBlockSize * 22, 500.f}, {kBlockSize * 23, 500.f},{kBlockSize * 24, 500.f},
-		{kBlockSize * 25, 500.f}, {kBlockSize * 26, 500.f},{kBlockSize * 27, 500.f},
-		{kBlockSize * 28, 500.f},
+		{kBlockSize *4, 300.f}, {kBlockSize * 5, 300.f},{kBlockSize * 6, 300.f},
+		{kBlockSize *7, 300.f}, {kBlockSize * 8, 300.f},{kBlockSize * 9, 300.f},
+		{kBlockSize * 10, 300.f}, {kBlockSize * 11, 300.f},{kBlockSize * 12, 300.f},
+		{kBlockSize * 13, 300.f}, {kBlockSize * 14, 300.f},{kBlockSize * 15, 300.f},
+		{kBlockSize * 16, 300.f}, {kBlockSize * 17, 300.f},{kBlockSize * 18, 300.f},
+		{kBlockSize * 19, 300.f}, {kBlockSize * 20, 300.f},{kBlockSize * 21, 300.f},
+		{kBlockSize * 22, 300.f}, {kBlockSize * 23, 300.f},{kBlockSize * 24, 300.f},
+		{kBlockSize * 25, 300.f}, {kBlockSize * 26, 300.f},{kBlockSize * 27, 300.f},
+		{kBlockSize * 28, 300.f},
 
-		{kBlockSize * 14, 700.f}, {kBlockSize * 15, 700.f},{kBlockSize * 16, 700.f},
-		{kBlockSize * 17, 700.f}, {kBlockSize * 18, 700.f},
+		{kBlockSize * 14, 500.f}, {kBlockSize * 15, 500.f},{kBlockSize * 16, 500.f},
+		{kBlockSize * 17, 500.f}, {kBlockSize * 18, 500.f},
 
-		{kBlockSize * 21, 1000.f}, {kBlockSize * 22, 1000.f},{kBlockSize * 23, 1000.f},
-		{kBlockSize * 24, 1000.f}, {kBlockSize * 25, 1000.f},
+		{kBlockSize * 21, 600.f}, {kBlockSize * 22, 600.f},{kBlockSize * 23, 600.f},
+		{kBlockSize * 24, 600.f}, {kBlockSize * 25, 600.f},
 
-		{kBlockSize * 7, 1300.f}, {kBlockSize * 8, 1300.f},{kBlockSize * 9, 1300.f},
-		{kBlockSize * 10, 1300.f}, {kBlockSize * 11, 1300.f},
+		{kBlockSize * 7, 800.f}, {kBlockSize * 8, 800.f},{kBlockSize * 9, 800.f},
+		{kBlockSize * 10, 800.f}, {kBlockSize * 11, 800.f},
 
-		{kBlockSize * 12, 1600.f}, {kBlockSize * 13, 1600.f},{kBlockSize * 14, 1600.f},
-		{kBlockSize * 15, 1600.f}, {kBlockSize * 16, 1600.f},
+		{kBlockSize * 16, 900.f}, {kBlockSize * 17, 900.f},{kBlockSize * 18, 900.f},
+		{kBlockSize * 19, 900.f}, {kBlockSize * 20, 900.f},
 	};
 
 	

@@ -8,9 +8,10 @@ Player::~Player()
 	delete shake_;
 }
 
-void Player::Initialize(const Vector2& pos)
+void Player::Initialize(const Vector2& pos, float scrollSpeed)
 {
 	pos_ = pos;
+	scrollSpeed_ = scrollSpeed;
 	playerIdleHandle_ = Novice::LoadTexture("./Resources/Player/digPlayer.png");
 	playerMovingRightHandle_ = Novice::LoadTexture("./Resources/Player/digPlayer(R).png");
 	playerMovingLeftHandle_ = Novice::LoadTexture("./Resources/Player/digPlayer(L).png");
@@ -158,7 +159,7 @@ void Player::Drilling()
 
 void Player::Scrolling()
 {
-	pos_.y -= 1.f;
+	pos_.y -= scrollSpeed_;
 	if (pos_.y >= 1080 || pos_.y <= 0)
 	{
 		isDead = true;

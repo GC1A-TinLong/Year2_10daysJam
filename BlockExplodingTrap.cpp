@@ -6,10 +6,11 @@ BlockExplodingTrap::~BlockExplodingTrap()
 	delete shake_;
 }
 
-void BlockExplodingTrap::Initialize(Vector2 pos, bool isMoss)
+void BlockExplodingTrap::Initialize(Vector2 pos, bool isMoss, float scrollSpeed)
 {
 	pos_ = pos;
 	isMoss_ = isMoss;
+	scrollSpeed_ = scrollSpeed;
 	if (isMoss_)
 	{
 		blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/GrassTrapBlock.png");
@@ -24,7 +25,7 @@ void BlockExplodingTrap::Initialize(Vector2 pos, bool isMoss)
 
 void BlockExplodingTrap::Update()
 {
-	pos_.y -= 1.f;
+	pos_.y -= scrollSpeed_;
 	DestroyIfOOB();
 	shake_->ActivateShake(5, 30);
 	HP();
@@ -83,4 +84,6 @@ const Object BlockExplodingTrap::GetObject_() const
 	result.pos = pos_;
 	result.size = size;
 	return result;
+
+	
 }

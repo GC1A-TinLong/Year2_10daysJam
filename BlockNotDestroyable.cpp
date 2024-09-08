@@ -6,11 +6,12 @@ BlockNotDestroyable::~BlockNotDestroyable()
 	delete shake_;
 }
 
-void BlockNotDestroyable::Initialize(Vector2 pos,bool isMoss, bool isWall)
+void BlockNotDestroyable::Initialize(Vector2 pos,bool isMoss, bool isWall, float scrollSpeed)
 {
 	pos_ = pos;
 	isMoss_ = isMoss;
 	isWall_ = isWall;
+	scrollSpeed_ = scrollSpeed;
 
 	if (isMoss_) 
 	{
@@ -26,7 +27,7 @@ void BlockNotDestroyable::Initialize(Vector2 pos,bool isMoss, bool isWall)
 
 void BlockNotDestroyable::Update()
 {
-	pos_.y -= 1.f;
+	pos_.y -= scrollSpeed_;
 	if (isWall_) 
 	{
 		LoopWall();

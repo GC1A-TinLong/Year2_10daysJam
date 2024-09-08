@@ -70,7 +70,7 @@ void StageScene::Initialize()
 
 	// Player
 	player_ = new Player;
-	player_->Initialize({ 640.f,400.f });
+	player_->Initialize({ 640.f,400.f }, 1.f);
 
 	// Spike
 	spike_.resize(kSpikeNum);
@@ -88,7 +88,7 @@ void StageScene::Initialize()
 	{
 		destroyableBlocks_[i] = new BlockDestroyable;
 		Vector2 desBlockPos = desBlockPos_[i];
-		destroyableBlocks_[i]->Initialize(desBlockPos);
+		destroyableBlocks_[i]->Initialize(desBlockPos, 1.f);
 	}
 
 #pragma endregion
@@ -100,7 +100,7 @@ void StageScene::Initialize()
 	{
 		blocks_[i] = new BlockNotDestroyable;
 		//Vector2 blockPos = BlockPos_[i];
-		blocks_[i]->Initialize(BlockPos_[i], isMoss[i], false);
+		blocks_[i]->Initialize(BlockPos_[i], isMoss[i], false, 1.f);
 	}
 #pragma endregion
 
@@ -111,7 +111,7 @@ void StageScene::Initialize()
 	{
 		leftWallBlocks_[i] = new BlockNotDestroyable;
 		leftWallPos_.y = 48.f * i;
-		leftWallBlocks_[i]->Initialize(leftWallPos_, false, true);
+		leftWallBlocks_[i]->Initialize(leftWallPos_, false, true, 1.f);
 	}
 
 #pragma endregion
@@ -123,7 +123,7 @@ void StageScene::Initialize()
 	{
 		rightWallBlocks_[i] = new BlockNotDestroyable;
 		rightWallPos_.y = 48.f * i;
-		rightWallBlocks_[i]->Initialize(rightWallPos_, false, true);
+		rightWallBlocks_[i]->Initialize(rightWallPos_, false, true, 1.f);
 	}
 
 #pragma endregion
@@ -134,7 +134,7 @@ void StageScene::Initialize()
 	for (int i = 0; i < kSpikeTrapNum; i++)
 	{
 		spikeTrap_[i] = new SpikeTrap;
-		spikeTrap_[i]->Initialize(spikeTrapPos_[i]);
+		spikeTrap_[i]->Initialize(spikeTrapPos_[i],1.f);
 	}
 
 #pragma endregion
@@ -146,7 +146,7 @@ void StageScene::Initialize()
 	{
 		explodingBlocks_[i] = new BlockExplodingTrap;
 		//Vector2 blockPos = BlockPos_[i];
-		explodingBlocks_[i]->Initialize(explodingBlockPos_[i], isExplodingBlockMoss[i]);
+		explodingBlocks_[i]->Initialize(explodingBlockPos_[i], isExplodingBlockMoss[i], 1.f);
 	}
 
 #pragma endregion

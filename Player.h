@@ -126,11 +126,14 @@ private:
 	int iFrames = 0;
 	static inline const uint8_t kMaxDrawCount = 16;
 	uint8_t drawCount = 0;
+
+	//Scroll speed
+	float scrollSpeed_;
 	
 public:
 	~Player();
 
-	void Initialize(const Vector2& pos);
+	void Initialize(const Vector2& pos, float scrollSpeed);
 	void Update();
 	void Draw();
 	void Audio();

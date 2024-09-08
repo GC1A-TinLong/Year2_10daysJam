@@ -41,7 +41,7 @@ void BasicTutorialScene::Initialize()
 	}
 	// Player
 	player_ = new Player;
-	player_->Initialize({ 640.f,500.f - player_->GetSize().height });
+	player_->Initialize({ 640.f,300.f - player_->GetSize().height }, 0.f);
 
 	// Normal Block
 	blocks_.resize(kBlockNum);
@@ -50,7 +50,7 @@ void BasicTutorialScene::Initialize()
 	{
 		blocks_[i] = new BlockNotDestroyable;
 		//blockPos_[i] = { (kBlockSize * 4) + (kBlockSize * i),500.f };
-		blocks_[i]->Initialize(blockPos_[i], false, false);
+		blocks_[i]->Initialize(blockPos_[i], false, false, 0.f);
 	}
 #pragma region LeftWall
 
@@ -59,7 +59,7 @@ void BasicTutorialScene::Initialize()
 	{
 		leftWallBlocks_[i] = new BlockNotDestroyable;
 		leftWallPos_.y = 48.f * i;
-		leftWallBlocks_[i]->Initialize(leftWallPos_, false, true);
+		leftWallBlocks_[i]->Initialize(leftWallPos_, false, true, 0.f);
 	}
 
 #pragma endregion
@@ -70,7 +70,7 @@ void BasicTutorialScene::Initialize()
 	{
 		rightWallBlocks_[i] = new BlockNotDestroyable;
 		rightWallPos_.y = 48.f * i;
-		rightWallBlocks_[i]->Initialize(rightWallPos_, false, true);
+		rightWallBlocks_[i]->Initialize(rightWallPos_, false, true, 0.f);
 	}
 
 #pragma endregion
