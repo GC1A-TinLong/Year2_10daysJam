@@ -47,7 +47,7 @@ private:
 
 	bool isAboveScreen_ = false;
 
-	int hpMax = 100;
+	int hpMax = 150;
 	int hp = hpMax;
 	int takenDamage_ = 0;
 	int hpLow = 90;

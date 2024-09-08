@@ -46,8 +46,8 @@ private:
 	Background* background_ = nullptr;
 	int backgroundHandle_[MAXBACKGROUNDS] =
 	{
-		{Novice::LoadTexture("./Resources/Background/Bg1.png")},
-		{Novice::LoadTexture("./Resources/Background/Bg2.png")},
+		{Novice::LoadTexture("./Resources/Background/OneBg.png")},
+		{Novice::LoadTexture("./Resources/Background/TwoBg.png")},
 	};
 
 	// UI

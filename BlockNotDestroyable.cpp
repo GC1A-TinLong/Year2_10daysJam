@@ -46,24 +46,27 @@ void BlockNotDestroyable::DestroyIfOOB()
 	if (pos_.y <= -48.f)
 	{
 		isAboveScreen_ = true;
+		hp = 0;
 	}
 }
 
 void BlockNotDestroyable::HP()
 {
-	if (isTouched_ && hp >= 0 && takenDamage_ > 1) //player is on top of the block
+	if (hp >= 0 && takenDamage_ > 1) //player is on top of the block
 	{
 		hp -= takenDamage_;
 	}
 
 	//Return to max HP
-	if (!isTouched_ && hp > 0) 
+
+	if (hp > hpHalf && takenDamage_ == 0 || !isTouched_ && hp > hpHalf)
 	{
 		hp = hpMax;
 	}
 
 	//Return to half HP
-	if (!isTouched_ && hp < hpHalf && hp > 0) 
+
+	if (takenDamage_ == 0 && hp < hpHalf && hp > 0 || !isTouched_ && hp < hpHalf && hp > 0)
 	{
 		hp = hpHalf;
 	}

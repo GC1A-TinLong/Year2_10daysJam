@@ -52,7 +52,7 @@ private:
 	/// Airborne ///
 	// Gravity
 	static inline const float kFreeFallAcceleration = 1.8f;
-	static inline float kMaxFallSpeed = 14.f;
+	static inline float maxFallSpeed = 14.f;
 	// Jump Acceleration
 	static inline const float kInitJumpAcceleration = 14.f;
 	static inline const float kContinuousJumpAcceleration = 3.f;
@@ -112,8 +112,9 @@ private:
 	bool isExploding_ = false;
 	int explodedTimer = 0;
 	int randX = 0;
+	float explosionVelocityX = 0;
 	unsigned int seed;
-	int amplitude = 40;
+	int amplitude = 9;
 
 	//dont go Out Of Bounds
 	float minXPos = 196.f;
