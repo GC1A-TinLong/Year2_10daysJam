@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Novice.h"
 #include "Input.h"
+#include "time.h"
 
 Player::~Player()
 {
@@ -15,6 +16,9 @@ void Player::Initialize(const Vector2& pos)
 	playerMovingLeftHandle_ = Novice::LoadTexture("./Resources/Player/digPlayer(L).png");
 
 	jumpAudioHandle = Novice::LoadAudio("./Resources/Audio/jump2.wav");
+
+	seed = (unsigned int)time(nullptr);
+	srand(seed);
 
 	shake_ = new Shake();
 	shake_->Initialize();
@@ -31,8 +35,10 @@ void Player::Update()
 
 	Drilling();
 	Shakeing();
+	Exploded();
 
 	TakingDamage();
+
 }
 
 void Player::Draw()
@@ -58,6 +64,7 @@ void Player::Draw()
 	Novice::ScreenPrintf(0, 100, "isTakingDamage = %d", isTakingDamage_);
 	Novice::ScreenPrintf(0, 120, "isDrilling = %d", isDrilling);
 	Novice::ScreenPrintf(0, 140, "hp = %d", hp);
+	Novice::ScreenPrintf(0, 160, "exploded = %d", isExploding_);
 
 	Novice::DrawBox((int)(pos_.x + widthOffset), (int)(pos_.y + drillPosOffset.y), drillSize.width, drillSize.height, 0.0f, WHITE, kFillModeWireFrame);
 }
@@ -151,12 +158,40 @@ void Player::Drilling()
 
 void Player::Scrolling()
 {
-	pos_.y -= 1.f;
+	//pos_.y -= 1.f;
 	if (pos_.y >= 1080)
 	{
 		isDead = true;
 	}
 
+}
+
+void Player::Exploded() 
+{
+	if (isExploding_) 
+	{
+		isTakingDamage_ = true;
+		pos_.y -= 34.f;
+		pos_.x += randX;
+		explodedTimer++;
+		kMaxFallSpeed = 7.f;
+	} 
+
+	if (onGround) 
+	{
+		kMaxFallSpeed = 14.f;
+	}
+
+	if (explodedTimer == 1) 
+	{
+		randX = (rand() % amplitude) - (amplitude / 2);
+	}
+
+	if (explodedTimer > 9) 
+	{
+		isExploding_ = false;
+		explodedTimer = 0;
+	}
 }
 
 void Player::MovementInput()
@@ -247,7 +282,6 @@ void Player::OnCollision()
 void Player::OnCollision(BlockExplodingTrap* explodingblock)
 {
 	(void)explodingblock;
-	velocity_.y += 5.f;
 }
 
 void Player::Shakeing()

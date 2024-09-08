@@ -52,7 +52,7 @@ private:
 	/// Airborne ///
 	// Gravity
 	static inline const float kFreeFallAcceleration = 1.8f;
-	static inline const float kMaxFallSpeed = 14.f;
+	static inline float kMaxFallSpeed = 14.f;
 	// Jump Acceleration
 	static inline const float kInitJumpAcceleration = 14.f;
 	static inline const float kContinuousJumpAcceleration = 3.f;
@@ -108,6 +108,13 @@ private:
 	
 	bool isDrilling = false;
 
+	//Has Exploded
+	bool isExploding_ = false;
+	int explodedTimer = 0;
+	int randX = 0;
+	unsigned int seed;
+	int amplitude = 40;
+
 	//dont go Out Of Bounds
 	float minXPos = 196.f;
 	float maxXPos = 1347.f;
@@ -130,6 +137,7 @@ public:
 	void SwitchPlayerAnimationState();
 	void Drilling();
 	void Scrolling();
+	void Exploded();
 
 	void MovementInput();
 	void OnCollision();
@@ -153,8 +161,10 @@ public:
 	Object GetDrillPointObject_() const;
 	bool GetIsDrilling() const { return isDrilling; };
 	bool GetIsTakingDamage() const { return isTakingDamage_; };
+	bool GetHasExploded() const { return isExploding_; };
 
 	// Setter
 	void SetVelocity(Vector2 velocity) { velocity_ = velocity; };
+	void SetHasExploded(bool isExploding) { isExploding_ = isExploding; };
 };
 
