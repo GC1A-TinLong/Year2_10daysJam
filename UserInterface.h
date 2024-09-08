@@ -4,9 +4,13 @@
 class UserInterface
 {
 public:
+
 	void Initialize();
 	void Update();
 	void Draw() const;
+
+	//Setter
+	void SetHPFrames(int hpFrames) { hpFrames_ = hpFrames; };
 
 
 private:
@@ -19,5 +23,18 @@ private:
 	int rightPlayer = Novice::LoadTexture("./Resources/Player/digPlayer(R).gif");
 	int leftPlayer = Novice::LoadTexture("./Resources/Player/digPlayer(L).gif");
 	int spaceHandle = Novice::LoadTexture("./Resources/StageText/SPACE.png");
+
+	//HP
+	int hpHandle[4]
+	{
+		{Novice::Novice::LoadTexture("./Resources/HP/HP4.png")},
+		{Novice::Novice::LoadTexture("./Resources/HP/HP3.png")},
+		{Novice::Novice::LoadTexture("./Resources/HP/HP2.png")},
+		{Novice::Novice::LoadTexture("./Resources/HP/HP1.png")},
+	};
+
+	int hpFrames_ = 3;
+
+	
 };
 

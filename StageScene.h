@@ -25,6 +25,7 @@ public:
 	void ChangePhase();
 	void DeleteBlocks();
 	void CheckAllCollision();
+	void UserInterfaceHP();
 
 private:
 	enum class Phase

@@ -55,18 +55,18 @@ void Player::Draw()
 				(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, WHITE);
 		}
 	}
-	Novice::ScreenPrintf(0, 0, "player.velocity.x = %f", velocity_.x);
-	Novice::ScreenPrintf(0, 20, "player.velocity.y = %f", velocity_.y);
-	Novice::ScreenPrintf(0, 40, "player.pos.x = %f", (pos_.x + widthOffset));
-	Novice::ScreenPrintf(0, 60, "player.pos.y = %f", pos_.y);
-	Novice::ScreenPrintf(0, 80, "onGround = %d", onGround);
-	Novice::ScreenPrintf(0, 100, "isTakingDamage = %d", isTakingDamage_);
-	Novice::ScreenPrintf(0, 120, "isDrilling = %d", isDrilling);
+	//Novice::ScreenPrintf(0, 0, "player.velocity.x = %f", velocity_.x);
+	//Novice::ScreenPrintf(0, 20, "player.velocity.y = %f", velocity_.y);
+	//Novice::ScreenPrintf(0, 40, "player.pos.x = %f", (pos_.x + widthOffset));
+	//Novice::ScreenPrintf(0, 60, "player.pos.y = %f", pos_.y);
+	//Novice::ScreenPrintf(0, 80, "onGround = %d", onGround);
+	//Novice::ScreenPrintf(0, 100, "isTakingDamage = %d", isTakingDamage_);
+	//Novice::ScreenPrintf(0, 120, "isDrilling = %d", isDrilling);
 	Novice::ScreenPrintf(0, 140, "hp = %d", hp);
-	Novice::ScreenPrintf(0, 160, "exploded = %d", isExploding_);
-	Novice::ScreenPrintf(0, 180, "randX = %d", randX);
+	//Novice::ScreenPrintf(0, 160, "exploded = %d", isExploding_);
+	//Novice::ScreenPrintf(0, 180, "randX = %d", randX);
 
-	Novice::DrawBox((int)(pos_.x + widthOffset), (int)(pos_.y + drillPosOffset.y), drillSize.width, drillSize.height, 0.0f, WHITE, kFillModeWireFrame);
+	//Novice::DrawBox((int)(pos_.x + widthOffset), (int)(pos_.y + drillPosOffset.y), drillSize.width, drillSize.height, 0.0f, WHITE, kFillModeWireFrame);
 }
 
 void Player::Audio()
@@ -158,7 +158,7 @@ void Player::Drilling()
 
 void Player::Scrolling()
 {
-	//pos_.y -= 1.f;
+	pos_.y -= 1.f;
 	if (pos_.y >= 1080 || pos_.y <= 0)
 	{
 		isDead = true;
@@ -170,12 +170,13 @@ void Player::Exploded()
 {
 	if (isExploding_) 
 	{
-		//isTakingDamage_ = true;
+		isTakingDamage_ = true;
 		pos_.y -= 27.f;
 		velocity_.x += explosionVelocityX;
 		explodedTimer++;
 		maxFallSpeed = 5.f;
-	} 
+	}  
+
 
 	if (onGround) 
 	{

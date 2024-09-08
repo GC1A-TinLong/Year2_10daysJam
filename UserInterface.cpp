@@ -25,4 +25,8 @@ void UserInterface::Draw() const
 	Novice::DrawSprite(1620, 350, rightPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Right
 	Novice::DrawSprite(1620, 450, leftPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Left
 	Novice::DrawSprite(1520, 550, spaceHandle, 1.0f, 1.0f, 0.0f, WHITE); //SPACE
+
+	//HP
+	Novice::DrawSprite(1550, 100, hpHandle[hpFrames_], 1.0f, 1.0f, 0.0f, WHITE); //HP
+
 }

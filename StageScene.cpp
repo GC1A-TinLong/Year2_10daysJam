@@ -231,7 +231,7 @@ void StageScene::Update()
 
 		DeleteBlocks();
 		CheckAllCollision();
-
+		UserInterfaceHP();
 		break;
 	case StageScene::Phase::kDeath:
 
@@ -541,4 +541,11 @@ void StageScene::CheckAllCollision()
 #pragma region player & item collision
 
 #pragma endregion
+}
+
+void StageScene::UserInterfaceHP()
+{
+	int playerHP = player_->GetUIHP();
+	
+	UI->SetHPFrames(playerHP);
 }

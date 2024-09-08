@@ -6,6 +6,7 @@
 #include <vector>
 #include "BlockExplodingTrap.h"
 
+
 class SpikeTrap;
 
 class Player
@@ -33,7 +34,7 @@ private:
 	Vector2 drillPosOffset = { 11,65 };
 	Size drillSize = { 20, size.height - 65 };
 	// HP
-	static inline const uint8_t kMaxHp = 30;
+	static inline const uint8_t kMaxHp = 3;
 	uint8_t hp = kMaxHp;
 	// Collide with enemy
 	uint16_t collideBuffer = 0;
@@ -155,6 +156,8 @@ public:
 	bool IsHit() const { return isHit; }
 	bool IsDead() const { return isDead; }
 	bool IsOnGround() const{ return onGround; }
+	bool GetHP() const { return hp; };
+	int GetUIHP()const { return hp; };
 
 	Vector2 GetPos() const { return pos_; }
 	Size GetSize() const { return size; }

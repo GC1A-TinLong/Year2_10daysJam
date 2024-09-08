@@ -26,10 +26,9 @@ void BlockNotDestroyable::Initialize(Vector2 pos,bool isMoss, bool isWall)
 
 void BlockNotDestroyable::Update()
 {
-	//pos_.y -= 1.f;
+	pos_.y -= 1.f;
 	if (isWall_) 
 	{
-		
 		LoopWall();
 	}
 	else 

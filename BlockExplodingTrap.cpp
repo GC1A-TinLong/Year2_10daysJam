@@ -24,7 +24,7 @@ void BlockExplodingTrap::Initialize(Vector2 pos, bool isMoss)
 
 void BlockExplodingTrap::Update()
 {
-	//pos_.y -= 1.f;
+	pos_.y -= 1.f;
 	DestroyIfOOB();
 	shake_->ActivateShake(5, 30);
 	HP();
