@@ -57,14 +57,12 @@ void BlockNotDestroyable::HP()
 	}
 
 	//Return to max HP
-
 	if (!isTouched_ && hp > 0) 
 	{
 		hp = hpMax;
 	}
 
 	//Return to half HP
-
 	if (!isTouched_ && hp < hpHalf && hp > 0) 
 	{
 		hp = hpHalf;
@@ -72,11 +70,11 @@ void BlockNotDestroyable::HP()
 
 	if (hp < hpHalf) 
 	{
-		if (isMoss_) 
+		if (isMoss_)
 		{
-			blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/BrokenBlock.png"); //ask Kouta to make broken moss block
+			blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/GrassTrapBlock.png"); //ask Kouta to make broken moss block
 		}
-		else 
+		else
 		{
 			blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/BrokenBlock.png");
 		}

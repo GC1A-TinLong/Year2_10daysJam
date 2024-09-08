@@ -4,8 +4,10 @@ BasicTutorialScene::~BasicTutorialScene()
 {
 	delete background_;
 	delete fade_;
-	delete player_;
 	delete UI;
+	delete player_;
+	for (auto* spike : spike_) { delete spike; }
+	spike_.clear();
 #pragma region BLOCK
 	for (auto* blocks : blocks_) { delete blocks; }
 	blocks_.clear();
@@ -19,28 +21,34 @@ BasicTutorialScene::~BasicTutorialScene()
 void BasicTutorialScene::Initialize()
 {
 #pragma region Fade
-
 	phase_ = Phase::kFadeIn;
 	fade_ = new Fade();
 	fade_->Initialize();
 	fade_->Start(Status::FadeIn, duration_);
-
 #pragma endregion
 
 	// Background
 	background_ = new Background;
 	background_->Initialize(backgroundHandle_);
 	UI = new UserInterface;
+	// Spike
+	spike_.resize(kSpikeNum);
+	for (int i = 0; i < kSpikeNum; i++)
+	{
+		spike_[i] = new Spike;
+		Vector2 initPos = { (kBlockSize * 4) + (i * 48),96.f };
+		spike_[i]->Initialize(initPos);
+	}
 	// Player
 	player_ = new Player;
-	player_->Initialize({ 640.f,400.f });
+	player_->Initialize({ 640.f,500.f - player_->GetSize().height});
 
 	// Normal Block
 	blocks_.resize(kBlockNum);
 	blockPos_.resize(kBlockNum);
 	for (int i = 0; i < kBlockNum; i++) {
 		blocks_[i] = new BlockNotDestroyable;
-		blockPos_[i] = { kBlockSize * i,500 };
+		blockPos_[i] = { (kBlockSize * 4) + (kBlockSize * i),500.f };
 		blocks_[i]->Initialize(blockPos_[i], false, false);
 	}
 #pragma region LeftWall
@@ -75,8 +83,10 @@ void BasicTutorialScene::Update()
 	// WallBlocks
 	for (auto* wallblock : leftWallBlocks_) { wallblock->Update(); }
 	for (auto* wallblock : rightWallBlocks_) { wallblock->Update(); }
+	// Spike
+	for (auto* spike : spike_) { spike->Update(); }
 
-	switch (phase_) 
+	switch (phase_)
 	{
 	case BasicTutorialScene::Phase::kFadeIn:
 		fade_->Update();
@@ -136,6 +146,8 @@ void BasicTutorialScene::Draw()
 {
 	// Background
 	background_->Draw();
+	// Spike
+	for (auto* spike : spike_) { spike->Draw(); }
 
 	// Player
 	player_->Draw();

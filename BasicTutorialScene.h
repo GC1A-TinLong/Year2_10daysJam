@@ -8,6 +8,7 @@
 #include "BlockNotDestroyable.h"
 #include "Backgroud.h"
 #include "UserInterface.h"
+#include "Spike.h"
 #include <vector>
 
 class BasicTutorialScene : public IScene
@@ -52,20 +53,16 @@ private:
 	// Player
 	Player* player_ = nullptr;
 
+	// Spike
+	static inline const uint8_t kSpikeNum = 25;
+	std::vector<Spike*>spike_;
+
 	// Block Size
 	static inline const float kBlockSize = 48.f;
 	// Normal Block
-	static inline const uint8_t kBlockNum = 15;
+	static inline const uint8_t kBlockNum = 25;
 	std::vector<BlockNotDestroyable*>blocks_;
 	std::vector<Vector2>blockPos_;
-	// Destroyable Block
-	static inline const uint8_t kDestroyableBlockNum = 4;
-	/*std::vector<BlockDestroyable*>destroyableBlocks_;
-	std::vector<Vector2> desBlockPos_;*/
-	/*{
-		{144, 300}, {192, 300},{672, 300},
-		{1056, 300}
-	};*/
 	// Wall
 	static inline const uint8_t kWallBlockNum = 22;
 	std::vector<BlockNotDestroyable*>leftWallBlocks_;

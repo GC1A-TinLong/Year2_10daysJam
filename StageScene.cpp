@@ -353,7 +353,7 @@ void StageScene::Draw()
 	for (auto* destroyableBlock : destroyableBlocks_) { destroyableBlock->Draw(); }
 
 	//Blocks
-	for (auto* block : blocks_) { 	block->Draw(); }
+	for (auto* block : blocks_) { block->Draw(); }
 
 	//Wall Blocks
 	for (auto* wallblock : leftWallBlocks_) { wallblock->Draw(); }
