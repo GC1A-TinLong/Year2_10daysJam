@@ -2,6 +2,7 @@
 #include <memory>
 #include "IScene.h"
 #include "TitleScene.h"
+#include "BasicTutorialScene.h"
 #include "StageScene.h"
 #include "ClearScene.h"
 #include "Novice.h"
@@ -12,7 +13,7 @@ class GameManager
 {
 private:
 	// for maintaining the scene
-	std::unique_ptr<IScene>sceneArr_[3];
+	std::unique_ptr<IScene>sceneArr_[4];
 
 	int currentSceneNo_;
 	int prevSceneNo_;

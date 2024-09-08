@@ -10,7 +10,7 @@ public:
 	void Update();
 	void Draw();
 
-	//void OnCollisionPlayer(Player* player);
+	void OnCollisionPlayer(Player* player);
 
 	// Getter
 	Object GetObject();

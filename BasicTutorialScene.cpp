@@ -21,6 +21,8 @@ void BasicTutorialScene::Initialize()
 	player_ = new Player;
 
 	// Normal Block
+	blocks_.resize(kBlockNum);
+	blockPos_.resize(kBlockNum);
 	for (int i = 0; i < kBlockNum; i++) {
 		blocks_[i] = new BlockNotDestroyable;
 		blockPos_[i] = { kBlockSize * i,500 };
@@ -52,6 +54,11 @@ void BasicTutorialScene::Initialize()
 
 void BasicTutorialScene::Update()
 {
+	fade_->Update();
+
+	if (Input::GetInstance()->TriggerKey(DIK_C)) {
+		sceneNo = STAGE;
+	}
 }
 
 void BasicTutorialScene::Draw()

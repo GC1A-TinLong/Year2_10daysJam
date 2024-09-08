@@ -7,6 +7,7 @@
 #include "BlockDestroyable.h"
 #include "BlockNotDestroyable.h"
 #include "Backgroud.h"
+#include <vector>
 
 class BasicTutorialScene : public IScene
 {
