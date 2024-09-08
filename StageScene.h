@@ -11,6 +11,7 @@
 #include "Backgroud.h"
 #include "SpikeTrap.h"
 #include "UserInterface.h"
+#include "BlockExplodingTrap.h"
 
 class StageScene :public IScene
 {
@@ -114,5 +115,19 @@ private:
 		{kBlockSize * 16, 652}, {kBlockSize * 17, 652}, {kBlockSize * 18, 652}
 	};
 
+	//Exploding Block
+
+	BlockExplodingTrap* blockExplodingTrap_ = nullptr;
+	static inline const uint8_t kExplodingBlockNum = 1;
+	std::vector< BlockExplodingTrap*> explodingBlocks_;
+	Vector2 explodingBlockPos_[kExplodingBlockNum] =
+	{
+		{kBlockSize * 6,  948},
+	};
+
+	bool isExplodingBlockMoss[kExplodingBlockNum] =
+	{
+		{false}
+	};
 
 };

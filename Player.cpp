@@ -241,6 +241,12 @@ void Player::OnCollision()
 	isTakingDamage_ = true;
 }
 
+void Player::OnCollision(BlockExplodingTrap* explodingblock)
+{
+	(void)explodingblock;
+	velocity_.y += 5.f;
+}
+
 void Player::Shakeing()
 {
 	shake_->ActivateShake(10, 60);
@@ -279,6 +285,42 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 		}
 	}
 	onGround = tempOnGround;
+
+}
+
+void Player::CollisionWithExplodingBlock(std::vector<BlockExplodingTrap*>& explodingBlocks)
+{
+	bool tempOnGround = false;		// temp flag, when its confirmed(ended loop), apply it to the origin flag
+
+	for (BlockExplodingTrap* explBlock : explodingBlocks) {
+		float playerLeftPos = pos_.x + widthOffset;
+		float playerRightPos = playerLeftPos + size.width;
+		float playerBottom = pos_.y + size.height + velocity_.y;
+		//float playerTop = pos_.y + velocity_.y;
+		float blockTop = explBlock->GetPos().y;
+		//float blockBottom = nonDesBlock->GetPos().y + nonDesBlock->GetSize().height;
+		float leftPosBlock = explBlock->GetPos().x;
+		float rightPosBlock = explBlock->GetPos().x + explBlock->GetSize().width;
+		if (velocity_.y < 0) {
+			continue;
+		}
+		// Conditions
+		bool isWithinHorizontalBounds = (playerLeftPos <= rightPosBlock) && (playerRightPos >= leftPosBlock);
+		bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);	// above block
+		// player.bot without velocity && blockTop + small amount to prevent falling through
+		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
+
+		if (isWithinHorizontalBounds && isCloseEnoughVertically && !isPlayerBelowBlock) {
+			if (velocity_.y > 0) {	// only when falling
+				pos_.y = blockTop - size.height;
+				velocity_.y = 0;
+				isPressingSpace = false;
+			}
+			// within the 3 conditions
+			tempOnGround = true;
+		}
+	}
+	//onGround = tempOnGround;
 
 }
 

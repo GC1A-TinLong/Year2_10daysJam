@@ -111,6 +111,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="Backgroud.cpp" />
     <ClCompile Include="BasicTutorialScene.cpp" />
     <ClCompile Include="BlockDestroyable.cpp" />
+    <ClCompile Include="BlockExplodingTrap.cpp" />
     <ClCompile Include="BlockNotDestroyable.cpp" />
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\StringUtility.cpp" />
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\DirectXCommon.cpp" />
@@ -139,6 +140,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="Backgroud.h" />
     <ClInclude Include="BasicTutorialScene.h" />
     <ClInclude Include="BlockDestroyable.h" />
+    <ClInclude Include="BlockExplodingTrap.h" />
     <ClInclude Include="BlockNotDestroyable.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\base\StringUtility.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\math\Matrix4x4.h" />
