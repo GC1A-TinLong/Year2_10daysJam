@@ -62,10 +62,10 @@ private:
 	// Normal Block
 	static inline const uint8_t kBlockNum = 45;
 	std::vector<BlockNotDestroyable*>blocks_;
-	std::vector<Vector2>blockPos_ = 
+	std::vector<Vector2>blockPos_ =
 	{
-		{kBlockSize *4, 300.f}, {kBlockSize * 5, 300.f},{kBlockSize * 6, 300.f},
-		{kBlockSize *7, 300.f}, {kBlockSize * 8, 300.f},{kBlockSize * 9, 300.f},
+		{kBlockSize * 4,  300.f}, {kBlockSize * 5,  300.f},{kBlockSize * 6,  300.f},
+		{kBlockSize * 7,  300.f}, {kBlockSize * 8,  300.f},{kBlockSize * 9,  300.f},
 		{kBlockSize * 10, 300.f}, {kBlockSize * 11, 300.f},{kBlockSize * 12, 300.f},
 		{kBlockSize * 13, 300.f}, {kBlockSize * 14, 300.f},{kBlockSize * 15, 300.f},
 		{kBlockSize * 16, 300.f}, {kBlockSize * 17, 300.f},{kBlockSize * 18, 300.f},
@@ -80,14 +80,14 @@ private:
 		{kBlockSize * 21, 600.f}, {kBlockSize * 22, 600.f},{kBlockSize * 23, 600.f},
 		{kBlockSize * 24, 600.f}, {kBlockSize * 25, 600.f},
 
-		{kBlockSize * 7, 800.f}, {kBlockSize * 8, 800.f},{kBlockSize * 9, 800.f},
+		{kBlockSize * 7,  800.f}, {kBlockSize * 8,  800.f},{kBlockSize * 9, 800.f},
 		{kBlockSize * 10, 800.f}, {kBlockSize * 11, 800.f},
 
 		{kBlockSize * 16, 900.f}, {kBlockSize * 17, 900.f},{kBlockSize * 18, 900.f},
 		{kBlockSize * 19, 900.f}, {kBlockSize * 20, 900.f},
 	};
 
-	
+
 
 
 
