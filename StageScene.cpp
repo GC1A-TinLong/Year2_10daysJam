@@ -460,7 +460,7 @@ void StageScene::CheckAllCollision()
 			if (blocks_.empty() || blocks_[i] == nullptr) {
 				continue;	// If block was destroyed or blocks_ changed, avoid incrementing "i"
 			}
-			break;
+			//break;
 		}
 		else
 		{
