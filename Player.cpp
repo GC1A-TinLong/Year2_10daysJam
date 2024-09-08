@@ -64,6 +64,7 @@ void Player::Draw()
 	Novice::ScreenPrintf(0, 120, "isDrilling = %d", isDrilling);
 	Novice::ScreenPrintf(0, 140, "hp = %d", hp);
 	Novice::ScreenPrintf(0, 160, "exploded = %d", isExploding_);
+	Novice::ScreenPrintf(0, 180, "randX = %d", randX);
 
 	Novice::DrawBox((int)(pos_.x + widthOffset), (int)(pos_.y + drillPosOffset.y), drillSize.width, drillSize.height, 0.0f, WHITE, kFillModeWireFrame);
 }
@@ -158,7 +159,7 @@ void Player::Drilling()
 void Player::Scrolling()
 {
 	//pos_.y -= 1.f;
-	if (pos_.y >= 1080)
+	if (pos_.y >= 1080 || pos_.y <= 0)
 	{
 		isDead = true;
 	}
@@ -169,21 +170,30 @@ void Player::Exploded()
 {
 	if (isExploding_) 
 	{
-		isTakingDamage_ = true;
-		pos_.y -= 34.f;
-		pos_.x += randX;
+		//isTakingDamage_ = true;
+		pos_.y -= 27.f;
+		velocity_.x += explosionVelocityX;
 		explodedTimer++;
-		kMaxFallSpeed = 7.f;
-	}
+		maxFallSpeed = 5.f;
+	} 
 
 	if (onGround) 
 	{
-		kMaxFallSpeed = 14.f;
+		maxFallSpeed = 14.f;
 	}
 
 	if (explodedTimer == 1) 
 	{
 		randX = (rand() % amplitude) - (amplitude / 2);
+	}
+
+	if (randX >= 0) 
+	{
+		explosionVelocityX = 4;
+	}
+	else 
+	{
+		explosionVelocityX =  -4;
 	}
 
 	if (explodedTimer > 9) 
@@ -263,7 +273,7 @@ void Player::MovementInput()
 		// Start free fall
 		if (!onGround || isMaxSpeed) {
 			velocity_.y += kFreeFallAcceleration;
-			velocity_.y = (std::min)(velocity_.y, kMaxFallSpeed);
+			velocity_.y = (std::min)(velocity_.y, maxFallSpeed);
 			isOnConveyor = false;
 		}
 	}

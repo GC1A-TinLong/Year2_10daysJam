@@ -48,7 +48,7 @@ void BlockExplodingTrap::HP()
 
 	//Return to max HP
 
-	if (!isTouched_ && hp > 0)
+	if (takenDamage_ == 0 && hp > 0 || !isTouched_ && hp > 0)
 	{
 		hp = hpMax;
 	}

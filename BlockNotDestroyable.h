@@ -49,9 +49,9 @@ private:
 	bool isMoss_ = false;
 	bool isWall_ = false;
 
-	int hpMax = 100;
+	int hpMax = 150;
 	int hp = hpMax;
-	int hpHalf = 50;
+	int hpHalf = 75;
 	int takenDamage_ = 0;
 	int hpLow = 90;
 	bool startShake_ = false;
