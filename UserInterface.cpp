@@ -8,7 +8,7 @@ void UserInterface::Update()
 {
 }
 
-void UserInterface::Draw()
+void UserInterface::Draw() const
 {
 	//UI
 	Novice::DrawBox(0, 0, 144, 1080, 0.0f, BLACK, kFillModeSolid);

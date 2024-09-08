@@ -322,13 +322,13 @@ void StageScene::Draw()
 		// Fade
 		fade_->Draw();
 
-		background_->Draw();
-		UI->Draw();
-
 		// Player
 		player_->Draw();
 
-		//Destroyable Blocks
+		// Background
+		background_->Draw();
+
+		// Destroyable Blocks
 		for (auto* destroyableBlock : destroyableBlocks_)
 		{
 			destroyableBlock->Draw();
@@ -356,13 +356,16 @@ void StageScene::Draw()
 			spike->Draw();
 		}
 
+
+		UI->Draw();
+
 		break;
 	case StageScene::Phase::kPlay:
+		// Background
+		background_->Draw();
+
 		// Player
 		player_->Draw();
-
-		background_->Draw();
-		UI->Draw();
 
 		//Destroyable Blocks
 		for (auto* destroyableBlock : destroyableBlocks_)
@@ -397,11 +400,12 @@ void StageScene::Draw()
 			spike->Draw();
 		}
 
+		UI->Draw();
+
 		break;
 	case StageScene::Phase::kDeath:
 
 		background_->Draw();
-		UI->Draw();
 
 		//Destroyable Blocks
 		for (auto* destroyableBlock : destroyableBlocks_)
@@ -431,12 +435,13 @@ void StageScene::Draw()
 		for (auto* spike : spike_) {
 			spike->Draw();
 		}
+
+		UI->Draw();
 
 		break;
 	case StageScene::Phase::kStageClear:
 
 		background_->Draw();
-		UI->Draw();
 
 		//Destroyable Blocks
 		for (auto* destroyableBlock : destroyableBlocks_)
@@ -466,13 +471,14 @@ void StageScene::Draw()
 		for (auto* spike : spike_) {
 			spike->Draw();
 		}
+
+		UI->Draw();
 
 		break;
 
 	case StageScene::Phase::kFadeOut:
 
 		background_->Draw();
-		UI->Draw();
 
 		//Destroyable Blocks
 		for (auto* destroyableBlock : destroyableBlocks_)
@@ -503,6 +509,7 @@ void StageScene::Draw()
 			spike->Draw();
 		}
 
+		UI->Draw();
 		fade_->Draw();
 		break;
 	}
