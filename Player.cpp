@@ -32,25 +32,33 @@ void Player::Update()
 
 	Drilling();
 	Shakeing();
+
+	TakingDamage();
 }
 
 void Player::Draw()
 {
-	if (!isDead && !isDrilling)
+	if (iFrames % 5 == 0) 
 	{
-		Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + shake_->GetRandY(),
-			(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, WHITE);
-	}
-	else if (!isDead && isDrilling && onGround)	// go down a little bit
-	{
-		Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + 15 + shake_->GetRandY(),
-			(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, WHITE);
+		if (!isDead && !isDrilling)
+		{
+			Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + shake_->GetRandY(),
+				(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, WHITE);
+		}
+		else if (!isDead && isDrilling && onGround)	// go down a little bit
+		{
+			Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + 15 + shake_->GetRandY(),
+				(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, WHITE);
+		}
 	}
 	Novice::ScreenPrintf(0, 0, "player.velocity.x = %f", velocity_.x);
 	Novice::ScreenPrintf(0, 20, "player.velocity.y = %f", velocity_.y);
 	Novice::ScreenPrintf(0, 40, "player.pos.x = %f", (pos_.x + widthOffset));
 	Novice::ScreenPrintf(0, 60, "player.pos.y = %f", pos_.y);
 	Novice::ScreenPrintf(0, 80, "onGround = %d", onGround);
+	Novice::ScreenPrintf(0, 100, "isTakingDamage = %d", isTakingDamage_);
+	Novice::ScreenPrintf(0, 120, "IFrames = %d", iFrames);
+	Novice::ScreenPrintf(0, 140, "hp = %d", hp);
 
 	Novice::DrawBox((int)(pos_.x + widthOffset), (int)(pos_.y + drillPosOffset.y), drillSize.width, drillSize.height, 0.0f, WHITE, kFillModeWireFrame);
 }
@@ -235,9 +243,9 @@ void Player::MovementInput()
 
 void Player::OnCollision()
 {
-	hp--;
-	isDead = true;
-	
+	//hp--;
+	//isDead = true;
+	isTakingDamage_ = true;
 }
 
 void Player::Shakeing()
@@ -326,8 +334,6 @@ Vector2 Player::CameraOffset()
 	return offset;
 }
 
-
-
 Object Player::GetObject_() const
 {
 	Object result{};
@@ -335,6 +341,30 @@ Object Player::GetObject_() const
 	result.pos.y = pos_.y;
 	result.size = size;
 	return result;
+}
+
+void Player::TakingDamage()
+{
+	if (isTakingDamage_) 
+	{
+		iFrames++;
+	}
+
+	if (iFrames == 1)
+	{
+		hp--;
+	}
+
+	if (iFrames >= 120) 
+	{
+		isTakingDamage_ = false;
+		iFrames = 0;
+	}
+
+	if (hp == 0) 
+	{
+		isDead = true;
+	}
 }
 
 Object Player::GetDrillPointObject_() const

@@ -32,7 +32,7 @@ private:
 	Vector2 drillPosOffset = { 11,65 };
 	Size drillSize = { 20, size.height - 65 };
 	// HP
-	static inline const uint8_t kMaxHp = 10;
+	static inline const uint8_t kMaxHp = 3;
 	uint8_t hp = kMaxHp;
 	// Collide with enemy
 	uint16_t collideBuffer = 0;
@@ -111,6 +111,10 @@ private:
 	//dont go Out Of Bounds
 	float minXPos = 196.f;
 	float maxXPos = 1347.f;
+
+	//Taking damage
+	bool isTakingDamage_ = false;
+	int iFrames = 0;
 	
 public:
 	void Initialize(const Vector2& pos);
@@ -130,6 +134,7 @@ public:
 
 	Vector2 CameraOffset();
 	void Shakeing();
+	void TakingDamage();
 
 	// Getter
 	bool IsHit() const { return isHit; }
@@ -139,6 +144,7 @@ public:
 	Object GetObject_() const;
 	Object GetDrillPointObject_() const;
 	bool GetIsDrilling() const { return isDrilling; };
+	bool GetIsTakingDamage() const { return isTakingDamage_; };
 
 	// Setter
 	void SetVelocity(Vector2 velocity) { velocity_ = velocity; };

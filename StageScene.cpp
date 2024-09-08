@@ -665,7 +665,7 @@ void StageScene::CheckAllCollision()
 	for (int i = 0; i < spikeTrap_.size(); i++)
 	{
 		obj5 = spikeTrap_[i]->GetObject_();
-		if (isCollideObject(obj1, obj5))
+		if (isCollideObject(obj1, obj5) && !player_->GetIsTakingDamage())
 		{
 			player_->OnCollision();
 		}
