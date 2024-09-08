@@ -2,8 +2,11 @@
 
 StageScene::~StageScene()
 {
-	delete player_;
+	delete background_;
 	delete fade_;
+	delete UI;
+
+	delete player_;
 	for (auto* spike : spike_) {
 		delete spike;
 	}
@@ -33,8 +36,6 @@ StageScene::~StageScene()
 	}
 	rightWallBlocks_.clear();
 
-	delete background_;
-
 	for (auto* spike : spikeTrap_) {
 		delete spike;
 	}
@@ -44,6 +45,9 @@ StageScene::~StageScene()
 
 void StageScene::Initialize()
 {
+	// UI
+	UI = new UserInterface;
+
 	// Player
 	player_ = new Player;
 	player_->Initialize({ 640.f,400.f });
@@ -287,22 +291,22 @@ void StageScene::ChangePhase()
 			fade_->Start(Status::FadeOut, duration_);
 			phase_ = Phase::kFadeOut;
 		}
-		if (player_->IsDead()) 
+		if (player_->IsDead())
 		{
 			phase_ = Phase::kDeath;
 		}
 		break;
 
 	case StageScene::Phase::kDeath:
-			phase_ = Phase::kFadeOut;
+		phase_ = Phase::kFadeOut;
 		break;
 	case StageScene::Phase::kStageClear:
 		break;
 	case StageScene::Phase::kFadeOut:
 		if (fade_->IsFinished() && !player_->IsDead()) {
 			sceneNo = CLEAR;
-		} 
-		else if (fade_->IsFinished() && player_->IsDead()) 
+		}
+		else if (fade_->IsFinished() && player_->IsDead())
 		{
 			Initialize();
 		}
@@ -316,8 +320,11 @@ void StageScene::Draw()
 	{
 	case StageScene::Phase::kFadeIn:
 		// Fade
+		fade_->Draw();
+
 		background_->Draw();
-		
+		UI->Draw();
+
 		// Player
 		player_->Draw();
 
@@ -349,30 +356,13 @@ void StageScene::Draw()
 			spike->Draw();
 		}
 
-		//UI
-		Novice::DrawBox(0, 0, 144, 1080, 0.0f, BLACK, kFillModeSolid);
-		Novice::DrawBox(0, 1032, 1440, 1032, 0.0f, BLACK, kFillModeSolid);
-		Novice::DrawBox(0, 0, 1440, 96, 0.0f, BLACK, kFillModeSolid);
-		Novice::DrawBox(1440, 0, 1920, 1080, 0.0f, BLACK, kFillModeSolid);
-
-		//UI TEXT
-		Novice::DrawSprite(200, 10, stageTextHandle, 1.0f, 1.0f, 0.0f, WHITE); //TEXT
-		Novice::DrawSprite(420, 5, stage1Handle, 1.0f, 1.0f, 0.0f, WHITE); //1
-		Novice::DrawSprite(1520, 200, controlsHandle, 1.0f, 1.0f, 0.0f, WHITE); //CONROLS
-		Novice::DrawSprite(1520, 350, letterDHandle, 1.0f, 1.0f, 0.0f, WHITE); //D
-		Novice::DrawSprite(1520, 450, letterAHandle, 1.0f, 1.0f, 0.0f, WHITE); //A
-		Novice::DrawSprite(1620, 350, rightPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Right
-		Novice::DrawSprite(1620, 450, leftPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Left
-		Novice::DrawSprite(1520, 550, spaceHandle, 1.0f, 1.0f, 0.0f, WHITE); //SPACE
-
-		fade_->Draw();
-
 		break;
 	case StageScene::Phase::kPlay:
 		// Player
-		background_->Draw();
-
 		player_->Draw();
+
+		background_->Draw();
+		UI->Draw();
 
 		//Destroyable Blocks
 		for (auto* destroyableBlock : destroyableBlocks_)
@@ -407,26 +397,11 @@ void StageScene::Draw()
 			spike->Draw();
 		}
 
-		//UI
-		Novice::DrawBox(0, 0, 144, 1080, 0.0f, BLACK, kFillModeSolid);
-		Novice::DrawBox(0, 1032, 1440, 1032, 0.0f, BLACK, kFillModeSolid);
-		Novice::DrawBox(0, 0, 1440, 96, 0.0f, BLACK, kFillModeSolid);
-		Novice::DrawBox(1440, 0, 1920, 1080, 0.0f, BLACK, kFillModeSolid);
-
-		//UI TEXT
-		Novice::DrawSprite(200, 10, stageTextHandle, 1.0f, 1.0f, 0.0f, WHITE); //TEXT
-		Novice::DrawSprite(420, 5, stage1Handle, 1.0f, 1.0f, 0.0f, WHITE); //1
-		Novice::DrawSprite(1520, 200, controlsHandle, 1.0f, 1.0f, 0.0f, WHITE); //CONROLS
-		Novice::DrawSprite(1520, 350, letterDHandle, 1.0f, 1.0f, 0.0f, WHITE); //D
-		Novice::DrawSprite(1520, 450, letterAHandle, 1.0f, 1.0f, 0.0f, WHITE); //A
-		Novice::DrawSprite(1620, 350, rightPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Right
-		Novice::DrawSprite(1620, 450, leftPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Left
-		Novice::DrawSprite(1520, 550, spaceHandle, 1.0f, 1.0f, 0.0f, WHITE); //SPACE
-
 		break;
 	case StageScene::Phase::kDeath:
 
 		background_->Draw();
+		UI->Draw();
 
 		//Destroyable Blocks
 		for (auto* destroyableBlock : destroyableBlocks_)
@@ -456,28 +431,12 @@ void StageScene::Draw()
 		for (auto* spike : spike_) {
 			spike->Draw();
 		}
-
-		//UI
-		Novice::DrawBox(0, 0, 144, 1080, 0.0f, BLACK, kFillModeSolid);
-		Novice::DrawBox(0, 1032, 1440, 1032, 0.0f, BLACK, kFillModeSolid);
-		Novice::DrawBox(0, 0, 1440, 96, 0.0f, BLACK, kFillModeSolid);
-		Novice::DrawBox(1440, 0, 1920, 1080, 0.0f, BLACK, kFillModeSolid);
-
-		//UI TEXT
-		Novice::DrawSprite(200, 10, stageTextHandle, 1.0f, 1.0f, 0.0f, WHITE); //TEXT
-		Novice::DrawSprite(420, 5, stage1Handle, 1.0f, 1.0f, 0.0f, WHITE); //1
-		Novice::DrawSprite(1520, 200, controlsHandle, 1.0f, 1.0f, 0.0f, WHITE); //CONROLS
-		Novice::DrawSprite(1520, 350, letterDHandle, 1.0f, 1.0f, 0.0f, WHITE); //D
-		Novice::DrawSprite(1520, 450, letterAHandle, 1.0f, 1.0f, 0.0f, WHITE); //A
-		Novice::DrawSprite(1620, 350, rightPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Right
-		Novice::DrawSprite(1620, 450, leftPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Left
-		Novice::DrawSprite(1520, 550, spaceHandle, 1.0f, 1.0f, 0.0f, WHITE); //SPACE
-
 
 		break;
 	case StageScene::Phase::kStageClear:
 
 		background_->Draw();
+		UI->Draw();
 
 		//Destroyable Blocks
 		for (auto* destroyableBlock : destroyableBlocks_)
@@ -508,26 +467,12 @@ void StageScene::Draw()
 			spike->Draw();
 		}
 
-		//UI
-		Novice::DrawBox(0, 0, 144, 1080, 0.0f, BLACK, kFillModeSolid);
-		Novice::DrawBox(0, 1032, 1440, 1032, 0.0f, BLACK, kFillModeSolid);
-		Novice::DrawBox(0, 0, 1440, 96, 0.0f, BLACK, kFillModeSolid);
-		Novice::DrawBox(1440, 0, 1920, 1080, 0.0f, BLACK, kFillModeSolid);
-
-		//UI TEXT
-		Novice::DrawSprite(200, 10, stageTextHandle, 1.0f, 1.0f, 0.0f, WHITE); //TEXT
-		Novice::DrawSprite(420, 5, stage1Handle, 1.0f, 1.0f, 0.0f, WHITE); //1
-		Novice::DrawSprite(1520, 200, controlsHandle, 1.0f, 1.0f, 0.0f, WHITE); //CONROLS
-		Novice::DrawSprite(1520, 350, letterDHandle, 1.0f, 1.0f, 0.0f, WHITE); //D
-		Novice::DrawSprite(1520, 450, letterAHandle, 1.0f, 1.0f, 0.0f, WHITE); //A
-		Novice::DrawSprite(1620, 350, rightPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Right
-		Novice::DrawSprite(1620, 450, leftPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Left
-		Novice::DrawSprite(1520, 550, spaceHandle, 1.0f, 1.0f, 0.0f, WHITE); //SPACE
 		break;
 
 	case StageScene::Phase::kFadeOut:
 
 		background_->Draw();
+		UI->Draw();
 
 		//Destroyable Blocks
 		for (auto* destroyableBlock : destroyableBlocks_)
@@ -558,25 +503,9 @@ void StageScene::Draw()
 			spike->Draw();
 		}
 
-		//UI
-		Novice::DrawBox(0, 0, 144, 1080, 0.0f, BLACK, kFillModeSolid);
-		Novice::DrawBox(0, 1032, 1440, 1032, 0.0f, BLACK, kFillModeSolid);
-		Novice::DrawBox(0, 0, 1440, 96, 0.0f, BLACK, kFillModeSolid);
-		Novice::DrawBox(1440, 0, 1920, 1080, 0.0f, BLACK, kFillModeSolid);
-
-		//UI TEXT
-		Novice::DrawSprite(200, 10, stageTextHandle, 1.0f, 1.0f, 0.0f, WHITE); //TEXT
-		Novice::DrawSprite(420, 5, stage1Handle, 1.0f, 1.0f, 0.0f, WHITE); //1
-		Novice::DrawSprite(1520, 200, controlsHandle, 1.0f, 1.0f, 0.0f, WHITE); //CONROLS
-		Novice::DrawSprite(1520, 350, letterDHandle, 1.0f, 1.0f, 0.0f, WHITE); //D
-		Novice::DrawSprite(1520, 450, letterAHandle, 1.0f, 1.0f, 0.0f, WHITE); //A
-		Novice::DrawSprite(1620, 350, rightPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Right
-		Novice::DrawSprite(1620, 450, leftPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Left
-		Novice::DrawSprite(1520, 550, spaceHandle, 1.0f, 1.0f, 0.0f, WHITE); //SPACE
 		fade_->Draw();
 		break;
 	}
-
 }
 
 void StageScene::DeleteBlocks()
@@ -589,11 +518,10 @@ void StageScene::DeleteBlocks()
 			blocks_.erase(blocks_.begin() + i); //erase it from the vector
 			break;
 		}
-		else 
+		else
 		{
 			i++;
 		}
-		
 	}
 }
 
@@ -635,10 +563,10 @@ void StageScene::CheckAllCollision()
 				blocks_[i]->SetTakenDamage(5); //damage is 5
 				blocks_[i]->SetStartShake(true); //shake
 			}
-			else 
+			else
 			{
 				blocks_[i]->SetTakenDamage(0); //damage is 1
-				blocks_[i]->SetStartShake(false); 
+				blocks_[i]->SetStartShake(false);
 			}
 
 			if (blocks_.empty() || blocks_[i] == nullptr) {
@@ -646,7 +574,7 @@ void StageScene::CheckAllCollision()
 			}
 			break;
 		}
-		else 
+		else
 		{
 			blocks_[i]->SetIsTouched(false); //not on top of the block anymore
 			blocks_[i]->SetStartShake(false);
@@ -656,7 +584,6 @@ void StageScene::CheckAllCollision()
 	}
 
 #pragma endregion
-
 
 #pragma region player & spike trap collision
 

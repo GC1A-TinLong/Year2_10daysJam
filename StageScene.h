@@ -10,6 +10,7 @@
 #include "BlockNotDestroyable.h"
 #include "Backgroud.h"
 #include "SpikeTrap.h"
+#include "UserInterface.h"
 
 class StageScene :public IScene
 {
@@ -18,8 +19,9 @@ public:
 
 	void Initialize() override;
 	void Update() override;
-	void ChangePhase();
 	void Draw() override;
+
+	void ChangePhase();
 	void DeleteBlocks();
 	void CheckAllCollision();
 
@@ -38,6 +40,17 @@ private:
 	// Fade
 	Fade* fade_ = nullptr;
 	float duration_ = 1.0f;
+
+	//Background
+	Background* background_ = nullptr;
+	int backgroundHandle_[MAXBACKGROUNDS] =
+	{
+		{Novice::LoadTexture("./Resources/Background/Bg1.png")},
+		{Novice::LoadTexture("./Resources/Background/Bg2.png")},
+	};
+
+	// UI
+	UserInterface* UI = nullptr;
 
 	// Player
 	Player* player_ = nullptr;
@@ -90,25 +103,6 @@ private:
 	Vector2 leftWallPos_ = { 144.f,0 };
 	std::vector<BlockNotDestroyable*>rightWallBlocks_;
 	Vector2 rightWallPos_ = { 1392.f,0 };
-
-	//UI Handles
-	int stageTextHandle = Novice::LoadTexture("./Resources/StageText/STAGE.png");
-	int stage1Handle = Novice::LoadTexture("./Resources/StageText/1.png");
-	int controlsHandle = Novice::LoadTexture("./Resources/StageText/CONTROLS.png");
-	int letterDHandle = Novice::LoadTexture("./Resources/StageText/D.png");
-	int letterAHandle = Novice::LoadTexture("./Resources/StageText/A.png");
-	int rightPlayer = Novice::LoadTexture("./Resources/Player/digPlayer(R).gif");
-	int leftPlayer = Novice::LoadTexture("./Resources/Player/digPlayer(L).gif");
-	int spaceHandle = Novice::LoadTexture("./Resources/StageText/SPACE.png");
-
-	//Background
-
-	Background* background_ = nullptr;
-	int backgroundHandle_[MAXBACKGROUNDS] =
-	{
-		{Novice::LoadTexture("./Resources/Background/Bg1.png")},
-		{Novice::LoadTexture("./Resources/Background/Bg2.png")},
-	};
 
 	// Spike Trap
 	static inline const uint8_t kSpikeTrapNum = 3;
