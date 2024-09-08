@@ -38,7 +38,7 @@ void Player::Update()
 
 void Player::Draw()
 {
-	if (drawCount <= kMaxDrawCount / 2)
+	if (drawCount <= kMaxDrawCount / 2)	// if taking damage, blink the character
 	{
 		if (!isDead && !isDrilling)
 		{
