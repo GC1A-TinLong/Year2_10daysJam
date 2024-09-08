@@ -38,7 +38,7 @@ void Player::Update()
 
 void Player::Draw()
 {
-	if (iFrames % 5 == 0) 
+	if (drawCount <= kMaxDrawCount / 2)
 	{
 		if (!isDead && !isDrilling)
 		{
@@ -348,6 +348,10 @@ void Player::TakingDamage()
 	if (isTakingDamage_) 
 	{
 		iFrames++;
+		drawCount++;
+		if (drawCount >= kMaxDrawCount) {
+			drawCount = 0;
+		}
 	}
 
 	if (iFrames == 1)
@@ -359,9 +363,10 @@ void Player::TakingDamage()
 	{
 		isTakingDamage_ = false;
 		iFrames = 0;
+		drawCount = 0;
 	}
 
-	if (hp == 0) 
+	if (hp <= 0) 
 	{
 		isDead = true;
 	}

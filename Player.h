@@ -115,6 +115,8 @@ private:
 	//Taking damage
 	bool isTakingDamage_ = false;
 	int iFrames = 0;
+	static inline const uint8_t kMaxDrawCount = 16;
+	uint8_t drawCount = 0;
 	
 public:
 	void Initialize(const Vector2& pos);
