@@ -431,6 +431,17 @@ void StageScene::DeleteBlocks()
 		}
 		else { i++; }
 	}
+
+	for (int i = 0; i < explodingBlocks_.size();)
+	{
+		if (explodingBlocks_[i]->IsDestroyed() && player_->GetHasExploded()) //if block is destroyed
+		{
+			delete explodingBlocks_[i]; //delete block
+			explodingBlocks_.erase(explodingBlocks_.begin() + i); //erase it from the vector
+			break;
+		}
+		else { i++; }
+	}
 }
 
 void StageScene::CheckAllCollision()
@@ -543,6 +554,7 @@ void StageScene::CheckAllCollision()
 			if (explodingBlocks_[i]->IsDestroyed()) 
 			{
 				player_->OnCollision(explodingBlocks_[i]);
+				player_->SetHasExploded(true);
 			}
 			break;
 		}

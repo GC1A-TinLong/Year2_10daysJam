@@ -118,11 +118,12 @@ private:
 	//Exploding Block
 
 	BlockExplodingTrap* blockExplodingTrap_ = nullptr;
-	static inline const uint8_t kExplodingBlockNum = 1;
+	static inline const uint8_t kExplodingBlockNum = 6;
 	std::vector< BlockExplodingTrap*> explodingBlocks_;
 	Vector2 explodingBlockPos_[kExplodingBlockNum] =
 	{
-		{kBlockSize * 6,  948},
+		{kBlockSize * 6,  948},  {kBlockSize * 7,  948}, {kBlockSize * 8,  948},
+		{kBlockSize * 9,  948},  {kBlockSize * 10,  948}, {kBlockSize * 11,  948},
 	};
 
 	bool isExplodingBlockMoss[kExplodingBlockNum] =
