@@ -41,7 +41,7 @@ void BasicTutorialScene::Initialize()
 	}
 	// Player
 	player_ = new Player;
-	player_->Initialize({ 640.f,500.f - player_->GetSize().height});
+	player_->Initialize({ 640.f,500.f - player_->GetSize().height });
 
 	// Normal Block
 	blocks_.resize(kBlockNum);
@@ -135,7 +135,6 @@ void BasicTutorialScene::Update()
 		fade_->Update();
 		break;
 	}
-
 
 	if (Input::GetInstance()->TriggerKey(DIK_C)) {
 		sceneNo = STAGE;
