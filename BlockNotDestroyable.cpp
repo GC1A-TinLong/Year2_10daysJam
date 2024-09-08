@@ -51,7 +51,7 @@ void BlockNotDestroyable::DestroyIfOOB()
 
 void BlockNotDestroyable::HP()
 {
-	if (isTouched_ && hp >= 0) //player is on top of the block
+	if (isTouched_ && hp >= 0 && takenDamage_ > 1) //player is on top of the block
 	{
 		hp -= takenDamage_;
 	}

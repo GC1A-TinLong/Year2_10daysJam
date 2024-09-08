@@ -20,7 +20,7 @@ void SpikeTrap::Draw()
 const Object SpikeTrap::GetObject_() const
 {
 	Object result{};
-	result.pos = pos_;
+	result.pos = { pos_.x, pos_.y + heightHitboxOffset };
 	result.size = size;
 	return result;
 }

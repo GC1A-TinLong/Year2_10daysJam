@@ -237,6 +237,7 @@ void Player::OnCollision()
 {
 	hp--;
 	isDead = true;
+	
 }
 
 void Player::Shakeing()

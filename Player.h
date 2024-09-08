@@ -5,6 +5,7 @@
 #include "Shake.h"
 #include <vector>
 
+class SpikeTrap;
 
 class Player
 {

@@ -52,7 +52,7 @@ private:
 	int hpMax = 100;
 	int hp = hpMax;
 	int hpHalf = 50;
-	int takenDamage_ = 1;
+	int takenDamage_ = 0;
 	int hpLow = 90;
 	bool startShake_ = false;
 

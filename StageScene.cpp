@@ -637,7 +637,7 @@ void StageScene::CheckAllCollision()
 			}
 			else 
 			{
-				blocks_[i]->SetTakenDamage(1); //damage is 1
+				blocks_[i]->SetTakenDamage(0); //damage is 1
 				blocks_[i]->SetStartShake(false); 
 			}
 
@@ -655,7 +655,23 @@ void StageScene::CheckAllCollision()
 		++i; // Increment if no collision or block was not removed
 	}
 
+#pragma endregion
 
+
+#pragma region player & spike trap collision
+
+	Object obj5;
+
+	for (int i = 0; i < spikeTrap_.size(); i++)
+	{
+		obj5 = spikeTrap_[i]->GetObject_();
+		if (isCollideObject(obj1, obj5))
+		{
+			player_->OnCollision();
+		}
+	}
+
+#pragma endregion
 
 #pragma region player & item collision
 
