@@ -109,7 +109,7 @@ private:
 	std::vector<SpikeTrap*>spikeTrap_;
 	Vector2 spikeTrapPos_[kSpikeTrapNum] =
 	{
-		{kBlockSize * 16, 748}, {kBlockSize * 17, 748}, {kBlockSize * 18, 748}
+		{kBlockSize * 16, 652}, {kBlockSize * 17, 652}, {kBlockSize * 18, 652}
 	};
 
 
