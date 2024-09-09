@@ -120,15 +120,22 @@ void BasicTutorialScene::Update()
 		break;
 
 	case Phase::kTextExplanation:
-		color = (R << 24) | (G << 16) | (B << 8) | A;
 		if (isPage[0] && A < 255) {
-			A += 4;
-			if (A >= 255) { A = 255; }
+			A += 6;
+			if (A >= 255 && !isStartDecreaseAlpha) { A = 255; }
 		}
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-			isPage[1] = true; 
-			isPage[0] = false;
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE) && isPage[0]) {
+			isStartDecreaseAlpha = true;
 		}
+		if (isStartDecreaseAlpha) {
+			A -= 6;
+			if (A <= 0) {
+				A = 0;
+				isStartDecreaseAlpha = false;
+			}
+		}
+
+		color = (R << 24) | (G << 16) | (B << 8) | A;
 		break;
 
 	case BasicTutorialScene::Phase::kPlay:

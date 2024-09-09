@@ -132,6 +132,8 @@ private:
 	int iFrames = 0;
 	static inline const uint8_t kMaxDrawCount = 16;
 	uint8_t drawCount = 0;
+	uint32_t halfAlphaWhite = 0xFFFFFF80;
+	uint32_t color = 0xFFFFFFFF;
 
 	//Scroll speed
 	float scrollSpeed_;

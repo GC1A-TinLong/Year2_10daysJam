@@ -40,7 +40,7 @@ private:
 	// Text Draw Timer
 	static inline const uint8_t kPageNum = 2;
 	bool isPage[kPageNum] = { 1,0 };
-	bool isStartAlpha = false;
+	bool isStartDecreaseAlpha = false;
 	bool isFinishedTutor = false;
 	// COLOR
 	uint16_t alphaTimer = 0;

@@ -49,24 +49,24 @@ void Player::Draw()
 		if (!isDead && !isDrilling || !isDead && !onGround)
 		{
 			Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + shake_->GetRandY(),
-				(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, WHITE);
+				(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, color);
 		}
 		else if (!isDead && isDrilling && onGround)	// go down a little bit
 		{
 			Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + 15 + shake_->GetRandY(),
-				(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, WHITE);
+				(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, color);
 		}
 	}
 	else {
 		if (!isDead && !isDrilling || !isDead && !onGround)
 		{
 			Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + shake_->GetRandY(),
-				(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, 0xFFFFFF55);
+				(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, color);
 		}
 		else if (!isDead && isDrilling && onGround)	// go down a little bit
 		{
 			Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + 15 + shake_->GetRandY(),
-				(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, 0xFFFFFF55);
+				(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, color);
 		}
 	}
 
@@ -523,12 +523,13 @@ void Player::TakingDamage()
 		if (drawCount >= kMaxDrawCount) {
 			drawCount = 0;
 		}
+		if (drawCount <= kMaxDrawCount / 2) {
+			color = halfAlphaWhite;
+		}
 	}
+	else { color = WHITE; }
 
-	if (iFrames == 1)
-	{
-		hp--;
-	}
+	if (iFrames == 1) { hp--; }
 
 	if (iFrames >= 120)
 	{
@@ -537,10 +538,12 @@ void Player::TakingDamage()
 		drawCount = 0;
 	}
 
-	if (hp <= 0)
-	{
-		isDead = true;
+	/*if (drawCount <= kMaxDrawCount / 2) {
+		color = halfAlphaWhite;
 	}
+	else { color = WHITE; }*/
+
+	if (hp <= 0) { isDead = true; }
 }
 
 Object Player::GetDrillPointObject_() const
