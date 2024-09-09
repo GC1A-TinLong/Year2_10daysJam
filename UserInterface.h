@@ -25,12 +25,16 @@ private:
 	int rightPlayer = Novice::LoadTexture("./Resources/Player/digPlayer(R).gif");
 	int leftPlayer = Novice::LoadTexture("./Resources/Player/digPlayer(L).gif");
 	int spaceHandle = Novice::LoadTexture("./Resources/StageText/SPACE.png");
+	int jumpPlayer = Novice::LoadTexture("./Resources/Player/player.gif");
+	int jumpLines = Novice::LoadTexture("./Resources/StageText/fakejump.png");
 
 	//HP
 	int hpHandle = Novice::Novice::LoadTexture("./Resources/HP/HP.png");
 	int hpLineHandle = Novice::Novice::LoadTexture("./Resources/HP/HPLines.png");
-
 	int HPTextHandle = Novice::Novice::LoadTexture("./Resources/StageText/HP.png");
+
+	//Battery
+	int batteryText = Novice::Novice::LoadTexture("./Resources/StageText/BATTERY.png");
 
 	float length_ = 324.f;
 	float drillPower_;

@@ -37,12 +37,12 @@ private:
 	LRDirection direction_ = LRDirection::left;
 
 	Vector2 pos_;
-	Size size_ = { 226,48 };
+	Size size_ = { 452,32 };
 	Vector2 scale = { 1.f,1.f };
 
 	//Animation
 	Vector2 animationPos_ = { 0.f, 0.f };
-	float animationFrames = 452.f;
+	float animationFrames = 904.f;
 	int animationTimer_ = 0;
 	uint32_t texture_;
 

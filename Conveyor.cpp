@@ -9,11 +9,11 @@ void Conveyor::Initialize(Vector2 pos/*, Size size*/, bool isRight, float scroll
 	scrollSpeed_ = scrollSpeed;
 	if (isRight_) 
 	{
-		texture_ = Novice::LoadTexture("./Resources/Conveyor/Conveyor.png"); //Right
+		texture_ = Novice::LoadTexture("./Resources/Conveyor/Conveyor32.png"); //Right
 	}
 	else 
 	{
-		texture_ = Novice::LoadTexture("./Resources/Conveyor/Conveyor.png"); //Left
+		texture_ = Novice::LoadTexture("./Resources/Conveyor/Conveyorleft24.png"); //Left
 	}
 }
 
@@ -36,14 +36,15 @@ void Conveyor::Animation()
 {
 	animationTimer_++;
 
-	if (animationPos_.x > animationFrames)
+	if (animationPos_.x >= animationFrames - size_.width && animationTimer_ >= 30)
 	{
 		animationPos_.x = 0;
+		animationTimer_ = 0;
 	}
 
 	if (animationTimer_ >= 30)
 	{
-		animationPos_.x += 226.f;
+		animationPos_.x += size_.width;
 		animationTimer_ = 0;
 	}
 }
@@ -52,7 +53,7 @@ void Conveyor::Draw()
 {
 	if (pos_.y >= -48.f && pos_.y <= 1080.f)
 	{
-		Novice::DrawSpriteRect((int)(pos_.x), (int)pos_.y,(int)animationPos_.x, (int)animationPos_.y, 226, 16, texture_, 226.f / animationFrames, 1.f, 0.0f, WHITE);
+		Novice::DrawSpriteRect((int)(pos_.x), (int)pos_.y,(int)animationPos_.x, (int)animationPos_.y, size_.width, size_.height, texture_, size_.width / animationFrames, 1.f, 0.0f, WHITE);
 	}
 }
 

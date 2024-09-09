@@ -141,6 +141,9 @@ private:
 
 	//Scroll speed
 	float scrollSpeed_;
+
+	//Conveyor speed
+	float conveyerSpeed = 3.f;
 	
 public:
 	~Player();

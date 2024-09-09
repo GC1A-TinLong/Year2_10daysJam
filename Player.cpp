@@ -399,12 +399,12 @@ void Player::OnConveyor()
 {
 	if (isRightConveyor) 
 	{
-		pos_.x++;
+		pos_.x+= conveyerSpeed;
 	} 
 
 	if (isLeftConveyor) 
 	{
-		pos_.x--;
+		pos_.x-= conveyerSpeed;
 	}
 }
 
