@@ -29,12 +29,17 @@ private:
 	enum class Phase
 	{
 		kFadeIn,
+		kTextExplanation,
 		kPlay,
 		kDeath,
 		kStageClear,
 		kFadeOut,
 	};
 	Phase phase_;
+
+	// Text Tutorial
+	uint32_t p1 = Novice::LoadTexture("./Resources/Tutorial/p1.png");
+	uint32_t p2 = Novice::LoadTexture("./Resources/Tutorial/p2.png");
 
 	// Fade
 	Fade* fade_ = nullptr;
@@ -86,10 +91,6 @@ private:
 		{kBlockSize * 16, 900.f}, {kBlockSize * 17, 900.f},{kBlockSize * 18, 900.f},
 		{kBlockSize * 19, 900.f}, {kBlockSize * 20, 900.f},
 	};*/
-
-
-
-
 
 
 	// Wall

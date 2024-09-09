@@ -43,8 +43,7 @@ void Player::Update()
 
 void Player::Draw()
 {
-	if (drawCount <= kMaxDrawCount / 2)	// if taking damage, blink the character
-	{
+	if (!isTakingDamage_) {
 		if (!isDead && !isDrilling || !isDead && !onGround)
 		{
 			Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + shake_->GetRandY(),
@@ -56,6 +55,19 @@ void Player::Draw()
 				(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, WHITE);
 		}
 	}
+	else {
+		if (!isDead && !isDrilling || !isDead && !onGround)
+		{
+			Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + shake_->GetRandY(),
+				(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, 0xFFFFFF55);
+		}
+		else if (!isDead && isDrilling && onGround)	// go down a little bit
+		{
+			Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + 15 + shake_->GetRandY(),
+				(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, 0xFFFFFF55);
+		}
+	}
+
 	//Novice::ScreenPrintf(0, 0, "player.velocity.x = %f", velocity_.x);
 	//Novice::ScreenPrintf(0, 20, "player.velocity.y = %f", velocity_.y);
 	//Novice::ScreenPrintf(0, 40, "player.pos.x = %f", (pos_.x + widthOffset));
@@ -145,7 +157,7 @@ void Player::Drilling()
 	{
 		isDrilling = true;
 	}
-	else 
+	else
 	{
 		isDrilling = false;
 	}
@@ -153,8 +165,8 @@ void Player::Drilling()
 		isDrilling = false;
 	}*/
 
-	if (isDrilling)  { kMaxVelocity = 4.5f; }
-	else  { kMaxVelocity = 12.5f; }
+	if (isDrilling) { kMaxVelocity = 4.5f; }
+	else { kMaxVelocity = 12.5f; }
 }
 
 void Player::Scrolling()
@@ -167,38 +179,38 @@ void Player::Scrolling()
 
 }
 
-void Player::Exploded() 
+void Player::Exploded()
 {
-	if (isExploding_) 
+	if (isExploding_)
 	{
 		isTakingDamage_ = true;
 		pos_.y -= 27.f;
 		velocity_.x += explosionVelocityX;
 		explodedTimer++;
 		maxFallSpeed = 5.f;
-	}  
+	}
 
 
-	if (onGround) 
+	if (onGround)
 	{
 		maxFallSpeed = 14.f;
 	}
 
-	if (explodedTimer == 1) 
+	if (explodedTimer == 1)
 	{
 		randX = (rand() % amplitude) - (amplitude / 2);
 	}
 
-	if (randX >= 0) 
+	if (randX >= 0)
 	{
 		explosionVelocityX = 4;
 	}
-	else 
+	else
 	{
-		explosionVelocityX =  -4;
+		explosionVelocityX = -4;
 	}
 
-	if (explodedTimer > 9) 
+	if (explodedTimer > 9)
 	{
 		isExploding_ = false;
 		explodedTimer = 0;
@@ -429,7 +441,7 @@ Object Player::GetObject_() const
 
 void Player::TakingDamage()
 {
-	if (isTakingDamage_) 
+	if (isTakingDamage_)
 	{
 		iFrames++;
 		drawCount++;
@@ -443,14 +455,14 @@ void Player::TakingDamage()
 		hp--;
 	}
 
-	if (iFrames >= 120) 
+	if (iFrames >= 120)
 	{
 		isTakingDamage_ = false;
 		iFrames = 0;
 		drawCount = 0;
 	}
 
-	if (hp <= 0) 
+	if (hp <= 0)
 	{
 		isDead = true;
 	}

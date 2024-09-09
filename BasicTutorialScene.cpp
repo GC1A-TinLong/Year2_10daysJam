@@ -277,6 +277,10 @@ void BasicTutorialScene::ChangePhase()
 		if (fade_->IsFinished()) { phase_ = Phase::kPlay; }
 		break;
 
+	case Phase::kTextExplanation:
+
+		break;
+
 	case BasicTutorialScene::Phase::kPlay:
 		if (Input::GetInstance()->TriggerKey(DIK_C))
 		{
