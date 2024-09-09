@@ -1,5 +1,6 @@
 #pragma once
 #include "Novice.h"
+#include <iostream>
 
 class UserInterface
 {
@@ -10,7 +11,8 @@ public:
 	void Draw() const;
 
 	//Setter
-	void SetHPFrames(int hpFrames) { hpFrames_ = hpFrames; };
+	void SetDrillPower(float drillPower) { drillPower_ = drillPower; };
+	void SetIsDrilling(bool isDrilling) { isDrilling_ = isDrilling; };
 
 
 private:
@@ -25,18 +27,20 @@ private:
 	int spaceHandle = Novice::LoadTexture("./Resources/StageText/SPACE.png");
 
 	//HP
-	int hpHandle[4]
-	{
-		{Novice::Novice::LoadTexture("./Resources/HP/HP4.png")},
-		{Novice::Novice::LoadTexture("./Resources/HP/HP3.png")},
-		{Novice::Novice::LoadTexture("./Resources/HP/HP2.png")},
-		{Novice::Novice::LoadTexture("./Resources/HP/HP1.png")},
-	};
+	int hpHandle = Novice::Novice::LoadTexture("./Resources/HP/HP.png");
+	int hpLineHandle = Novice::Novice::LoadTexture("./Resources/HP/HPLines.png");
 
 	int HPTextHandle = Novice::Novice::LoadTexture("./Resources/StageText/HP.png");
 
-	int hpFrames_ = 3;
-
+	float length_ = 324.f;
+	float drillPower_;
+	uint32_t color;
+	uint32_t R = 0;
+	uint32_t G = 255;
+	uint32_t B = 34;
+	bool isDrilling_ = false;
+	float test_ = 0.f;
+	
 	
 };
 

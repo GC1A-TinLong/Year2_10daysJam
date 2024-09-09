@@ -136,7 +136,7 @@ private:
 		{false}
 	};
 
-	float scrollSpeed = 1.f;
+	float scrollSpeed = 0.f;
 
 
 	//Conveyor

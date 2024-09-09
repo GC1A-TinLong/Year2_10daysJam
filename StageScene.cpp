@@ -72,6 +72,7 @@ void StageScene::Initialize()
 
 	// UI
 	UI = new UserInterface;
+	UI->Initialize();
 
 	// Player
 	player_ = new Player;
@@ -191,6 +192,7 @@ void StageScene::Update()
 		{
 			player_->CollisiontWithConveyor(conveyers_);
 		}
+		player_->Drilling();
 
 		// Spike
 		for (auto* spike : spike_) {
@@ -251,6 +253,8 @@ void StageScene::Update()
 		for (auto* conveyor : conveyers_) {
 			conveyor->Update();
 		}
+
+		UI->Update();
 
 		DeleteBlocks();
 		CheckAllCollision();
@@ -589,7 +593,11 @@ void StageScene::CheckAllCollision()
 
 void StageScene::UserInterfaceHP()
 {
-	int playerHP = player_->GetUIHP();
+	float playerDrillPower = player_->GetDrillPower();
 	
-	UI->SetHPFrames(playerHP);
+	UI->SetDrillPower(playerDrillPower);
+
+	bool isDrilling = player_->GetIsDrilling();
+
+	UI->SetIsDrilling(isDrilling);
 }

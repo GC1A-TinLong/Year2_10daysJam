@@ -34,7 +34,7 @@ void Player::Update()
 	Scrolling();
 	MovementInput();
 
-	Drilling();
+	//Drilling();
 	Shakeing();
 	Exploded();
 
@@ -78,6 +78,7 @@ void Player::Draw()
 	//Novice::ScreenPrintf(0, 100, "isTakingDamage = %d", isTakingDamage_);
 	//Novice::ScreenPrintf(0, 120, "isDrilling = %d", isDrilling);
 	Novice::ScreenPrintf(0, 140, "hp = %d", hp);
+	Novice::ScreenPrintf(0, 100, "drillpower = %d", drillPower);
 	//Novice::ScreenPrintf(0, 160, "exploded = %d", isExploding_);
 	//Novice::ScreenPrintf(0, 180, "randX = %d", randX);
 
@@ -155,7 +156,7 @@ void Player::SwitchPlayerAnimationState()
 
 void Player::Drilling()
 {
-	if (Input::GetInstance()->PushKey(DIK_S))
+	if (Input::GetInstance()->PushKey(DIK_S) && !drillFatigue && onGround)
 	{
 		isDrilling = true;
 	}
@@ -167,8 +168,33 @@ void Player::Drilling()
 		isDrilling = false;
 	}*/
 
-	if (isDrilling) { kMaxVelocity = 4.5f; }
-	else { kMaxVelocity = 12.5f; }
+	if (isDrilling)  
+	{
+		kMaxVelocity = 4.5f;
+		if (onGround && drillPower > 0) 
+		{
+			drillPower -= 2.f;
+		}
+	}
+	else  
+	{ 
+		kMaxVelocity = 12.5f; 
+		if (drillPower < maxDrillPower) 
+		{
+			drillPower += 1.f;
+		}
+	}
+
+	if (drillPower < 0) 
+	{
+		drillPower = 0;
+		drillFatigue = true;
+	}
+
+	if (drillPower >= 150 && drillFatigue) 
+	{
+		drillFatigue = false;
+	}
 }
 
 void Player::Scrolling()

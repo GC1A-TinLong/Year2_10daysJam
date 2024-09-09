@@ -122,6 +122,11 @@ private:
 	float minXPos = 196.f;
 	float maxXPos = 1347.f;
 
+	//Drill 
+	float maxDrillPower = 510.f;
+	float drillPower = maxDrillPower;
+	bool drillFatigue = false;
+
 	//Taking damage
 	bool isTakingDamage_ = false;
 	int iFrames = 0;
@@ -171,6 +176,7 @@ public:
 	bool GetIsDrilling() const { return isDrilling; };
 	bool GetIsTakingDamage() const { return isTakingDamage_; };
 	bool GetHasExploded() const { return isExploding_; };
+	float GetDrillPower() const { return drillPower; };
 
 	// Setter
 	void SetVelocity(Vector2 velocity) { velocity_ = velocity; };
