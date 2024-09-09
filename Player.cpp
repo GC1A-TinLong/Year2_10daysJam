@@ -523,6 +523,7 @@ void Player::TakingDamage()
 		if (drawCount <= kMaxDrawCount / 2) {
 			color = halfAlphaWhite;
 		}
+		else { color = WHITE; }
 	}
 	else { color = WHITE; }
 
