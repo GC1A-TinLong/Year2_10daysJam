@@ -93,7 +93,7 @@ void BlockNotDestroyable::Shakeing()
 {
 	if (startShake_) 
 	{
-		shake_->InfiniteShake(2);
+		shake_->InfiniteShake(6); //Change amplitude here
 	}
 }
 

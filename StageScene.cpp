@@ -45,6 +45,11 @@ StageScene::~StageScene()
 		delete explodingBlock;
 	}
 	explodingBlocks_.clear();
+
+	for (auto* conveyer : conveyers_) {
+		delete conveyer;
+	}
+	conveyers_.clear();
 }
 
 void StageScene::Initialize()
@@ -70,7 +75,7 @@ void StageScene::Initialize()
 
 	// Player
 	player_ = new Player;
-	player_->Initialize({ 640.f,400.f }, 1.f);
+	player_->Initialize({ 640.f,400.f }, scrollSpeed);
 
 	// Spike
 	spike_.resize(kSpikeNum);
@@ -88,7 +93,7 @@ void StageScene::Initialize()
 	{
 		destroyableBlocks_[i] = new BlockDestroyable;
 		Vector2 desBlockPos = desBlockPos_[i];
-		destroyableBlocks_[i]->Initialize(desBlockPos, 1.f);
+		destroyableBlocks_[i]->Initialize(desBlockPos, scrollSpeed);
 	}
 
 #pragma endregion
@@ -100,7 +105,7 @@ void StageScene::Initialize()
 	{
 		blocks_[i] = new BlockNotDestroyable;
 		//Vector2 blockPos = BlockPos_[i];
-		blocks_[i]->Initialize(BlockPos_[i], isMoss[i], false, 1.f);
+		blocks_[i]->Initialize(BlockPos_[i], isMoss[i], false, scrollSpeed);
 	}
 #pragma endregion
 
@@ -111,7 +116,7 @@ void StageScene::Initialize()
 	{
 		leftWallBlocks_[i] = new BlockNotDestroyable;
 		leftWallPos_.y = 48.f * i;
-		leftWallBlocks_[i]->Initialize(leftWallPos_, false, true, 1.f);
+		leftWallBlocks_[i]->Initialize(leftWallPos_, false, true, scrollSpeed);
 	}
 
 #pragma endregion
@@ -123,9 +128,8 @@ void StageScene::Initialize()
 	{
 		rightWallBlocks_[i] = new BlockNotDestroyable;
 		rightWallPos_.y = 48.f * i;
-		rightWallBlocks_[i]->Initialize(rightWallPos_, false, true, 1.f);
+		rightWallBlocks_[i]->Initialize(rightWallPos_, false, true, scrollSpeed);
 	}
-
 #pragma endregion
 
 #pragma region Spike Trap
@@ -134,7 +138,7 @@ void StageScene::Initialize()
 	for (int i = 0; i < kSpikeTrapNum; i++)
 	{
 		spikeTrap_[i] = new SpikeTrap;
-		spikeTrap_[i]->Initialize(spikeTrapPos_[i],1.f);
+		spikeTrap_[i]->Initialize(spikeTrapPos_[i], scrollSpeed);
 	}
 
 #pragma endregion
@@ -146,7 +150,18 @@ void StageScene::Initialize()
 	{
 		explodingBlocks_[i] = new BlockExplodingTrap;
 		//Vector2 blockPos = BlockPos_[i];
-		explodingBlocks_[i]->Initialize(explodingBlockPos_[i], isExplodingBlockMoss[i], 1.f);
+		explodingBlocks_[i]->Initialize(explodingBlockPos_[i], isExplodingBlockMoss[i], scrollSpeed);
+	}
+
+#pragma endregion
+
+#pragma region Conveyer
+
+	conveyers_.resize(kConveyorNum);
+	for (int i = 0; i < kConveyorNum; i++)
+	{
+		conveyers_[i] = new Conveyor;
+		conveyers_[i]->Initialize(conveyerPos_[i], isConveyorRight[i],scrollSpeed);
 	}
 
 #pragma endregion
@@ -171,6 +186,10 @@ void StageScene::Update()
 		player_->CollisionWithBlock(blocks_);
 		if (!player_->IsOnGround()) {
 			player_->CollisionWithExplodingBlock(explodingBlocks_);
+		}
+		if (!player_->IsOnGround()) 
+		{
+			player_->CollisiontWithConveyor(conveyers_);
 		}
 
 		// Spike
@@ -227,6 +246,10 @@ void StageScene::Update()
 			{
 				++i;
 			}
+		}
+
+		for (auto* conveyor : conveyers_) {
+			conveyor->Update();
 		}
 
 		DeleteBlocks();
@@ -365,6 +388,10 @@ void StageScene::Draw()
 	for (auto* spike : spike_) { spike->Draw(); }
 	// Spike Trap
 	for (auto* spike : spikeTrap_) { spike->Draw(); }
+
+	for (auto* conveyor : conveyers_) {
+		conveyor->Draw();
+	}
 
 	UI->Draw();
 
@@ -520,7 +547,7 @@ void StageScene::CheckAllCollision()
 				continue;	// If block was destroyed or blocks_ changed, avoid incrementing "i"
 			}
 
-			if (explodingBlocks_[i]->IsDestroyed()) 
+			if (explodingBlocks_[i]->IsDestroyed())
 			{
 				player_->OnCollision(explodingBlocks_[i]);
 				player_->SetHasExploded(true);
@@ -538,9 +565,26 @@ void StageScene::CheckAllCollision()
 
 #pragma endregion
 
+
+#pragma region player & conveyor collision
+
+	//Object obj7;
+	//for (int i = 0; i < conveyers_.size();)
+	//{
+	//	obj7 = conveyers_[i]->GetObject_();
+	//	if (isCollideObject(obj3, obj7))
+	//	{
+	//		//conveyers_[i]->OnCollision(player_);
+	//	}
+	//}
+
+#pragma endregion
+
+
 #pragma region player & item collision
 
 #pragma endregion
+	
 }
 
 void StageScene::UserInterfaceHP()

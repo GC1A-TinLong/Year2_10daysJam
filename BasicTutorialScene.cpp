@@ -41,7 +41,7 @@ void BasicTutorialScene::Initialize()
 	}
 	// Player
 	player_ = new Player;
-	player_->Initialize({ 640.f,500.f - player_->GetSize().height }, 0.f);
+	player_->Initialize({ 640.f,300.f - player_->GetSize().height }, scrollSpeed);
 
 	// Normal Block
 	blocks_.resize(kBlockNum);
@@ -82,7 +82,7 @@ void BasicTutorialScene::Initialize()
 	{
 		leftWallBlocks_[i] = new BlockNotDestroyable;
 		leftWallPos_.y = 48.f * i;
-		leftWallBlocks_[i]->Initialize(leftWallPos_, false, true, 0.f);
+		leftWallBlocks_[i]->Initialize(leftWallPos_, false, true, scrollSpeed);
 	}
 
 #pragma endregion
@@ -93,7 +93,7 @@ void BasicTutorialScene::Initialize()
 	{
 		rightWallBlocks_[i] = new BlockNotDestroyable;
 		rightWallPos_.y = 48.f * i;
-		rightWallBlocks_[i]->Initialize(rightWallPos_, false, true, 0.f);
+		rightWallBlocks_[i]->Initialize(rightWallPos_, false, true, scrollSpeed);
 	}
 
 #pragma endregion
@@ -255,7 +255,7 @@ void BasicTutorialScene::CheckAllCollision()
 			if (blocks_.empty() || blocks_[i] == nullptr) {
 				continue;	// If block was destroyed or blocks_ changed, avoid incrementing "i"
 			}
-			break;
+			//break;
 		}
 		else
 		{

@@ -39,6 +39,8 @@ void Player::Update()
 	Exploded();
 
 	TakingDamage();
+
+	OnConveyor();
 }
 
 void Player::Draw()
@@ -184,14 +186,35 @@ void Player::Exploded()
 	if (isExploding_)
 	{
 		isTakingDamage_ = true;
-		pos_.y -= 27.f;
-		velocity_.x += explosionVelocityX;
+		if(explodedTimer < 9)
+		{
+			velocity_.x += explosionVelocityX;
+		}
 		explodedTimer++;
-		maxFallSpeed = 5.f;
+		maxFallSpeed = 10.f;
+	}  
+
+	if (explodedTimer >= 1 && explodedTimer <= 3)
+	{
+		pos_.y -= 45.f;
 	}
 
+	if (explodedTimer >= 3 && explodedTimer <= 6)
+	{
+		pos_.y -= 24.f;
+	}
 
-	if (onGround)
+	if (explodedTimer >= 6 && explodedTimer <= 15)
+	{
+		pos_.y -= 14.f;
+	}
+
+	if (explodedTimer >= 15 && explodedTimer <= 30)
+	{
+		pos_.y -= 5.f;
+	}
+
+	if (onGround) 
 	{
 		maxFallSpeed = 14.f;
 	}
@@ -203,14 +226,14 @@ void Player::Exploded()
 
 	if (randX >= 0)
 	{
-		explosionVelocityX = 4;
+		explosionVelocityX = 2;
 	}
 	else
 	{
-		explosionVelocityX = -4;
+		explosionVelocityX =  -2;
 	}
 
-	if (explodedTimer > 9)
+	if (explodedTimer > 30) 
 	{
 		isExploding_ = false;
 		explodedTimer = 0;
@@ -349,6 +372,19 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 
 }
 
+void Player::OnConveyor()
+{
+	if (isRightConveyor) 
+	{
+		pos_.x++;
+	} 
+
+	if (isLeftConveyor) 
+	{
+		pos_.x--;
+	}
+}
+
 void Player::CollisionWithExplodingBlock(std::vector<BlockExplodingTrap*>& explodingBlocks)
 {
 	bool tempOnGround = false;		// temp flag, when its confirmed(ended loop), apply it to the origin flag
@@ -411,9 +447,22 @@ void Player::CollisiontWithConveyor(std::vector<Conveyor*>& conveyor)
 				velocity_.y = 0;
 				isPressingSpace = false;
 				isOnConveyor = true;	// conveyor flag
+				if (convey->GetIsRight()) 
+				{
+					isRightConveyor = true;
+				}
+				else 
+				{
+					isLeftConveyor = true;
+				}
 			}
 			// within the 3 conditions
 			tempOnGround = true;
+		}
+		else 
+		{
+			isLeftConveyor = false;
+			isRightConveyor = false;
 		}
 	}
 	onGround = tempOnGround;

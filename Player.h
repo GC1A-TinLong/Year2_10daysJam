@@ -5,7 +5,7 @@
 #include "Shake.h"
 #include <vector>
 #include "BlockExplodingTrap.h"
-
+#include "Conveyor.h"
 
 class SpikeTrap;
 
@@ -67,6 +67,9 @@ private:
 	static inline const float kCloseEnoughDistanceWithBlock = 1.f;
 	
 	bool isOnConveyor = false;
+	bool isRightConveyor = false;
+	bool isLeftConveyor = false;
+
 
 	// IsHit Flag
 	bool isHit = false;
@@ -80,8 +83,6 @@ private:
 	// Sprite Handle
 	uint32_t texture_;
 
-	//Exploding Block
-	BlockExplodingTrap* explodingBlock;
 
 	#pragma region Animation
 
@@ -143,6 +144,7 @@ public:
 	void Drilling();
 	void Scrolling();
 	void Exploded();
+	void OnConveyor();
 
 	void MovementInput();
 	void OnCollision();

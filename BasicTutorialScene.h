@@ -99,5 +99,8 @@ private:
 	Vector2 leftWallPos_ = { 144.f,0 };
 	std::vector<BlockNotDestroyable*>rightWallBlocks_;
 	Vector2 rightWallPos_ = { 1392.f,0 };
+
+	//Scroll
+	float scrollSpeed = 0.f;
 };
 

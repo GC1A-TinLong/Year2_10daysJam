@@ -33,6 +33,8 @@ private:
 		{Novice::Novice::LoadTexture("./Resources/HP/HP1.png")},
 	};
 
+	int HPTextHandle = Novice::Novice::LoadTexture("./Resources/StageText/HP.png");
+
 	int hpFrames_ = 3;
 
 	
