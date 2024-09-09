@@ -41,15 +41,38 @@ void BasicTutorialScene::Initialize()
 	}
 	// Player
 	player_ = new Player;
-	player_->Initialize({ 640.f,300.f - player_->GetSize().height }, 0.f);
+	player_->Initialize({ 640.f,500.f - player_->GetSize().height }, 0.f);
 
 	// Normal Block
 	blocks_.resize(kBlockNum);
 	blockPos_.resize(kBlockNum);
-	for (int i = 0; i < kBlockNum; i++) 
+	int j = 0;
+	for (int i = 0; i < kBlockNum; i++)
 	{
 		blocks_[i] = new BlockNotDestroyable;
-		//blockPos_[i] = { (kBlockSize * 4) + (kBlockSize * i),500.f };
+		if (i < 25) {
+			blockPos_[i] = { (kBlockSize * 4) + (kBlockSize * i),500.f };
+		}
+		else if (i < 30) {
+			if (i == 25) { j = 0; }
+			else { j++; }
+			blockPos_[i] = { (kBlockSize * 14) + (kBlockSize * j),700.f };
+		}
+		else if (i < 35) {
+			if (i == 30) { j = 0; }
+			else { j++; }
+			blockPos_[i] = { (kBlockSize * 21) + (kBlockSize * j),800.f };
+		}
+		else if (i < 40) {
+			if (i == 35) { j = 0; }
+			else { j++; }
+			blockPos_[i] = { (kBlockSize * 7) + (kBlockSize * j),1000.f };
+		}
+		else if (i < 45) {
+			if (i == 40) { j = 0; }
+			else { j++; }
+			blockPos_[i] = { (kBlockSize * 16) + (kBlockSize * j),1100.f };
+		}
 		blocks_[i]->Initialize(blockPos_[i], false, false, 0.f);
 	}
 #pragma region LeftWall
