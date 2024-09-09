@@ -28,6 +28,7 @@ void BasicTutorialScene::Initialize()
 #pragma endregion
 
 	// Text
+	isPage[0] = true;
 	A = 0;
 	color = (R << 24) | (G << 16) | (B << 8) | A;	// "|" == or (for bit calculation)
 	// Background
@@ -120,19 +121,39 @@ void BasicTutorialScene::Update()
 		break;
 
 	case Phase::kTextExplanation:
-		if (isPage[0] && A < 255 && !isStartDecreaseAlpha) {
-			A += 6;
-			if (A >= 255) { A = 255; }
+		if (isPage[0]) {
+			if (A < 255 && !isStartDecreaseAlpha) {
+				A += 6;
+				if (A >= 255) { A = 255; }
+			}
+			if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+				isStartDecreaseAlpha = true;
+			}
+			if (isStartDecreaseAlpha) {
+				if (A > 0) { A -= 6; }
+				if (A <= 0 || A > 255) {
+					A = 0;
+					isStartDecreaseAlpha = false;
+					isPage[0] = false;
+					isPage[1] = true;
+				}
+			}
 		}
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE) && isPage[0]) {
-			isStartDecreaseAlpha = true;
-		}
-		if (isStartDecreaseAlpha) {
-			if (A > 0) { A -= 6; }
-			if (A <= 0 || A > 255) {
-				A = 0;
-				isStartDecreaseAlpha = false;
-				isPage[0] = false;
+		else if (isPage[1]) {
+			if (A < 255 && !isStartDecreaseAlpha) {
+				A += 6;
+				if (A >= 255) { A = 255; }
+			}
+			if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+				isStartDecreaseAlpha = true;
+			}
+			if (isStartDecreaseAlpha) {
+				if (A > 0) { A -= 6; }
+				if (A <= 0 || A > 255) {
+					A = 0;
+					isStartDecreaseAlpha = false;
+					isPage[1] = false;
+				}
 			}
 		}
 

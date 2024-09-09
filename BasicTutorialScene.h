@@ -42,7 +42,7 @@ private:
 	CurrentPage currentPage = CurrentPage::first;
 
 	static inline const uint8_t kPageNum = 2;
-	bool isPage[kPageNum] = { 1,0 };
+	bool isPage[kPageNum];
 	bool isStartDecreaseAlpha = false;
 	bool isFinishedTutor = false;
 	// COLOR
