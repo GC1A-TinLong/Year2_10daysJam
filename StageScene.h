@@ -12,6 +12,7 @@
 #include "SpikeTrap.h"
 #include "UserInterface.h"
 #include "BlockExplodingTrap.h"
+#include "Conveyor.h"
 
 class StageScene :public IScene
 {
@@ -64,6 +65,7 @@ private:
 	// Block Size
 	static inline const float kBlockSize = 48.f;
 	// Destroyable Block
+
 	static inline const uint8_t kDestroyableBlockNum = 4;
 	std::vector<BlockDestroyable*>destroyableBlocks_;
 	Vector2 desBlockPos_[kDestroyableBlockNum]
@@ -75,7 +77,9 @@ private:
 #pragma region Normal Block
 	// Normal Block
 	static inline const uint8_t kBlockNum = 36;
+
 	std::vector<BlockNotDestroyable*>blocks_;
+
 	Vector2 BlockPos_[kBlockNum]
 	{
 		{kBlockSize * 6,  300},  {kBlockSize * 7,  300},  {kBlockSize * 8,  300},
@@ -132,4 +136,19 @@ private:
 		{false}
 	};
 
+	float scrollSpeed = 1.f;
+
+
+	//Conveyor
+	static inline const uint8_t kConveyorNum = 1;
+	std::vector<Conveyor*> conveyers_;
+	Vector2 conveyerPos_[kConveyorNum] =
+	{
+		{500, 600},
+	};
+
+	bool isConveyorRight[kConveyorNum] =
+	{
+		0,
+	};
 };
