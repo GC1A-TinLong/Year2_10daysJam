@@ -27,6 +27,9 @@ void BasicTutorialScene::Initialize()
 	fade_->Start(Status::FadeIn, duration_);
 #pragma endregion
 
+	// Text
+	A = 0;
+	color= (R << 24) | (G << 16) | (B << 8) | A;	// "|" == or (for bit calculation)
 	// Background
 	background_ = new Background;
 	background_->Initialize(backgroundHandle_);
@@ -41,7 +44,7 @@ void BasicTutorialScene::Initialize()
 	}
 	// Player
 	player_ = new Player;
-	player_->Initialize({ 640.f,300.f - player_->GetSize().height }, scrollSpeed);
+	player_->Initialize({ 640.f,500.f - player_->GetSize().height }, scrollSpeed);
 
 	// Normal Block
 	blocks_.resize(kBlockNum);
@@ -116,6 +119,18 @@ void BasicTutorialScene::Update()
 		fade_->Update();
 		break;
 
+	case Phase::kTextExplanation:
+		color = (R << 24) | (G << 16) | (B << 8) | A;
+		if (isPage[0] && A < 255) {
+			A += 4;
+			if (A >= 255) { A = 255; }
+		}
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+			isPage[1] = true; 
+			isPage[0] = false;
+		}
+		break;
+
 	case BasicTutorialScene::Phase::kPlay:
 		// Player
 		player_->Update();
@@ -184,12 +199,58 @@ void BasicTutorialScene::Draw()
 
 	switch (phase_)
 	{
-	case BasicTutorialScene::Phase::kFadeIn:
+	case Phase::kFadeIn:
 		// Fade
 		fade_->Draw();
+		break;
+
+	case Phase::kTextExplanation:
+		for (int i = 0; i < kPageNum; i++) {
+			if (isPage[i]) {
+				Novice::DrawSprite(int(kBlockSize * 3), int(kBlockSize * 2),pageHandle[i], 1.f, 1.f, 0, color);
+			}
+		}
 
 		break;
-	case BasicTutorialScene::Phase::kPlay:
+
+	case Phase::kPlay:
+		break;
+	}
+}
+
+void BasicTutorialScene::ChangePhase()
+{
+	switch (phase_)
+	{
+	case Phase::kFadeIn:
+		if (fade_->IsFinished()) { phase_ = Phase::kTextExplanation; }
+		break;
+
+	case Phase::kTextExplanation:
+		if (isFinishedTutor) { phase_ = Phase::kPlay; }
+		break;
+
+	case Phase::kPlay:
+		if (Input::GetInstance()->TriggerKey(DIK_C))
+		{
+			fade_->Start(Status::FadeOut, duration_);
+			phase_ = Phase::kFadeOut;
+		}
+		if (player_->IsDead()) { phase_ = Phase::kDeath; }
+		break;
+
+	case Phase::kDeath:
+		phase_ = Phase::kFadeOut;
+		break;
+	case Phase::kStageClear:
+		break;
+	case Phase::kFadeOut:
+		if (fade_->IsFinished() && !player_->IsDead()) {
+			sceneNo = STAGE;
+		}
+		else if (fade_->IsFinished() && player_->IsDead()) {
+			Initialize();
+		}
 		break;
 	}
 }
@@ -261,47 +322,9 @@ void BasicTutorialScene::CheckAllCollision()
 		{
 			blocks_[i]->SetIsTouched(false); //not on top of the block anymore
 			blocks_[i]->SetStartShake(false);
-
 		}
 		++i; // Increment if no collision or block was not removed
 	}
 
 #pragma endregion
-}
-
-void BasicTutorialScene::ChangePhase()
-{
-	switch (phase_)
-	{
-	case BasicTutorialScene::Phase::kFadeIn:
-		if (fade_->IsFinished()) { phase_ = Phase::kPlay; }
-		break;
-
-	case Phase::kTextExplanation:
-
-		break;
-
-	case BasicTutorialScene::Phase::kPlay:
-		if (Input::GetInstance()->TriggerKey(DIK_C))
-		{
-			fade_->Start(Status::FadeOut, duration_);
-			phase_ = Phase::kFadeOut;
-		}
-		if (player_->IsDead()) { phase_ = Phase::kDeath; }
-		break;
-
-	case BasicTutorialScene::Phase::kDeath:
-		phase_ = Phase::kFadeOut;
-		break;
-	case BasicTutorialScene::Phase::kStageClear:
-		break;
-	case BasicTutorialScene::Phase::kFadeOut:
-		if (fade_->IsFinished() && !player_->IsDead()) {
-			sceneNo = STAGE;
-		}
-		else if (fade_->IsFinished() && player_->IsDead()) {
-			Initialize();
-		}
-		break;
-	}
 }

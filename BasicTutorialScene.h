@@ -19,11 +19,11 @@ public:
 	void Initialize() override;
 	void Update() override;
 	void Draw() override;
+	void ChangePhase();
 
-	void DeleteBlocks(); 
+	void DeleteBlocks();
 
 	void CheckAllCollision();
-	void ChangePhase();
 
 private:
 	enum class Phase
@@ -37,9 +37,23 @@ private:
 	};
 	Phase phase_;
 
-	// Text Tutorial
-	uint32_t p1 = Novice::LoadTexture("./Resources/Tutorial/p1.png");
-	uint32_t p2 = Novice::LoadTexture("./Resources/Tutorial/p2.png");
+	// Text Draw Timer
+	static inline const uint8_t kPageNum = 2;
+	bool isPage[kPageNum] = { 1,0 };
+	bool isStartAlpha = false;
+	bool isFinishedTutor = false;
+	// COLOR
+	uint16_t alphaTimer = 0;
+	uint32_t R = 255;
+	uint32_t G = 255;
+	uint32_t B = 255;
+	uint32_t A = 0;
+	uint32_t color;
+	// Text Handle
+	int pageHandle[kPageNum] = {
+		Novice::LoadTexture("./Resources/Tutorial/p1.png"),
+		Novice::LoadTexture("./Resources/Tutorial/p2.png")
+	};
 
 	// Fade
 	Fade* fade_ = nullptr;
