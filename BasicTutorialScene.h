@@ -20,7 +20,7 @@ public:
 	void Update() override;
 	void Draw() override;
 
-	void DeleteBlocks();
+	void DeleteBlocks(); 
 
 	void CheckAllCollision();
 	void ChangePhase();
