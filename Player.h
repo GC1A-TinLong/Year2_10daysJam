@@ -127,6 +127,10 @@ private:
 	float drillPower = maxDrillPower;
 	bool drillFatigue = false;
 
+	//Drill Meter
+	float drillEnergyReductionSpeed = 4.f;
+	float drillEnergyRestorationSpeed = 2.f;
+
 	//Taking damage
 	bool isTakingDamage_ = false;
 	int iFrames = 0;

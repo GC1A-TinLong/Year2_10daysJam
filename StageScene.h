@@ -76,7 +76,7 @@ private:
 
 #pragma region Normal Block
 	// Normal Block
-	static inline const uint8_t kBlockNum = 36;
+	static inline const uint8_t kBlockNum = 39;
 
 	std::vector<BlockNotDestroyable*>blocks_;
 
@@ -90,6 +90,8 @@ private:
 		{kBlockSize * 10, 500},  {kBlockSize * 11, 500},  {kBlockSize * 12, 500},
 		{kBlockSize * 13, 500},  {kBlockSize * 14, 500},  {kBlockSize * 15, 500},
 		{kBlockSize * 26, 500},  {kBlockSize * 27, 500},  {kBlockSize * 28, 500},
+
+		{kBlockSize * 4,  548}, {kBlockSize * 4,  596}, {kBlockSize * 4,  644},
 
 		{kBlockSize * 15, 700},  {kBlockSize * 16, 700},  {kBlockSize * 17, 700},
 		{kBlockSize * 18, 700},  {kBlockSize * 19, 700},  {kBlockSize * 20, 700},

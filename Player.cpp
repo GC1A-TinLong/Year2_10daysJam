@@ -156,7 +156,7 @@ void Player::SwitchPlayerAnimationState()
 
 void Player::Drilling()
 {
-	if (Input::GetInstance()->PushKey(DIK_S) && !drillFatigue && onGround)
+	if (Input::GetInstance()->PushKey(DIK_S) && onGround && !drillFatigue)
 	{
 		isDrilling = true;
 	}
@@ -164,16 +164,14 @@ void Player::Drilling()
 	{
 		isDrilling = false;
 	}
-	/*else if(!Input::GetInstance()->PushKey(DIK_S) || !onGround) {
-		isDrilling = false;
-	}*/
+	
 
 	if (isDrilling)  
 	{
 		kMaxVelocity = 4.5f;
 		if (onGround && drillPower > 0) 
 		{
-			drillPower -= 2.f;
+			drillPower -= drillEnergyReductionSpeed;
 		}
 	}
 	else  
@@ -181,17 +179,16 @@ void Player::Drilling()
 		kMaxVelocity = 12.5f; 
 		if (drillPower < maxDrillPower) 
 		{
-			drillPower += 1.f;
+			drillPower += drillEnergyRestorationSpeed;
 		}
 	}
 
-	if (drillPower < 0) 
+	if (drillPower <= 0.f) 
 	{
-		drillPower = 0;
 		drillFatigue = true;
 	}
 
-	if (drillPower >= 150 && drillFatigue) 
+	if (drillPower >= 30 && drillFatigue) 
 	{
 		drillFatigue = false;
 	}

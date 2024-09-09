@@ -48,11 +48,11 @@ void UserInterface::Update()
 
 	if (isDrilling_) 
 	{
-		length_ -= 1.3f;
+		length_ -= drillEnergyReductionSpeed;
 	}
 	else 
 	{
-		length_ += 0.65f;
+		length_ += drillEnergyRestorationSpeed;
 	}
 
 	

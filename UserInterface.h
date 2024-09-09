@@ -40,6 +40,8 @@ private:
 	uint32_t B = 34;
 	bool isDrilling_ = false;
 	float test_ = 0.f;
+	float drillEnergyReductionSpeed = 1.3f * 2;
+	float drillEnergyRestorationSpeed = 0.65f * 2;
 	
 	
 };
