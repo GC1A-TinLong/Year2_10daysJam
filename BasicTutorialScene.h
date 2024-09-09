@@ -37,7 +37,10 @@ private:
 	};
 	Phase phase_;
 
-	// Text Draw Timer
+	// Text
+	enum class CurrentPage { first, second, third };
+	CurrentPage currentPage = CurrentPage::first;
+
 	static inline const uint8_t kPageNum = 2;
 	bool isPage[kPageNum] = { 1,0 };
 	bool isStartDecreaseAlpha = false;

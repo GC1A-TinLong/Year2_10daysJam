@@ -29,7 +29,7 @@ void BasicTutorialScene::Initialize()
 
 	// Text
 	A = 0;
-	color= (R << 24) | (G << 16) | (B << 8) | A;	// "|" == or (for bit calculation)
+	color = (R << 24) | (G << 16) | (B << 8) | A;	// "|" == or (for bit calculation)
 	// Background
 	background_ = new Background;
 	background_->Initialize(backgroundHandle_);
@@ -120,18 +120,19 @@ void BasicTutorialScene::Update()
 		break;
 
 	case Phase::kTextExplanation:
-		if (isPage[0] && A < 255) {
+		if (isPage[0] && A < 255 && !isStartDecreaseAlpha) {
 			A += 6;
-			if (A >= 255 && !isStartDecreaseAlpha) { A = 255; }
+			if (A >= 255) { A = 255; }
 		}
 		if (Input::GetInstance()->TriggerKey(DIK_SPACE) && isPage[0]) {
 			isStartDecreaseAlpha = true;
 		}
 		if (isStartDecreaseAlpha) {
-			A -= 6;
-			if (A <= 0) {
+			if (A > 0) { A -= 6; }
+			if (A <= 0 || A > 255) {
 				A = 0;
 				isStartDecreaseAlpha = false;
+				isPage[0] = false;
 			}
 		}
 
@@ -214,7 +215,7 @@ void BasicTutorialScene::Draw()
 	case Phase::kTextExplanation:
 		for (int i = 0; i < kPageNum; i++) {
 			if (isPage[i]) {
-				Novice::DrawSprite(int(kBlockSize * 3), int(kBlockSize * 2),pageHandle[i], 1.f, 1.f, 0, color);
+				Novice::DrawSprite(int(kBlockSize * 3), int(kBlockSize * 2), pageHandle[i], 1.f, 1.f, 0, color);
 			}
 		}
 

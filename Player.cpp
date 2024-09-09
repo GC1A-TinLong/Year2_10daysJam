@@ -525,7 +525,6 @@ void Player::TakingDamage()
 		}
 		else { color = WHITE; }
 	}
-	else { color = WHITE; }
 
 	if (iFrames == 1) { hp--; }
 
@@ -533,8 +532,8 @@ void Player::TakingDamage()
 	{
 		isTakingDamage_ = false;
 		iFrames = 0;
-		drawCount = 0;
 	}
+	if (!isTakingDamage_) { color = WHITE; }
 
 	/*if (drawCount <= kMaxDrawCount / 2) {
 		color = halfAlphaWhite;
