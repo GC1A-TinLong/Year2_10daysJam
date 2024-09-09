@@ -36,13 +36,13 @@ void Conveyor::Animation()
 {
 	animationTimer_++;
 
-	if (animationPos_.x >= animationFrames - size_.width && animationTimer_ >= 30)
+	if (animationPos_.x >= animationFrames - size_.width && animationTimer_ >= 7)
 	{
 		animationPos_.x = 0;
 		animationTimer_ = 0;
 	}
 
-	if (animationTimer_ >= 30)
+	if (animationTimer_ >= 7)
 	{
 		animationPos_.x += size_.width;
 		animationTimer_ = 0;

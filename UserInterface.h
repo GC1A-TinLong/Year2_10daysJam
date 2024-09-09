@@ -36,6 +36,10 @@ private:
 	//Battery
 	int batteryText = Novice::Novice::LoadTexture("./Resources/StageText/BATTERY.png");
 
+	//Drill
+	int drillText = Novice::Novice::LoadTexture("./Resources/StageText/DRILL.png");
+
+
 	float length_ = 324.f;
 	float drillPower_;
 	uint32_t color;

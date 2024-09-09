@@ -66,7 +66,14 @@ void UserInterface::Draw() const
 	Novice::DrawBox(1516, 104, (int)length_, 82, 0.0f, color, kFillModeSolid); // COLOR
 	Novice::DrawSprite(1510, 100, hpLineHandle, 1.0f, 1.0f, 0.0f, WHITE); //HP line
 
-	Novice::DrawSprite(1560, 30, batteryText, 1.0f, 1.0f, 0.0f, WHITE); //HP
+	Novice::DrawSprite(1560, 30, batteryText, 1.0f, 1.0f, 0.0f, WHITE); //BATTERY
+
+	//Drill
+	Novice::DrawSprite(1480, 750, drillText, 1.0f, 1.0f, 0.0f, WHITE); //DRILL
+	Novice::DrawSprite(1750, 750, jumpPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Jump
+
+
+
 	Novice::ScreenPrintf(0, 0, "%f", length_);
 
 
