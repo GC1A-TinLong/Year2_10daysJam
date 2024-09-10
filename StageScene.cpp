@@ -194,7 +194,7 @@ void StageScene::Update()
 		// Player
 
 		player_->Update();
-		UserInterfaceHP();
+		SetPlayerStatus();
 		UserInterfaceDepthMeter();
 		depthMeter_->Update();
 		player_->CollisionWithBlock(blocks_);
@@ -254,7 +254,7 @@ void StageScene::Update()
 			conveyor->Update();
 		}
 
-		UI->Update();
+		UI->Update(true);
 
 		DeleteBlocks();
 		CheckAllCollision();
@@ -573,18 +573,15 @@ void StageScene::CheckAllCollision()
 	
 }
 
-void StageScene::UserInterfaceHP()
+void StageScene::SetPlayerStatus()
 {
 	float playerDrillPower = player_->GetDrillPower();
-	
 	UI->SetDrillPower(playerDrillPower);
 
 	bool isDrilling = player_->GetIsDrilling();
-
 	UI->SetIsDrilling(isDrilling);
 
 	int playerHP = player_->GetUIHP();
-
 	UI->SetPlayerHP(playerHP);
 }
 

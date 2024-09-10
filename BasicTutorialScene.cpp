@@ -1,4 +1,4 @@
-#include "BasicTutorialScene.h"
+﻿#include "BasicTutorialScene.h"
 
 BasicTutorialScene::~BasicTutorialScene()
 {
@@ -31,6 +31,7 @@ void BasicTutorialScene::Initialize()
 	isPage[0] = true;
 	A = 0;
 	color = (R << 24) | (G << 16) | (B << 8) | A;	// "|" == "or" (for bit calculation)
+	isShowingDrillUI = false;
 	// Background
 	background_ = new Background;
 	background_->Initialize(backgroundHandle_);
@@ -48,35 +49,41 @@ void BasicTutorialScene::Initialize()
 	player_ = new Player;
 	player_->Initialize({ 792.f,500.f - player_->GetSize().height }, scrollSpeed);
 
-	// Normal Block
+	// Normal Blocks
 	blocks_.resize(kBlockNum);
 	blockPos_.resize(kBlockNum);
-	int j = 0;
+	int j = 0; // blocks pos & initialize
 	for (int i = 0; i < kBlockNum; i++)
 	{
 		blocks_[i] = new BlockNotDestroyable;
-		if (i < 25) {
+		if (i < kRowBlockNum) {
 			blockPos_[i] = { (kBlockSize * 4) + (kBlockSize * i),500.f };
 		}
-		else if (i < 30) {
-			if (i == 25) { j = 0; }
+		else if (i < kRowBlockNum * 2) {
+			if (i == kRowBlockNum) { j = 0; }
 			else { j++; }
-			blockPos_[i] = { (kBlockSize * 14) + (kBlockSize * j),700.f };
+			blockPos_[i] = { (kBlockSize * 4) + (kBlockSize * j),644.f };
 		}
-		else if (i < 35) {
-			if (i == 30) { j = 0; }
+		/// ↑ 2 row of blocks ↑ ///
+		else if (i < kRowBlockNum * 2 + 5) {
+			if (i == kRowBlockNum * 2) { j = 0; }
 			else { j++; }
-			blockPos_[i] = { (kBlockSize * 21) + (kBlockSize * j),800.f };
+			blockPos_[i] = { (kBlockSize * 14) + (kBlockSize * j),800.f };
 		}
-		else if (i < 40) {
-			if (i == 35) { j = 0; }
+		else if (i < kRowBlockNum * 2 + 5 * 2) {
+			if (i == kRowBlockNum * 2 + 5) { j = 0; }
 			else { j++; }
-			blockPos_[i] = { (kBlockSize * 7) + (kBlockSize * j),1000.f };
+			blockPos_[i] = { (kBlockSize * 21) + (kBlockSize * j),900.f };
 		}
-		else if (i < 45) {
-			if (i == 40) { j = 0; }
+		else if (i < kRowBlockNum * 2 + 5 * 3) {
+			if (i == kRowBlockNum * 2 + 5 * 2) { j = 0; }
 			else { j++; }
-			blockPos_[i] = { (kBlockSize * 16) + (kBlockSize * j),1100.f };
+			blockPos_[i] = { (kBlockSize * 7) + (kBlockSize * j),1100.f };
+		}
+		else if (i < kRowBlockNum * 2 + 5 * 4) {
+			if (i == kRowBlockNum * 2 + 5 * 3) { j = 0; }
+			else { j++; }
+			blockPos_[i] = { (kBlockSize * 16) + (kBlockSize * j),1200.f };
 		}
 		blocks_[i]->Initialize(blockPos_[i], false, false, 0.f);
 	}
@@ -115,6 +122,7 @@ void BasicTutorialScene::Update()
 	// Spike
 	for (auto* spike : spike_) { spike->Update(); }
 
+	if(phase_!=Phase::kPlay){ UI->Update(isShowingDrillUI); }	// to hide battery and drill UI
 	switch (phase_)
 	{
 	case BasicTutorialScene::Phase::kFadeIn:
@@ -128,6 +136,11 @@ void BasicTutorialScene::Update()
 	case BasicTutorialScene::Phase::kPlay:
 		// Player
 		player_->Update();
+		SetPlayerStatus();
+		if (isAbleToDrill) {
+			player_->Drilling();
+			UI->Update(isShowingDrillUI);
+		}
 		player_->CollisionWithBlock(blocks_);
 		// Normal Blocks
 		for (auto* blocks : blocks_) { blocks->Update(); }
@@ -210,17 +223,21 @@ void BasicTutorialScene::ChangePhase()
 		break;
 
 	case Phase::kTextExplanation:
-		if (isFinishedMovementText && !isTriedMovement) { phase_ = Phase::kPlay; }
+		if (isFinishedMovementText && !isTriedMovement) {
+			phase_ = Phase::kPlay;
+			isFinishedMovementText = false;
+		}
+		if (isAbleToDrill) { phase_ = Phase::kPlay; }
 		break;
 
 	case Phase::kPlay:
 		if (Input::GetInstance()->TriggerKey(DIK_C)) // DEBUG
 		{
-			fade_->Start(Status::FadeOut, duration_);  
+			fade_->Start(Status::FadeOut, duration_);
 			phase_ = Phase::kFadeOut;
 		}
 		// Let player try basic movement for 5 seconds
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE) && !isTriedMovement) { isStartMovement = true; }
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE) && !isAbleToDrill) { isStartMovement = true; }
 		if (isStartMovement) {
 			tryMovementTimer++;
 			if (tryMovementTimer >= 60) {
@@ -229,7 +246,6 @@ void BasicTutorialScene::ChangePhase()
 				phase_ = Phase::kTextExplanation;
 			}
 		}
-		//if (isTriedMovement) { phase_ = Phase::kTextExplanation; }
 
 		if (player_->IsDead()) { phase_ = Phase::kDeath; }
 		break;
@@ -252,6 +268,7 @@ void BasicTutorialScene::ChangePhase()
 
 void BasicTutorialScene::TextExplanation()
 {
+#pragma region Basic movement guide (Page1, 2)
 	if (isPage[0]) {
 		if (A < 255 && !isStartDecreaseAlpha) {
 			A += 6;
@@ -288,12 +305,66 @@ void BasicTutorialScene::TextExplanation()
 			}
 		}
 	}
-
+#pragma endregion
+#pragma region Drill Guide
 	if (isTriedMovement) {
-
+		isPage[2] = true;
 	}
+	if (isPage[2]) {
+		if (A < 255 && !isStartDecreaseAlpha) {
+			A += 6;
+			if (A >= 255) { A = 255; }
+		}
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+			isStartDecreaseAlpha = true;
+		}
+		if (isStartDecreaseAlpha) {
+			if (A > 0) { A -= 6; }
+			if (A <= 0 || A > 255) {
+				A = 0;
+				isStartDecreaseAlpha = false;
+				isPage[2] = false;
+				isPage[3] = true;		// go to page 4
+				isTriedMovement = false;
+				isShowingDrillUI = true;
+			}
+		}
+	}
+	else if (isPage[3]) {
+		if (A < 255 && !isStartDecreaseAlpha) {
+			A += 6;
+			if (A >= 255) { A = 255; }
+		}
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+			isStartDecreaseAlpha = true;
+		}
+		if (isStartDecreaseAlpha) {
+			if (A > 0) { A -= 6; }
+			if (A <= 0 || A > 255) {
+				A = 0;
+				isStartDecreaseAlpha = false;
+				isPage[3] = false;
+				isAbleToDrill = true;	// can drill from now
+			}
+		}
+	}
+	Novice::ScreenPrintf(300, 0, "page[2]=%d", isPage[2]);
+	Novice::ScreenPrintf(300, 20, "page[3]=%d", isPage[3]);
+#pragma endregion
 
 	color = (R << 24) | (G << 16) | (B << 8) | A;
+}
+
+void BasicTutorialScene::SetPlayerStatus()
+{
+	float playerDrillPower = player_->GetDrillPower();
+	UI->SetDrillPower(playerDrillPower);
+
+	bool isDrilling = player_->GetIsDrilling();
+	UI->SetIsDrilling(isDrilling);
+
+	int playerHP = player_->GetUIHP();
+	UI->SetPlayerHP(playerHP);
 }
 
 void BasicTutorialScene::DeleteBlocks()

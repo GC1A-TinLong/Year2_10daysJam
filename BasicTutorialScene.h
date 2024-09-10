@@ -22,6 +22,7 @@ public:
 	void ChangePhase();
 
 	void TextExplanation();
+	void SetPlayerStatus();
 
 	void DeleteBlocks();
 	void CheckAllCollision();
@@ -41,13 +42,21 @@ private:
 	// Text
 	enum class CurrentPage { first, second, third };
 	CurrentPage currentPage = CurrentPage::first;
-
-	static inline const uint8_t kPageNum = 2;
+	// Text Handle
+	static inline const uint8_t kPageNum = 4;
+	int pageHandle[kPageNum] = {
+		Novice::LoadTexture("./Resources/Tutorial/p1.png"),
+		Novice::LoadTexture("./Resources/Tutorial/p2.png"),
+		Novice::LoadTexture("./Resources/Tutorial/p3.png"),
+		Novice::LoadTexture("./Resources/Tutorial/p4.png"),
+	};
 	bool isPage[kPageNum];
 	bool isStartDecreaseAlpha = false;
 	bool isFinishedMovementText = false;
 	bool isTriedMovement = false;
 	bool isStartMovement = false;
+	bool isShowingDrillUI = false;
+	bool isAbleToDrill = false;
 	uint8_t tryMovementTimer = 0;
 	// COLOR
 	uint16_t alphaTimer = 0;
@@ -56,11 +65,6 @@ private:
 	uint32_t B = 255;
 	uint32_t A = 0;
 	uint32_t color;
-	// Text Handle
-	int pageHandle[kPageNum] = {
-		Novice::LoadTexture("./Resources/Tutorial/p1.png"),
-		Novice::LoadTexture("./Resources/Tutorial/p2.png")
-	};
 
 	// Fade
 	Fade* fade_ = nullptr;
@@ -86,7 +90,8 @@ private:
 	// Block Size
 	static inline const float kBlockSize = 48.f;
 	// Normal Block
-	static inline const uint8_t kBlockNum = 45;
+	static inline const uint8_t kBlockNum = 50 + 20;
+	static inline const uint8_t kRowBlockNum = 25;
 	std::vector<BlockNotDestroyable*>blocks_;
 	std::vector<Vector2>blockPos_;
 	/*{

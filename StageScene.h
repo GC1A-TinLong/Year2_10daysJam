@@ -27,7 +27,7 @@ public:
 	void ChangePhase();
 	void DeleteBlocks();
 	void CheckAllCollision();
-	void UserInterfaceHP();
+	void SetPlayerStatus();
 	void UserInterfaceDepthMeter();
 
 private:
