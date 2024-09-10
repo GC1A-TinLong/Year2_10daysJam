@@ -18,7 +18,7 @@ void Player::Initialize(const Vector2& pos, float scrollSpeed)
 
 	jumpAudioHandle = Novice::LoadAudio("./Resources/Audio/jump2.wav");
 
-	sparkHandle_ = Novice::LoadTexture("./Resources/Player/spark.png");
+	sparkHandle_ = Novice::LoadTexture("./Resources/Player/spark1.png");
 
 	seed = (unsigned int)time(nullptr);
 	srand(seed);

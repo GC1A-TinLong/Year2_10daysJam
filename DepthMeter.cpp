@@ -24,7 +24,7 @@ void DepthMeter::Update()
 
 void DepthMeter::DepthCounter()
 {
-	playerStartPos_--;
+	playerStartPos_-=2;
 	depthCounter_ = (playerYDepth_ - playerStartPos_) /10.f;
 	depthCounter_ = std::clamp(depthCounter_, 0.f, 999.f);
 
@@ -55,7 +55,7 @@ void DepthMeter::MoveDownwards()
 void DepthMeter::Draw()
 {
 	Novice::DrawSprite((int)pos_.x, (int)pos_.y, meterSprite_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
-	Novice::DrawSprite((int)playerPos_.x, (int)playerPos_.y, meterPlayer_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
+	Novice::DrawSprite((int)playerPos_.x, (int)posY, meterPlayer_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
 	Novice::DrawSprite(100, (int)posY, numbers[units], 1.0f, 1.0f, 0.0f, WHITE); //STAGE
 	if (showTens) 
 	{
@@ -68,8 +68,8 @@ void DepthMeter::Draw()
 	Novice::DrawSprite(120, (int)posY, mHandle_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
 	Novice::DrawSprite(15, 110, starthandle_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
 	Novice::DrawSprite(15, 950, goalhandle_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
-	Novice::ScreenPrintf(0, 0, "%f", depthCounter_);
-	Novice::ScreenPrintf(0, 20, "%d", units);
-	Novice::ScreenPrintf(0, 40, "%f", t);
+	//Novice::ScreenPrintf(0, 0, "%f", depthCounter_);
+	//Novice::ScreenPrintf(0, 20, "%d", units);
+	//Novice::ScreenPrintf(0, 40, "%f", t);
 
 }
