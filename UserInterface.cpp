@@ -49,32 +49,39 @@ void UserInterface::Draw() const
 	Novice::DrawBox(1440, 0, 1920, 1080, 0.0f, BLACK, kFillModeSolid);
 
 	//UI TEXT
-	Novice::DrawSprite(200, 20, stageTextHandle, 1.0f, 1.0f, 0.0f, WHITE); //TEXT
+	Novice::DrawSprite(200, 20, stageTextHandle, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
 	Novice::DrawSprite(420, 15, stage1Handle, 1.0f, 1.0f, 0.0f, WHITE); //1
-	Novice::DrawSprite(1520, 250, controlsHandle, 1.0f, 1.0f, 0.0f, WHITE); //CONROLS
-	Novice::DrawSprite(1520, 350, letterDHandle, 1.0f, 1.0f, 0.0f, WHITE); //D
-	Novice::DrawSprite(1520, 450, letterAHandle, 1.0f, 1.0f, 0.0f, WHITE); //A
-	Novice::DrawSprite(1620, 350, rightPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Right
-	Novice::DrawSprite(1620, 450, leftPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Left
-	Novice::DrawSprite(1520, 550, spaceHandle, 1.0f, 1.0f, 0.0f, WHITE); //SPACE
-	Novice::DrawSprite(1750, 550, jumpPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Jump
-	Novice::DrawSprite(1736, 625, jumpLines, 1.0f, 1.0f, 0.0f, WHITE); //Player Jump Lines
+	Novice::DrawSprite(1520, 370, controlsHandle, 1.0f, 1.0f, 0.0f, WHITE); //CONROLS
+	Novice::DrawSprite(1520, 470, letterDHandle, 1.0f, 1.0f, 0.0f, WHITE); //D
+	Novice::DrawSprite(1520, 570, letterAHandle, 1.0f, 1.0f, 0.0f, WHITE); //A
+	Novice::DrawSprite(1620, 470, rightPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Right
+	Novice::DrawSprite(1620, 570, leftPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Left
+	Novice::DrawSprite(1520, 670, spaceHandle, 1.0f, 1.0f, 0.0f, WHITE); //SPACE
+	Novice::DrawSprite(1750, 670, jumpPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Jump
+	Novice::DrawSprite(1736, 745, jumpLines, 1.0f, 1.0f, 0.0f, WHITE); //Player Jump Lines
+	Novice::DrawSprite(1520, 900, letterSHandle, 1.0f, 1.0f, 0.0f, WHITE); //S
 
-
-	//HP
-	Novice::DrawSprite(1509, 100, hpHandle, 1.0f, 1.0f, 0.0f, WHITE); //HP Battery
+	//Energy
+	Novice::DrawSprite(1509, 100, EnergyHandle, 1.0f, 1.0f, 0.0f, WHITE); //HP Battery
 	Novice::DrawBox(1516, 104, (int)length_, 82, 0.0f, color, kFillModeSolid); // COLOR
-	Novice::DrawSprite(1510, 100, hpLineHandle, 1.0f, 1.0f, 0.0f, WHITE); //HP line
-
+	Novice::DrawSprite(1510, 100, energyLineHandle, 1.0f, 1.0f, 0.0f, WHITE); //HP line
 	Novice::DrawSprite(1560, 30, batteryText, 1.0f, 1.0f, 0.0f, WHITE); //BATTERY
 
 	//Drill
-	Novice::DrawSprite(1480, 750, drillText, 1.0f, 1.0f, 0.0f, WHITE); //DRILL
-	Novice::DrawSprite(1750, 750, jumpPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Jump
+	Novice::DrawSprite(1540, 800, drillText, 1.0f, 1.0f, 0.0f, WHITE); //DRILL
+	Novice::DrawSprite(1750, 900, jumpPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Jump
+	Novice::DrawSprite(1745, 960, drilledBlock, 1.0f, 1.0f, 0.0f, WHITE); //Destroyed Block
+	Novice::DrawSprite(1725, 955, drillLines, 1.0f, 1.0f, 0.0f, WHITE); //Drill Lines
+
+	//Life
+	Novice::DrawSprite(1570, 205, lifeTextHandle, 1.0f, 1.0f, 0.0f, WHITE); //LIFE
+	Novice::DrawSprite(1500, 270, lifeHandle[playerHP_], 1.0f, 1.0f, 0.0f, WHITE); //LIFE
+	//Novice::DrawSpriteRect(1500, 300, (int)animationPos_.x, (int)animationPos_.y, size_.width, size_.height, lifeHandle, size_.width / animationFrames, 1.f, 0.0f, WHITE);
 
 
 
 	Novice::ScreenPrintf(0, 0, "%f", length_);
+	Novice::ScreenPrintf(0, 20, "%d", playerHP_);
 
 
 }

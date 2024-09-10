@@ -34,7 +34,7 @@ private:
 	Vector2 drillPosOffset = { 11,65 };
 	Size drillSize = { 20, size.height - 65 };
 	// HP
-	static inline const uint8_t kMaxHp = 3;
+	static inline const uint8_t kMaxHp = 5;
 	uint8_t hp = kMaxHp;
 	// Collide with enemy
 	uint16_t collideBuffer = 0;

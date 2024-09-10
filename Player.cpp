@@ -219,22 +219,22 @@ void Player::Exploded()
 
 	if (explodedTimer >= 1 && explodedTimer <= 3)
 	{
-		pos_.y -= 45.f;
+		pos_.y -= 30.f;
 	}
 
 	if (explodedTimer >= 3 && explodedTimer <= 6)
 	{
-		pos_.y -= 24.f;
+		pos_.y -= 26.f;
 	}
 
 	if (explodedTimer >= 6 && explodedTimer <= 15)
 	{
-		pos_.y -= 14.f;
+		pos_.y -= 16.f;
 	}
 
 	if (explodedTimer >= 15 && explodedTimer <= 30)
 	{
-		pos_.y -= 5.f;
+		pos_.y -= 12.f;
 	}
 
 	if (onGround) 

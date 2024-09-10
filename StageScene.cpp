@@ -183,7 +183,9 @@ void StageScene::Update()
 	case StageScene::Phase::kPlay:
 
 		// Player
+
 		player_->Update();
+		UserInterfaceHP();
 		player_->CollisionWithBlock(blocks_);
 		if (!player_->IsOnGround()) {
 			player_->CollisionWithExplodingBlock(explodingBlocks_);
@@ -258,7 +260,7 @@ void StageScene::Update()
 
 		DeleteBlocks();
 		CheckAllCollision();
-		UserInterfaceHP();
+		
 		break;
 	case StageScene::Phase::kDeath:
 
@@ -600,4 +602,8 @@ void StageScene::UserInterfaceHP()
 	bool isDrilling = player_->GetIsDrilling();
 
 	UI->SetIsDrilling(isDrilling);
+
+	int playerHP = player_->GetUIHP();
+
+	UI->SetPlayerHP(playerHP);
 }

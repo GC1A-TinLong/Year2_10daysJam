@@ -1,6 +1,7 @@
 #pragma once
 #include "Novice.h"
 #include <iostream>
+#include "MathFunction.h"
 
 class UserInterface
 {
@@ -13,6 +14,7 @@ public:
 	//Setter
 	void SetDrillPower(float drillPower) { drillPower_ = drillPower; };
 	void SetIsDrilling(bool isDrilling) { isDrilling_ = isDrilling; };
+	void SetPlayerHP(int playerHP) { playerHP_ = playerHP; };
 
 
 private:
@@ -27,17 +29,30 @@ private:
 	int spaceHandle = Novice::LoadTexture("./Resources/StageText/SPACE.png");
 	int jumpPlayer = Novice::LoadTexture("./Resources/Player/player.gif");
 	int jumpLines = Novice::LoadTexture("./Resources/StageText/fakejump.png");
-
-	//HP
-	int hpHandle = Novice::Novice::LoadTexture("./Resources/HP/HP.png");
-	int hpLineHandle = Novice::Novice::LoadTexture("./Resources/HP/HPLines.png");
-	int HPTextHandle = Novice::Novice::LoadTexture("./Resources/StageText/HP.png");
+	int letterSHandle = Novice::LoadTexture("./Resources/StageText/S.png");
 
 	//Battery
+	int EnergyHandle = Novice::Novice::LoadTexture("./Resources/HP/HP.png");
+	int energyLineHandle = Novice::Novice::LoadTexture("./Resources/HP/HPLines.png");
 	int batteryText = Novice::Novice::LoadTexture("./Resources/StageText/BATTERY.png");
 
 	//Drill
 	int drillText = Novice::Novice::LoadTexture("./Resources/StageText/DRILL.png");
+	int drilledBlock = Novice::Novice::LoadTexture("./Resources/StageAssets/BrokenBlock.png");
+	int drillLines = Novice::Novice::LoadTexture("./Resources/StageText/fakeDrill.png");
+
+	//Life
+	int lifeTextHandle = Novice::Novice::LoadTexture("./Resources/StageText/HP.png");
+
+	int lifeHandle[6] =
+	{
+		{Novice::Novice::LoadTexture("./Resources/Life/Life0.png")},
+		{Novice::Novice::LoadTexture("./Resources/Life/Life1.png")},
+		{Novice::Novice::LoadTexture("./Resources/Life/Life2.png")},
+		{Novice::Novice::LoadTexture("./Resources/Life/Life3.png")},
+		{Novice::Novice::LoadTexture("./Resources/Life/Life4.png")},
+		{Novice::Novice::LoadTexture("./Resources/Life/Life5.png")},
+	};
 
 
 	float length_ = 324.f;
@@ -50,7 +65,11 @@ private:
 	float test_ = 0.f;
 	float drillEnergyReductionSpeed = 1.3f * 2;
 	float drillEnergyRestorationSpeed = 0.65f * 2;
+	int playerHP_ = 5;
 	
-	
+	//HP
+	/*Size size_ = { 348,90 };
+	float animationFrames = 2088.f;
+	Vector2 animationPos_ = { 0.f, 0.f };*/
 };
 
