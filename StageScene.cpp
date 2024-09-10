@@ -31,6 +31,8 @@ StageScene::~StageScene()
 	conveyers_.clear();
 
 	delete depthMeter_;
+	delete explosion_;
+	delete goal_;
 }
 
 void StageScene::Initialize()
@@ -151,7 +153,7 @@ void StageScene::Initialize()
 #pragma region Depth Meter
 
 	depthMeter_ = new DepthMeter;
-	depthMeter_->Initialize(5000);
+	depthMeter_->Initialize((int)goalPos_.y);
 
 #pragma endregion
 
@@ -160,6 +162,13 @@ void StageScene::Initialize()
 
 	explosion_ = new Explosion;
 	explosion_->Initialize({ -100,100 });
+
+#pragma endregion
+
+#pragma region Goal
+
+	goal_ = new Goal;
+	goal_->Initialize(goalPos_, scrollSpeed);
 
 #pragma endregion
 
@@ -191,6 +200,10 @@ void StageScene::Update()
 		if (!player_->IsOnGround()) 
 		{
 			player_->CollisiontWithConveyor(conveyers_);
+		}
+		if (!player_->IsOnGround())
+		{
+			player_->CollisionWithGoal(goal_);
 		}
 		player_->Drilling();
 
@@ -231,8 +244,8 @@ void StageScene::Update()
 
 			if (explodingBlocks_[i]->IsDestroyed()) 
 			{
-				explosion_->SetIsExploding(true);
-				explosion_->Initialize({ explodingBlocks_[i]->GetPos().x, explodingBlocks_[i]->GetPos().y -15});
+				explosion_->SetIsExploding(true); 
+				explosion_->Initialize({ explodingBlocks_[i]->GetPos().x, explodingBlocks_[i]->GetPos().y -15}); //make the explosion the position of the destroyed block
 			}
 			if (explodingBlocks_[i]->GetIsAboveScreen())
 			{
@@ -252,6 +265,8 @@ void StageScene::Update()
 		{
 			explosion_->Update();
 		}
+
+		goal_->Update();
 
 		DeleteBlocks();
 		CheckAllCollision();
@@ -379,9 +394,12 @@ void StageScene::Draw()
 		explosion_->Draw();
 	}
 
+	goal_->Draw();
+
 	UI->Draw();
 
 	depthMeter_->Draw();
+
 
 	switch (phase_)
 	{
@@ -395,6 +413,7 @@ void StageScene::Draw()
 	case StageScene::Phase::kDeath:
 		break;
 	case StageScene::Phase::kStageClear:
+		Novice::ScreenPrintf(50, 0, "CLEAR");
 		break;
 	case StageScene::Phase::kFadeOut:
 
@@ -553,18 +572,19 @@ void StageScene::CheckAllCollision()
 
 #pragma endregion
 
+#pragma region player & goal
+
+	Object obj7 = goal_->GetObject_();
+
+	if (isCollideObject(obj3, obj7))
+	{
+		phase_ = Phase::kStageClear;
+	}
+
+#pragma endregion
+
 
 #pragma region player & conveyor collision
-
-	//Object obj7;
-	//for (int i = 0; i < conveyers_.size();)
-	//{
-	//	obj7 = conveyers_[i]->GetObject_();
-	//	if (isCollideObject(obj3, obj7))
-	//	{
-	//		//conveyers_[i]->OnCollision(player_);
-	//	}
-	//}
 
 #pragma endregion
 

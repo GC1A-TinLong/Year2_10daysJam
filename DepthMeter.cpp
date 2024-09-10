@@ -26,12 +26,12 @@ void DepthMeter::DepthCounter()
 {
 	goalPos_--;
 	playerStartPos_-=2;
-	depthCounter_ = (playerYDepth_ - playerStartPos_) /10.f;
-	depthCounter_ = std::clamp(depthCounter_, 0.f, 999.f);
+	depthCounter_ = (playerYDepth_ - playerStartPos_) /10.f; //divide it by 10 to get a smaller number
+	depthCounter_ = std::clamp(depthCounter_, 0.f, 999.f); //clamp it to be between 0 and 999
 
-	units = (int)depthCounter_ % 10;
-	tens = ((int)depthCounter_ / 10) % 10;
-	hundreds = ((int)depthCounter_ / 100) % 10;
+	units = (int)depthCounter_ % 10; // make sure it only counts the first digit
+	tens = ((int)depthCounter_ / 10) % 10; // make sure it only counts the second digit
+	hundreds = ((int)depthCounter_ / 100) % 10; // make sure it only counts the third digit
 
 	if (tens > 0) 
 	{

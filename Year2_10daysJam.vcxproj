@@ -125,6 +125,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="DepthMeter.cpp" />
     <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Goal.cpp" />
     <ClCompile Include="IScene.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="main.cpp" />
@@ -176,6 +177,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="DepthMeter.h" />
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Goal.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="MathFunction.h" />

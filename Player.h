@@ -6,6 +6,7 @@
 #include <vector>
 #include "BlockExplodingTrap.h"
 #include "Conveyor.h"
+#include "Goal.h"
 
 class SpikeTrap;
 
@@ -173,6 +174,7 @@ public:
 	void CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks);
 	void CollisionWithExplodingBlock(std::vector<BlockExplodingTrap*>& explodingBlocks);
 	void CollisiontWithConveyor(std::vector<Conveyor*>& conveyor);
+	void CollisionWithGoal(Goal* goal);
 
 	Vector2 CameraOffset();
 	void Shakeing();

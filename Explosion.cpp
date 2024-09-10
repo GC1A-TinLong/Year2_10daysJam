@@ -13,7 +13,7 @@ void Explosion::Initialize(Vector2 pos)
 
 void Explosion::Update()
 {
-	if (isExploding_)
+	if (isExploding_) //This is set in gamescene
 	{
 		animationTimer_++;
 

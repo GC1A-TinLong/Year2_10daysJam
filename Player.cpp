@@ -512,6 +512,37 @@ void Player::CollisiontWithConveyor(std::vector<Conveyor*>& conveyor)
 	onGround = tempOnGround;
 }
 
+void Player::CollisionWithGoal(Goal* goal) 
+{
+	bool tempOnGround = false;		// temp flag, when its confirmed(ended loop), apply it to the origin flag
+
+		float playerLeftPos = pos_.x + widthOffset;
+		float playerRightPos = playerLeftPos + size.width;
+		float playerBottom = pos_.y + size.height + velocity_.y;
+		//float playerTop = pos_.y + velocity_.y;
+		float blockTop = goal->GetPos().y;
+		//float blockBottom = nonDesBlock->GetPos().y + nonDesBlock->GetSize().height;
+		float leftPosBlock = goal->GetPos().x;
+		float rightPosBlock = goal->GetPos().x + goal->GetSize().width;
+		// Conditions
+		bool isWithinHorizontalBounds = (playerLeftPos <= rightPosBlock) && (playerRightPos >= leftPosBlock);
+		bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);	// above block
+		// player.bot without velocity && blockTop + small amount to prevent falling through
+		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
+
+		if (isWithinHorizontalBounds && isCloseEnoughVertically && !isPlayerBelowBlock) {
+			if (velocity_.y > 0) {	// only when falling
+				pos_.y = blockTop - size.height;
+				velocity_.y = 0;
+				isPressingSpace = false;
+			}
+			// within the 3 conditions
+			tempOnGround = true;
+		}
+	onGround = tempOnGround;
+
+}
+
 Vector2 Player::CameraOffset()
 {
 	Vector2 offset{};

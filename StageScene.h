@@ -15,6 +15,7 @@
 #include "Conveyor.h"
 #include "DepthMeter.h"
 #include "Explosion.h"
+#include "Goal.h"
 
 class StageScene :public IScene
 {
@@ -163,5 +164,9 @@ private:
 
 	//Explosion
 	Explosion* explosion_ = nullptr;
+
+	//Goal
+	Goal* goal_ = nullptr;
+	Vector2 goalPos_{ 192, 1000 };
 };
 
