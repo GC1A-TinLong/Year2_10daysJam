@@ -21,8 +21,9 @@ public:
 	void Draw() override;
 	void ChangePhase();
 
-	void DeleteBlocks();
+	void TextExplanation();
 
+	void DeleteBlocks();
 	void CheckAllCollision();
 
 private:
@@ -44,7 +45,10 @@ private:
 	static inline const uint8_t kPageNum = 2;
 	bool isPage[kPageNum];
 	bool isStartDecreaseAlpha = false;
-	bool isFinishedMovementTutor = false;
+	bool isFinishedMovementText = false;
+	bool isTriedMovement = false;
+	bool isStartMovement = false;
+	uint8_t tryMovementTimer = 0;
 	// COLOR
 	uint16_t alphaTimer = 0;
 	uint32_t R = 255;
@@ -65,8 +69,8 @@ private:
 	Background* background_ = nullptr;
 	int backgroundHandle_[MAXBACKGROUNDS] =
 	{
-		{Novice::LoadTexture("./Resources/Background/Bg1.png")},
-		{Novice::LoadTexture("./Resources/Background/Bg2.png")},
+		{Novice::LoadTexture("./Resources/Background/OneBg.png")},
+		{Novice::LoadTexture("./Resources/Background/TwoBg.png")},
 	};
 
 	// UI

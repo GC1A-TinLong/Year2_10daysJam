@@ -25,6 +25,7 @@ public:
 	GameManager();
 	~GameManager();
 	int Run();
+
 	int pauseTimer = 0;
 	bool isPaused = false;
 };

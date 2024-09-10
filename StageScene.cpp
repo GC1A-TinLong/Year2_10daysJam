@@ -169,7 +169,6 @@ void StageScene::Initialize()
 
 #pragma endregion
 
-
 #pragma region Depth Meter
 
 	depthMeter_ = new DepthMeter;
@@ -227,17 +226,7 @@ void StageScene::Update()
 		}
 
 		//Blocks
-		for (int i = 0; i < blocks_.size();)
-		{
-			blocks_[i]->Update();
-
-			if (blocks_[i]->GetIsAboveScreen())
-			{
-				delete blocks_[i];
-				blocks_.erase(blocks_.begin() + i);
-			}
-			else { ++i; }
-		}
+		for (auto* blocks : blocks_) { blocks->Update(); }
 
 		// WallBlocks
 		for (auto* wallblock : leftWallBlocks_) { wallblock->Update(); }
@@ -258,10 +247,7 @@ void StageScene::Update()
 				delete explodingBlocks_[i];
 				explodingBlocks_.erase(explodingBlocks_.begin() + i);
 			}
-			else
-			{
-				++i;
-			}
+			else { ++i; }
 		}
 
 		for (auto* conveyor : conveyers_) {
@@ -295,28 +281,11 @@ void StageScene::Update()
 		}
 
 		//Blocks
-		for (int i = 0; i < blocks_.size();)
-		{
-			blocks_[i]->Update();
-
-			if (blocks_[i]->GetIsAboveScreen())
-			{
-				delete blocks_[i];
-				blocks_.erase(blocks_.begin() + i);
-			}
-			else { ++i; }
-		}
+		for (auto* blocks : blocks_) { blocks->Update(); }
 
 		// WallBlocks
-		for (auto* wallblock : leftWallBlocks_)
-		{
-			wallblock->Update();
-		}
-
-		for (auto* wallblock : rightWallBlocks_)
-		{
-			wallblock->Update();
-		}
+		for (auto* wallblock : leftWallBlocks_) { wallblock->Update(); }
+		for (auto* wallblock : rightWallBlocks_) { wallblock->Update(); }
 
 		//Exploding Blocks
 		for (int i = 0; i < explodingBlocks_.size();)
@@ -328,10 +297,7 @@ void StageScene::Update()
 				delete explodingBlocks_[i];
 				explodingBlocks_.erase(explodingBlocks_.begin() + i);
 			}
-			else
-			{
-				++i;
-			}
+			else { ++i; }
 		}
 
 		break;
@@ -439,7 +405,7 @@ void StageScene::DeleteBlocks()
 {
 	for (int i = 0; i < blocks_.size();)
 	{
-		if (blocks_[i]->IsDestroyed()) //if block is destroyed
+		if (blocks_[i]->IsDestroyed() || blocks_[i]->GetIsAboveScreen()) //if block is destroyed
 		{
 			delete blocks_[i]; //delete block
 			blocks_.erase(blocks_.begin() + i); //erase it from the vector

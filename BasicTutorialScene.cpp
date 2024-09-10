@@ -122,46 +122,7 @@ void BasicTutorialScene::Update()
 		break;
 
 	case Phase::kTextExplanation:
-#pragma region Tutorial Text
-		if (isPage[0]) {
-			if (A < 255 && !isStartDecreaseAlpha) {
-				A += 6;
-				if (A >= 255) { A = 255; }
-			}
-			if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-				isStartDecreaseAlpha = true;
-			}
-			if (isStartDecreaseAlpha) {
-				if (A > 0) { A -= 6; }
-				if (A <= 0 || A > 255) {
-					A = 0;
-					isStartDecreaseAlpha = false;
-					isPage[0] = false;
-					isPage[1] = true;
-				}
-			}
-		}
-		else if (isPage[1]) {
-			if (A < 255 && !isStartDecreaseAlpha) {
-				A += 6;
-				if (A >= 255) { A = 255; }
-			}
-			if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-				isStartDecreaseAlpha = true;
-			}
-			if (isStartDecreaseAlpha) {
-				if (A > 0) { A -= 6; }
-				if (A <= 0 || A > 255) {
-					A = 0;
-					isStartDecreaseAlpha = false;
-					isPage[1] = false;
-					isFinishedMovementTutor = true;
-				}
-			}
-		}
-#pragma endregion
-
-		color = (R << 24) | (G << 16) | (B << 8) | A;
+		TextExplanation();
 		break;
 
 	case BasicTutorialScene::Phase::kPlay:
@@ -169,17 +130,7 @@ void BasicTutorialScene::Update()
 		player_->Update();
 		player_->CollisionWithBlock(blocks_);
 		// Normal Blocks
-		for (int i = 0; i < blocks_.size();)
-		{
-			blocks_[i]->Update();
-
-			if (blocks_[i]->GetIsAboveScreen())
-			{
-				delete blocks_[i];
-				blocks_.erase(blocks_.begin() + i);
-			}
-			else { ++i; }
-		}
+		for (auto* blocks : blocks_) { blocks->Update(); }
 
 		DeleteBlocks();
 		CheckAllCollision();
@@ -259,15 +210,27 @@ void BasicTutorialScene::ChangePhase()
 		break;
 
 	case Phase::kTextExplanation:
-		if (isFinishedMovementTutor) { phase_ = Phase::kPlay; }
+		if (isFinishedMovementText && !isTriedMovement) { phase_ = Phase::kPlay; }
 		break;
 
 	case Phase::kPlay:
-		if (Input::GetInstance()->TriggerKey(DIK_C))
+		if (Input::GetInstance()->TriggerKey(DIK_C)) // DEBUG
 		{
-			fade_->Start(Status::FadeOut, duration_);
+			fade_->Start(Status::FadeOut, duration_);  
 			phase_ = Phase::kFadeOut;
 		}
+		// Let player try basic movement for 5 seconds
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE) && !isTriedMovement) { isStartMovement = true; }
+		if (isStartMovement) {
+			tryMovementTimer++;
+			if (tryMovementTimer >= 60) {
+				isStartMovement = false;
+				isTriedMovement = true;	// go back to text explanation
+				phase_ = Phase::kTextExplanation;
+			}
+		}
+		//if (isTriedMovement) { phase_ = Phase::kTextExplanation; }
+
 		if (player_->IsDead()) { phase_ = Phase::kDeath; }
 		break;
 
@@ -287,11 +250,57 @@ void BasicTutorialScene::ChangePhase()
 	}
 }
 
+void BasicTutorialScene::TextExplanation()
+{
+	if (isPage[0]) {
+		if (A < 255 && !isStartDecreaseAlpha) {
+			A += 6;
+			if (A >= 255) { A = 255; }
+		}
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+			isStartDecreaseAlpha = true;
+		}
+		if (isStartDecreaseAlpha) {
+			if (A > 0) { A -= 6; }
+			if (A <= 0 || A > 255) {
+				A = 0;
+				isStartDecreaseAlpha = false;
+				isPage[0] = false;
+				isPage[1] = true;
+			}
+		}
+	}
+	else if (isPage[1]) {
+		if (A < 255 && !isStartDecreaseAlpha) {
+			A += 6;
+			if (A >= 255) { A = 255; }
+		}
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+			isStartDecreaseAlpha = true;
+		}
+		if (isStartDecreaseAlpha) {
+			if (A > 0) { A -= 6; }
+			if (A <= 0 || A > 255) {
+				A = 0;
+				isStartDecreaseAlpha = false;
+				isPage[1] = false;
+				isFinishedMovementText = true;
+			}
+		}
+	}
+
+	if (isTriedMovement) {
+
+	}
+
+	color = (R << 24) | (G << 16) | (B << 8) | A;
+}
+
 void BasicTutorialScene::DeleteBlocks()
 {
 	for (int i = 0; i < blocks_.size();)
 	{
-		if (blocks_[i]->IsDestroyed())
+		if (blocks_[i]->IsDestroyed() || blocks_[i]->GetIsAboveScreen())
 		{
 			delete blocks_[i]; //delete block
 			blocks_.erase(blocks_.begin() + i); //erase it from the vector

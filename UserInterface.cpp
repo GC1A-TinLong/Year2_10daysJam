@@ -56,8 +56,8 @@ void UserInterface::Draw() const
 	Novice::DrawSprite(1620, 470, rightPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Right
 	Novice::DrawSprite(1620, 570, leftPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Left
 	Novice::DrawSprite(1520, 670, spaceHandle, 1.0f, 1.0f, 0.0f, WHITE); //SPACE
-	Novice::DrawSprite(1750, 670, jumpPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Jump
-	Novice::DrawSprite(1736, 745, jumpLines, 1.0f, 1.0f, 0.0f, WHITE); //Player Jump Lines
+	Novice::DrawSprite(1750, 650, jumpPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Jump
+	Novice::DrawSprite(1736, 725, jumpLines, 1.0f, 1.0f, 0.0f, WHITE); //Player Jump Lines
 	Novice::DrawSprite(1520, 900, letterSHandle, 1.0f, 1.0f, 0.0f, WHITE); //S
 
 	//Energy
