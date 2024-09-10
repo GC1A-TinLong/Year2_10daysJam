@@ -9,7 +9,7 @@ void UserInterface::Initialize()
 	drillA = 0;
 }
 
-void UserInterface::Update(bool isShowingDrillUI)
+void UserInterface::Update(bool isShowingDrillUI, bool isTutorial)
 {
 	if (isDrilling_) { length_ -= drillEnergyReductionSpeed; }
 	else { length_ += drillEnergyRestorationSpeed; }
@@ -31,7 +31,8 @@ void UserInterface::Update(bool isShowingDrillUI)
 	length_ = std::clamp(length_, 0.f, 323.f);
 
 	// Adjusting drill UI alpha
-	if (isShowingDrillUI) { isStartIncreaseAlpha = true; }
+	if (!isTutorial) { drillA = 255; }
+	else if (isShowingDrillUI && isTutorial) { isStartIncreaseAlpha = true; }
 	if (isStartIncreaseAlpha) {
 		drillA += 6;
 		if (drillA >= 255) {

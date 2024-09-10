@@ -254,7 +254,7 @@ void StageScene::Update()
 			conveyor->Update();
 		}
 
-		UI->Update(true);
+		UI->Update(true, false);
 
 		DeleteBlocks();
 		CheckAllCollision();

@@ -9,7 +9,7 @@ public:
 
 	~UserInterface();
 	void Initialize();
-	void Update(bool isAbleToDrill);
+	void Update(bool isShowingDrillUI, bool isTutorial);
 	void Draw() const;
 
 	//Setter

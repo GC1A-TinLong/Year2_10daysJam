@@ -28,15 +28,14 @@ void BasicTutorialScene::Initialize()
 #pragma endregion
 
 	// Text
+	UI = new UserInterface;
+	UI->Initialize();
 	isPage[0] = true;
 	A = 0;
 	color = (R << 24) | (G << 16) | (B << 8) | A;	// "|" == "or" (for bit calculation)
-	isShowingDrillUI = false;
 	// Background
 	background_ = new Background;
 	background_->Initialize(backgroundHandle_);
-	UI = new UserInterface;
-	UI->Initialize();
 	// Spike
 	spike_.resize(kSpikeNum);
 	for (int i = 0; i < kSpikeNum; i++)
@@ -122,7 +121,8 @@ void BasicTutorialScene::Update()
 	// Spike
 	for (auto* spike : spike_) { spike->Update(); }
 
-	if(phase_!=Phase::kPlay){ UI->Update(isShowingDrillUI); }	// to hide battery and drill UI
+	SetPlayerStatus();
+	if(phase_!=Phase::kPlay){ UI->Update(isShowingDrillUI, true); }	// to hide battery and drill UI
 	switch (phase_)
 	{
 	case BasicTutorialScene::Phase::kFadeIn:
@@ -136,12 +136,11 @@ void BasicTutorialScene::Update()
 	case BasicTutorialScene::Phase::kPlay:
 		// Player
 		player_->Update();
-		SetPlayerStatus();
+		player_->CollisionWithBlock(blocks_);
 		if (isAbleToDrill) {
 			player_->Drilling();
-			UI->Update(isShowingDrillUI);
+			UI->Update(isShowingDrillUI, false);
 		}
-		player_->CollisionWithBlock(blocks_);
 		// Normal Blocks
 		for (auto* blocks : blocks_) { blocks->Update(); }
 
@@ -151,17 +150,9 @@ void BasicTutorialScene::Update()
 		break;
 	case BasicTutorialScene::Phase::kDeath:
 		// Normal Blocks
-		for (int i = 0; i < blocks_.size();)
-		{
-			blocks_[i]->Update();
+		for (auto* blocks : blocks_) { blocks->Update(); }
 
-			if (blocks_[i]->GetIsAboveScreen())
-			{
-				delete blocks_[i];
-				blocks_.erase(blocks_.begin() + i);
-			}
-			else { ++i; }
-		}
+		DeleteBlocks();
 		break;
 
 	case BasicTutorialScene::Phase::kStageClear:
@@ -348,8 +339,6 @@ void BasicTutorialScene::TextExplanation()
 			}
 		}
 	}
-	Novice::ScreenPrintf(300, 0, "page[2]=%d", isPage[2]);
-	Novice::ScreenPrintf(300, 20, "page[3]=%d", isPage[3]);
 #pragma endregion
 
 	color = (R << 24) | (G << 16) | (B << 8) | A;

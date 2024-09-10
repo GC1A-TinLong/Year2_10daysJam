@@ -6,18 +6,18 @@ BlockNotDestroyable::~BlockNotDestroyable()
 	delete shake_;
 }
 
-void BlockNotDestroyable::Initialize(Vector2 pos,bool isMoss, bool isWall, float scrollSpeed)
+void BlockNotDestroyable::Initialize(Vector2 pos, bool isMoss, bool isWall, float scrollSpeed)
 {
 	pos_ = pos;
 	isMoss_ = isMoss;
 	isWall_ = isWall;
 	scrollSpeed_ = scrollSpeed;
 
-	if (isMoss_) 
+	if (isMoss_)
 	{
 		blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/MossBlock.png");
 	}
-	else 
+	else
 	{
 		blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/Block.png");
 	}
@@ -28,11 +28,11 @@ void BlockNotDestroyable::Initialize(Vector2 pos,bool isMoss, bool isWall, float
 void BlockNotDestroyable::Update()
 {
 	pos_.y -= scrollSpeed_;
-	if (isWall_) 
+	if (isWall_)
 	{
 		LoopWall();
 	}
-	else 
+	else
 	{
 		DestroyIfOOB();
 		shake_->ActivateShake(5, 30);
@@ -57,21 +57,16 @@ void BlockNotDestroyable::HP()
 		hp -= takenDamage_;
 	}
 
-	//Return to max HP
-
-	if (hp > hpHalf && takenDamage_ == 0 || !isTouched_ && hp > hpHalf)
-	{
-		hp = hpMax;
+	//Return to respective HP
+	if (takenDamage_ == 0 || !isTouched_) {
+		if (hp > hp70percent) { hp = hpMax; }
+		else if (hp <= hp70percent && hp > hpHalf) { hp = hp70percent; }
+		else if (hp <= hpHalf && hp > hp30percent) { hp = hpHalf; }
+		else if (hp <= hp30percent && hp > 0) { hp = hp30percent; }
 	}
+	Novice::ScreenPrintf(0, 100, "HP = %d", hp);
 
-	//Return to half HP
-
-	if (takenDamage_ == 0 && hp < hpHalf && hp > 0 || !isTouched_ && hp < hpHalf && hp > 0)
-	{
-		hp = hpHalf;
-	}
-
-	if (hp < hpHalf) 
+	if (hp < hpHalf)
 	{
 		if (isMoss_)
 		{
@@ -82,16 +77,12 @@ void BlockNotDestroyable::HP()
 			blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/BrokenBlock.png");
 		}
 	}
-
-	if (hp <= 0)
-	{
-		hp = 0; //Block destroyed animation handle?
-	}
+	if (hp <= 0) { hp = 0; /*Block destroyed animation handle?*/ }
 }
 
 void BlockNotDestroyable::Shakeing()
 {
-	if (startShake_) 
+	if (startShake_)
 	{
 		shake_->InfiniteShake(6); //Change amplitude here
 	}

@@ -51,7 +51,9 @@ private:
 
 	int hpMax = 150;
 	int hp = hpMax;
+	int hp70percent = 110;
 	int hpHalf = 75;
+	int hp30percent = 40;
 	int takenDamage_ = 0;
 	int hpLow = 90;
 	bool startShake_ = false;
