@@ -172,7 +172,15 @@ void StageScene::Initialize()
 #pragma region Depth Meter
 
 	depthMeter_ = new DepthMeter;
-	depthMeter_->Initialize(2000);
+	depthMeter_->Initialize(5000);
+
+#pragma endregion
+
+
+#pragma region Explosion
+
+	explosion_ = new Explosion;
+	explosion_->Initialize({ -100,100 });
 
 #pragma endregion
 
@@ -242,6 +250,11 @@ void StageScene::Update()
 		{
 			explodingBlocks_[i]->Update();
 
+			if (explodingBlocks_[i]->IsDestroyed()) 
+			{
+				explosion_->SetIsExploding(true);
+				explosion_->Initialize({ explodingBlocks_[i]->GetPos().x, explodingBlocks_[i]->GetPos().y -15});
+			}
 			if (explodingBlocks_[i]->GetIsAboveScreen())
 			{
 				delete explodingBlocks_[i];
@@ -255,6 +268,11 @@ void StageScene::Update()
 		}
 
 		UI->Update(true, false);
+
+		if (explosion_->GetIsExploding()) 
+		{
+			explosion_->Update();
+		}
 
 		DeleteBlocks();
 		CheckAllCollision();
@@ -375,6 +393,11 @@ void StageScene::Draw()
 
 	for (auto* conveyor : conveyers_) {
 		conveyor->Draw();
+	}
+
+	if (explosion_->GetIsExploding()) 
+	{
+		explosion_->Draw();
 	}
 
 	UI->Draw();

@@ -14,6 +14,7 @@
 #include "BlockExplodingTrap.h"
 #include "Conveyor.h"
 #include "DepthMeter.h"
+#include "Explosion.h"
 
 class StageScene :public IScene
 {
@@ -158,6 +159,9 @@ private:
 
 
 	//Depth Meter
-
 	DepthMeter* depthMeter_ = nullptr;
+
+	//Explosion
+	Explosion* explosion_ = nullptr;
 };
+

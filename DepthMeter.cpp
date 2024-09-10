@@ -24,6 +24,7 @@ void DepthMeter::Update()
 
 void DepthMeter::DepthCounter()
 {
+	goalPos_--;
 	playerStartPos_-=2;
 	depthCounter_ = (playerYDepth_ - playerStartPos_) /10.f;
 	depthCounter_ = std::clamp(depthCounter_, 0.f, 999.f);

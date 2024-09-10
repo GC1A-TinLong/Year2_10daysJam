@@ -123,6 +123,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="ClearScene.cpp" />
     <ClCompile Include="Conveyor.cpp" />
     <ClCompile Include="DepthMeter.cpp" />
+    <ClCompile Include="Explosion.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="IScene.cpp" />
     <ClCompile Include="Fade.cpp" />
@@ -173,6 +174,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="ClearScene.h" />
     <ClInclude Include="Conveyor.h" />
     <ClInclude Include="DepthMeter.h" />
+    <ClInclude Include="Explosion.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="IScene.h" />
     <ClInclude Include="Fade.h" />
