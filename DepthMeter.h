@@ -55,7 +55,8 @@ private:
 	int units = 0;
 	int tens = 0;
 	int hundreds = 0;
-	//int index;
+	bool showTens = false;
+	bool showHundreds = false;
 
 };
 
