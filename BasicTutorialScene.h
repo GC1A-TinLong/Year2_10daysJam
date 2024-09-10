@@ -44,7 +44,7 @@ private:
 	static inline const uint8_t kPageNum = 2;
 	bool isPage[kPageNum];
 	bool isStartDecreaseAlpha = false;
-	bool isFinishedTutor = false;
+	bool isFinishedMovementTutor = false;
 	// COLOR
 	uint16_t alphaTimer = 0;
 	uint32_t R = 255;

@@ -59,9 +59,6 @@
     <ClCompile Include="BlockNotDestroyable.cpp">
       <Filter>KamataEngine</Filter>
     </ClCompile>
-    <ClCompile Include="GameManager.cpp">
-      <Filter>KamataEngine</Filter>
-    </ClCompile>
     <ClCompile Include="Fade.cpp">
       <Filter>KamataEngine</Filter>
     </ClCompile>
@@ -91,6 +88,21 @@
     </ClCompile>
     <ClCompile Include="Conveyor.cpp">
       <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockExplodingTrap.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="SpikeTrap.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInterface.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>KamataEngine\Scene\cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicTutorialScene.cpp">
+      <Filter>KamataEngine\Scene\cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -169,7 +181,6 @@
     <ClInclude Include="MathFunction.h" />
     <ClInclude Include="BlockDestroyable.h" />
     <ClInclude Include="BlockNotDestroyable.h" />
-    <ClInclude Include="GameManager.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="IScene.h">
@@ -188,5 +199,14 @@
     <ClInclude Include="Shake.h" />
     <ClInclude Include="Backgroud.h" />
     <ClInclude Include="Conveyor.h" />
+    <ClInclude Include="BlockExplodingTrap.h" />
+    <ClInclude Include="SpikeTrap.h" />
+    <ClInclude Include="UserInterface.h" />
+    <ClInclude Include="BasicTutorialScene.h">
+      <Filter>KamataEngine\Scene\header</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>KamataEngine\Scene\header</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

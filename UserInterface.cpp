@@ -7,8 +7,6 @@ void UserInterface::Initialize()
 
 void UserInterface::Update()
 {
-	
-	
 	if (isDrilling_) 
 	{
 		length_ -= drillEnergyReductionSpeed;

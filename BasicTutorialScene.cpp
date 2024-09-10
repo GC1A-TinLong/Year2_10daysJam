@@ -30,11 +30,12 @@ void BasicTutorialScene::Initialize()
 	// Text
 	isPage[0] = true;
 	A = 0;
-	color = (R << 24) | (G << 16) | (B << 8) | A;	// "|" == or (for bit calculation)
+	color = (R << 24) | (G << 16) | (B << 8) | A;	// "|" == "or" (for bit calculation)
 	// Background
 	background_ = new Background;
 	background_->Initialize(backgroundHandle_);
 	UI = new UserInterface;
+	UI->Initialize();
 	// Spike
 	spike_.resize(kSpikeNum);
 	for (int i = 0; i < kSpikeNum; i++)
@@ -45,7 +46,7 @@ void BasicTutorialScene::Initialize()
 	}
 	// Player
 	player_ = new Player;
-	player_->Initialize({ 640.f,500.f - player_->GetSize().height }, scrollSpeed);
+	player_->Initialize({ 792.f,500.f - player_->GetSize().height }, scrollSpeed);
 
 	// Normal Block
 	blocks_.resize(kBlockNum);
@@ -121,6 +122,7 @@ void BasicTutorialScene::Update()
 		break;
 
 	case Phase::kTextExplanation:
+#pragma region Tutorial Text
 		if (isPage[0]) {
 			if (A < 255 && !isStartDecreaseAlpha) {
 				A += 6;
@@ -153,9 +155,11 @@ void BasicTutorialScene::Update()
 					A = 0;
 					isStartDecreaseAlpha = false;
 					isPage[1] = false;
+					isFinishedMovementTutor = true;
 				}
 			}
 		}
+#pragma endregion
 
 		color = (R << 24) | (G << 16) | (B << 8) | A;
 		break;
@@ -239,7 +243,6 @@ void BasicTutorialScene::Draw()
 				Novice::DrawSprite(int(kBlockSize * 3), int(kBlockSize * 2), pageHandle[i], 1.f, 1.f, 0, color);
 			}
 		}
-
 		break;
 
 	case Phase::kPlay:
@@ -256,7 +259,7 @@ void BasicTutorialScene::ChangePhase()
 		break;
 
 	case Phase::kTextExplanation:
-		if (isFinishedTutor) { phase_ = Phase::kPlay; }
+		if (isFinishedMovementTutor) { phase_ = Phase::kPlay; }
 		break;
 
 	case Phase::kPlay:
