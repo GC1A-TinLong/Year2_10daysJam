@@ -7,48 +7,27 @@ StageScene::~StageScene()
 	delete UI;
 
 	delete player_;
-	for (auto* spike : spike_) {
-		delete spike;
-	}
+	for (auto* spike : spike_) { delete spike; }
 	spike_.clear();
 
-	for (BlockDestroyable* blocks : destroyableBlocks_)
-	{
-		delete blocks;
-	}
+	for (BlockDestroyable* blocks : destroyableBlocks_) { delete blocks; }
 	destroyableBlocks_.clear();
 
-	for (BlockNotDestroyable* blocks : blocks_)
-	{
-		delete blocks;
-	}
+	for (BlockNotDestroyable* blocks : blocks_) { delete blocks; }
 	blocks_.clear();
 
-	for (BlockNotDestroyable* leftBlocks : leftWallBlocks_)
-	{
-		delete leftBlocks;
-	}
+	for (BlockNotDestroyable* leftBlocks : leftWallBlocks_) { delete leftBlocks; }
 	leftWallBlocks_.clear();
-
-	for (BlockNotDestroyable* rightBlocks : rightWallBlocks_)
-	{
-		delete rightBlocks;
-	}
+	for (BlockNotDestroyable* rightBlocks : rightWallBlocks_) { delete rightBlocks; }
 	rightWallBlocks_.clear();
 
-	for (auto* spike : spikeTrap_) {
-		delete spike;
-	}
+	for (auto* spike : spikeTrap_) { delete spike; }
 	spikeTrap_.clear();
 
-	for (auto* explodingBlock : explodingBlocks_) {
-		delete explodingBlock;
-	}
+	for (auto* explodingBlock : explodingBlocks_) { delete explodingBlock; }
 	explodingBlocks_.clear();
 
-	for (auto* conveyer : conveyers_) {
-		delete conveyer;
-	}
+	for (auto* conveyer : conveyers_) { delete conveyer; }
 	conveyers_.clear();
 
 	delete depthMeter_;

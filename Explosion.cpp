@@ -1,10 +1,6 @@
 #include "Explosion.h"
 #include "Novice.h"
 
-Explosion::Explosion()
-{
-}
-
 Explosion::~Explosion()
 {
 }
@@ -40,6 +36,7 @@ void Explosion::Draw()
 {
 	if (isExploding_) 
 	{
-		Novice::DrawSpriteRect((int)(pos_.x), (int)pos_.y, (int)animationPos_.x, (int)animationPos_.y, size_.width, size_.height, texture_, size_.width / animationFrames, 1.f, 0.0f, WHITE);
+		Novice::DrawSpriteRect((int)(pos_.x) - 24, (int)pos_.y - 24, (int)animationPos_.x, (int)animationPos_.y, size_.width, size_.height, texture_,
+			(size_.width / animationFrames) * 2.f, 2.f, 0.0f, WHITE);
 	}
 }

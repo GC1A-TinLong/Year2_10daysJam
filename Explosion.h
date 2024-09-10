@@ -5,14 +5,9 @@ class Explosion
 {
 public:
 
-	Explosion();
-
 	~Explosion();
-
 	void Initialize(Vector2 pos);
-
 	void Update();
-
 	void Draw();
 
 	//Setter
@@ -24,7 +19,7 @@ public:
 private:
 
 	Vector2 pos_;
-	Size size_ = { 54,48 };
+	Size size_ = { 48,48 };
 	Vector2 scale = { 1.f,1.f };
 
 	//Animation
