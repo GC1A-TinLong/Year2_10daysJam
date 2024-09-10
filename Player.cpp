@@ -171,10 +171,7 @@ void Player::Drilling()
 	{
 		isDrilling = true;
 	}
-	else
-	{
-		isDrilling = false;
-	}
+	else { isDrilling = false; }
 	
 	if (isDrilling)  
 	{
@@ -193,15 +190,8 @@ void Player::Drilling()
 		}
 	}
 
-	if (drillPower <= 0.f) 
-	{
-		drillFatigue = true;
-	}
-
-	if (drillPower >= 30 && drillFatigue) 
-	{
-		drillFatigue = false;
-	}
+	if (drillPower <= 0.f) { drillFatigue = true; }
+	if (drillPower >= 30 && drillFatigue) { drillFatigue = false; }
 
 }
 
