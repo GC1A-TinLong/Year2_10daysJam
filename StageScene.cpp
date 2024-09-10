@@ -50,6 +50,8 @@ StageScene::~StageScene()
 		delete conveyer;
 	}
 	conveyers_.clear();
+
+	delete depthMeter_;
 }
 
 void StageScene::Initialize()
@@ -167,6 +169,14 @@ void StageScene::Initialize()
 
 #pragma endregion
 
+
+#pragma region Depth Meter
+
+	depthMeter_ = new DepthMeter;
+	depthMeter_->Initialize();
+
+#pragma endregion
+
 }
 
 void StageScene::Update()
@@ -186,6 +196,8 @@ void StageScene::Update()
 
 		player_->Update();
 		UserInterfaceHP();
+		UserInterfaceDepthMeter();
+		depthMeter_->Update();
 		player_->CollisionWithBlock(blocks_);
 		if (!player_->IsOnGround()) {
 			player_->CollisionWithExplodingBlock(explodingBlocks_);
@@ -401,6 +413,8 @@ void StageScene::Draw()
 
 	UI->Draw();
 
+	depthMeter_->Draw();
+
 	switch (phase_)
 	{
 	case StageScene::Phase::kFadeIn:
@@ -606,4 +620,11 @@ void StageScene::UserInterfaceHP()
 	int playerHP = player_->GetUIHP();
 
 	UI->SetPlayerHP(playerHP);
+}
+
+void StageScene::UserInterfaceDepthMeter()
+{
+	float playerY = player_->GetPos().y;
+
+	depthMeter_->SetPlayerYPos(playerY);
 }

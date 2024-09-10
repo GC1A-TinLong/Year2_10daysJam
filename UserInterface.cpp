@@ -1,8 +1,12 @@
 #include "UserInterface.h"
 #include "algorithm"
+UserInterface::~UserInterface()
+{
+}
 void UserInterface::Initialize()
 {
 	color = 0x00FF1AFF; //Green
+	
 }
 
 void UserInterface::Update()
@@ -65,6 +69,7 @@ void UserInterface::Draw() const
 	//Drill
 	Novice::DrawSprite(1540, 800, drillText, 1.0f, 1.0f, 0.0f, WHITE); //DRILL
 	Novice::DrawSprite(1750, 900, jumpPlayer, 1.0f, 1.0f, 0.0f, WHITE); //Player Jump
+	Novice::DrawSprite(1750, 940, sparkHandle, 1.0f, 1.0f, 0.0f, WHITE); //Sparks
 	Novice::DrawSprite(1745, 960, drilledBlock, 1.0f, 1.0f, 0.0f, WHITE); //Destroyed Block
 	Novice::DrawSprite(1725, 955, drillLines, 1.0f, 1.0f, 0.0f, WHITE); //Drill Lines
 
@@ -73,8 +78,9 @@ void UserInterface::Draw() const
 	Novice::DrawSprite(1500, 270, lifeHandle[playerHP_], 1.0f, 1.0f, 0.0f, WHITE); //LIFE
 	//Novice::DrawSpriteRect(1500, 300, (int)animationPos_.x, (int)animationPos_.y, size_.width, size_.height, lifeHandle, size_.width / animationFrames, 1.f, 0.0f, WHITE);
 
-	Novice::ScreenPrintf(0, 0, "%f", length_);
-	Novice::ScreenPrintf(0, 20, "%d", playerHP_);
+	//Novice::ScreenPrintf(0, 0, "%f", length_);
+	//Novice::ScreenPrintf(0, 20, "%d", playerHP_);
+
 
 
 }

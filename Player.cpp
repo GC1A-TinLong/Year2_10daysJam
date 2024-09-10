@@ -76,7 +76,7 @@ void Player::Draw()
 	if (!isDead && isDrilling) 
 	{
 		Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + 55 + shake_->GetRandY(),
-			(int)sparkAnimationPos_.x, (int)sparkAnimationPos_.y, 42, 16, sparkHandle_, 42.f / sparkAnimationFrames, 1.f, 0.0f, color);
+			(int)sparkAnimationPos_.x, (int)sparkAnimationPos_.y, (int)sparkSize, 16, sparkHandle_, sparkSize / sparkAnimationFrames, 1.f, 0.0f, color);
 	}
 
 	//Novice::ScreenPrintf(0, 0, "player.velocity.x = %f", velocity_.x);
@@ -86,8 +86,8 @@ void Player::Draw()
 	//Novice::ScreenPrintf(0, 80, "onGround = %d", onGround);
 	//Novice::ScreenPrintf(0, 100, "isTakingDamage = %d", isTakingDamage_);
 	//Novice::ScreenPrintf(0, 120, "isDrilling = %d", isDrilling);
-	Novice::ScreenPrintf(0, 140, "hp = %d", hp);
-	Novice::ScreenPrintf(0, 100, "drillpower = %d", drillPower);
+	//Novice::ScreenPrintf(0, 140, "hp = %d", hp);
+	//Novice::ScreenPrintf(0, 100, "drillpower = %d", drillPower);
 	//Novice::ScreenPrintf(0, 160, "exploded = %d", isExploding_);
 	//Novice::ScreenPrintf(0, 180, "randX = %d", randX);
 
@@ -201,7 +201,7 @@ void Player::DrillingSparks()
 	{
 		sparkAnimationTimer_++;
 
-		if (sparkAnimationPos_.x >= sparkAnimationFrames - 42 && sparkAnimationTimer_ >= 4)
+		if (sparkAnimationPos_.x >= sparkAnimationFrames - sparkSize && sparkAnimationTimer_ >= 4)
 		{
 			sparkAnimationPos_.x = 0;
 			sparkAnimationTimer_ = 0;
@@ -209,7 +209,7 @@ void Player::DrillingSparks()
 
 		if (sparkAnimationTimer_ >= 4)
 		{
-			sparkAnimationPos_.x += 42;
+			sparkAnimationPos_.x += sparkSize;
 			sparkAnimationTimer_ = 0;
 		}
 	}

@@ -13,6 +13,7 @@
 #include "UserInterface.h"
 #include "BlockExplodingTrap.h"
 #include "Conveyor.h"
+#include "DepthMeter.h"
 
 class StageScene :public IScene
 {
@@ -27,6 +28,7 @@ public:
 	void DeleteBlocks();
 	void CheckAllCollision();
 	void UserInterfaceHP();
+	void UserInterfaceDepthMeter();
 
 private:
 	enum class Phase
@@ -153,4 +155,9 @@ private:
 	{
 		0,
 	};
+
+
+	//Depth Meter
+
+	DepthMeter* depthMeter_ = nullptr;
 };

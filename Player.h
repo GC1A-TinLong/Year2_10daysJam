@@ -102,6 +102,7 @@ private:
 	Vector2 sparkAnimationPos_ = { 0.f, 0.f };
 	int sparkAnimationTimer_ = 0;
 	float sparkAnimationFrames = 168.f;
+	float sparkSize = 42.f;
 	#pragma endregion
 
 	//Audio

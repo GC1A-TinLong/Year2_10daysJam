@@ -7,6 +7,7 @@ class UserInterface
 {
 public:
 
+	~UserInterface();
 	void Initialize();
 	void Update();
 	void Draw() const;
@@ -40,6 +41,7 @@ private:
 	int drillText = Novice::Novice::LoadTexture("./Resources/StageText/DRILL.png");
 	int drilledBlock = Novice::Novice::LoadTexture("./Resources/StageAssets/BrokenBlock.png");
 	int drillLines = Novice::Novice::LoadTexture("./Resources/StageText/fakeDrill.png");
+	int sparkHandle = Novice::Novice::LoadTexture("./Resources/Player/UIspark.png");
 
 	//Life
 	int lifeTextHandle = Novice::Novice::LoadTexture("./Resources/StageText/HP.png");
@@ -71,5 +73,8 @@ private:
 	/*Size size_ = { 348,90 };
 	float animationFrames = 2088.f;
 	Vector2 animationPos_ = { 0.f, 0.f };*/
+
+
+
 };
 
