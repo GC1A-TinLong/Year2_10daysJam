@@ -18,6 +18,8 @@ void Player::Initialize(const Vector2& pos, float scrollSpeed)
 
 	jumpAudioHandle = Novice::LoadAudio("./Resources/Audio/jump2.wav");
 
+	sparkHandle_ = Novice::LoadTexture("./Resources/Player/spark.png");
+
 	seed = (unsigned int)time(nullptr);
 	srand(seed);
 
@@ -68,6 +70,13 @@ void Player::Draw()
 			Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + 15 + shake_->GetRandY(),
 				(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, color);
 		}
+	}
+
+	//Spark animation
+	if (!isDead && isDrilling) 
+	{
+		Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + 55 + shake_->GetRandY(),
+			(int)sparkAnimationPos_.x, (int)sparkAnimationPos_.y, 42, 16, sparkHandle_, 42.f / sparkAnimationFrames, 1.f, 0.0f, color);
 	}
 
 	//Novice::ScreenPrintf(0, 0, "player.velocity.x = %f", velocity_.x);
@@ -156,6 +165,8 @@ void Player::SwitchPlayerAnimationState()
 
 void Player::Drilling()
 {
+	DrillingSparks();
+
 	if (Input::GetInstance()->PushKey(DIK_S) && onGround && !drillFatigue)
 	{
 		isDrilling = true;
@@ -165,7 +176,6 @@ void Player::Drilling()
 		isDrilling = false;
 	}
 	
-
 	if (isDrilling)  
 	{
 		kMaxVelocity = 4.5f;
@@ -191,6 +201,27 @@ void Player::Drilling()
 	if (drillPower >= 30 && drillFatigue) 
 	{
 		drillFatigue = false;
+	}
+
+}
+
+void Player::DrillingSparks()
+{
+	if (isDrilling) 
+	{
+		sparkAnimationTimer_++;
+
+		if (sparkAnimationPos_.x >= sparkAnimationFrames - 42 && sparkAnimationTimer_ >= 4)
+		{
+			sparkAnimationPos_.x = 0;
+			sparkAnimationTimer_ = 0;
+		}
+
+		if (sparkAnimationTimer_ >= 4)
+		{
+			sparkAnimationPos_.x += 42;
+			sparkAnimationTimer_ = 0;
+		}
 	}
 }
 

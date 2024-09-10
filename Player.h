@@ -86,17 +86,22 @@ private:
 
 	#pragma region Animation
 
+	//Player
 	int playerHandleHolder_;
 	int playerIdleHandle_;
 	int playerMovingRightHandle_;
 	int playerMovingLeftHandle_;
-	//int playerDrillingHandle_;
 	Vector2 animationPos_ = { 0.f, 0.f };
 	int animationTimer_ = 0;
 	float currentAnimationFrames = 126.f;
 	PlayerAnimation playerAnimation_ = PlayerAnimation::Idle;
 	PlayerAnimation previousPlayerAnimation_ = PlayerAnimation::Idle;
 
+	//Sparks
+	int sparkHandle_;
+	Vector2 sparkAnimationPos_ = { 0.f, 0.f };
+	int sparkAnimationTimer_ = 0;
+	float sparkAnimationFrames = 168.f;
 	#pragma endregion
 
 	//Audio
@@ -156,6 +161,7 @@ public:
 	void AnimationHolder();
 	void SwitchPlayerAnimationState();
 	void Drilling();
+	void DrillingSparks();
 	void Scrolling();
 	void Exploded();
 	void OnConveyor();

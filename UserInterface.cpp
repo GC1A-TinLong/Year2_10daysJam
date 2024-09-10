@@ -16,8 +16,6 @@ void UserInterface::Update()
 		length_ += drillEnergyRestorationSpeed;
 	}
 
-	
-
 	if (drillPower_ >= 255)
 	{
 		G = 255;
@@ -30,7 +28,6 @@ void UserInterface::Update()
 		G = (int)drillPower_;
 	}
 
-	
 	R = std::clamp((int)R, 0, 255); // Clamp R to 255
 	G = std::clamp((int)G, 0, 255); //Clamp G to 255
 	length_ = std::clamp(length_, 0.f, 323.f);
@@ -75,8 +72,6 @@ void UserInterface::Draw() const
 	Novice::DrawSprite(1570, 205, lifeTextHandle, 1.0f, 1.0f, 0.0f, WHITE); //LIFE
 	Novice::DrawSprite(1500, 270, lifeHandle[playerHP_], 1.0f, 1.0f, 0.0f, WHITE); //LIFE
 	//Novice::DrawSpriteRect(1500, 300, (int)animationPos_.x, (int)animationPos_.y, size_.width, size_.height, lifeHandle, size_.width / animationFrames, 1.f, 0.0f, WHITE);
-
-
 
 	Novice::ScreenPrintf(0, 0, "%f", length_);
 	Novice::ScreenPrintf(0, 20, "%d", playerHP_);

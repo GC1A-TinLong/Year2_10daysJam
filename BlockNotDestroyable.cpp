@@ -54,7 +54,7 @@ void BlockNotDestroyable::HP()
 {
 	if (hp >= 0 && takenDamage_ > 1) //player is on top of the block
 	{
-		hp -= takenDamage_;
+		//hp -= takenDamage_;
 	}
 
 	//Return to max HP
