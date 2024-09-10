@@ -84,7 +84,7 @@ void BasicTutorialScene::Initialize()
 			else { j++; }
 			blockPos_[i] = { (kBlockSize * 16) + (kBlockSize * j),1200.f };
 		}
-		blocks_[i]->Initialize(blockPos_[i], false, false, 0.f);
+		blocks_[i]->Initialize(blockPos_[i], false, false, scrollSpeed);
 	}
 #pragma region LeftWall
 

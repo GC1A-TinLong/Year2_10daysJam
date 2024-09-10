@@ -64,7 +64,6 @@ void BlockNotDestroyable::HP()
 		else if (hp <= hpHalf && hp > hp30percent) { hp = hpHalf; }
 		else if (hp <= hp30percent && hp > 0) { hp = hp30percent; }
 	}
-	Novice::ScreenPrintf(0, 100, "HP = %d", hp);
 
 	if (hp < hpHalf)
 	{
