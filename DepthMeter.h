@@ -10,11 +10,13 @@ public:
 
 	~DepthMeter();
 
-	void Initialize();
+	void Initialize(int goalPos);
 
 	void Update();
 
 	void DepthCounter();
+
+	void MoveDownwards();
 
 	void Draw();
 
@@ -57,6 +59,10 @@ private:
 	int hundreds = 0;
 	bool showTens = false;
 	bool showHundreds = false;
-
+	int goalPos_ = {};
+	float t = 0.f;
+	float posY = 0.f;
+	float startY = 100.0f;// Starting position of posY
+	float endY = 920.0f;   // Ending position of posY when t = 1.0f
 };
 

@@ -172,7 +172,7 @@ void StageScene::Initialize()
 #pragma region Depth Meter
 
 	depthMeter_ = new DepthMeter;
-	depthMeter_->Initialize();
+	depthMeter_->Initialize(2000);
 
 #pragma endregion
 

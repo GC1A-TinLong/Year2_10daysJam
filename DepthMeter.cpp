@@ -8,16 +8,18 @@ DepthMeter::~DepthMeter()
 {
 }
 
-void DepthMeter::Initialize()
+void DepthMeter::Initialize(int goalPos)
 {
+	goalPos_ = goalPos;
 	pos_ = { 20,140 };
 	playerPos_ = { 25,140 };
-	
+	startY = pos_.y;
 }
 
 void DepthMeter::Update()
 {
 	DepthCounter();
+	MoveDownwards();
 }
 
 void DepthMeter::DepthCounter()
@@ -42,23 +44,32 @@ void DepthMeter::DepthCounter()
 
 }
 
+void DepthMeter::MoveDownwards()
+{
+	t = std::clamp((playerYDepth_ - playerStartPos_) / (goalPos_ - playerStartPos_), 0.0f, 1.0f);
+
+	// Linearly interpolate posY based on t
+	posY = startY + t * (endY - startY);
+}
+
 void DepthMeter::Draw()
 {
 	Novice::DrawSprite((int)pos_.x, (int)pos_.y, meterSprite_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
 	Novice::DrawSprite((int)playerPos_.x, (int)playerPos_.y, meterPlayer_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
-	Novice::DrawSprite(100, (int)playerPos_.y, numbers[units], 1.0f, 1.0f, 0.0f, WHITE); //STAGE
+	Novice::DrawSprite(100, (int)posY, numbers[units], 1.0f, 1.0f, 0.0f, WHITE); //STAGE
 	if (showTens) 
 	{
-		Novice::DrawSprite(80, (int)playerPos_.y, numbers[tens], 1.0f, 1.0f, 0.0f, WHITE); //STAGE
+		Novice::DrawSprite(80, (int)posY, numbers[tens], 1.0f, 1.0f, 0.0f, WHITE); //STAGE
 	}
 	if (hundreds)
 	{
-		Novice::DrawSprite(60, (int)playerPos_.y, numbers[hundreds], 1.0f, 1.0f, 0.0f, WHITE); //STAGE
+		Novice::DrawSprite(60, (int)posY, numbers[hundreds], 1.0f, 1.0f, 0.0f, WHITE); //STAGE
 	}
-	Novice::DrawSprite(120, (int)playerPos_.y, mHandle_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
+	Novice::DrawSprite(120, (int)posY, mHandle_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
 	Novice::DrawSprite(15, 110, starthandle_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
 	Novice::DrawSprite(15, 950, goalhandle_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
 	Novice::ScreenPrintf(0, 0, "%f", depthCounter_);
 	Novice::ScreenPrintf(0, 20, "%d", units);
+	Novice::ScreenPrintf(0, 40, "%f", t);
 
 }
