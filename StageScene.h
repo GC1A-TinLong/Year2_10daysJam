@@ -57,7 +57,7 @@ private:
 	int backgroundHandle_[MAXBACKGROUNDS] =
 	{
 		{Novice::LoadTexture("./Resources/Background/OneBg.png")},
-		{Novice::LoadTexture("./Resources/Background/TwoBg.png")},
+		{Novice::LoadTexture("./Resources/Background/OneBg.png")},
 	};
 
 	// UI
@@ -121,9 +121,9 @@ private:
 
 	static inline const uint8_t kWallBlockNum = 22;
 	std::vector<BlockNotDestroyable*>leftWallBlocks_;
-	Vector2 leftWallPos_ = { 144.f,0 };
+	Vector2 leftWallPos_ = { 144.f,0.f };
 	std::vector<BlockNotDestroyable*>rightWallBlocks_;
-	Vector2 rightWallPos_ = { 1392.f,0 };
+	Vector2 rightWallPos_ = { 1392.f,0.f };
 
 	// Spike Trap
 	static inline const uint8_t kSpikeTrapNum = 3;

@@ -91,7 +91,6 @@ void StageScene::Initialize()
 	for (int i = 0; i < kBlockNum; i++)
 	{
 		blocks_[i] = new BlockNotDestroyable;
-		//Vector2 blockPos = BlockPos_[i];
 		blocks_[i]->Initialize(BlockPos_[i], isMoss[i], false);
 	}
 #pragma endregion
@@ -136,7 +135,7 @@ void StageScene::Initialize()
 	for (int i = 0; i < kExplodingBlockNum; i++)
 	{
 		explodingBlocks_[i] = new BlockExplodingTrap;
-		//Vector2 blockPos = BlockPos_[i];
+		// Vector2 blockPos = BlockPos_[i];
 		explodingBlocks_[i]->Initialize(explodingBlockPos_[i], isExplodingBlockMoss[i]);
 	}
 
@@ -191,7 +190,6 @@ void StageScene::Initialize()
 void StageScene::Update()
 {
 	ChangePhase();
-	background_->Update(scrollSpeed);
 
 	switch (phase_)
 	{
@@ -200,6 +198,7 @@ void StageScene::Update()
 		break;
 
 	case StageScene::Phase::kPlay:
+		background_->Update(scrollSpeed);
 
 		UserInterfaceDepthMeter();
 		depthMeter_->Update(scrollSpeed);
@@ -307,6 +306,7 @@ void StageScene::Update()
 		
 		break;
 	case StageScene::Phase::kDeath:
+		background_->Update(scrollSpeed);
 
 		// Spike
 		for (auto* spike : spike_) {
