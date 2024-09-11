@@ -388,8 +388,8 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 		float rightPosBlock = nonDesBlock->GetPos().x + nonDesBlock->GetSize().width;
 		
 		bool isLeftCollision = (playerRightPos > leftPosBlock) && (playerLeftPos < leftPosBlock) &&
-			(playerBottom > blockTop) && (pos_.y < blockBottom);
-		bool isRightCollision = (playerLeftPos < rightPosBlock) && (playerRightPos > rightPosBlock) && (playerBottom > blockTop) && (pos_.y < blockBottom);
+			(playerBottom > blockTop /*+10*/) && (pos_.y < blockBottom);
+		bool isRightCollision = (playerLeftPos < rightPosBlock) && (playerRightPos > rightPosBlock) && (playerBottom > blockTop /*+10*/) && (pos_.y < blockBottom);
 		
 		if (isLeftCollision) {
 			//pos_.x = leftPosBlock - spriteWidth;
