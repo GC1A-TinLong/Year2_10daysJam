@@ -35,7 +35,7 @@ public:
 
 private:
 	// Scroll
-	float scrollSpeed = 0.f;
+	float scrollSpeed = 2.f;
 
 	enum class Phase
 	{
@@ -172,6 +172,8 @@ private:
 	//Goal
 	Goal* goal_ = nullptr;
 	Vector2 goalPos_{ 192, 1800 };
+	bool isStageCleared = false;
+	int waitForCollision = 0;
 
 
 #pragma region Steel Block

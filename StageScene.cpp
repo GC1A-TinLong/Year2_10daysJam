@@ -196,7 +196,7 @@ void StageScene::Update()
 	case StageScene::Phase::kFadeIn:
 		fade_->Update();
 		break;
-
+#pragma region Play
 	case StageScene::Phase::kPlay:
 
 		background_->Update(scrollSpeed);
@@ -309,6 +309,9 @@ void StageScene::Update()
 		CheckAllCollision();
 		
 		break;
+#pragma endregion
+
+#pragma region kDeath
 	case StageScene::Phase::kDeath:
 		background_->Update(scrollSpeed);
 
@@ -351,9 +354,127 @@ void StageScene::Update()
 		}
 
 		break;
-	case StageScene::Phase::kStageClear:
-		break;
+#pragma endregion
 
+#pragma region kStageClear
+	case StageScene::Phase::kStageClear:
+
+		scrollSpeed = 0.f;
+
+
+		background_->Update(scrollSpeed);
+
+		UserInterfaceDepthMeter();
+		depthMeter_->Update(scrollSpeed);
+
+		// Player
+		SetPlayerStatus();
+
+		player_->Update(scrollSpeed);
+		SetPlayerStatus();
+		player_->CollisionWithBlock(blocks_);
+		if (!player_->IsOnGround()) {
+			player_->CollisionWithExplodingBlock(explodingBlocks_);
+		}
+		if (!player_->IsOnGround())
+		{
+			player_->CollisiontWithConveyor(conveyers_);
+		}
+		if (!player_->IsOnGround())
+		{
+			player_->CollisionWithGoal(goal_);
+		}
+		if (!player_->IsOnGround())
+		{
+			player_->CollisionWithDestroyableBlock(destroyableBlocks_);
+		}
+		if (!player_->IsOnGround())
+		{
+			player_->CollisionWithMetalBlock(blocksSteel_);
+		}
+		player_->Drilling();
+		CheckAllCollision();
+		goal_->Update(scrollSpeed);
+		
+		// Spike
+		for (auto* spike : spike_) {
+			spike->Update();
+		}
+
+		//Destroyable Blocks
+		for (int i = 0; i < destroyableBlocks_.size();)
+		{
+			destroyableBlocks_[i]->Update(scrollSpeed);
+
+			if (destroyableBlocks_[i]->GetIsAboveScreen())
+			{
+				delete destroyableBlocks_[i];
+				destroyableBlocks_.erase(destroyableBlocks_.begin() + i);
+			}
+			else { ++i; }
+		}
+
+		//Blocks
+		for (auto* blocks : blocks_) { blocks->Update(scrollSpeed); }
+
+		// WallBlocks
+		for (auto* wallblock : leftWallBlocks_) { wallblock->Update(scrollSpeed); }
+		for (auto* wallblock : rightWallBlocks_) { wallblock->Update(scrollSpeed); }
+
+		// Spike Trap
+		for (auto* spike : spikeTrap_) {
+			spike->Update(scrollSpeed);
+		}
+
+		//Exploding Blocks
+		for (int i = 0; i < explodingBlocks_.size();)
+		{
+			explodingBlocks_[i]->Update(scrollSpeed);
+
+			if (explodingBlocks_[i]->IsDestroyed())
+			{
+				explosion_->SetIsExploding(true);
+				explosion_->Initialize({ explodingBlocks_[i]->GetPos().x, explodingBlocks_[i]->GetPos().y - 15 }); //make the explosion the position of the destroyed block
+			}
+			if (explodingBlocks_[i]->GetIsAboveScreen())
+			{
+				delete explodingBlocks_[i];
+				explodingBlocks_.erase(explodingBlocks_.begin() + i);
+			}
+			else { ++i; }
+		}
+
+		for (auto* conveyor : conveyers_) {
+			conveyor->Update(scrollSpeed);
+		}
+
+		//Steel Blocks
+		for (int i = 0; i < blocksSteel_.size();)
+		{
+			blocksSteel_[i]->Update(scrollSpeed);
+
+			if (blocksSteel_[i]->GetIsAboveScreen())
+			{
+				delete blocksSteel_[i];
+				blocksSteel_.erase(blocksSteel_.begin() + i);
+			}
+			else { ++i; }
+		}
+
+		UI->Update(true, false);
+
+		if (explosion_->GetIsExploding())
+		{
+			explosion_->Update();
+		}
+
+		
+
+		DeleteBlocks();
+		
+
+		break;
+#pragma endregion
 	case StageScene::Phase::kFadeOut:
 		fade_->Update();
 		break;
@@ -378,6 +499,12 @@ void StageScene::ChangePhase()
 			phase_ = Phase::kFadeOut;
 		}
 		if (player_->IsDead()) { phase_ = Phase::kDeath; }
+
+		if (isStageCleared) 
+		{
+			phase_ = Phase::kStageClear;
+
+		}
 
 		break;
 
@@ -672,7 +799,7 @@ void StageScene::CheckAllCollision()
 
 	if (isCollideObject(obj3, obj7))
 	{
-		phase_ = Phase::kStageClear;
+		isStageCleared = true;
 	}
 
 #pragma endregion
