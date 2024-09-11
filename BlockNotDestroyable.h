@@ -9,8 +9,8 @@ class BlockNotDestroyable
 public:
 
 	~BlockNotDestroyable();
-	void Initialize(Vector2 pos, bool isMoss, bool isWall, float scrollSpeed);
-	void Update();
+	void Initialize(Vector2 pos, bool isMoss, bool isWall);
+	void Update(float scrollSpeed);
 	void Draw();
 
 	void DestroyIfOOB(); // out of bounds
@@ -60,7 +60,5 @@ private:
 
 	Shake* shake_ = nullptr;
 
-	//Scroll speed
-	float scrollSpeed_;
 };
 

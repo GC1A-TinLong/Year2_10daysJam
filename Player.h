@@ -56,6 +56,7 @@ public:
 	bool GetIsTakingDamage() const { return isTakingDamage_; };
 	bool GetHasExploded() const { return isExploding_; };
 	float GetDrillPower() const { return drillPower; };
+	bool GetHasTouchedGoal() const { return hasTouchedGoal; };
 
 	// Setter
 	void SetVelocity(Vector2 velocity) { velocity_ = velocity; };
@@ -198,5 +199,8 @@ private:
 
 	//Conveyor speed
 	float conveyerSpeed = 3.f;
+
+	//Goal
+	bool hasTouchedGoal = false;
 };
 

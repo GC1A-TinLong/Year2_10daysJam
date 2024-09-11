@@ -15,17 +15,17 @@ void Background::Initialize(int backgroundHandle[MAXBACKGROUNDS])
 	srand(seed);
 }
 
-void Background::Update()
+void Background::Update(float scrollSpeed)
 {
 	RandomizeX();
-	ResetY();
+	ResetY(scrollSpeed);
 }
 
-void Background::ResetY()
+void Background::ResetY(float scrollSpeed)
 {
 	for (int i = 0; i < 2; i++)
 	{
-		pos_[i].y -= 4;
+		pos_[i].y -= scrollSpeed;
 		if (pos_[i].y <= -1080)
 		{
 			pos_[i].y = 1080;

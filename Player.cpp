@@ -541,6 +541,7 @@ void Player::CollisionWithGoal(Goal* goal)
 				pos_.y = blockTop - size.height;
 				velocity_.y = 0;
 				isPressingSpace = false;
+				hasTouchedGoal = true;
 			}
 			// within the 3 conditions
 			tempOnGround = true;

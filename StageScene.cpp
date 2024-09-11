@@ -77,7 +77,7 @@ void StageScene::Initialize()
 	{
 		destroyableBlocks_[i] = new BlockDestroyable;
 		Vector2 desBlockPos = desBlockPos_[i];
-		destroyableBlocks_[i]->Initialize(desBlockPos, scrollSpeed);
+		destroyableBlocks_[i]->Initialize(desBlockPos);
 	}
 
 #pragma endregion
@@ -89,7 +89,7 @@ void StageScene::Initialize()
 	{
 		blocks_[i] = new BlockNotDestroyable;
 		//Vector2 blockPos = BlockPos_[i];
-		blocks_[i]->Initialize(BlockPos_[i], isMoss[i], false, scrollSpeed);
+		blocks_[i]->Initialize(BlockPos_[i], isMoss[i], false);
 	}
 #pragma endregion
 
@@ -100,7 +100,7 @@ void StageScene::Initialize()
 	{
 		leftWallBlocks_[i] = new BlockNotDestroyable;
 		leftWallPos_.y = 48.f * i;
-		leftWallBlocks_[i]->Initialize(leftWallPos_, false, true, scrollSpeed);
+		leftWallBlocks_[i]->Initialize(leftWallPos_, false, true);
 	}
 
 #pragma endregion
@@ -112,7 +112,7 @@ void StageScene::Initialize()
 	{
 		rightWallBlocks_[i] = new BlockNotDestroyable;
 		rightWallPos_.y = 48.f * i;
-		rightWallBlocks_[i]->Initialize(rightWallPos_, false, true, scrollSpeed);
+		rightWallBlocks_[i]->Initialize(rightWallPos_, false, true);
 	}
 #pragma endregion
 
@@ -122,7 +122,7 @@ void StageScene::Initialize()
 	for (int i = 0; i < kSpikeTrapNum; i++)
 	{
 		spikeTrap_[i] = new SpikeTrap;
-		spikeTrap_[i]->Initialize(spikeTrapPos_[i], scrollSpeed);
+		spikeTrap_[i]->Initialize(spikeTrapPos_[i]);
 	}
 
 #pragma endregion
@@ -134,7 +134,7 @@ void StageScene::Initialize()
 	{
 		explodingBlocks_[i] = new BlockExplodingTrap;
 		//Vector2 blockPos = BlockPos_[i];
-		explodingBlocks_[i]->Initialize(explodingBlockPos_[i], isExplodingBlockMoss[i], scrollSpeed);
+		explodingBlocks_[i]->Initialize(explodingBlockPos_[i], isExplodingBlockMoss[i]);
 	}
 
 #pragma endregion
@@ -145,7 +145,7 @@ void StageScene::Initialize()
 	for (int i = 0; i < kConveyorNum; i++)
 	{
 		conveyers_[i] = new Conveyor;
-		conveyers_[i]->Initialize(conveyerPos_[i], isConveyorRight[i],scrollSpeed);
+		conveyers_[i]->Initialize(conveyerPos_[i], isConveyorRight[i]);
 	}
 
 #pragma endregion
@@ -168,7 +168,7 @@ void StageScene::Initialize()
 #pragma region Goal
 
 	goal_ = new Goal;
-	goal_->Initialize(goalPos_, scrollSpeed);
+	goal_->Initialize(goalPos_);
 
 #pragma endregion
 
@@ -177,7 +177,7 @@ void StageScene::Initialize()
 void StageScene::Update()
 {
 	ChangePhase();
-	background_->Update();
+	background_->Update(scrollSpeed);
 
 	switch (phase_)
 	{
@@ -193,6 +193,9 @@ void StageScene::Update()
 		SetPlayerStatus();
 
 		player_->Update(scrollSpeed);
+		SetPlayerStatus();
+		UserInterfaceDepthMeter();
+		depthMeter_->Update(scrollSpeed);
 		player_->CollisionWithBlock(blocks_);
 		if (!player_->IsOnGround()) {
 			player_->CollisionWithExplodingBlock(explodingBlocks_);
@@ -215,7 +218,7 @@ void StageScene::Update()
 		//Destroyable Blocks
 		for (int i = 0; i < destroyableBlocks_.size();)
 		{
-			destroyableBlocks_[i]->Update();
+			destroyableBlocks_[i]->Update(scrollSpeed);
 
 			if (destroyableBlocks_[i]->GetIsAboveScreen())
 			{
@@ -226,21 +229,21 @@ void StageScene::Update()
 		}
 
 		//Blocks
-		for (auto* blocks : blocks_) { blocks->Update(); }
+		for (auto* blocks : blocks_) { blocks->Update(scrollSpeed); }
 
 		// WallBlocks
-		for (auto* wallblock : leftWallBlocks_) { wallblock->Update(); }
-		for (auto* wallblock : rightWallBlocks_) { wallblock->Update(); }
+		for (auto* wallblock : leftWallBlocks_) { wallblock->Update(scrollSpeed); }
+		for (auto* wallblock : rightWallBlocks_) { wallblock->Update(scrollSpeed); }
 
 		// Spike Trap
 		for (auto* spike : spikeTrap_) {
-			spike->Update();
+			spike->Update(scrollSpeed);
 		}
 
 		//Exploding Blocks
 		for (int i = 0; i < explodingBlocks_.size();)
 		{
-			explodingBlocks_[i]->Update();
+			explodingBlocks_[i]->Update(scrollSpeed);
 
 			if (explodingBlocks_[i]->IsDestroyed()) 
 			{
@@ -256,7 +259,7 @@ void StageScene::Update()
 		}
 
 		for (auto* conveyor : conveyers_) {
-			conveyor->Update();
+			conveyor->Update(scrollSpeed);
 		}
 
 		UI->Update(true, false);
@@ -266,7 +269,7 @@ void StageScene::Update()
 			explosion_->Update();
 		}
 
-		goal_->Update();
+		goal_->Update(scrollSpeed);
 
 		DeleteBlocks();
 		CheckAllCollision();
@@ -282,7 +285,7 @@ void StageScene::Update()
 		//Destroyable Blocks
 		for (int i = 0; i < destroyableBlocks_.size();)
 		{
-			destroyableBlocks_[i]->Update();
+			destroyableBlocks_[i]->Update(scrollSpeed);
 
 			if (destroyableBlocks_[i]->GetIsAboveScreen())
 			{
@@ -293,16 +296,16 @@ void StageScene::Update()
 		}
 
 		//Blocks
-		for (auto* blocks : blocks_) { blocks->Update(); }
+		for (auto* blocks : blocks_) { blocks->Update(scrollSpeed); }
 
 		// WallBlocks
-		for (auto* wallblock : leftWallBlocks_) { wallblock->Update(); }
-		for (auto* wallblock : rightWallBlocks_) { wallblock->Update(); }
+		for (auto* wallblock : leftWallBlocks_) { wallblock->Update(scrollSpeed); }
+		for (auto* wallblock : rightWallBlocks_) { wallblock->Update(scrollSpeed); }
 
 		//Exploding Blocks
 		for (int i = 0; i < explodingBlocks_.size();)
 		{
-			explodingBlocks_[i]->Update();
+			explodingBlocks_[i]->Update(scrollSpeed);
 
 			if (explodingBlocks_[i]->GetIsAboveScreen())
 			{

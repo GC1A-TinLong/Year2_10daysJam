@@ -9,9 +9,9 @@ public:
 
 	~Goal();
 
-	void Initialize(Vector2 pos, float scrollSpeed);
+	void Initialize(Vector2 pos);
 
-	void Update();
+	void Update(float scrollSpeed);
 
 	void Draw();
 
@@ -24,7 +24,6 @@ private:
 	Vector2 pos_;
 	Vector2 scale = { 1.f,1.f };
 	Size size = { 1200 , 300};
-	float scrollSpeed_ = 0.f;
 	uint32_t texture_;
 
 };

@@ -8,8 +8,8 @@ class BlockDestroyable
 {
 public:
 	~BlockDestroyable();
-	void Initialize(Vector2 pos, float scrollSpeed);
-	void Update();
+	void Initialize(Vector2 pos);
+	void Update(float scrollSpeed);
 	void DestroyIfOOB(); // out of bounds
 	void HP();
 	void Shakeing();
@@ -52,7 +52,5 @@ private:
 
 	Shake* shake_ = nullptr;
 
-	//Scroll speed
-	float scrollSpeed_;
 };
 

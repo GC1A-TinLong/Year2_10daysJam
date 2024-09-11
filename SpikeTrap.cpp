@@ -1,16 +1,15 @@
 #include "SpikeTrap.h"
 #include "Novice.h"
 
-void SpikeTrap::Initialize(const Vector2& pos, float scrollSpeed)
+void SpikeTrap::Initialize(const Vector2& pos)
 {
 	pos_ = pos;
-	scrollSpeed_ = scrollSpeed;
 	texture_ = Novice::LoadTexture("./Resources/StageAssets/SpikeBloodTrap.png");
 }
 
-void SpikeTrap::Update()
+void SpikeTrap::Update(float scrollSpeed)
 {
-	pos_.y -= scrollSpeed_;
+	pos_.y -= scrollSpeed;
 }
 
 void SpikeTrap::Draw()

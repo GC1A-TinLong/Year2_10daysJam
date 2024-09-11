@@ -5,8 +5,8 @@ class SpikeTrap
 {
 public:
 
-	void Initialize(const Vector2& pos, float scrollSpeed);
-	void Update();
+	void Initialize(const Vector2& pos);
+	void Update(float scrollSpeed);
 	void Draw();
 
 	// Getter
@@ -23,9 +23,6 @@ private:
 	Size size = { width,height };
 	Vector2 pos_;
 	int texture_;
-
-	//Scroll speed
-	float scrollSpeed_;
 
 };
 

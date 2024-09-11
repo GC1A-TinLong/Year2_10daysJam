@@ -6,18 +6,17 @@ BlockDestroyable::~BlockDestroyable()
 	delete shake_;
 }
 
-void BlockDestroyable::Initialize(Vector2 pos, float scrollSpeed)
+void BlockDestroyable::Initialize(Vector2 pos)
 {
 	pos_ = pos;
-	scrollSpeed_ = scrollSpeed;
 	blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/BrokenBlock.png");
 	shake_ = new Shake();
 	shake_->Initialize();
 }
 
-void BlockDestroyable::Update()
+void BlockDestroyable::Update(float scrollSpeed)
 {
-	pos_.y -= scrollSpeed_;
+	pos_.y -= scrollSpeed;
 	DestroyIfOOB();
 	shake_->ActivateShake(5, 30);
 	HP();

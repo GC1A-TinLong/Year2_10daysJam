@@ -89,7 +89,18 @@ void BasicTutorialScene::Initialize()
 			else { j++; }
 			blockPos_[i] = { (kBlockSize * 16) + (kBlockSize * j),1200.f };
 		}
-		blocks_[i]->Initialize(blockPos_[i], false, false, scrollSpeed);
+		else if (i < kRowBlockNum * 2 + 5 * 5) {
+			if (i == kRowBlockNum * 2 + 5 * 4) { j = 0; }
+			else { j++; }
+			blockPos_[i] = { (kBlockSize * 8) + (kBlockSize * j),1500.f };
+		}
+		else if (i < kRowBlockNum * 2 + 5 * 6) {
+			if (i == kRowBlockNum * 2 + 5 * 5) { j = 0; }
+			else { j++; }
+			blockPos_[i] = { (kBlockSize * 16) + (kBlockSize * j),1700.f };
+		}
+
+		blocks_[i]->Initialize(blockPos_[i], false, false);
 	}
 #pragma region LeftWall
 
@@ -98,7 +109,7 @@ void BasicTutorialScene::Initialize()
 	{
 		leftWallBlocks_[i] = new BlockNotDestroyable;
 		leftWallPos_.y = 48.f * i;
-		leftWallBlocks_[i]->Initialize(leftWallPos_, false, true, scrollSpeed);
+		leftWallBlocks_[i]->Initialize(leftWallPos_, false, true);
 	}
 
 #pragma endregion
@@ -109,20 +120,37 @@ void BasicTutorialScene::Initialize()
 	{
 		rightWallBlocks_[i] = new BlockNotDestroyable;
 		rightWallPos_.y = 48.f * i;
-		rightWallBlocks_[i]->Initialize(rightWallPos_, false, true, scrollSpeed);
+		rightWallBlocks_[i]->Initialize(rightWallPos_, false, true);
 	}
 
 #pragma endregion
+
+
+#pragma region Goal
+
+	goal_ = new Goal;
+	goal_->Initialize(goalPos_);
+
+#pragma endregion
+
+
+#pragma region Depth Meter
+
+	depthMeter_ = new DepthMeter;
+	depthMeter_->Initialize((int)goalPos_.y);
+
+#pragma endregion
+
 }
 
 void BasicTutorialScene::Update()
 {
 	ChangePhase();
 
-	background_->Update();
+	background_->Update(scrollSpeed);
 	// WallBlocks
-	for (auto* wallblock : leftWallBlocks_) { wallblock->Update(); }
-	for (auto* wallblock : rightWallBlocks_) { wallblock->Update(); }
+	for (auto* wallblock : leftWallBlocks_) { wallblock->Update(scrollSpeed); }
+	for (auto* wallblock : rightWallBlocks_) { wallblock->Update(scrollSpeed); }
 	// Spike
 	for (auto* spike : spike_) { spike->Update(); }
 
@@ -140,14 +168,27 @@ void BasicTutorialScene::Update()
 
 	case BasicTutorialScene::Phase::kPlay:
 		// Player
-		player_->Update(-scrollSpeed);
+		player_->Update(scrollSpeed);
 		player_->CollisionWithBlock(blocks_);
+		if (!player_->IsOnGround()) 
+		{
+			player_->CollisionWithGoal(goal_);
+		}
+
+		if (player_->GetHasTouchedGoal()) 
+		{
+			scrollSpeed = 0.f;
+		}
+
+		goal_->Update(scrollSpeed);
 		if (isAbleToDrill) {
 			player_->Drilling();
 			UI->Update(isShowingDrillUI, false);
+			UserInterfaceDepthMeter();
+			depthMeter_->Update(scrollSpeed);
 		}
 		// Normal Blocks
-		for (auto* blocks : blocks_) { blocks->Update(); }
+		for (auto* blocks : blocks_) { blocks->Update(scrollSpeed); }
 
 		DeleteBlocks();
 		CheckAllCollision();
@@ -155,7 +196,7 @@ void BasicTutorialScene::Update()
 		break;
 	case BasicTutorialScene::Phase::kDeath:
 		// Normal Blocks
-		for (auto* blocks : blocks_) { blocks->Update(); }
+		for (auto* blocks : blocks_) { blocks->Update(scrollSpeed); }
 
 		DeleteBlocks();
 		break;
@@ -178,7 +219,7 @@ void BasicTutorialScene::Draw()
 	// Background
 	background_->Draw();
 	// Spike
-	for (auto* spike : spike_) { spike->Draw(); }
+	
 
 	// Player
 	player_->Draw();
@@ -188,8 +229,11 @@ void BasicTutorialScene::Draw()
 	for (auto* wallblock : leftWallBlocks_) { wallblock->Draw(); }
 	for (auto* wallblock : rightWallBlocks_) { wallblock->Draw(); }
 
-	UI->Draw();
+	for (auto* spike : spike_) { spike->Draw(); }
+	goal_->Draw();
 
+	UI->Draw();
+	depthMeter_->Draw();
 	switch (phase_)
 	{
 	case Phase::kFadeIn:
@@ -341,6 +385,7 @@ void BasicTutorialScene::TextExplanation()
 				isStartDecreaseAlpha = false;
 				isPage[3] = false;
 				isAbleToDrill = true;	// can drill from now
+				scrollSpeed = 3.f;
 				
 			}
 		}
@@ -360,6 +405,13 @@ void BasicTutorialScene::SetPlayerStatus()
 
 	int playerHP = player_->GetUIHP();
 	UI->SetPlayerHP(playerHP);
+}
+
+void BasicTutorialScene::UserInterfaceDepthMeter()
+{
+	float playerY = player_->GetPos().y;
+
+	depthMeter_->SetPlayerYPos(playerY);
 }
 
 void BasicTutorialScene::DeleteBlocks()
@@ -435,3 +487,4 @@ void BasicTutorialScene::CheckAllCollision()
 
 #pragma endregion
 }
+

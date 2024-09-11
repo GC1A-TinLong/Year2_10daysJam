@@ -1,12 +1,11 @@
 #include "Conveyor.h"
 #include "Player.h"
 #include "Novice.h"
-void Conveyor::Initialize(Vector2 pos/*, Size size*/, bool isRight, float scrollSpeed)
+void Conveyor::Initialize(Vector2 pos/*, Size size*/, bool isRight)
 {
 	pos_ = pos;
 	//size_ = size;
 	isRight_ = isRight;
-	scrollSpeed_ = scrollSpeed;
 	if (isRight_) 
 	{
 		texture_ = Novice::LoadTexture("./Resources/Conveyor/Conveyor32.png"); //Right
@@ -17,9 +16,9 @@ void Conveyor::Initialize(Vector2 pos/*, Size size*/, bool isRight, float scroll
 	}
 }
 
-void Conveyor::Update()
+void Conveyor::Update(float scrollSpeed)
 {
-	pos_.y -= scrollSpeed_;
+	pos_.y -= scrollSpeed;
 	Animation();
 	DestroyIfOOB();
 }

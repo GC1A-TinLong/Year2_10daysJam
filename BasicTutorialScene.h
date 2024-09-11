@@ -10,6 +10,8 @@
 #include "UserInterface.h"
 #include "Spike.h"
 #include <vector>
+#include "Goal.h"
+#include "DepthMeter.h"
 
 class BasicTutorialScene : public IScene
 {
@@ -23,7 +25,7 @@ public:
 
 	void TextExplanation();
 	void SetPlayerStatus();
-
+	void UserInterfaceDepthMeter();
 	void DeleteBlocks();
 	void CheckAllCollision();
 
@@ -128,6 +130,14 @@ private:
 
 	//Scroll
 	float scrollSpeed = 0.f;
+
+	//Goal
+	Goal* goal_ = nullptr;
+	Vector2 goalPos_ = { 192, 2000 };
+
+	//Depth Meter
+
+	DepthMeter* depthMeter_ = nullptr;
 
 };
 

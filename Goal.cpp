@@ -9,16 +9,15 @@ Goal::~Goal()
 {
 }
 
-void Goal::Initialize(Vector2 pos, float scrollSpeed)
+void Goal::Initialize(Vector2 pos)
 {
 	pos_ = pos;
-	scrollSpeed_ = scrollSpeed;
 	texture_ = Novice::LoadTexture("./Resources/Goal/Goal.png");
 }
 
-void Goal::Update()
+void Goal::Update(float scrollSpeed)
 {
-	pos_.y -= scrollSpeed_;
+	pos_.y -= scrollSpeed;
 }
 
 void Goal::Draw()

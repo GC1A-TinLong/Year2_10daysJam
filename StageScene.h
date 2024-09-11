@@ -170,6 +170,6 @@ private:
 
 	//Goal
 	Goal* goal_ = nullptr;
-	Vector2 goalPos_{ 192, 5000 };
+	Vector2 goalPos_{ 192, 2000 };
 };
 

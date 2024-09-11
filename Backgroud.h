@@ -8,10 +8,10 @@ public:
 
 	void Initialize(int backgroundHandle[MAXBACKGROUNDS]);
 
-	void Update();
+	void Update(float scrollSpeed);
 	void Draw();
 
-	void ResetY();
+	void ResetY(float scrollSpeed);
 
 	void RandomizeX();
 

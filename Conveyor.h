@@ -8,8 +8,8 @@ class Conveyor
 
 
 public:
-	void Initialize(Vector2 pos/*, Size size*/, bool isRight, float scrollSpeed);
-	void Update();
+	void Initialize(Vector2 pos/*, Size size*/, bool isRight);
+	void Update(float scrollSpeed);
 
 	void DestroyIfOOB(); // out of bounds
 
@@ -50,7 +50,5 @@ private:
 	bool isTouched_ = false;
 	bool isRight_ = false;
 
-	//Scroll speed
-	float scrollSpeed_;
 };
 

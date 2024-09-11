@@ -10,8 +10,8 @@ class BlockExplodingTrap
 public:
 
 	~BlockExplodingTrap();
-	void Initialize(Vector2 pos, bool isMoss, float scrollSpeed);
-	void Update();
+	void Initialize(Vector2 pos, bool isMoss);
+	void Update(float scrollSpeed);
 	void DestroyIfOOB(); // out of bounds
 	void HP();
 	void Shakeing();
@@ -55,7 +55,5 @@ private:
 
 	Shake* shake_ = nullptr;
 
-	//Scroll speed
-	float scrollSpeed_;
 };
 

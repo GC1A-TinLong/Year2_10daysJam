@@ -16,16 +16,16 @@ void DepthMeter::Initialize(int goalPos)
 	startY = pos_.y;
 }
 
-void DepthMeter::Update()
+void DepthMeter::Update(float scrollSpeed)
 {
-	DepthCounter();
+	DepthCounter(scrollSpeed);
 	MoveDownwards();
 }
 
-void DepthMeter::DepthCounter()
+void DepthMeter::DepthCounter(float scrollSpeed)
 {
-	goalPos_--;
-	playerStartPos_-=2;
+	goalPos_-= (int)scrollSpeed;
+	playerStartPos_-= scrollSpeed * 2;
 	depthCounter_ = (playerYDepth_ - playerStartPos_) /10.f; //divide it by 10 to get a smaller number
 	depthCounter_ = std::clamp(depthCounter_, 0.f, 999.f); //clamp it to be between 0 and 999
 
