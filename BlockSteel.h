@@ -5,11 +5,17 @@ class BlockSteel
 {
 public:
 
+	BlockSteel();
+
 	~BlockSteel();
+
 	void Initialize(Vector2 pos);
+
 	void Update(float scrollSpeed);
 	void Draw() const;
 	void DestroyIfOOB(); // out of bounds
+
+	void Draw();
 
 	//Getter
 	bool GetIsAboveScreen() const { return isAboveScreen_; };

@@ -1,6 +1,10 @@
 #include "BlockSteel.h"
 #include "novice.h"
 
+BlockSteel::BlockSteel()
+{
+}
+
 BlockSteel::~BlockSteel()
 {
 }
