@@ -184,8 +184,8 @@ private:
 	bool drillFatigue = false;
 
 	//Drill Meter
-	float drillEnergyReductionSpeed = 4.f;
-	float drillEnergyRestorationSpeed = 2.f;
+	float drillEnergyReductionSpeed = 8.f;
+	float drillEnergyRestorationSpeed = 4.f;
 
 	//Taking damage
 	bool isTakingDamage_ = false;

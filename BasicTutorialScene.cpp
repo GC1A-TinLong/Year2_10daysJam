@@ -336,6 +336,7 @@ void BasicTutorialScene::TextExplanation()
 				isStartDecreaseAlpha = false;
 				isPage[3] = false;
 				isAbleToDrill = true;	// can drill from now
+				
 			}
 		}
 	}

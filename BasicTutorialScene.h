@@ -127,6 +127,7 @@ private:
 	Vector2 rightWallPos_ = { 1392.f,0 };
 
 	//Scroll
-	float scrollSpeed = 5.f;
+	float scrollSpeed = 0.f;
+
 };
 

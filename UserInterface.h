@@ -65,8 +65,8 @@ private:
 	unsigned int B = 34;
 	bool isDrilling_ = false;
 	float test_ = 0.f;
-	float drillEnergyReductionSpeed = 1.3f * 2;
-	float drillEnergyRestorationSpeed = 0.65f * 2;
+	float drillEnergyReductionSpeed = 1.3f * 4;
+	float drillEnergyRestorationSpeed = 0.65f * 4;
 	int playerHP_ = 5;
 
 	// Drill
