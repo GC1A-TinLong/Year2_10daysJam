@@ -12,6 +12,7 @@ BlockSteel::~BlockSteel()
 void BlockSteel::Initialize(Vector2 pos)
 {
 	pos_ = pos;
+	blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/SteelBlock.png");
 }
 
 void BlockSteel::Update(float scrollSpeed)
@@ -30,7 +31,7 @@ void BlockSteel::DestroyIfOOB()
 
 void BlockSteel::Draw() const
 {
-	if (pos_.y >= -float(size.height) && pos_.y <= 720.f)
+	if (pos_.y >= -float(size.height) && pos_.y <= 1080.f)
 	{
 		Novice::DrawSprite((int)pos_.x, (int)pos_.y, blockHandle_, scale.x, scale.y, 0.0f, WHITE);
 	}

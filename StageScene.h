@@ -35,7 +35,7 @@ public:
 
 private:
 	// Scroll
-	float scrollSpeed = 1.f;
+	float scrollSpeed = 0.f;
 
 	enum class Phase
 	{
@@ -171,7 +171,7 @@ private:
 
 	//Goal
 	Goal* goal_ = nullptr;
-	Vector2 goalPos_{ 192, 1800 };
+	Vector2 goalPos_{ 192, 1500 };
 
 
 #pragma region Steel Block
@@ -180,9 +180,9 @@ private:
 	std::vector<BlockSteel*>blocksSteel_;
 	Vector2 steelBlockPos_[kSteelBlockNum] =
 	{
-		{kBlockSize * 6,  440},  {kBlockSize * 7,  1440}, {kBlockSize * 8,  1440},
-		{kBlockSize * 9,  440},  {kBlockSize * 10,  1440}, {kBlockSize * 11,  1440},
-		{kBlockSize * 12,  440},  {kBlockSize * 13,  1440}, {kBlockSize * 14,  1440},
+		{kBlockSize * 6,  1440},  {kBlockSize * 7,  1440}, {kBlockSize * 8,  1440},
+		{kBlockSize * 9,  1440},  {kBlockSize * 10,  1440}, {kBlockSize * 11,  1440},
+		{kBlockSize * 12,  1440},  {kBlockSize * 13,  1440}, {kBlockSize * 14,  1440},
 	};
 };
 #pragma endregion

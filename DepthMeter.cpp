@@ -24,11 +24,17 @@ void DepthMeter::Update(float scrollSpeed)
 
 void DepthMeter::DepthCounter(float scrollSpeed)
 {
-	if (scrollSpeed != 0)
+	if (scrollSpeed == 1) 
+	{
+		goalPos_ --;
+		playerStartPos_ -=2;
+	}
+	else 
 	{
 		goalPos_ -= (int)scrollSpeed;
-		playerStartPos_ -= (scrollSpeed +1.f);
+		playerStartPos_ -= (scrollSpeed * 2);
 	}
+	
 	
 	
 	depthCounter_ = (playerYDepth_ - playerStartPos_) /10.f; //divide it by 10 to get a smaller number
@@ -52,6 +58,7 @@ void DepthMeter::DepthCounter(float scrollSpeed)
 
 void DepthMeter::MoveDownwards()
 {
+
 	t = std::clamp((playerYDepth_ - playerStartPos_) / (goalPos_ - playerStartPos_), 0.0f, 1.0f);
 
 	// Linearly interpolate posY based on t
@@ -77,6 +84,6 @@ void DepthMeter::Draw()
 	Novice::DrawSprite(15, 950, goalhandle_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
 	//Novice::ScreenPrintf(0, 0, "%f", depthCounter_);
 	//Novice::ScreenPrintf(0, 20, "%d", units);
-	//Novice::ScreenPrintf(0, 40, "%f", t);
+	Novice::ScreenPrintf(0, 40, "%f", t);
 
 }

@@ -198,22 +198,22 @@ void StageScene::Update()
 		break;
 
 	case StageScene::Phase::kPlay:
+
 		background_->Update(scrollSpeed);
 
 		UserInterfaceDepthMeter();
 		depthMeter_->Update(scrollSpeed);
+
 		// Player
 		SetPlayerStatus();
 
 		player_->Update(scrollSpeed);
 		SetPlayerStatus();
-		UserInterfaceDepthMeter();
-		depthMeter_->Update(scrollSpeed);
 		player_->CollisionWithBlock(blocks_);
 		if (!player_->IsOnGround()) {
 			player_->CollisionWithExplodingBlock(explodingBlocks_);
 		}
-		if (!player_->IsOnGround()) 
+		if (!player_->IsOnGround())
 		{
 			player_->CollisiontWithConveyor(conveyers_);
 		}
@@ -224,6 +224,10 @@ void StageScene::Update()
 		if (!player_->IsOnGround())
 		{
 			player_->CollisionWithDestroyableBlock(destroyableBlocks_);
+		}
+		if (!player_->IsOnGround())
+		{
+			player_->CollisionWithMetalBlock(blocksSteel_);
 		}
 		player_->Drilling();
 
