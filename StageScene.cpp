@@ -188,7 +188,7 @@ void StageScene::Update()
 	case StageScene::Phase::kPlay:
 
 		UserInterfaceDepthMeter();
-		depthMeter_->Update();
+		depthMeter_->Update(scrollSpeed);
 		// Player
 		SetPlayerStatus();
 

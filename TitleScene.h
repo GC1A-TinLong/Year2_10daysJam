@@ -11,7 +11,12 @@ public:
 
 	void Initialize() override;
 	void Update() override;
+	void Animation();
+	void Menuing();
 	void Draw() override;
+
+	//Getter
+	bool GetPressedExit() const { return hasPressedExit; };
 
 private:
 	enum class Phase
@@ -23,10 +28,21 @@ private:
 		kFadeOut,
 	};
 
-	//uint32_t textureHandle_ = Novice::LoadTexture("./Resources/title.png");
 	Fade* fade_ = nullptr;
 	float duration_ = 1.0f;
 	Phase phase_;
 	bool isSpaceClicked = false;
 	bool finished_ = false;
+	Vector2 pos_ = { 0.f, 0.f };
+	Vector2 animationPos_ = { 0.f, 0.f };
+	float animationFrames = 7680.f;
+	int animationTimer_ = 0;
+	int titleHandle_;
+	bool hasPressedDown = false;
+	int animationTimer = 0;
+	int maxFrames = 60;
+	int pressTimer = 0;
+	bool hasPressedExit = false;
+
+
 };

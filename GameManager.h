@@ -8,10 +8,13 @@
 #include "Novice.h"
 #include "Input.h"
 #include "Pause.h"
+#include "TitleScene.h"
 
 class GameManager
 {
 private:
+
+
 	// for maintaining the scene
 	std::unique_ptr<IScene>sceneArr_[4];
 
@@ -20,6 +23,7 @@ private:
 
 	bool isFullScreen = false;
 	Pause* pause_ = nullptr;
+	TitleScene* titleScene_ = nullptr;
 
 public:
 	GameManager();

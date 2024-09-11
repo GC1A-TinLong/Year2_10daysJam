@@ -34,7 +34,7 @@ private:
 	unsigned int drillingPlayer = Novice::LoadTexture("./Resources/StageText/drillingUI.png");
 
 	//Battery
-	unsigned int EnergyHandle = Novice::LoadTexture("./Resources/HP/HP.png");
+	unsigned int EnergyHandle = Novice::LoadTexture("./Resources/HP/energy1.png");
 	unsigned int energyLineHandle = Novice::LoadTexture("./Resources/HP/HPLines.png");
 	unsigned int batteryText = Novice::LoadTexture("./Resources/StageText/BATTERY.png");
 
@@ -47,14 +47,13 @@ private:
 	//Life
 	unsigned int lifeTextHandle = Novice::LoadTexture("./Resources/StageText/HP.png");
 
-	int lifeHandle[6] =
+	int lifeHandle[5] =
 	{
-		{Novice::LoadTexture("./Resources/Life/Life0.png")},
-		{Novice::LoadTexture("./Resources/Life/Life1.png")},
-		{Novice::LoadTexture("./Resources/Life/Life2.png")},
-		{Novice::LoadTexture("./Resources/Life/Life3.png")},
-		{Novice::LoadTexture("./Resources/Life/Life4.png")},
-		{Novice::LoadTexture("./Resources/Life/Life5.png")},
+		{Novice::LoadTexture("./Resources/Life/LifeNew1.png")},
+		{Novice::LoadTexture("./Resources/Life/LifeNew2.png")},
+		{Novice::LoadTexture("./Resources/Life/LifeNew3.png")},
+		{Novice::LoadTexture("./Resources/Life/LifeNew4.png")},
+		{Novice::LoadTexture("./Resources/Life/LifeNew5.png")},
 	};
 
 	float length_ = 324.f;
@@ -67,7 +66,7 @@ private:
 	float test_ = 0.f;
 	float drillEnergyReductionSpeed = 1.3f * 4;
 	float drillEnergyRestorationSpeed = 0.65f * 4;
-	int playerHP_ = 5;
+	int playerHP_ = 4;
 
 	// Drill
 	uint32_t drillColor;

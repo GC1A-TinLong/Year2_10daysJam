@@ -158,7 +158,7 @@ private:
 
 	bool isConveyorRight[kConveyorNum] =
 	{
-		0,
+		1,
 	};
 
 

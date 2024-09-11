@@ -20,7 +20,6 @@ public:
 	void PauseAnimation();
 
 	void PauseMenu1Menuing();
-
 	void PauseMenu2Menuing();
 
 	void Draw();
@@ -48,6 +47,7 @@ private:
 	bool isOnMeny2 = false;
 	bool closeGame = false;
 	PauseStatus pauseStatus_ = PauseStatus::None;
+
 
 
 };

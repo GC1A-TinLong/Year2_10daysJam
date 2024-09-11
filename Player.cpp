@@ -385,6 +385,39 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 		float blockBottom = nonDesBlock->GetPos().y + nonDesBlock->GetSize().height;
 		float leftPosBlock = nonDesBlock->GetPos().x;
 		float rightPosBlock = nonDesBlock->GetPos().x + nonDesBlock->GetSize().width;
+		
+		bool isLeftCollision = (playerRightPos > leftPosBlock) && (playerLeftPos < leftPosBlock) &&
+			(playerBottom > blockTop) && (pos_.y < blockBottom);
+		bool isRightCollision = (playerLeftPos < rightPosBlock) && (playerRightPos > rightPosBlock) && (playerBottom > blockTop) && (pos_.y < blockBottom);
+		
+		if (isLeftCollision) {
+			//pos_.x = leftPosBlock - spriteWidth;
+			if (!isOnConveyor) 
+			{
+				pos_.x = leftPosBlock - size.width - 12;  // Stop at the block's left edge
+			}
+			else 
+			{
+				pos_.x = leftPosBlock - size.width - 16;
+			}
+			velocity_.x = 0;  // Stop horizontal movement
+			kLRAcceleration = 0;
+
+		}
+		if (isRightCollision) {
+			if (!isOnConveyor) 
+			{
+				pos_.x = rightPosBlock - 10;  // Stop at the block's right edge
+			}
+			else 
+			{
+				pos_.x = rightPosBlock - 6;  // Stop at the block's right edge
+
+			}
+			velocity_.x = 0;  // Stop horizontal movement
+			kLRAcceleration = 0;
+		}
+
 		if (velocity_.y < 0) {
 			continue;
 		}
@@ -394,9 +427,7 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 		// player.bot without velocity && blockTop + small amount to prevent falling through
 		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
 
-		bool isLeftCollision = (playerRightPos > leftPosBlock) && (playerLeftPos < leftPosBlock) &&
-								(playerBottom > blockTop) && (pos_.y < blockBottom);
-		bool isRightCollision = (playerLeftPos < rightPosBlock) && (playerRightPos > rightPosBlock) && (playerBottom > blockTop) && (pos_.y < blockBottom);
+		
 
 		if (isWithinHorizontalBounds && isCloseEnoughVertically && !isPlayerBelowBlock) {
 			if (velocity_.y > 0) {	// only when falling
@@ -407,16 +438,7 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 			// within the 3 conditions
 			tempOnGround = true;
 		}
-		else if (isLeftCollision) {
-			pos_.x = leftPosBlock - spriteWidth;
-			velocity_.x = 0;
-			kLRAcceleration = 0;
-		}
-		else if (isRightCollision) {
-			pos_.x = rightPosBlock + 1; 
-			velocity_.x = 0;
-			kLRAcceleration = 0;
-		}
+		
 	}
 
 	onGround = tempOnGround;

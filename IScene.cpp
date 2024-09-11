@@ -1,6 +1,6 @@
 #include "IScene.h"
 
-int IScene::sceneNo = BASIC_TUTORIAL;
+int IScene::sceneNo = TITLE;
 
 IScene::~IScene()
 {

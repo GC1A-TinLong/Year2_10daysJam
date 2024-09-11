@@ -4,8 +4,8 @@
 
 void Pause::Initialize()
 {
-	pause1Handle_ = Novice::LoadTexture("./Resources/Pause/pauseText1.png");
-	pause2Handle_ = Novice::LoadTexture("./Resources/Pause/pauseText2.png");
+	pause1Handle_ = Novice::LoadTexture("./Resources/Pause/pauseText1New.png");
+	pause2Handle_ = Novice::LoadTexture("./Resources/Pause/pauseText2New.png");
 	pauseTextOnlyHandle_ = Novice::LoadTexture("./Resources/Pause/pauseTextOnly1.png");
 
 	
@@ -107,12 +107,16 @@ void Pause::PauseMenu1Menuing()
 	{
 		hasPressedDown = true;
 		pressTimer = 0;
+		pos_.x = 3840;
+		animationTimer = 0;
 	}
 
 	if ((Input::GetInstance()->TriggerKey(DIK_DOWN) || Input::GetInstance()->TriggerKey(DIK_S) || Input::GetInstance()->TriggerKey(DIK_UP) || Input::GetInstance()->TriggerKey(DIK_W)) && hasPressedDown && pressTimer >= 5)
 	{
 		hasPressedDown = false;
 		pressTimer = 0;
+		pos_.x = 0;
+		animationTimer = 0;
 	}
 
 

@@ -13,12 +13,15 @@ GameManager::GameManager()
 	sceneArr_[currentSceneNo_]->Initialize();
 	pause_ = new Pause();
 	pause_->Initialize();
+	titleScene_ = new TitleScene;
+	titleScene_->Initialize();
 
 }
 
 GameManager::~GameManager()
 {
 	delete pause_;
+	delete titleScene_;
 }
 
 int GameManager::Run()
@@ -46,6 +49,11 @@ int GameManager::Run()
 			pause_->Draw();
 		}
 
+		if (currentSceneNo_ == TITLE) 
+		{
+			titleScene_->Update();
+		}
+
 		if (Input::GetInstance()->TriggerKey(DIK_ESCAPE) && !isPaused && currentSceneNo_ != TITLE)
 		{
 			pause_->SetIsPaused(true);
@@ -64,7 +72,7 @@ int GameManager::Run()
 
 		Novice::EndFrame();
 
-		if (pause_->GetCloseGame()) {
+		if (pause_->GetCloseGame() || titleScene_->GetPressedExit()) {
 			break;
 		}
 	}
