@@ -12,7 +12,7 @@ public:
 
 	void Initialize(int goalPos);
 
-	void Update(float scrollSpeed);
+	void Update(float scrollSpeed); 
 
 	void DepthCounter(float scrollSpeed);
 

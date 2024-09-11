@@ -16,6 +16,7 @@
 #include "DepthMeter.h"
 #include "Explosion.h"
 #include "Goal.h"
+#include "BlockSteel.h"
 
 class StageScene :public IScene
 {
@@ -34,7 +35,7 @@ public:
 
 private:
 	// Scroll
-	float scrollSpeed = 5.f;
+	float scrollSpeed = 1.f;
 
 	enum class Phase
 	{
@@ -134,9 +135,9 @@ private:
 
 	//Exploding Block
 
-	BlockExplodingTrap* blockExplodingTrap_ = nullptr;
+	
 	static inline const uint8_t kExplodingBlockNum = 6;
-	std::vector< BlockExplodingTrap*> explodingBlocks_;
+	std::vector<BlockExplodingTrap*>explodingBlocks_;
 	Vector2 explodingBlockPos_[kExplodingBlockNum] =
 	{
 		{kBlockSize * 6,  948},  {kBlockSize * 7,  948}, {kBlockSize * 8,  948},
@@ -170,6 +171,21 @@ private:
 
 	//Goal
 	Goal* goal_ = nullptr;
-	Vector2 goalPos_{ 192, 2500 };
+	Vector2 goalPos_{ 192, 1800 };
+
+
+#pragma region Steel Block
+
+	static inline const uint8_t kSteelBlockNum = 9;
+	std::vector<BlockSteel*>blocksSteel_;
+	Vector2 steelBlockPos_[kSteelBlockNum] =
+	{
+		{kBlockSize * 6,  440},  {kBlockSize * 7,  1440}, {kBlockSize * 8,  1440},
+		{kBlockSize * 9,  440},  {kBlockSize * 10,  1440}, {kBlockSize * 11,  1440},
+		{kBlockSize * 12,  440},  {kBlockSize * 13,  1440}, {kBlockSize * 14,  1440},
+	};
+
+
+#pragma endregion
 };
 

@@ -46,6 +46,7 @@ private:
 	int animationTimer_ = 0;
 	uint32_t texture_;
 
+
 	bool isAboveScreen_ = false;
 	bool isTouched_ = false;
 	bool isRight_ = false;

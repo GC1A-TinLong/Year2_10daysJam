@@ -35,7 +35,7 @@ void BlockDestroyable::HP()
 {
 	if (isTouched_ && hp >= 0) //player is on top of the block
 	{
-		hp--;
+		hp -= takenDamage_;
 	}
 
 	if (!isTouched_ && hp > 0)
@@ -76,6 +76,6 @@ void BlockDestroyable::Draw()
 {
 	if (pos_.y >= -float(size.height) && pos_.y <= 720.f  && hp != 0)
 	{
-		Novice::DrawSprite((int)pos_.x, (int)pos_.y, blockHandle_, scale.x, scale.y, 0.0f, WHITE);
+		Novice::DrawSprite((int)pos_.x + shake_->GetRandX(), (int)pos_.y + shake_->GetRandY(), blockHandle_, scale.x, scale.y, 0.0f, WHITE);
 	}
 }

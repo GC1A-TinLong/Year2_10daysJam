@@ -572,6 +572,75 @@ void Player::CollisionWithGoal(Goal* goal)
 
 }
 
+void Player::CollisionWithDestroyableBlock(std::vector<BlockDestroyable*>& desBlocks)
+{
+	bool tempOnGround = false;		// temp flag, when its confirmed(ended loop), apply it to the origin flag
+
+	for (BlockDestroyable* desBlock : desBlocks) {
+		float playerLeftPos = pos_.x + widthOffset;
+		float playerRightPos = playerLeftPos + size.width;
+		float playerBottom = pos_.y + size.height + velocity_.y;
+		//float playerTop = pos_.y + velocity_.y;
+		float blockTop = desBlock->GetPos().y;
+		float blockBottom = desBlock->GetPos().y + desBlock->GetSize().height;
+		float leftPosBlock = desBlock->GetPos().x;
+		float rightPosBlock = desBlock->GetPos().x + desBlock->GetSize().width;
+
+		bool isLeftCollision = (playerRightPos > leftPosBlock) && (playerLeftPos < leftPosBlock) &&
+			(playerBottom > blockTop) && (pos_.y < blockBottom);
+		bool isRightCollision = (playerLeftPos < rightPosBlock) && (playerRightPos > rightPosBlock) && (playerBottom > blockTop) && (pos_.y < blockBottom);
+
+		if (isLeftCollision) {
+			//pos_.x = leftPosBlock - spriteWidth;
+			if (!isOnConveyor)
+			{
+				pos_.x = leftPosBlock - size.width - 12;  // Stop at the block's left edge
+			}
+			else
+			{
+				pos_.x = leftPosBlock - size.width - 16;
+			}
+			velocity_.x = 0;  // Stop horizontal movement
+			kLRAcceleration = 0;
+
+		}
+		if (isRightCollision) {
+			if (!isOnConveyor)
+			{
+				pos_.x = rightPosBlock - 10;  // Stop at the block's right edge
+			}
+			else
+			{
+				pos_.x = rightPosBlock - 6;  // Stop at the block's right edge
+
+			}
+			velocity_.x = 0;  // Stop horizontal movement
+			kLRAcceleration = 0;
+		}
+
+		if (velocity_.y < 0) {
+			continue;
+		}
+		// Conditions
+		bool isWithinHorizontalBounds = (playerLeftPos <= rightPosBlock) && (playerRightPos >= leftPosBlock);
+		bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);	// above block
+		// player.bot without velocity && blockTop + small amount to prevent falling through
+		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
+
+		if (isWithinHorizontalBounds && isCloseEnoughVertically && !isPlayerBelowBlock) {
+			if (velocity_.y > 0) {	// only when falling
+				pos_.y = blockTop - size.height;
+				velocity_.y = 0;
+				isPressingSpace = false;
+			}
+			// within the 3 conditions
+			tempOnGround = true;
+		}
+	}
+	onGround = tempOnGround;
+
+}
+
 Vector2 Player::CameraOffset()
 {
 	Vector2 offset{};
