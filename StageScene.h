@@ -33,6 +33,9 @@ public:
 	void UserInterfaceDepthMeter();
 
 private:
+	// Scroll
+	float scrollSpeed = 1.f;
+
 	enum class Phase
 	{
 		kFadeIn,
@@ -41,9 +44,9 @@ private:
 		kStageClear,
 		kFadeOut,
 	};
-
 	// Phase
 	Phase phase_;
+
 	// Fade
 	Fade* fade_ = nullptr;
 	float duration_ = 1.0f;
@@ -141,9 +144,6 @@ private:
 	{
 		{false}
 	};
-
-	float scrollSpeed = 1.f;
-
 
 	//Conveyor
 	static inline const uint8_t kConveyorNum = 1;

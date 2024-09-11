@@ -156,7 +156,7 @@ public:
 	~Player();
 
 	void Initialize(const Vector2& pos, float scrollSpeed);
-	void Update();
+	void Update(float scrollSpeed);
 	void Draw();
 	void Audio();
 
@@ -164,7 +164,7 @@ public:
 	void SwitchPlayerAnimationState();
 	void Drilling();
 	void DrillingSparks();
-	void Scrolling();
+	void Scrolling(float scrollSpeed);
 	void Exploded();
 	void OnConveyor();
 

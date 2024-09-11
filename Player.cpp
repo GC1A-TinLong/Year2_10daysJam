@@ -2,6 +2,7 @@
 #include "Novice.h"
 #include "Input.h"
 #include "time.h"
+#include <BasicTutorialScene.h>
 
 Player::~Player()
 {
@@ -28,12 +29,12 @@ void Player::Initialize(const Vector2& pos, float scrollSpeed)
 }
 
 
-void Player::Update()
+void Player::Update(float scrollSpeed)
 {
 	Audio();
 	AnimationHolder();
 
-	Scrolling();
+	Scrolling(scrollSpeed);
 	MovementInput();
 
 	//Drilling();
@@ -215,9 +216,9 @@ void Player::DrillingSparks()
 	}
 }
 
-void Player::Scrolling()
+void Player::Scrolling(float scrollSpeed)
 {
-	pos_.y -= scrollSpeed_;
+	pos_.y -= scrollSpeed;
 	if (pos_.y >= 1080 || pos_.y <= 0)
 	{
 		isDead = true;
@@ -410,10 +411,11 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 			// within the 3 conditions
 			tempOnGround = true;
 		}
+
+		//bool isOutOfHorizontalBounds = (playerLeftPos >= rightPosBlock) || (playerRightPos <= leftPosBlock);
 	}
 
 	onGround = tempOnGround;
-
 }
 
 void Player::OnConveyor()

@@ -189,7 +189,7 @@ void StageScene::Update()
 
 		// Player
 
-		player_->Update();
+		player_->Update(scrollSpeed);
 		SetPlayerStatus();
 		UserInterfaceDepthMeter();
 		depthMeter_->Update();

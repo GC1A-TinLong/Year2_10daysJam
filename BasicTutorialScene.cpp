@@ -135,7 +135,7 @@ void BasicTutorialScene::Update()
 
 	case BasicTutorialScene::Phase::kPlay:
 		// Player
-		player_->Update();
+		player_->Update(-scrollSpeed);
 		player_->CollisionWithBlock(blocks_);
 		if (isAbleToDrill) {
 			player_->Drilling();
