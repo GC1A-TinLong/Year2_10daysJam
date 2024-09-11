@@ -184,8 +184,6 @@ private:
 		{kBlockSize * 9,  440},  {kBlockSize * 10,  1440}, {kBlockSize * 11,  1440},
 		{kBlockSize * 12,  440},  {kBlockSize * 13,  1440}, {kBlockSize * 14,  1440},
 	};
-
-
-#pragma endregion
 };
+#pragma endregion
 
