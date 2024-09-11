@@ -90,7 +90,7 @@ private:
 	// Block Size
 	static inline const float kBlockSize = 48.f;
 	// Normal Block
-	static inline const uint8_t kBlockNum = 50 + 20;
+	static inline const uint8_t kBlockNum = 75 + 20;
 	static inline const uint8_t kRowBlockNum = 25;
 	std::vector<BlockNotDestroyable*>blocks_;
 	std::vector<Vector2>blockPos_;

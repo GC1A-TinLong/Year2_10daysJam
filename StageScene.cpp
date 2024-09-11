@@ -59,7 +59,7 @@ void StageScene::Initialize()
 
 	// Player
 	player_ = new Player;
-	player_->Initialize({ 640.f,400.f }, scrollSpeed);
+	player_->Initialize({ 640.f,400.f });
 
 	// Spike
 	spike_.resize(kSpikeNum);
@@ -187,12 +187,12 @@ void StageScene::Update()
 
 	case StageScene::Phase::kPlay:
 
-		// Player
-
-		player_->Update(scrollSpeed);
-		SetPlayerStatus();
 		UserInterfaceDepthMeter();
 		depthMeter_->Update();
+		// Player
+		SetPlayerStatus();
+
+		player_->Update(scrollSpeed);
 		player_->CollisionWithBlock(blocks_);
 		if (!player_->IsOnGround()) {
 			player_->CollisionWithExplodingBlock(explodingBlocks_);

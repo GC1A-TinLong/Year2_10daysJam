@@ -46,7 +46,7 @@ void BasicTutorialScene::Initialize()
 	}
 	// Player
 	player_ = new Player;
-	player_->Initialize({ 792.f,500.f - player_->GetSize().height }, scrollSpeed);
+	player_->Initialize({ 792.f,500.f - player_->GetSize().height });
 
 	// Normal Blocks
 	blocks_.resize(kBlockNum);
@@ -61,26 +61,31 @@ void BasicTutorialScene::Initialize()
 		else if (i < kRowBlockNum * 2) {
 			if (i == kRowBlockNum) { j = 0; }
 			else { j++; }
+			blockPos_[i] = { (kBlockSize * 4) + (kBlockSize * j),548.f };
+		}
+		else if (i < kRowBlockNum * 3) {
+			if (i == kRowBlockNum) { j = 0; }
+			else { j++; }
 			blockPos_[i] = { (kBlockSize * 4) + (kBlockSize * j),644.f };
 		}
 		/// ↑ 2 row of blocks ↑ ///
-		else if (i < kRowBlockNum * 2 + 5) {
-			if (i == kRowBlockNum * 2) { j = 0; }
+		else if (i < kRowBlockNum * 3 + 5) {
+			if (i == kRowBlockNum * 3) { j = 0; }
 			else { j++; }
 			blockPos_[i] = { (kBlockSize * 14) + (kBlockSize * j),800.f };
 		}
-		else if (i < kRowBlockNum * 2 + 5 * 2) {
-			if (i == kRowBlockNum * 2 + 5) { j = 0; }
+		else if (i < kRowBlockNum * 3 + 5 * 2) {
+			if (i == kRowBlockNum * 3 + 5) { j = 0; }
 			else { j++; }
 			blockPos_[i] = { (kBlockSize * 21) + (kBlockSize * j),900.f };
 		}
-		else if (i < kRowBlockNum * 2 + 5 * 3) {
-			if (i == kRowBlockNum * 2 + 5 * 2) { j = 0; }
+		else if (i < kRowBlockNum * 3 + 5 * 3) {
+			if (i == kRowBlockNum * 3 + 5 * 2) { j = 0; }
 			else { j++; }
 			blockPos_[i] = { (kBlockSize * 7) + (kBlockSize * j),1100.f };
 		}
-		else if (i < kRowBlockNum * 2 + 5 * 4) {
-			if (i == kRowBlockNum * 2 + 5 * 3) { j = 0; }
+		else if (i < kRowBlockNum * 3 + 5 * 4) {
+			if (i == kRowBlockNum * 3 + 5 * 3) { j = 0; }
 			else { j++; }
 			blockPos_[i] = { (kBlockSize * 16) + (kBlockSize * j),1200.f };
 		}

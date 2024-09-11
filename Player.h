@@ -79,6 +79,7 @@ private:
 	// Size
 	static inline const int height = 72;
 	static inline const int width = 20;
+	static inline const int spriteWidth = 44;
 	static inline const int widthOffset = 11;
 	Size size = { width,height };
 	Vector2 drillPosOffset = { 11,65 };
@@ -96,8 +97,8 @@ private:
 	bool isHitGround = true;
 	// OnGround
 	bool onGround = true;
-	static inline const float kLRAcceleration = 0.8f;
-	static inline const float kAttenuation = 0.15f;
+	float kLRAcceleration = 0.8f;
+	static inline const float kAttenuation = 0.15f; // reduce speed (sliding)
 	static inline float kMaxVelocity = 12.5f;
 
 	/// Airborne ///

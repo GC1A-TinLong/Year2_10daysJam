@@ -43,6 +43,9 @@ void Player::Update(float scrollSpeed)
 	TakingDamage();
 
 	OnConveyor();
+
+	pos_ += velocity_;
+	pos_.x = std::clamp(pos_.x, minXPos, maxXPos);
 }
 
 void Player::Draw()
@@ -81,15 +84,6 @@ void Player::Draw()
 
 	//Novice::ScreenPrintf(0, 0, "player.velocity.x = %f", velocity_.x);
 	//Novice::ScreenPrintf(0, 20, "player.velocity.y = %f", velocity_.y);
-	//Novice::ScreenPrintf(0, 40, "player.pos.x = %f", (pos_.x + widthOffset));
-	//Novice::ScreenPrintf(0, 60, "player.pos.y = %f", pos_.y);
-	//Novice::ScreenPrintf(0, 80, "onGround = %d", onGround);
-	//Novice::ScreenPrintf(0, 100, "isTakingDamage = %d", isTakingDamage_);
-	//Novice::ScreenPrintf(0, 120, "isDrilling = %d", isDrilling);
-	//Novice::ScreenPrintf(0, 140, "hp = %d", hp);
-	//Novice::ScreenPrintf(0, 100, "drillpower = %d", drillPower);
-	//Novice::ScreenPrintf(0, 160, "exploded = %d", isExploding_);
-	//Novice::ScreenPrintf(0, 180, "randX = %d", randX);
 
 	//Novice::DrawBox((int)(pos_.x + widthOffset), (int)(pos_.y + drillPosOffset.y), drillSize.width, drillSize.height, 0.0f, WHITE, kFillModeWireFrame);
 }
@@ -288,6 +282,7 @@ void Player::MovementInput()
 {
 	// LR Movement
 	if (Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->PushKey(DIK_A)) {
+		kLRAcceleration = 0.8f;
 		Vector2 acceleration = {};
 		if (Input::GetInstance()->PushKey(DIK_D)) {
 			if (direction != LRDirection::right) { // player direction
@@ -358,8 +353,6 @@ void Player::MovementInput()
 			isOnConveyor = false;
 		}
 	}
-	pos_ += velocity_;
-	pos_.x = std::clamp(pos_.x, minXPos, maxXPos);
 }
 
 void Player::OnCollision()
@@ -389,7 +382,7 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 		float playerBottom = pos_.y + size.height + velocity_.y;
 		//float playerTop = pos_.y + velocity_.y;
 		float blockTop = nonDesBlock->GetPos().y;
-		//float blockBottom = nonDesBlock->GetPos().y + nonDesBlock->GetSize().height;
+		float blockBottom = nonDesBlock->GetPos().y + nonDesBlock->GetSize().height;
 		float leftPosBlock = nonDesBlock->GetPos().x;
 		float rightPosBlock = nonDesBlock->GetPos().x + nonDesBlock->GetSize().width;
 		if (velocity_.y < 0) {
@@ -401,6 +394,10 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 		// player.bot without velocity && blockTop + small amount to prevent falling through
 		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
 
+		bool isLeftCollision = (playerRightPos > leftPosBlock) && (playerLeftPos < leftPosBlock) &&
+								(playerBottom > blockTop) && (pos_.y < blockBottom);
+		bool isRightCollision = (playerLeftPos < rightPosBlock) && (playerRightPos > rightPosBlock) && (playerBottom > blockTop) && (pos_.y < blockBottom);
+
 		if (isWithinHorizontalBounds && isCloseEnoughVertically && !isPlayerBelowBlock) {
 			if (velocity_.y > 0) {	// only when falling
 				pos_.y = blockTop - size.height;
@@ -410,8 +407,16 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 			// within the 3 conditions
 			tempOnGround = true;
 		}
-
-		//bool isOutOfHorizontalBounds = (playerLeftPos >= rightPosBlock) || (playerRightPos <= leftPosBlock);
+		else if (isLeftCollision) {
+			pos_.x = leftPosBlock - spriteWidth;
+			velocity_.x = 0;
+			kLRAcceleration = 0;
+		}
+		else if (isRightCollision) {
+			pos_.x = rightPosBlock + 1; 
+			velocity_.x = 0;
+			kLRAcceleration = 0;
+		}
 	}
 
 	onGround = tempOnGround;

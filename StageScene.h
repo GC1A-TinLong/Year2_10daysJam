@@ -34,7 +34,7 @@ public:
 
 private:
 	// Scroll
-	float scrollSpeed = 1.f;
+	float scrollSpeed = 0.f;
 
 	enum class Phase
 	{
@@ -83,7 +83,7 @@ private:
 
 #pragma region Normal Block
 	// Normal Block
-	static inline const uint8_t kBlockNum = 39;
+	static inline const uint8_t kBlockNum = 45;
 
 	std::vector<BlockNotDestroyable*>blocks_;
 
@@ -97,6 +97,9 @@ private:
 		{kBlockSize * 10, 500},  {kBlockSize * 11, 500},  {kBlockSize * 12, 500},
 		{kBlockSize * 13, 500},  {kBlockSize * 14, 500},  {kBlockSize * 15, 500},
 		{kBlockSize * 26, 500},  {kBlockSize * 27, 500},  {kBlockSize * 28, 500},
+
+		{kBlockSize * 13, 548},  {kBlockSize * 14, 548},  {kBlockSize * 15, 548},
+		{kBlockSize * 26, 548},  {kBlockSize * 27, 548},  {kBlockSize * 28, 548},
 
 		{kBlockSize * 4,  548}, {kBlockSize * 4,  596}, {kBlockSize * 4,  644},
 
