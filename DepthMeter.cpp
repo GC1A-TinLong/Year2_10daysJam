@@ -85,5 +85,7 @@ void DepthMeter::Draw()
 	//Novice::ScreenPrintf(0, 0, "%f", depthCounter_);
 	//Novice::ScreenPrintf(0, 20, "%d", units);
 	Novice::ScreenPrintf(0, 40, "%f", t);
+	Novice::ScreenPrintf(0, 00, "goal = %d", goalPos_);
+	Novice::ScreenPrintf(0, 20, "player= %f", playerStartPos_);
 
 }

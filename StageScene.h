@@ -35,7 +35,7 @@ public:
 
 private:
 	// Scroll
-	float scrollSpeed = 0.f;
+	float scrollSpeed = 1.f;
 
 	enum class Phase
 	{

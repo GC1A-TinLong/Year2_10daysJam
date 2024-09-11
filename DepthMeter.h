@@ -53,7 +53,7 @@ private:
 
 	float depthCounter_ = 0.f;
 	float playerYDepth_;
-	float playerStartPos_ = 400.f;
+	float playerStartPos_ = 472.f;
 	int units = 0;
 	int tens = 0;
 	int hundreds = 0;
