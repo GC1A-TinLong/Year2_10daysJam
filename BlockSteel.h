@@ -15,8 +15,6 @@ public:
 	void Draw() const;
 	void DestroyIfOOB(); // out of bounds
 
-	void Draw();
-
 	//Getter
 	bool GetIsAboveScreen() const { return isAboveScreen_; };
 	Vector2 GetPos() const { return pos_; };
