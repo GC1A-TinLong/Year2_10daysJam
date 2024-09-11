@@ -1,10 +1,6 @@
 #include "BlockSteel.h"
 #include "novice.h"
 
-BlockSteel::BlockSteel()
-{
-}
-
 BlockSteel::~BlockSteel()
 {
 }
@@ -28,7 +24,7 @@ void BlockSteel::DestroyIfOOB()
 	}
 }
 
-void BlockSteel::Draw()
+void BlockSteel::Draw() const
 {
 	if (pos_.y >= -float(size.height) && pos_.y <= 720.f)
 	{

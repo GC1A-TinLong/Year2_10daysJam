@@ -5,22 +5,16 @@ class BlockSteel
 {
 public:
 
-	BlockSteel();
-
 	~BlockSteel();
-
 	void Initialize(Vector2 pos);
-
 	void Update(float scrollSpeed);
-
+	void Draw() const;
 	void DestroyIfOOB(); // out of bounds
-
-	void Draw();
 
 	//Getter
 	bool GetIsAboveScreen() const { return isAboveScreen_; };
-	Vector2 GetPos() { return pos_; };
-	Size GetSize() { return size; };
+	Vector2 GetPos() const { return pos_; };
+	Size GetSize() const { return size; };
 	const Object GetObject_() const;
 
 private:
