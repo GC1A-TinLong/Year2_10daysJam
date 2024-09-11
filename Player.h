@@ -12,6 +12,55 @@ class SpikeTrap;
 
 class Player
 {
+
+public:
+	~Player();
+
+	void Initialize(const Vector2& pos);
+	void Update(float scrollSpeed);
+	void Draw();
+	void Audio();
+
+	void AnimationHolder();
+	void SwitchPlayerAnimationState();
+	void Drilling();
+	void DrillingSparks();
+	void Scrolling(float scrollSpeed);
+	void Exploded();
+	void OnConveyor();
+
+	void MovementInput();
+	void OnCollision();
+	void OnCollision(BlockExplodingTrap* explodingblock);
+	void CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks);
+	void CollisionWithExplodingBlock(std::vector<BlockExplodingTrap*>& explodingBlocks);
+	void CollisiontWithConveyor(std::vector<Conveyor*>& conveyor);
+	void CollisionWithGoal(Goal* goal);
+
+	Vector2 CameraOffset();
+	void Shakeing();
+	void TakingDamage();
+
+	// Getter
+	bool IsHit() const { return isHit; }
+	bool IsDead() const { return isDead; }
+	bool IsOnGround() const { return onGround; }
+	bool GetHP() const { return hp; };
+	int GetUIHP()const { return hp; };
+
+	Vector2 GetPos() const { return pos_; }
+	Size GetSize() const { return size; }
+	Object GetObject_() const;
+	Object GetDrillPointObject_() const;
+	bool GetIsDrilling() const { return isDrilling; };
+	bool GetIsTakingDamage() const { return isTakingDamage_; };
+	bool GetHasExploded() const { return isExploding_; };
+	float GetDrillPower() const { return drillPower; };
+
+	// Setter
+	void SetVelocity(Vector2 velocity) { velocity_ = velocity; };
+	void SetHasExploded(bool isExploding) { isExploding_ = isExploding; };
+
 private:
 	enum class LRDirection {
 		left,
@@ -146,58 +195,7 @@ private:
 	uint32_t halfAlphaWhite = 0xFF4040FF;
 	uint32_t color = 0xFFFFFFFF;
 
-	//Scroll speed
-	float scrollSpeed_;
-
 	//Conveyor speed
 	float conveyerSpeed = 3.f;
-	
-public:
-	~Player();
-
-	void Initialize(const Vector2& pos, float scrollSpeed);
-	void Update(float scrollSpeed);
-	void Draw();
-	void Audio();
-
-	void AnimationHolder();
-	void SwitchPlayerAnimationState();
-	void Drilling();
-	void DrillingSparks();
-	void Scrolling(float scrollSpeed);
-	void Exploded();
-	void OnConveyor();
-
-	void MovementInput();
-	void OnCollision();
-	void OnCollision(BlockExplodingTrap* explodingblock);
-	void CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks);
-	void CollisionWithExplodingBlock(std::vector<BlockExplodingTrap*>& explodingBlocks);
-	void CollisiontWithConveyor(std::vector<Conveyor*>& conveyor);
-	void CollisionWithGoal(Goal* goal);
-
-	Vector2 CameraOffset();
-	void Shakeing();
-	void TakingDamage();
-
-	// Getter
-	bool IsHit() const { return isHit; }
-	bool IsDead() const { return isDead; }
-	bool IsOnGround() const{ return onGround; }
-	bool GetHP() const { return hp; };
-	int GetUIHP()const { return hp; };
-
-	Vector2 GetPos() const { return pos_; }
-	Size GetSize() const { return size; }
-	Object GetObject_() const;
-	Object GetDrillPointObject_() const;
-	bool GetIsDrilling() const { return isDrilling; };
-	bool GetIsTakingDamage() const { return isTakingDamage_; };
-	bool GetHasExploded() const { return isExploding_; };
-	float GetDrillPower() const { return drillPower; };
-
-	// Setter
-	void SetVelocity(Vector2 velocity) { velocity_ = velocity; };
-	void SetHasExploded(bool isExploding) { isExploding_ = isExploding; };
 };
 

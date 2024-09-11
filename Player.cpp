@@ -9,10 +9,9 @@ Player::~Player()
 	delete shake_;
 }
 
-void Player::Initialize(const Vector2& pos, float scrollSpeed)
+void Player::Initialize(const Vector2& pos)
 {
 	pos_ = pos;
-	scrollSpeed_ = scrollSpeed;
 	playerIdleHandle_ = Novice::LoadTexture("./Resources/Player/digPlayer.png");
 	playerMovingRightHandle_ = Novice::LoadTexture("./Resources/Player/digPlayer(R).png");
 	playerMovingLeftHandle_ = Novice::LoadTexture("./Resources/Player/digPlayer(L).png");
