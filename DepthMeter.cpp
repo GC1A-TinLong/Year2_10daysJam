@@ -24,8 +24,13 @@ void DepthMeter::Update(float scrollSpeed)
 
 void DepthMeter::DepthCounter(float scrollSpeed)
 {
-	goalPos_-= (int)scrollSpeed;
-	playerStartPos_-= scrollSpeed * 2;
+	if (scrollSpeed != 0)
+	{
+		goalPos_ -= (int)scrollSpeed;
+		playerStartPos_ -= (scrollSpeed +1.f);
+	}
+	
+	
 	depthCounter_ = (playerYDepth_ - playerStartPos_) /10.f; //divide it by 10 to get a smaller number
 	depthCounter_ = std::clamp(depthCounter_, 0.f, 999.f); //clamp it to be between 0 and 999
 
@@ -51,6 +56,7 @@ void DepthMeter::MoveDownwards()
 
 	// Linearly interpolate posY based on t
 	posY = startY + t * (endY - startY);
+
 }
 
 void DepthMeter::Draw()

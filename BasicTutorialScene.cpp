@@ -385,7 +385,7 @@ void BasicTutorialScene::TextExplanation()
 				isStartDecreaseAlpha = false;
 				isPage[3] = false;
 				isAbleToDrill = true;	// can drill from now
-				scrollSpeed = 3.f;
+				scrollSpeed = 2.f;
 				
 			}
 		}

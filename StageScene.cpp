@@ -33,6 +33,9 @@ StageScene::~StageScene()
 	delete depthMeter_;
 	delete explosion_;
 	delete goal_;
+
+	for (BlockSteel* steelBlocks : blocksSteel_) { delete steelBlocks; }
+	blocksSteel_.clear();
 }
 
 void StageScene::Initialize()
@@ -157,7 +160,6 @@ void StageScene::Initialize()
 
 #pragma endregion
 
-
 #pragma region Explosion
 
 	explosion_ = new Explosion;
@@ -169,6 +171,18 @@ void StageScene::Initialize()
 
 	goal_ = new Goal;
 	goal_->Initialize(goalPos_);
+
+#pragma endregion
+
+#pragma region Steel Block
+
+	blocksSteel_.resize(kSteelBlockNum);
+	for (int i = 0; i < kSteelBlockNum; i++)
+	{
+		blocksSteel_[i] = new BlockSteel;
+		//Vector2 blockPos = BlockPos_[i];
+		blocksSteel_[i]->Initialize(steelBlockPos_[i]);
+	}
 
 #pragma endregion
 
@@ -207,6 +221,10 @@ void StageScene::Update()
 		if (!player_->IsOnGround())
 		{
 			player_->CollisionWithGoal(goal_);
+		}
+		if (!player_->IsOnGround())
+		{
+			player_->CollisionWithDestroyableBlock(destroyableBlocks_);
 		}
 		player_->Drilling();
 
@@ -260,6 +278,19 @@ void StageScene::Update()
 
 		for (auto* conveyor : conveyers_) {
 			conveyor->Update(scrollSpeed);
+		}
+
+		//Steel Blocks
+		for (int i = 0; i < blocksSteel_.size();)
+		{
+			blocksSteel_[i]->Update(scrollSpeed);
+
+			if (blocksSteel_[i]->GetIsAboveScreen())
+			{
+				delete blocksSteel_[i];
+				blocksSteel_.erase(blocksSteel_.begin() + i);
+			}
+			else { ++i; }
 		}
 
 		UI->Update(true, false);
@@ -383,6 +414,9 @@ void StageScene::Draw()
 
 	for (auto* explodingBlock : explodingBlocks_) { explodingBlock->Draw(); }
 
+	for (auto* steelBlock : blocksSteel_) { steelBlock->Draw(); }
+
+
 	// Spike
 	for (auto* spike : spike_) { spike->Draw(); }
 	// Spike Trap
@@ -448,6 +482,17 @@ void StageScene::DeleteBlocks()
 		}
 		else { i++; }
 	}
+
+	for (int i = 0; i < destroyableBlocks_.size();)
+	{
+		if (destroyableBlocks_[i]->IsDestroyed() || destroyableBlocks_[i]->GetIsAboveScreen()) //if block is destroyed
+		{
+			delete destroyableBlocks_[i]; //delete block
+			destroyableBlocks_.erase(destroyableBlocks_.begin() + i); //erase it from the vector
+			break;
+		}
+		else { i++; }
+	}
 }
 
 void StageScene::CheckAllCollision()
@@ -503,6 +548,48 @@ void StageScene::CheckAllCollision()
 		{
 			blocks_[i]->SetIsTouched(false); //not on top of the block anymore
 			blocks_[i]->SetStartShake(false);
+
+		}
+		++i; // Increment if no collision or block was not removed
+	}
+
+#pragma endregion
+
+#pragma region player & destroyable block collision
+	Object obj8;
+
+	for (int i = 0; i < destroyableBlocks_.size(); ++i) //reset all blocks to not being touched
+	{
+		destroyableBlocks_[i]->SetIsTouched(false);
+		destroyableBlocks_[i]->SetStartShake(false);
+	}
+
+	for (int i = 0; i < destroyableBlocks_.size();)
+	{
+		obj8 = destroyableBlocks_[i]->GetObject_();
+		if (isCollideObject(obj3, obj8) && !destroyableBlocks_[i]->IsDestroyed())
+		{
+			destroyableBlocks_[i]->OnCollision(player_);
+			destroyableBlocks_[i]->SetStartShake(true);
+
+			if (player_->GetIsDrilling()) //if we're drilling
+			{
+				destroyableBlocks_[i]->SetTakenDamage(5); //damage is 5
+			}
+			else
+			{
+				destroyableBlocks_[i]->SetTakenDamage(1); //damage is 1
+			}
+
+			if (destroyableBlocks_.empty() || destroyableBlocks_[i] == nullptr) {
+				continue;	// If block was destroyed or blocks_ changed, avoid incrementing "i"
+			}
+			//break;
+		}
+		else
+		{
+			destroyableBlocks_[i]->SetIsTouched(false); //not on top of the block anymore
+			destroyableBlocks_[i]->SetStartShake(false);
 
 		}
 		++i; // Increment if no collision or block was not removed
