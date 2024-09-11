@@ -13,17 +13,18 @@ void Background::Initialize(int backgroundHandle[MAXBACKGROUNDS])
 	//backgroundHandle_[1] = Novice::LoadTexture("./Resources/Background/Bg2.png");
 	seed = (unsigned int)time(nullptr);
 	srand(seed);
+	//randX = rand() % amplitude - amplitude / 2;
 }
 
 void Background::Update(float scrollSpeed)
 {
-	RandomizeX();
+	//RandomizeX();
 	ResetY(scrollSpeed);
 }
 
 void Background::ResetY(float scrollSpeed)
 {
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < MAXBACKGROUNDS; i++)
 	{
 		pos_[i].y -= scrollSpeed;
 		if (pos_[i].y <= -1080)
@@ -33,22 +34,26 @@ void Background::ResetY(float scrollSpeed)
 	}
 }
 
-void Background::RandomizeX()
-{
-	for (int i = 0; i < 2; i++)
-	{
-		if (pos_[i].y <= -1070) 
-		{
-			randX[i] = rand() % amplitude - amplitude / 2;
-		}
-	}
-	
-}
+//void Background::RandomizeX()
+//{
+//	if (pos_[0].y == 1070)
+//	{
+//		randX = rand() % amplitude - amplitude / 2;
+//	}
+//	/*for (int i = 0; i < 2; i++)
+//	{
+//		if (pos_[0].y <= -1070) 
+//		{
+//			randX = rand() % amplitude - amplitude / 2;
+//		}
+//	}*/
+//	
+//}
 
-void Background::Draw()
+void Background::Draw() const
 {
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < MAXBACKGROUNDS; i++)
 	{
-		Novice::DrawSprite((int)pos_[i].x + randX[i], (int)pos_[i].y, backgroundHandle_[i], 1, 1, 0.0f, WHITE);
+		Novice::DrawSprite((int)pos_[i].x, (int)pos_[i].y, backgroundHandle_[i], 1, 1, 0.0f, WHITE);
 	}
 }

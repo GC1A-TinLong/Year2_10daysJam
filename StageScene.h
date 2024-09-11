@@ -34,7 +34,7 @@ public:
 
 private:
 	// Scroll
-	float scrollSpeed = 0.f;
+	float scrollSpeed = 5.f;
 
 	enum class Phase
 	{
@@ -56,7 +56,7 @@ private:
 	int backgroundHandle_[MAXBACKGROUNDS] =
 	{
 		{Novice::LoadTexture("./Resources/Background/OneBg.png")},
-		{Novice::LoadTexture("./Resources/Background/TwoBg.png")},
+		{Novice::LoadTexture("./Resources/Background/OneBg.png")},
 	};
 
 	// UI
@@ -120,9 +120,9 @@ private:
 
 	static inline const uint8_t kWallBlockNum = 22;
 	std::vector<BlockNotDestroyable*>leftWallBlocks_;
-	Vector2 leftWallPos_ = { 144.f,0 };
+	Vector2 leftWallPos_ = { 144.f,0.f };
 	std::vector<BlockNotDestroyable*>rightWallBlocks_;
-	Vector2 rightWallPos_ = { 1392.f,0 };
+	Vector2 rightWallPos_ = { 1392.f,0.f };
 
 	// Spike Trap
 	static inline const uint8_t kSpikeTrapNum = 3;
@@ -170,6 +170,6 @@ private:
 
 	//Goal
 	Goal* goal_ = nullptr;
-	Vector2 goalPos_{ 192, 2000 };
+	Vector2 goalPos_{ 192, 2500 };
 };
 

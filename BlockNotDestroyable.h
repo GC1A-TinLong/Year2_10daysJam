@@ -38,8 +38,8 @@ private:
 	Vector2 scale = { 1.f,1.f };
 	Size size = { 48,48 };
 
-	float wallMinY = 0;
-	float wallMaxY = float(size.height) * 22;
+	float wallMinY = float(size.height * 1);
+	float wallMaxY = float(size.height * 22);
 
 	uint32_t blockHandle_;
 

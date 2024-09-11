@@ -76,7 +76,7 @@ private:
 	int backgroundHandle_[MAXBACKGROUNDS] =
 	{
 		{Novice::LoadTexture("./Resources/Background/OneBg.png")},
-		{Novice::LoadTexture("./Resources/Background/TwoBg.png")},
+		{Novice::LoadTexture("./Resources/Background/OneBg.png")},
 	};
 
 	// UI
@@ -119,7 +119,6 @@ private:
 		{kBlockSize * 16, 900.f}, {kBlockSize * 17, 900.f},{kBlockSize * 18, 900.f},
 		{kBlockSize * 19, 900.f}, {kBlockSize * 20, 900.f},
 	};*/
-
 
 	// Wall
 	static inline const uint8_t kWallBlockNum = 22;
