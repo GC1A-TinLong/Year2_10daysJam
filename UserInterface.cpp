@@ -6,7 +6,7 @@ UserInterface::~UserInterface()
 void UserInterface::Initialize()
 {
 	batteryColor = 0x00FF1AFF; //Green
-	drillA = 0;
+	batteryA = 0;
 }
 
 void UserInterface::Update(bool isShowingDrillUI, bool isTutorial)
@@ -30,18 +30,32 @@ void UserInterface::Update(bool isShowingDrillUI, bool isTutorial)
 	G = std::clamp((int)G, 0, 255); //Clamp G to 255
 	length_ = std::clamp(length_, 0.f, 323.f);
 
-	// Adjusting drill UI alpha
-	if (!isTutorial) { drillA = 255; }
-	else if (isShowingDrillUI && isTutorial) { isStartIncreaseAlpha = true; }
+	// Adjusting battery UI alpha
+	if (!isTutorial) {
+		batteryA = 255;
+		drillBoxA = 0;
+	}
+	else if (isShowingDrillUI && isTutorial) {
+		isStartIncreaseAlpha = true;
+		isStartBlinking = true;
+	}
 	if (isStartIncreaseAlpha) {
-		drillA += 6;
-		if (drillA >= 255) {
-			drillA = 255;
+		batteryA += 6;
+		if (batteryA >= 255) {
+			batteryA = 255;
 			isStartIncreaseAlpha = false;
 		}
 	}
-	batteryColor = (R << 24) | (G << 16) | (B << 8) | drillA;
-	drillColor = (drillR << 24) | (drillG << 16) | (drillB << 8) | drillA;
+	// Adjusting drill UI alpha
+	if (isStartBlinking) {
+		drillBoxA += alphaSpeed;
+		if (drillBoxA >= 118 && drillBoxA <= 255) { alphaSpeed = -3; }
+		else if (drillBoxA <= 0 || drillBoxA > 255) { alphaSpeed = 3; }
+	}
+
+	drillBoxColor = (drillBoxR << 24) | (drillBoxG << 16) | (drillBoxB << 8) | drillBoxA;
+	batteryUIColor = (R << 24) | (G << 16) | (B << 8) | batteryA;
+	batteryColor = (batteryR << 24) | (batteryG << 16) | (batteryB << 8) | batteryA;
 }
 
 void UserInterface::Draw() const
@@ -65,14 +79,15 @@ void UserInterface::Draw() const
 	Novice::DrawSprite(1736, 725, jumpLines, 1.0f, 1.0f, 0.0f, WHITE); //Player Jump Lines
 
 	//Energy
-	Novice::DrawSprite(1509, 100, EnergyHandle, 1.0f, 1.0f, 0.0f, drillColor); //HP Battery
-	Novice::DrawBox(1516, 104, (int)length_, 82, 0.0f, batteryColor, kFillModeSolid); // COLOR
-	Novice::DrawSprite(1510, 100, energyLineHandle, 1.0f, 1.0f, 0.0f, drillColor); //HP line
-	Novice::DrawSprite(1560, 30, batteryText, 1.0f, 1.0f, 0.0f, drillColor); //BATTERY text
+	Novice::DrawSprite(1509, 100, EnergyHandle, 1.0f, 1.0f, 0.0f, batteryColor); //HP Battery
+	Novice::DrawBox(1516, 104, (int)length_, 82, 0.0f, batteryUIColor, kFillModeSolid); // COLOR
+	Novice::DrawSprite(1510, 100, energyLineHandle, 1.0f, 1.0f, 0.0f, batteryColor); //HP line
+	Novice::DrawSprite(1560, 30, batteryText, 1.0f, 1.0f, 0.0f, batteryColor); //BATTERY text
 	//Drill
-	Novice::DrawSprite(1540, 800, drillText, 1.0f, 1.0f, 0.0f, drillColor); //DRILL
-	Novice::DrawSprite(1520, 900, letterSHandle, 1.0f, 1.0f, 0.0f, drillColor); //S
-	Novice::DrawSprite(1725, 885, drillingPlayer, 1.0f, 1.0f, 0.0f, drillColor); //Drilling Player
+	Novice::DrawBox(1500, 785, 340, 235, 0, drillBoxColor, kFillModeSolid);	// Drill Box Blink
+	Novice::DrawSprite(1540, 800, drillText, 1.0f, 1.0f, 0.0f, batteryColor); //DRILL
+	Novice::DrawSprite(1520, 900, letterSHandle, 1.0f, 1.0f, 0.0f, batteryColor); //S
+	Novice::DrawSprite(1725, 885, drillingPlayer, 1.0f, 1.0f, 0.0f, batteryColor); //Drilling Player
 
 	//Life
 	Novice::DrawSprite(1570, 205, lifeTextHandle, 1.0f, 1.0f, 0.0f, WHITE); //LIFE

@@ -69,11 +69,20 @@ private:
 	int playerHP_ = 4;
 
 	// Drill
-	uint32_t drillColor;
-	uint32_t drillR = 255;
-	uint32_t drillG = 255;
-	uint32_t drillB = 255;
-	uint32_t drillA = 0;
+	uint32_t drillBoxColor;
+	uint32_t drillBoxR = 235;
+	uint32_t drillBoxG = 255;
+	uint32_t drillBoxB = 41;
+	uint32_t drillBoxA = 0;
+	int alphaSpeed = 3;
+	bool isStartBlinking = false;
+
+	// Battery
+	uint32_t batteryUIColor;
+	uint32_t batteryR = 255;
+	uint32_t batteryG = 255;
+	uint32_t batteryB = 255;
+	uint32_t batteryA = 0;
 	bool isStartIncreaseAlpha = false;
 	
 	//HP

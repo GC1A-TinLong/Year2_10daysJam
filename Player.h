@@ -193,8 +193,9 @@ private:
 
 	//Taking damage
 	bool isTakingDamage_ = false;
+	static inline const int kMaxIFrames = 60;
 	int iFrames = 0;
-	static inline const uint8_t kMaxDrawCount = 40;
+	static inline const uint8_t kMaxDrawCount = 30;
 	uint8_t drawCount = 0;
 	uint32_t halfAlphaWhite = 0xFF4040FF;
 	uint32_t color = 0xFFFFFFFF;

@@ -280,7 +280,7 @@ void BasicTutorialScene::ChangePhase()
 		if (Input::GetInstance()->TriggerKey(DIK_SPACE) && !isAbleToDrill) { isStartMovement = true; }
 		if (isStartMovement) {
 			tryMovementTimer++;
-			if (tryMovementTimer >= 60) {
+			if (tryMovementTimer >= 6000) {
 				isStartMovement = false;
 				isTriedMovement = true;	// go back to text explanation
 				phase_ = Phase::kTextExplanation;
@@ -386,7 +386,6 @@ void BasicTutorialScene::TextExplanation()
 				isPage[3] = false;
 				isAbleToDrill = true;	// can drill from now
 				scrollSpeed = 2.f;
-				
 			}
 		}
 	}

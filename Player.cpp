@@ -678,7 +678,7 @@ void Player::TakingDamage()
 
 	if (iFrames == 1) { hp--; }
 
-	if (iFrames >= 120)
+	if (iFrames >= kMaxIFrames)
 	{
 		isTakingDamage_ = false;
 		iFrames = 0;
