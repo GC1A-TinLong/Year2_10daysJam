@@ -17,6 +17,7 @@ void Player::Initialize(const Vector2& pos)
 	playerMovingLeftHandle_ = Novice::LoadTexture("./Resources/Player/digPlayer(L).png");
 
 	jumpAudioHandle = Novice::LoadAudio("./Resources/Audio/jump2.wav");
+	drillAudioHandle = Novice::LoadAudio("./Resources/Audio/drillSound.wav");
 
 	sparkHandle_ = Novice::LoadTexture("./Resources/Player/spark1.png");
 
@@ -94,6 +95,19 @@ void Player::Audio()
 		if (Novice::IsPlayingAudio(jumpPlayHandle) == 0 || jumpPlayHandle == -1) {
 			jumpPlayHandle = Novice::PlayAudio(jumpAudioHandle, 0, kJumpAudioVolume);
 		}
+	}
+
+	if (isDrilling) 
+	{
+		if (Novice::IsPlayingAudio(drillPlayHandle) == 0 || drillPlayHandle == -1) {
+			drillPlayHandle = Novice::PlayAudio(drillAudioHandle, 1, kDrillAudioVolume);
+		}
+
+	}
+	else 
+	{
+		Novice::StopAudio(drillPlayHandle);
+		drillPlayHandle = -1;
 	}
 }
 
