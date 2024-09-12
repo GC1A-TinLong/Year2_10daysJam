@@ -102,7 +102,6 @@ void Player::Audio()
 		if (Novice::IsPlayingAudio(drillPlayHandle) == 0 || drillPlayHandle == -1) {
 			drillPlayHandle = Novice::PlayAudio(drillAudioHandle, 1, kDrillAudioVolume);
 		}
-
 	}
 	else 
 	{

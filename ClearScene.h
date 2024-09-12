@@ -29,5 +29,7 @@ private:
 	float duration_ = 1.0f;
 	Phase phase_;
 
+
+
 };
 
