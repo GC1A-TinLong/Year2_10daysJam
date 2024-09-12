@@ -45,6 +45,8 @@ void Player::Update(float scrollSpeed, bool isStageSelect)
 
 	TakingDamage();
 
+	DeathAnimation();
+
 	OnConveyor();
 
 	if (isStageSelect) {
@@ -181,16 +183,19 @@ void Player::DeathAnimation()
 {
 	if (isDead)
 	{
+		velocity_.x = 0.f;
+		velocity_.y = 0.f;
 		deathAnimationTimer_++;
 
-		if (deathAnimationPos_.x >= deathAnimationFrames - deathSize.x && deathAnimationTimer_ >= 7)
+		if (deathAnimationPos_.x >= deathAnimationFrames - deathSize.x && deathAnimationTimer_ >= 4)
 		{
 			deathAnimationPos_.x = 0;
 			deathAnimationTimer_ = 0;
 			deathAnimationDone = true;
+			
 		}
 
-		if (deathAnimationTimer_ >= 7 && !deathAnimationDone)
+		if (deathAnimationTimer_ >= 4)
 		{
 			deathAnimationPos_.x += deathSize.x;
 			deathAnimationTimer_ = 0;
@@ -433,6 +438,7 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 			(playerBottom > blockTop) && (pos_.y < blockBottom);
 		bool isRightCollision = (playerLeftPos < rightPosBlock) && (playerRightPos > rightPosBlock) && (playerBottom > blockTop) && (pos_.y < blockBottom);
 
+		
 		// Conditions
 		bool isWithinHorizontalBounds = (playerLeftPos <= rightPosBlock) && (playerRightPos >= leftPosBlock);
 		bool isCloseEnoughVertically = (blockTop - 8 - playerBottom <= kCloseEnoughDistanceWithBlock);	// above block, TEMPORARY FIX FOR GETTING STUCK

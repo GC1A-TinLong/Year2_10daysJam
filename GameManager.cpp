@@ -49,6 +49,12 @@ int GameManager::Run()
 		{
 			pause_->Update();
 			pause_->Draw();
+			Novice::SetAudioVolume(BGMPlayHandle, 0.01f);
+		}
+		else 
+		{
+			Novice::SetAudioVolume(BGMPlayHandle, 0.05f);
+
 		}
 
 		if (currentSceneNo_ == TITLE) 

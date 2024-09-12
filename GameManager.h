@@ -38,6 +38,6 @@ public:
 	//Audio
 	int BGMAudioHandle = Novice::LoadAudio("./Resources/Audio/BGM.mp3");
 	int BGMPlayHandle = -1;
-	static inline const float kBGMAudioVolume = 0.05f;
+	static inline float kBGMAudioVolume = 0.05f;
 };
 

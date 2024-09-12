@@ -368,11 +368,12 @@ void StageScene::Update()
 
 #pragma region kDeath
 	case StageScene::Phase::kDeath:
+		SetPlayerStatus();
 
+		player_->Update(scrollSpeed, false);
 		player_->DeathAnimation();
-		scrollSpeed = 0;
 		background_->Update(scrollSpeed);
-
+		CheckAllCollision();
 		break;
 #pragma endregion
 
@@ -510,18 +511,18 @@ void StageScene::ChangePhase()
 		break;
 
 	case StageScene::Phase::kPlay:
-		if (Input::GetInstance()->TriggerKey(DIK_C))
+		if (Input::GetInstance()->TriggerKey(DIK_C) || isStageCleared)
 		{
 			fade_->Start(Status::FadeOut, duration_);
 			phase_ = Phase::kFadeOut;
 		}
 		if (player_->GetDeathAnimationDone()) { phase_ = Phase::kDeath; }
 
-		if (isStageCleared)
+		/*if (isStageCleared)
 		{
 			phase_ = Phase::kFadeOut;
 
-		}
+		}*/
 
 		break;
 
@@ -531,7 +532,7 @@ void StageScene::ChangePhase()
 	case StageScene::Phase::kStageClear:
 		break;
 	case StageScene::Phase::kFadeOut:
-		if (fade_->IsFinished() && !player_->IsDead()) {
+		if (fade_->IsFinished() && isStageCleared) {
 			sceneNo = STAGE2;
 		}
 		else if (fade_->IsFinished() && player_->IsDead())
@@ -817,8 +818,8 @@ void StageScene::CheckAllCollision()
 
 	if (isCollideObject(obj3, obj7))
 	{
-		//isStageCleared = true;
-		Initialize();
+		isStageCleared = true;
+		//Initialize();
 	}
 
 #pragma endregion
