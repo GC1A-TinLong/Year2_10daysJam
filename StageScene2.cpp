@@ -267,7 +267,7 @@ void StageScene2::Update()
 		// Player
 		SetPlayerStatus();
 
-		player_->Update(scrollSpeed);
+		player_->Update(scrollSpeed, false);
 		SetPlayerStatus();
 		player_->CollisionWithBlock(blocks_);
 		/*if (!player_->IsOnGround()) {
@@ -430,7 +430,7 @@ void StageScene2::Update()
 		// Player
 		SetPlayerStatus();
 
-		player_->Update(scrollSpeed);
+		player_->Update(scrollSpeed, false);
 		SetPlayerStatus();
 		player_->CollisionWithBlock(blocks_);
 		/*if (!player_->IsOnGround()) {

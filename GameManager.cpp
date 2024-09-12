@@ -5,9 +5,10 @@ GameManager::GameManager()
 	// calling contructor
 	sceneArr_[TITLE] = std::make_unique<TitleScene>();
 	sceneArr_[BASIC_TUTORIAL] = std::make_unique<BasicTutorialScene>();
+	sceneArr_[STAGESELECT] = std::make_unique<StageSelect>();
 	sceneArr_[STAGE] = std::make_unique<StageScene>();
-	sceneArr_[CLEAR] = std::make_unique<ClearScene>();
 	sceneArr_[STAGE2] = std::make_unique<StageScene2>();
+	sceneArr_[CLEAR] = std::make_unique<ClearScene>();
 
 	currentSceneNo_ = TITLE;
 	prevSceneNo_ = TITLE;

@@ -166,9 +166,9 @@ void BasicTutorialScene::Update()
 		TextExplanation();
 		break;
 
-	case BasicTutorialScene::Phase::kPlay:
+	case Phase::kPlay:
 		// Player
-		player_->Update(scrollSpeed);
+		player_->Update(scrollSpeed,false);
 		player_->CollisionWithBlock(blocks_);
 		if (!player_->IsOnGround()) 
 		{
@@ -194,17 +194,17 @@ void BasicTutorialScene::Update()
 		CheckAllCollision();
 
 		break;
-	case BasicTutorialScene::Phase::kDeath:
+	case Phase::kDeath:
 		// Normal Blocks
 		for (auto* blocks : blocks_) { blocks->Update(scrollSpeed); }
 
 		DeleteBlocks();
 		break;
 
-	case BasicTutorialScene::Phase::kStageClear:
+	case Phase::kStageClear:
 		break;
 
-	case BasicTutorialScene::Phase::kFadeOut:
+	case Phase::kFadeOut:
 		fade_->Update();
 		break;
 	}
@@ -218,18 +218,18 @@ void BasicTutorialScene::Draw()
 {
 	// Background
 	background_->Draw();
-	// Spike
-	
-
-	// Player
-	player_->Draw();
-	//Blocks
-	for (auto* block : blocks_) { block->Draw(); }
 	//Wall Blocks
 	for (auto* wallblock : leftWallBlocks_) { wallblock->Draw(); }
 	for (auto* wallblock : rightWallBlocks_) { wallblock->Draw(); }
 
+	//Blocks
+	for (auto* block : blocks_) { block->Draw(); }
+	// Player
+	player_->Draw();
+
+	// Spike
 	for (auto* spike : spike_) { spike->Draw(); }
+
 	goal_->Draw();
 
 	UI->Draw();

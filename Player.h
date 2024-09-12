@@ -19,7 +19,7 @@ public:
 	~Player();
 
 	void Initialize(const Vector2& pos);
-	void Update(float scrollSpeed);
+	void Update(float scrollSpeed, bool isStageSelect);
 	void Draw();
 	void Audio();
 

@@ -37,7 +37,7 @@ private:
 	// Scroll
 	float scrollSpeed = 2.f;
 
-	enum Stage 
+	enum BlockType
 	{
 		None,
 		Block,
@@ -45,7 +45,6 @@ private:
 		SteelBlock,
 		ExplosionBlock,
 		TrapSpike,
-
 	};
 
 	enum class Phase

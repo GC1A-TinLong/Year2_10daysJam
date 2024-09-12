@@ -227,8 +227,8 @@ void StageScene::Initialize()
 				//if (blockIndex < kBlockNum) // Ensure we don't exceed the number of blocks
 				//{
 				blocksSteel_[steelIndex] = new BlockSteel;
-				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchipX, i * (float)spriteSize + adjustPosForMapchipY };
-				blocksSteel_[steelIndex]->Initialize(blockPos_);
+				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchip, i * (float)spriteSize };
+				blocksSteel_[steelIndex]->Initialize(blockPos_, false);
 				steelIndex++; // Move to the next block
 
 
@@ -262,7 +262,7 @@ void StageScene::Update()
 		// Player
 		SetPlayerStatus();
 
-		player_->Update(scrollSpeed);
+		player_->Update(scrollSpeed, false);
 		SetPlayerStatus();
 		player_->CollisionWithBlock(blocks_);
 		/*if (!player_->IsOnGround()) {
@@ -425,7 +425,7 @@ void StageScene::Update()
 		// Player
 		SetPlayerStatus();
 
-		player_->Update(scrollSpeed);
+		player_->Update(scrollSpeed, false);
 		SetPlayerStatus();
 		player_->CollisionWithBlock(blocks_);
 		/*if (!player_->IsOnGround()) {
