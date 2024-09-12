@@ -6,6 +6,7 @@ enum Scene {
 	STAGESELECT,
 	STAGE,
 	STAGE2,
+	STAGE3,
 	CLEAR 
 };
 

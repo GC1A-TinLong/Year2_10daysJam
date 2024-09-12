@@ -549,18 +549,12 @@ void StageScene2::ChangePhase()
 		break;
 
 	case StageScene2::Phase::kPlay:
-		if (Input::GetInstance()->TriggerKey(DIK_C))
+		if (Input::GetInstance()->TriggerKey(DIK_C) || isStageCleared)
 		{
 			fade_->Start(Status::FadeOut, duration_);
 			phase_ = Phase::kFadeOut;
 		}
-		if (player_->IsDead()) { phase_ = Phase::kDeath; }
-
-		if (isStageCleared)
-		{
-			phase_ = Phase::kFadeOut;
-
-		}
+		if (player_->GetDeathAnimationDone()) { phase_ = Phase::kDeath; }
 
 		break;
 
@@ -573,7 +567,7 @@ void StageScene2::ChangePhase()
 		if (fade_->IsFinished() && !player_->IsDead()) {
 			sceneNo = CLEAR;
 		}
-		else if (fade_->IsFinished() && player_->IsDead())
+		else if (fade_->IsFinished() && player_->GetDeathAnimationDone())
 		{
 			Initialize();
 		}

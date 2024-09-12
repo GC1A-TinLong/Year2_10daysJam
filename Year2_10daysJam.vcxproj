@@ -138,6 +138,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClCompile Include="SpikeTrap.cpp" />
     <ClCompile Include="StageScene.cpp" />
     <ClCompile Include="StageScene2.cpp" />
+    <ClCompile Include="StageScene3.cpp" />
     <ClCompile Include="StageSelect.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="UserInterface.cpp" />
@@ -192,6 +193,7 @@ xcopy C:\KamataEngine\DirectXGame\Resources "$(OutDirFullPath)NoviceResources" /
     <ClInclude Include="SpikeTrap.h" />
     <ClInclude Include="StageScene.h" />
     <ClInclude Include="StageScene2.h" />
+    <ClInclude Include="StageScene3.h" />
     <ClInclude Include="StageSelect.h" />
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="UserInterface.h" />

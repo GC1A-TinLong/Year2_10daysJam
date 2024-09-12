@@ -30,6 +30,11 @@ void Explosion::Update()
 			animationTimer_ = 0;
 		}
 	}
+	else 
+	{
+		animationPos_.x = 0;
+		animationTimer_ = 0;
+	}
 }
 
 void Explosion::Draw()

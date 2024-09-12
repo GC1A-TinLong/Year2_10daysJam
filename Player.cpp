@@ -506,20 +506,24 @@ void Player::CollisionWithExplodingBlock(std::vector<BlockExplodingTrap*>& explo
 {
 	bool tempOnGround = false;		// temp flag, when its confirmed(ended loop), apply it to the origin flag
 
-	for (BlockExplodingTrap* explBlock : explodingBlocks) {
+	for (BlockExplodingTrap* expBlock : explodingBlocks) {
 		float playerLeftPos = pos_.x + widthOffset;
+		float playerRightPos = playerLeftPos + size.width;
 		float playerBottom = pos_.y + size.height + velocity_.y;
 		//float playerTop = pos_.y + velocity_.y;
-		float blockTop = explBlock->GetPos().y;
-		//float blockBottom = nonDesBlock->GetPos().y + nonDesBlock->GetSize().height;
-		float leftPosBlock = explBlock->GetPos().x;
-		float rightPosBlock = explBlock->GetPos().x + explBlock->GetSize().width;
-		if (velocity_.y < 0) {
-			continue;
-		}
+		float blockTop = expBlock->GetPos().y;
+		float blockBottom = expBlock->GetPos().y + expBlock->GetSize().height;
+		float leftPosBlock = expBlock->GetPos().x;
+		float rightPosBlock = expBlock->GetPos().x + expBlock->GetSize().width;
+
+		bool isLeftCollision = (playerRightPos > leftPosBlock) && (playerLeftPos < leftPosBlock) &&
+			(playerBottom > blockTop) && (pos_.y < blockBottom);
+		bool isRightCollision = (playerLeftPos < rightPosBlock) && (playerRightPos > rightPosBlock) && (playerBottom > blockTop) && (pos_.y < blockBottom);
+
+
 		// Conditions
-		bool isWithinHorizontalBounds = (playerLeftPos <= rightPosBlock) && (pos_.x + size.width >= leftPosBlock);
-		bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);	// above block
+		bool isWithinHorizontalBounds = (playerLeftPos <= rightPosBlock) && (playerRightPos >= leftPosBlock);
+		bool isCloseEnoughVertically = (blockTop - 8 - playerBottom <= kCloseEnoughDistanceWithBlock);	// above block, TEMPORARY FIX FOR GETTING STUCK
 		// player.bot without velocity && blockTop + small amount to prevent falling through
 		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
 
@@ -532,7 +536,37 @@ void Player::CollisionWithExplodingBlock(std::vector<BlockExplodingTrap*>& explo
 			// within the 3 conditions
 			tempOnGround = true;
 		}
+
+		if (isLeftCollision) {
+			//pos_.x = leftPosBlock - spriteWidth;
+			if (!isOnConveyor)
+			{
+				pos_.x = leftPosBlock - size.width - 12;  // Stop at the block's left edge
+			}
+			else
+			{
+				pos_.x = leftPosBlock - size.width - 16;
+			}
+			velocity_.x = 0;  // Stop horizontal movement
+			kLRAcceleration = 0;
+
+		}
+		if (isRightCollision) {
+			if (!isOnConveyor)
+			{
+				pos_.x = rightPosBlock - 10;  // Stop at the block's right edge
+			}
+			else
+			{
+				pos_.x = rightPosBlock - 6;  // Stop at the block's right edge
+
+			}
+			velocity_.x = 0;  // Stop horizontal movement
+			kLRAcceleration = 0;
+		}
+
 	}
+
 	onGround = tempOnGround;
 
 }
@@ -667,10 +701,10 @@ void Player::CollisionWithDestroyableBlock(std::vector<BlockDestroyable*>& desBl
 			continue;
 		}
 		// Conditions
-		bool isWithinHorizontalBounds = (playerLeftPos <= rightPosBlock) && (pos_.x + size.width >= leftPosBlock);
-		bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);	// above block
+		//bool isWithinHorizontalBounds = (playerLeftPos <= rightPosBlock) && (pos_.x + size.width >= leftPosBlock);
+		//bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);	// above block
 		// player.bot without velocity && blockTop + small amount to prevent falling through
-		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
+		//bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
 
 		if (isWithinHorizontalBounds && isCloseEnoughVertically && !isPlayerBelowBlock) {
 			if (velocity_.y > 0) {	// only when falling
