@@ -31,7 +31,6 @@ private:
 	unsigned int jumpPlayer = Novice::LoadTexture("./Resources/Player/player.gif");
 	unsigned int jumpLines = Novice::LoadTexture("./Resources/StageText/fakejump.png");
 	unsigned int letterSHandle = Novice::LoadTexture("./Resources/StageText/S.png");
-	unsigned int drillingPlayer = Novice::LoadTexture("./Resources/StageText/drillingUI.png");
 
 	//Battery
 	unsigned int EnergyHandle = Novice::LoadTexture("./Resources/HP/energy1.png");
@@ -40,9 +39,8 @@ private:
 
 	//Drill
 	unsigned int drillText = Novice::LoadTexture("./Resources/StageText/DRILL.png");
-	unsigned int drilledBlock = Novice::LoadTexture("./Resources/StageAssets/BrokenBlock.png");
-	unsigned int drillLines = Novice::LoadTexture("./Resources/StageText/fakeDrill.png");
-	unsigned int sparkHandle = Novice::LoadTexture("./Resources/Player/UIspark.png");
+	unsigned int drillingPlayer = Novice::LoadTexture("./Resources/StageText/drillingUI.png");
+	unsigned int blackEdge = Novice::LoadTexture("./Resources/StageText/blackEdge.png");
 
 	//Life
 	unsigned int lifeTextHandle = Novice::LoadTexture("./Resources/StageText/HP.png");

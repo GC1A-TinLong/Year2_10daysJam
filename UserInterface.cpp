@@ -33,7 +33,6 @@ void UserInterface::Update(bool isShowingDrillUI, bool isTutorial)
 	// Adjusting battery UI alpha
 	if (!isTutorial) {
 		batteryA = 255;
-		drillBoxA = 0;
 	}
 	else if (isShowingDrillUI && isTutorial) {
 		isStartIncreaseAlpha = true;
@@ -46,12 +45,13 @@ void UserInterface::Update(bool isShowingDrillUI, bool isTutorial)
 			isStartIncreaseAlpha = false;
 		}
 	}
-	// Adjusting drill UI alpha
+	// Adjusting drill UI blink alpha
 	if (isStartBlinking) {
-		drillBoxA += alphaSpeed;
 		if (drillBoxA >= 118 && drillBoxA <= 255) { alphaSpeed = -3; }
 		else if (drillBoxA <= 0 || drillBoxA > 255) { alphaSpeed = 3; }
+		drillBoxA += alphaSpeed;
 	}
+	else { drillBoxA = 0; }
 
 	drillBoxColor = (drillBoxR << 24) | (drillBoxG << 16) | (drillBoxB << 8) | drillBoxA;
 	batteryUIColor = (R << 24) | (G << 16) | (B << 8) | batteryA;
@@ -84,7 +84,8 @@ void UserInterface::Draw() const
 	Novice::DrawSprite(1510, 100, energyLineHandle, 1.0f, 1.0f, 0.0f, batteryColor); //HP line
 	Novice::DrawSprite(1560, 30, batteryText, 1.0f, 1.0f, 0.0f, batteryColor); //BATTERY text
 	//Drill
-	Novice::DrawBox(1500, 785, 340, 235, 0, drillBoxColor, kFillModeSolid);	// Drill Box Blink
+	Novice::DrawBox(1500, 780, 340, 235, 0, drillBoxColor, kFillModeSolid);	// Drill Box Blink
+	Novice::DrawSprite(1500, 780, blackEdge, 1.f, 1.f, 0, WHITE);	// Black Edge for drill box blink
 	Novice::DrawSprite(1540, 800, drillText, 1.0f, 1.0f, 0.0f, batteryColor); //DRILL
 	Novice::DrawSprite(1520, 900, letterSHandle, 1.0f, 1.0f, 0.0f, batteryColor); //S
 	Novice::DrawSprite(1725, 885, drillingPlayer, 1.0f, 1.0f, 0.0f, batteryColor); //Drilling Player

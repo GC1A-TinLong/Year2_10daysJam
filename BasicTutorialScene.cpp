@@ -46,7 +46,7 @@ void BasicTutorialScene::Initialize()
 	}
 	// Player
 	player_ = new Player;
-	player_->Initialize({ 792.f,500.f - player_->GetSize().height });
+	player_->Initialize({ 780.f,500.f - player_->GetSize().height });
 
 	// Normal Blocks
 	blocks_.resize(kBlockNum);
@@ -280,7 +280,7 @@ void BasicTutorialScene::ChangePhase()
 		if (Input::GetInstance()->TriggerKey(DIK_SPACE) && !isAbleToDrill) { isStartMovement = true; }
 		if (isStartMovement) {
 			tryMovementTimer++;
-			if (tryMovementTimer >= 6000) {
+			if (tryMovementTimer >= 30) {
 				isStartMovement = false;
 				isTriedMovement = true;	// go back to text explanation
 				phase_ = Phase::kTextExplanation;
