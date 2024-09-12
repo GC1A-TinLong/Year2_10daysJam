@@ -227,7 +227,7 @@ void StageScene::Initialize()
 				//if (blockIndex < kBlockNum) // Ensure we don't exceed the number of blocks
 				//{
 				blocksSteel_[steelIndex] = new BlockSteel;
-				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchipX, i * (float)spriteSize };
+				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchipX, i * (float)spriteSize + adjustPosForMapchipY };
 				blocksSteel_[steelIndex]->Initialize(blockPos_, false);
 				steelIndex++; // Move to the next block
 
@@ -368,45 +368,10 @@ void StageScene::Update()
 
 #pragma region kDeath
 	case StageScene::Phase::kDeath:
+
+		player_->DeathAnimation();
+		scrollSpeed = 0;
 		background_->Update(scrollSpeed);
-
-		// Spike
-		for (auto* spike : spike_) {
-			spike->Update();
-		}
-
-		//Destroyable Blocks
-		for (int i = 0; i < destroyableBlocks_.size();)
-		{
-			destroyableBlocks_[i]->Update(scrollSpeed);
-
-			if (destroyableBlocks_[i]->GetIsAboveScreen())
-			{
-				delete destroyableBlocks_[i];
-				destroyableBlocks_.erase(destroyableBlocks_.begin() + i);
-			}
-			else { ++i; }
-		}
-
-		//Blocks
-		for (auto* blocks : blocks_) { blocks->Update(scrollSpeed); }
-
-		// WallBlocks
-		for (auto* wallblock : leftWallBlocks_) { wallblock->Update(scrollSpeed); }
-		for (auto* wallblock : rightWallBlocks_) { wallblock->Update(scrollSpeed); }
-
-		//Exploding Blocks
-		/*for (int i = 0; i < explodingBlocks_.size();)
-		{
-			explodingBlocks_[i]->Update(scrollSpeed);
-
-			if (explodingBlocks_[i]->GetIsAboveScreen())
-			{
-				delete explodingBlocks_[i];
-				explodingBlocks_.erase(explodingBlocks_.begin() + i);
-			}
-			else { ++i; }
-		}*/
 
 		break;
 #pragma endregion
@@ -550,7 +515,7 @@ void StageScene::ChangePhase()
 			fade_->Start(Status::FadeOut, duration_);
 			phase_ = Phase::kFadeOut;
 		}
-		if (player_->IsDead()) { phase_ = Phase::kDeath; }
+		if (player_->GetDeathAnimationDone()) { phase_ = Phase::kDeath; }
 
 		if (isStageCleared)
 		{
@@ -631,6 +596,7 @@ void StageScene::Draw()
 	case StageScene::Phase::kPlay:
 		break;
 	case StageScene::Phase::kDeath:
+		player_->Draw();
 		break;
 	case StageScene::Phase::kStageClear:
 		Novice::ScreenPrintf(50, 0, "CLEAR");

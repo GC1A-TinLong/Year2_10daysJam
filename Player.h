@@ -25,6 +25,7 @@ public:
 
 	void AnimationHolder();
 	void SwitchPlayerAnimationState();
+	void DeathAnimation();
 	void Drilling();
 	void DrillingSparks();
 	void Scrolling(float scrollSpeed);
@@ -61,6 +62,7 @@ public:
 	bool GetHasExploded() const { return isExploding_; };
 	float GetDrillPower() const { return drillPower; };
 	bool GetHasTouchedGoal() const { return hasTouchedGoal; };
+	bool GetDeathAnimationDone()const { return deathAnimationDone; };
 
 	// Setter
 	void SetVelocity(Vector2 velocity) { velocity_ = velocity; };
@@ -159,6 +161,15 @@ private:
 	int sparkAnimationTimer_ = 0;
 	float sparkAnimationFrames = 168.f;
 	float sparkSize = 42.f;
+
+
+	//Death
+	int deathHandle_;
+	Vector2 deathAnimationPos_ = { 0.f, 0.f };
+	int deathAnimationTimer_ = 0;
+	float deathAnimationFrames = 168.f;
+	Vector2 deathSize = { 42.f, 72.f };
+	bool deathAnimationDone = false;
 	#pragma endregion
 
 	//Audio

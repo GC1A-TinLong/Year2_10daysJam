@@ -43,7 +43,7 @@ int GameManager::Run()
 			sceneArr_[currentSceneNo_]->Update();
 		}
 		sceneArr_[currentSceneNo_]->Draw();
-
+		Audio();
 		// PAUSE
 		if (pause_->GetIsPaused())
 		{
@@ -79,4 +79,11 @@ int GameManager::Run()
 		}
 	}
 	return 0;
+}
+
+void GameManager::Audio()
+{
+	if (Novice::IsPlayingAudio(BGMPlayHandle) == 0 || BGMPlayHandle == -1) {
+		BGMPlayHandle = Novice::PlayAudio(BGMAudioHandle, 1, kBGMAudioVolume);
+	}
 }

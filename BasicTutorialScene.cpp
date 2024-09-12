@@ -408,7 +408,7 @@ void BasicTutorialScene::SetPlayerStatus()
 
 void BasicTutorialScene::UserInterfaceDepthMeter()
 {
-	float playerY = player_->GetPos().y;
+	float playerY = player_->GetPos().y + player_->GetSize().height;
 
 	depthMeter_->SetPlayerYPos(playerY);
 }

@@ -21,6 +21,8 @@ void Player::Initialize(const Vector2& pos)
 
 	sparkHandle_ = Novice::LoadTexture("./Resources/Player/spark1.png");
 
+	deathHandle_ = Novice::LoadTexture("./Resources/Player/die.png");
+
 	seed = (unsigned int)time(nullptr);
 	srand(seed);
 
@@ -75,6 +77,10 @@ void Player::Draw()
 			Novice::DrawSpriteRect((int)(pos_.x) + shake_->GetRandX(), (int)pos_.y + 15 + shake_->GetRandY(),
 				(int)animationPos_.x, (int)animationPos_.y, 42, 72, playerHandleHolder_, 42.f / currentAnimationFrames, 1.f, 0.0f, color);
 		}
+	}
+	if (isDead) 
+	{
+		Novice::DrawSpriteRect((int)pos_.x, (int)pos_.y,(int)deathAnimationPos_.x, (int)deathAnimationPos_.y, (int)deathSize.x, (int)deathSize.y, deathHandle_, deathSize.x / deathAnimationFrames, 1.f, 0.0f, color);
 	}
 
 	//Spark animation
@@ -168,6 +174,27 @@ void Player::SwitchPlayerAnimationState()
 		break;
 	default:
 		break;
+	}
+}
+
+void Player::DeathAnimation()
+{
+	if (isDead)
+	{
+		deathAnimationTimer_++;
+
+		if (deathAnimationPos_.x >= deathAnimationFrames - deathSize.x && deathAnimationTimer_ >= 7)
+		{
+			deathAnimationPos_.x = 0;
+			deathAnimationTimer_ = 0;
+			deathAnimationDone = true;
+		}
+
+		if (deathAnimationTimer_ >= 7 && !deathAnimationDone)
+		{
+			deathAnimationPos_.x += deathSize.x;
+			deathAnimationTimer_ = 0;
+		}
 	}
 }
 

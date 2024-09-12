@@ -3,7 +3,6 @@
 #include "Novice.h"
 #include "Input.h"
 #include "Pause.h"
-
 #include "IScene.h"
 #include "TitleScene.h"
 #include "BasicTutorialScene.h"
@@ -31,8 +30,14 @@ public:
 	GameManager();
 	~GameManager();
 	int Run();
+	void Audio();
 
 	int pauseTimer = 0;
 	bool isPaused = false;
+
+	//Audio
+	int BGMAudioHandle = Novice::LoadAudio("./Resources/Audio/BGM.mp3");
+	int BGMPlayHandle = -1;
+	static inline const float kBGMAudioVolume = 0.05f;
 };
 
