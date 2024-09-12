@@ -24,8 +24,8 @@ StageScene::~StageScene()
 	for (auto* spike : spikeTrap_) { delete spike; }
 	spikeTrap_.clear();
 
-	for (auto* explodingBlock : explodingBlocks_) { delete explodingBlock; }
-	explodingBlocks_.clear();
+	/*for (auto* explodingBlock : explodingBlocks_) { delete explodingBlock; }
+	explodingBlocks_.clear();*/
 
 	for (auto* conveyer : conveyers_) { delete conveyer; }
 	conveyers_.clear();
@@ -131,13 +131,13 @@ void StageScene::Initialize()
 
 #pragma region Exploding Block
 
-	explodingBlocks_.resize(kExplodingBlockNum);
-	for (int i = 0; i < kExplodingBlockNum; i++)
-	{
-		explodingBlocks_[i] = new BlockExplodingTrap;
-		// Vector2 blockPos = BlockPos_[i];
-		explodingBlocks_[i]->Initialize(explodingBlockPos_[i], isExplodingBlockMoss[i]);
-	}
+	//explodingBlocks_.resize(kExplodingBlockNum);
+	//for (int i = 0; i < kExplodingBlockNum; i++)
+	//{
+	//	explodingBlocks_[i] = new BlockExplodingTrap;
+	//	// Vector2 blockPos = BlockPos_[i];
+	//	explodingBlocks_[i]->Initialize(explodingBlockPos_[i], isExplodingBlockMoss[i]);
+	//}
 
 #pragma endregion
 
@@ -210,13 +210,13 @@ void StageScene::Update()
 		player_->Update(scrollSpeed);
 		SetPlayerStatus();
 		player_->CollisionWithBlock(blocks_);
-		if (!player_->IsOnGround()) {
+		/*if (!player_->IsOnGround()) {
 			player_->CollisionWithExplodingBlock(explodingBlocks_);
-		}
-		if (!player_->IsOnGround())
+		}*/
+		/*if (!player_->IsOnGround())
 		{
 			player_->CollisiontWithConveyor(conveyers_);
-		}
+		}*/
 		if (!player_->IsOnGround())
 		{
 			player_->CollisionWithGoal(goal_);
@@ -262,26 +262,26 @@ void StageScene::Update()
 		}
 
 		//Exploding Blocks
-		for (int i = 0; i < explodingBlocks_.size();)
-		{
-			explodingBlocks_[i]->Update(scrollSpeed);
+		//for (int i = 0; i < explodingBlocks_.size();)
+		//{
+		//	explodingBlocks_[i]->Update(scrollSpeed);
 
-			if (explodingBlocks_[i]->IsDestroyed()) 
-			{
-				explosion_->SetIsExploding(true); 
-				explosion_->Initialize({ explodingBlocks_[i]->GetPos().x, explodingBlocks_[i]->GetPos().y -15}); //make the explosion the position of the destroyed block
-			}
-			if (explodingBlocks_[i]->GetIsAboveScreen())
-			{
-				delete explodingBlocks_[i];
-				explodingBlocks_.erase(explodingBlocks_.begin() + i);
-			}
-			else { ++i; }
-		}
+		//	if (explodingBlocks_[i]->IsDestroyed()) 
+		//	{
+		//		explosion_->SetIsExploding(true); 
+		//		explosion_->Initialize({ explodingBlocks_[i]->GetPos().x, explodingBlocks_[i]->GetPos().y -15}); //make the explosion the position of the destroyed block
+		//	}
+		//	if (explodingBlocks_[i]->GetIsAboveScreen())
+		//	{
+		//		delete explodingBlocks_[i];
+		//		explodingBlocks_.erase(explodingBlocks_.begin() + i);
+		//	}
+		//	else { ++i; }
+		//}
 
-		for (auto* conveyor : conveyers_) {
+		/*for (auto* conveyor : conveyers_) {
 			conveyor->Update(scrollSpeed);
-		}
+		}*/
 
 		//Steel Blocks
 		for (int i = 0; i < blocksSteel_.size();)
@@ -341,7 +341,7 @@ void StageScene::Update()
 		for (auto* wallblock : rightWallBlocks_) { wallblock->Update(scrollSpeed); }
 
 		//Exploding Blocks
-		for (int i = 0; i < explodingBlocks_.size();)
+		/*for (int i = 0; i < explodingBlocks_.size();)
 		{
 			explodingBlocks_[i]->Update(scrollSpeed);
 
@@ -351,7 +351,7 @@ void StageScene::Update()
 				explodingBlocks_.erase(explodingBlocks_.begin() + i);
 			}
 			else { ++i; }
-		}
+		}*/
 
 		break;
 #pragma endregion
@@ -373,9 +373,9 @@ void StageScene::Update()
 		player_->Update(scrollSpeed);
 		SetPlayerStatus();
 		player_->CollisionWithBlock(blocks_);
-		if (!player_->IsOnGround()) {
+		/*if (!player_->IsOnGround()) {
 			player_->CollisionWithExplodingBlock(explodingBlocks_);
-		}
+		}*/
 		if (!player_->IsOnGround())
 		{
 			player_->CollisiontWithConveyor(conveyers_);
@@ -427,26 +427,26 @@ void StageScene::Update()
 		}
 
 		//Exploding Blocks
-		for (int i = 0; i < explodingBlocks_.size();)
-		{
-			explodingBlocks_[i]->Update(scrollSpeed);
+		//for (int i = 0; i < explodingBlocks_.size();)
+		//{
+		//	explodingBlocks_[i]->Update(scrollSpeed);
 
-			if (explodingBlocks_[i]->IsDestroyed())
-			{
-				explosion_->SetIsExploding(true);
-				explosion_->Initialize({ explodingBlocks_[i]->GetPos().x, explodingBlocks_[i]->GetPos().y - 15 }); //make the explosion the position of the destroyed block
-			}
-			if (explodingBlocks_[i]->GetIsAboveScreen())
-			{
-				delete explodingBlocks_[i];
-				explodingBlocks_.erase(explodingBlocks_.begin() + i);
-			}
-			else { ++i; }
-		}
+		//	if (explodingBlocks_[i]->IsDestroyed())
+		//	{
+		//		explosion_->SetIsExploding(true);
+		//		explosion_->Initialize({ explodingBlocks_[i]->GetPos().x, explodingBlocks_[i]->GetPos().y - 15 }); //make the explosion the position of the destroyed block
+		//	}
+		//	if (explodingBlocks_[i]->GetIsAboveScreen())
+		//	{
+		//		delete explodingBlocks_[i];
+		//		explodingBlocks_.erase(explodingBlocks_.begin() + i);
+		//	}
+		//	else { ++i; }
+		//}
 
-		for (auto* conveyor : conveyers_) {
+		/*for (auto* conveyor : conveyers_) {
 			conveyor->Update(scrollSpeed);
-		}
+		}*/
 
 		//Steel Blocks
 		for (int i = 0; i < blocksSteel_.size();)
@@ -543,7 +543,7 @@ void StageScene::Draw()
 	for (auto* wallblock : leftWallBlocks_) { wallblock->Draw(); }
 	for (auto* wallblock : rightWallBlocks_) { wallblock->Draw(); }
 
-	for (auto* explodingBlock : explodingBlocks_) { explodingBlock->Draw(); }
+	//for (auto* explodingBlock : explodingBlocks_) { explodingBlock->Draw(); }
 
 	for (auto* steelBlock : blocksSteel_) { steelBlock->Draw(); }
 
@@ -553,9 +553,9 @@ void StageScene::Draw()
 	// Spike Trap
 	for (auto* spike : spikeTrap_) { spike->Draw(); }
 
-	for (auto* conveyor : conveyers_) {
+	/*for (auto* conveyor : conveyers_) {
 		conveyor->Draw();
-	}
+	}*/
 
 	if (explosion_->GetIsExploding()) 
 	{
@@ -603,16 +603,16 @@ void StageScene::DeleteBlocks()
 		else { i++; }
 	}
 
-	for (int i = 0; i < explodingBlocks_.size();)
-	{
-		if (explodingBlocks_[i]->IsDestroyed() && player_->GetHasExploded()) //if block is destroyed
-		{
-			delete explodingBlocks_[i]; //delete block
-			explodingBlocks_.erase(explodingBlocks_.begin() + i); //erase it from the vector
-			break;
-		}
-		else { i++; }
-	}
+	//for (int i = 0; i < explodingBlocks_.size();)
+	//{
+	//	if (explodingBlocks_[i]->IsDestroyed() && player_->GetHasExploded()) //if block is destroyed
+	//	{
+	//		delete explodingBlocks_[i]; //delete block
+	//		explodingBlocks_.erase(explodingBlocks_.begin() + i); //erase it from the vector
+	//		break;
+	//	}
+	//	else { i++; }
+	//}
 
 	for (int i = 0; i < destroyableBlocks_.size();)
 	{
@@ -745,51 +745,51 @@ void StageScene::CheckAllCollision()
 
 #pragma region  player & exploding block
 
-	Object obj6;
+	//Object obj6;
 
-	for (int i = 0; i < explodingBlocks_.size(); ++i) //reset all blocks to not being touched
-	{
-		explodingBlocks_[i]->SetIsTouched(false);
-		explodingBlocks_[i]->SetStartShake(false);
-	}
+	//for (int i = 0; i < explodingBlocks_.size(); ++i) //reset all blocks to not being touched
+	//{
+	//	explodingBlocks_[i]->SetIsTouched(false);
+	//	explodingBlocks_[i]->SetStartShake(false);
+	//}
 
-	for (int i = 0; i < explodingBlocks_.size();)
-	{
-		obj6 = explodingBlocks_[i]->GetObject_();
-		if (isCollideObject(obj3, obj6))
-		{
-			explodingBlocks_[i]->OnCollision(player_);
+	//for (int i = 0; i < explodingBlocks_.size();)
+	//{
+	//	obj6 = explodingBlocks_[i]->GetObject_();
+	//	if (isCollideObject(obj3, obj6))
+	//	{
+	//		explodingBlocks_[i]->OnCollision(player_);
 
-			if (player_->GetIsDrilling()) //if we're drilling
-			{
-				explodingBlocks_[i]->SetTakenDamage(5); //damage is 5
-				explodingBlocks_[i]->SetStartShake(true); //shake
-			}
-			else
-			{
-				explodingBlocks_[i]->SetTakenDamage(0); //damage is 1
-				explodingBlocks_[i]->SetStartShake(false);
-			}
+	//		if (player_->GetIsDrilling()) //if we're drilling
+	//		{
+	//			explodingBlocks_[i]->SetTakenDamage(5); //damage is 5
+	//			explodingBlocks_[i]->SetStartShake(true); //shake
+	//		}
+	//		else
+	//		{
+	//			explodingBlocks_[i]->SetTakenDamage(0); //damage is 1
+	//			explodingBlocks_[i]->SetStartShake(false);
+	//		}
 
-			if (explodingBlocks_.empty() || explodingBlocks_[i] == nullptr) {
-				continue;	// If block was destroyed or blocks_ changed, avoid incrementing "i"
-			}
+	//		if (explodingBlocks_.empty() || explodingBlocks_[i] == nullptr) {
+	//			continue;	// If block was destroyed or blocks_ changed, avoid incrementing "i"
+	//		}
 
-			if (explodingBlocks_[i]->IsDestroyed())
-			{
-				player_->OnCollision(explodingBlocks_[i]);
-				player_->SetHasExploded(true);
-			}
-			break;
-		}
-		else
-		{
-			explodingBlocks_[i]->SetIsTouched(false); //not on top of the block anymore
-			explodingBlocks_[i]->SetStartShake(false);
+	//		if (explodingBlocks_[i]->IsDestroyed())
+	//		{
+	//			player_->OnCollision(explodingBlocks_[i]);
+	//			player_->SetHasExploded(true);
+	//		}
+	//		break;
+	//	}
+	//	else
+	//	{
+	//		explodingBlocks_[i]->SetIsTouched(false); //not on top of the block anymore
+	//		explodingBlocks_[i]->SetStartShake(false);
 
-		}
-		++i; // Increment if no collision or block was not removed
-	}
+	//	}
+	//	++i; // Increment if no collision or block was not removed
+	//}
 
 #pragma endregion
 
@@ -799,7 +799,8 @@ void StageScene::CheckAllCollision()
 
 	if (isCollideObject(obj3, obj7))
 	{
-		isStageCleared = true;
+		//isStageCleared = true;
+		Initialize();
 	}
 
 #pragma endregion

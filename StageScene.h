@@ -74,48 +74,91 @@ private:
 	static inline const float kBlockSize = 48.f;
 	// Destroyable Block
 
-	static inline const uint8_t kDestroyableBlockNum = 4;
+	static inline const uint8_t kDestroyableBlockNum = 13;
 	std::vector<BlockDestroyable*>destroyableBlocks_;
 	Vector2 desBlockPos_[kDestroyableBlockNum]
 	{
-		{144, 300}, {192, 300},{672, 300},
-		{1056, 300}
+		{kBlockSize * 4,  500}, {kBlockSize * 4,  548},{kBlockSize * 4,  596},
+		{kBlockSize * 5,  500}, {kBlockSize * 5,  548},{kBlockSize * 5,  596},
+
+		{kBlockSize * 16, 1172},  {kBlockSize * 17, 1172},  {kBlockSize * 18, 1172},
+
+		{kBlockSize * 4, 1508}, {kBlockSize * 5, 1508}, {kBlockSize * 27, 1508},
+		{kBlockSize * 28, 1508},
+		
 	};
 
 #pragma region Normal Block
 	// Normal Block
-	static inline const uint8_t kBlockNum = 45;
-
+	static inline const uint8_t kBlockNum = 128;
 	std::vector<BlockNotDestroyable*>blocks_;
 
 	Vector2 BlockPos_[kBlockNum]
 	{
-		{kBlockSize * 6,  300},  {kBlockSize * 7,  300},  {kBlockSize * 8,  300},
-		{kBlockSize * 9,  350},  {kBlockSize * 10, 350},  {kBlockSize * 11, 350},
 
-		{kBlockSize * 4,  500},  {kBlockSize * 5,  500},  {kBlockSize * 6,  500},
+		{kBlockSize * 6,  500}, 
 		{kBlockSize * 7,  500},  {kBlockSize * 8,  500},  {kBlockSize * 9,  500},
 		{kBlockSize * 10, 500},  {kBlockSize * 11, 500},  {kBlockSize * 12, 500},
 		{kBlockSize * 13, 500},  {kBlockSize * 14, 500},  {kBlockSize * 15, 500},
+
 		{kBlockSize * 26, 500},  {kBlockSize * 27, 500},  {kBlockSize * 28, 500},
 
+		{kBlockSize * 6, 548},  {kBlockSize * 7, 548},
+		{kBlockSize * 8, 548},  {kBlockSize * 9, 548},  {kBlockSize * 10, 548},
+		{kBlockSize * 11, 548},  {kBlockSize * 12, 548},  {kBlockSize * 13, 548},
 		{kBlockSize * 13, 548},  {kBlockSize * 14, 548},  {kBlockSize * 15, 548},
-		{kBlockSize * 26, 548},  {kBlockSize * 27, 548},  {kBlockSize * 28, 548},
 
-		{kBlockSize * 4,  548}, {kBlockSize * 4,  596}, {kBlockSize * 4,  644},
+		 {kBlockSize * 6, 596},   {kBlockSize * 7, 596},
+		 {kBlockSize * 8, 596},   {kBlockSize * 9, 596},  {kBlockSize * 10, 596},
+		{kBlockSize * 11, 596},  {kBlockSize * 12, 596},  {kBlockSize * 13, 596},
+		{kBlockSize * 13, 596},  {kBlockSize * 14, 596},  {kBlockSize * 15, 596},
+		
+		{kBlockSize * 16, 644},  {kBlockSize * 17, 644},
+		{kBlockSize * 18, 644},  {kBlockSize * 19, 644},  {kBlockSize * 20, 644},
 
-		{kBlockSize * 15, 700},  {kBlockSize * 16, 700},  {kBlockSize * 17, 700},
-		{kBlockSize * 18, 700},  {kBlockSize * 19, 700},  {kBlockSize * 20, 700},
+		{kBlockSize * 13, 1172},  {kBlockSize * 14, 1172},  {kBlockSize * 15, 1172},
+		
 
-		{kBlockSize * 14, 900},  {kBlockSize * 15, 900},  {kBlockSize * 16, 900},
-		{kBlockSize * 17, 900},  {kBlockSize * 18, 900},  {kBlockSize * 19, 900},
+		 {kBlockSize * 5, 1316},   {kBlockSize * 6, 1316},   {kBlockSize * 7, 1316},
+		{kBlockSize * 13, 1316},  {kBlockSize * 14, 1316},  {kBlockSize * 15, 1316},
+		{kBlockSize * 16, 1316},  {kBlockSize * 17, 1316},  {kBlockSize * 18, 1316},
+		{kBlockSize * 25, 1316},  {kBlockSize * 26, 1316},  {kBlockSize * 27, 1316},
 
-		{kBlockSize * 3, 1300},  {kBlockSize * 4, 1300},  {kBlockSize * 5, 1300},
+		 {kBlockSize * 6, 1508},   {kBlockSize * 7, 1508},
+		 {kBlockSize * 8, 1508},   {kBlockSize * 9, 1508},  {kBlockSize * 10, 1508},
+		{kBlockSize * 11, 1508},  {kBlockSize * 12, 1508},  {kBlockSize * 13, 1508},
+		{kBlockSize * 14, 1508},  {kBlockSize * 15, 1508},  {kBlockSize * 16, 1508},
+		{kBlockSize * 17, 1508},  {kBlockSize * 18, 1508},  {kBlockSize * 19, 1508},
+		{kBlockSize * 20, 1508},  {kBlockSize * 21, 1508},  {kBlockSize * 22, 1508},
+		{kBlockSize * 23, 1508},  {kBlockSize * 24, 1508},  {kBlockSize * 25, 1508},
+		{kBlockSize * 26, 1508},  
+
+		 {kBlockSize * 4, 1556},  {kBlockSize * 5, 1556},   {kBlockSize * 6, 1556},   
+		 {kBlockSize * 7, 1556},  {kBlockSize * 8, 1556},   {kBlockSize * 9, 1556},  
+		{kBlockSize * 10, 1556}, {kBlockSize * 11, 1556},  {kBlockSize * 12, 1556},  
+		{kBlockSize * 13, 1556}, {kBlockSize * 14, 1556},  {kBlockSize * 15, 1556}, 
+		{kBlockSize * 16, 1556}, {kBlockSize * 17, 1556},  {kBlockSize * 18, 1556},  
+		{kBlockSize * 19, 1556}, {kBlockSize * 20, 1556},  {kBlockSize * 21, 1556}, 
+		{kBlockSize * 22, 1556}, {kBlockSize * 23, 1556},  {kBlockSize * 24, 1556},  
+		{kBlockSize * 25, 1556}, {kBlockSize * 26, 1556},  {kBlockSize * 27, 1556}, 
+		{kBlockSize * 28, 1556}, {kBlockSize * 29, 1556},
+
+		 {kBlockSize * 4, 1652},  {kBlockSize * 5, 1652},   {kBlockSize * 6, 1652},
+		 {kBlockSize * 7, 1652},  {kBlockSize * 8, 1652},   {kBlockSize * 9, 1652},
+		{kBlockSize * 10, 1652}, {kBlockSize * 11, 1652},  {kBlockSize * 12, 1652},
+		{kBlockSize * 13, 1652}, {kBlockSize * 14, 1652},  {kBlockSize * 15, 1652},
+		{kBlockSize * 16, 1652}, {kBlockSize * 17, 1652},  {kBlockSize * 18, 1652},
+		{kBlockSize * 19, 1652}, {kBlockSize * 20, 1652},  {kBlockSize * 21, 1652},
+		{kBlockSize * 22, 1652}, {kBlockSize * 23, 1652},  {kBlockSize * 24, 1652},
+		{kBlockSize * 25, 1652}, {kBlockSize * 26, 1652},  {kBlockSize * 27, 1652},
+		{kBlockSize * 28, 1652}, {kBlockSize * 29, 1652}
+
+
 	};
 
 	bool isMoss[kBlockNum] =
 	{
-		0,1,0,1,1,0,0,0,1,0,
+		0,1,0,1,1,0,0,0,1,0,1,1,1,0,0,1,0,1,1,1,0,0,0
 	};
 #pragma endregion
 
@@ -126,28 +169,34 @@ private:
 	Vector2 rightWallPos_ = { 1392.f,0.f };
 
 	// Spike Trap
-	static inline const uint8_t kSpikeTrapNum = 3;
+	static inline const uint8_t kSpikeTrapNum = 15;
 	std::vector<SpikeTrap*>spikeTrap_;
 	Vector2 spikeTrapPos_[kSpikeTrapNum] =
 	{
-		{kBlockSize * 16, 652}, {kBlockSize * 17, 652}, {kBlockSize * 18, 652}
+		{kBlockSize * 16, 596}, {kBlockSize * 17, 596}, {kBlockSize * 18, 596},
+		{kBlockSize * 19, 596}, {kBlockSize * 20, 596},
+
+		{kBlockSize * 13, 1268},  {kBlockSize * 14, 1268},  {kBlockSize * 15, 1268},
+		{kBlockSize * 13, 1604},  {kBlockSize * 14, 1604},  {kBlockSize * 15, 1604},
+		{kBlockSize * 16, 1604},  {kBlockSize * 17, 1604},  {kBlockSize * 18, 1604},
+		{kBlockSize * 19, 1604},
 	};
 
 	//Exploding Block
 
 	
-	static inline const uint8_t kExplodingBlockNum = 6;
-	std::vector<BlockExplodingTrap*>explodingBlocks_;
-	Vector2 explodingBlockPos_[kExplodingBlockNum] =
-	{
-		{kBlockSize * 6,  948},  {kBlockSize * 7,  948}, {kBlockSize * 8,  948},
-		{kBlockSize * 9,  948},  {kBlockSize * 10,  948}, {kBlockSize * 11,  948},
-	};
+	//static inline const uint8_t kExplodingBlockNum = 6;
+	//std::vector<BlockExplodingTrap*>explodingBlocks_;
+	//Vector2 explodingBlockPos_[kExplodingBlockNum] =
+	//{
+	//	{kBlockSize * 6,  948},  {kBlockSize * 7,  948}, {kBlockSize * 8,  948},
+	//	{kBlockSize * 9,  948},  {kBlockSize * 10,  948}, {kBlockSize * 11,  948},
+	//};
 
-	bool isExplodingBlockMoss[kExplodingBlockNum] =
-	{
-		{false}
-	};
+	//bool isExplodingBlockMoss[kExplodingBlockNum] =
+	//{
+	//	{false}
+	//};
 
 	//Conveyor
 	static inline const uint8_t kConveyorNum = 1;
@@ -171,20 +220,22 @@ private:
 
 	//Goal
 	Goal* goal_ = nullptr;
-	Vector2 goalPos_{ 192, 1800 };
+	Vector2 goalPos_{ 192, 1900 };
 	bool isStageCleared = false;
 	int waitForCollision = 0;
 
 
 #pragma region Steel Block
 
-	static inline const uint8_t kSteelBlockNum = 9;
+	static inline const uint8_t kSteelBlockNum = 12;
 	std::vector<BlockSteel*>blocksSteel_;
 	Vector2 steelBlockPos_[kSteelBlockNum] =
 	{
-		{kBlockSize * 6,  1440},  {kBlockSize * 7,  1440}, {kBlockSize * 8,  1440},
-		{kBlockSize * 9,  1440},  {kBlockSize * 10,  1440}, {kBlockSize * 11,  1440},
-		{kBlockSize * 12,  1440},  {kBlockSize * 13,  1440}, {kBlockSize * 14,  1440},
+		{kBlockSize * 4,  948},  {kBlockSize * 5,  948}, {kBlockSize * 6,  948},
+		{kBlockSize * 7,  948},  {kBlockSize * 8,  948}, {kBlockSize * 9,  948},
+
+		{kBlockSize * 21,  948},  {kBlockSize * 22,  948}, {kBlockSize * 23,  948},
+		{kBlockSize * 24,  948},  {kBlockSize * 25,  948}, {kBlockSize * 26,  948},
 	};
 };
 #pragma endregion

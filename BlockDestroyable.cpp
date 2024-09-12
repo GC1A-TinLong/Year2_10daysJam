@@ -74,7 +74,7 @@ const Object BlockDestroyable::GetObject_() const
 
 void BlockDestroyable::Draw()
 {
-	if (pos_.y >= -float(size.height) && pos_.y <= 720.f  && hp != 0)
+	if (pos_.y >= -float(size.height) && pos_.y <= 1080.f  && hp != 0)
 	{
 		Novice::DrawSprite((int)pos_.x + shake_->GetRandX(), (int)pos_.y + shake_->GetRandY(), blockHandle_, scale.x, scale.y, 0.0f, WHITE);
 	}
