@@ -29,7 +29,16 @@ private:
 	float duration_ = 1.0f;
 	Phase phase_;
 
+	Vector2 pos_;
+	Vector2 scale = { 1.f,1.f };
+	Size size = { 1920 , 1080 };
+	uint32_t texture_;
+	uint32_t textTexture_;
 
+	//Animation
+	Vector2 animationPos_ = { 0.f, 0.f };
+	float animationFrames = 3840.f;
+	int animationTimer_ = 0;
 
 };
 
