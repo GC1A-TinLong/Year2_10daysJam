@@ -8,7 +8,9 @@
 #include "Novice.h"
 #include "Input.h"
 #include "Pause.h"
-#include "TitleScene.h"
+#include "StageScene2.h"
+
+
 
 class GameManager
 {
@@ -16,7 +18,7 @@ private:
 
 
 	// for maintaining the scene
-	std::unique_ptr<IScene>sceneArr_[4];
+	std::unique_ptr<IScene>sceneArr_[5];
 
 	int currentSceneNo_;
 	int prevSceneNo_;

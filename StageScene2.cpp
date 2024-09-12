@@ -1,6 +1,6 @@
-#include "StageScene.h"
+#include "StageScene2.h"
 
-StageScene::~StageScene()
+StageScene2::~StageScene2()
 {
 	delete background_;
 	delete fade_;
@@ -38,7 +38,7 @@ StageScene::~StageScene()
 	blocksSteel_.clear();
 }
 
-void StageScene::Initialize()
+void StageScene2::Initialize()
 {
 #pragma region Fade
 
@@ -62,7 +62,7 @@ void StageScene::Initialize()
 
 	// Player
 	player_ = new Player;
-	player_->Initialize({ 640.f,400.f });
+	player_->Initialize({ 340.f,400.f });
 
 	// Spike
 	spike_.resize(kSpikeNum);
@@ -187,17 +187,17 @@ void StageScene::Initialize()
 
 }
 
-void StageScene::Update()
+void StageScene2::Update()
 {
 	ChangePhase();
 
 	switch (phase_)
 	{
-	case StageScene::Phase::kFadeIn:
+	case StageScene2::Phase::kFadeIn:
 		fade_->Update();
 		break;
 #pragma region Play
-	case StageScene::Phase::kPlay:
+	case StageScene2::Phase::kPlay:
 
 		background_->Update(scrollSpeed);
 
@@ -298,7 +298,7 @@ void StageScene::Update()
 
 		UI->Update(true, false);
 
-		if (explosion_->GetIsExploding()) 
+		if (explosion_->GetIsExploding())
 		{
 			explosion_->Update();
 		}
@@ -307,12 +307,12 @@ void StageScene::Update()
 
 		DeleteBlocks();
 		CheckAllCollision();
-		
+
 		break;
 #pragma endregion
 
 #pragma region kDeath
-	case StageScene::Phase::kDeath:
+	case StageScene2::Phase::kDeath:
 		background_->Update(scrollSpeed);
 
 		// Spike
@@ -357,7 +357,7 @@ void StageScene::Update()
 #pragma endregion
 
 #pragma region kStageClear
-	case StageScene::Phase::kStageClear:
+	case StageScene2::Phase::kStageClear:
 
 		scrollSpeed = 0.f;
 
@@ -395,7 +395,7 @@ void StageScene::Update()
 		player_->Drilling();
 		CheckAllCollision();
 		goal_->Update(scrollSpeed);
-		
+
 		// Spike
 		for (auto* spike : spike_) {
 			spike->Update();
@@ -468,31 +468,31 @@ void StageScene::Update()
 			explosion_->Update();
 		}
 
-		
+
 
 		DeleteBlocks();
-		
+
 
 		break;
 #pragma endregion
-	case StageScene::Phase::kFadeOut:
+	case StageScene2::Phase::kFadeOut:
 		fade_->Update();
 		break;
 	}
 }
 
-void StageScene::ChangePhase()
+void StageScene2::ChangePhase()
 {
 	switch (phase_)
 	{
-	case StageScene::Phase::kFadeIn:
+	case StageScene2::Phase::kFadeIn:
 		if (fade_->IsFinished())
 		{
 			phase_ = Phase::kPlay;
 		}
 		break;
 
-	case StageScene::Phase::kPlay:
+	case StageScene2::Phase::kPlay:
 		if (Input::GetInstance()->TriggerKey(DIK_C))
 		{
 			fade_->Start(Status::FadeOut, duration_);
@@ -500,7 +500,7 @@ void StageScene::ChangePhase()
 		}
 		if (player_->IsDead()) { phase_ = Phase::kDeath; }
 
-		if (isStageCleared) 
+		if (isStageCleared)
 		{
 			phase_ = Phase::kFadeOut;
 
@@ -508,14 +508,14 @@ void StageScene::ChangePhase()
 
 		break;
 
-	case StageScene::Phase::kDeath:
+	case StageScene2::Phase::kDeath:
 		phase_ = Phase::kFadeOut;
 		break;
-	case StageScene::Phase::kStageClear:
+	case StageScene2::Phase::kStageClear:
 		break;
-	case StageScene::Phase::kFadeOut:
+	case StageScene2::Phase::kFadeOut:
 		if (fade_->IsFinished() && !player_->IsDead()) {
-			sceneNo = STAGE2;
+			sceneNo = CLEAR;
 		}
 		else if (fade_->IsFinished() && player_->IsDead())
 		{
@@ -525,7 +525,7 @@ void StageScene::ChangePhase()
 	}
 }
 
-void StageScene::Draw()
+void StageScene2::Draw()
 {
 	// Background
 	background_->Draw();
@@ -557,7 +557,7 @@ void StageScene::Draw()
 		conveyor->Draw();
 	}*/
 
-	if (explosion_->GetIsExploding()) 
+	if (explosion_->GetIsExploding())
 	{
 		explosion_->Draw();
 	}
@@ -571,26 +571,26 @@ void StageScene::Draw()
 
 	switch (phase_)
 	{
-	case StageScene::Phase::kFadeIn:
+	case StageScene2::Phase::kFadeIn:
 		// Fade
 		fade_->Draw();
 		break;
 
-	case StageScene::Phase::kPlay:
+	case StageScene2::Phase::kPlay:
 		break;
-	case StageScene::Phase::kDeath:
+	case StageScene2::Phase::kDeath:
 		break;
-	case StageScene::Phase::kStageClear:
+	case StageScene2::Phase::kStageClear:
 		Novice::ScreenPrintf(50, 0, "CLEAR");
 		break;
-	case StageScene::Phase::kFadeOut:
+	case StageScene2::Phase::kFadeOut:
 
 		fade_->Draw();
 		break;
 	}
 }
 
-void StageScene::DeleteBlocks()
+void StageScene2::DeleteBlocks()
 {
 	for (int i = 0; i < blocks_.size();)
 	{
@@ -626,7 +626,7 @@ void StageScene::DeleteBlocks()
 	}
 }
 
-void StageScene::CheckAllCollision()
+void StageScene2::CheckAllCollision()
 {
 #pragma region player & spike collision
 	Object obj1, obj2;
@@ -814,10 +814,10 @@ void StageScene::CheckAllCollision()
 #pragma region player & item collision
 
 #pragma endregion
-	
+
 }
 
-void StageScene::SetPlayerStatus()
+void StageScene2::SetPlayerStatus()
 {
 	float playerDrillPower = player_->GetDrillPower();
 	UI->SetDrillPower(playerDrillPower);
@@ -829,9 +829,10 @@ void StageScene::SetPlayerStatus()
 	UI->SetPlayerHP(playerHP);
 }
 
-void StageScene::UserInterfaceDepthMeter()
+void StageScene2::UserInterfaceDepthMeter()
 {
 	float playerY = player_->GetPos().y + player_->GetSize().height;
 
 	depthMeter_->SetPlayerYPos(playerY);
 }
+

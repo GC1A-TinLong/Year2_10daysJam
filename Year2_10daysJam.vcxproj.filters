@@ -116,6 +116,9 @@
     <ClCompile Include="BlockSteel.cpp">
       <Filter>KamataEngine</Filter>
     </ClCompile>
+    <ClCompile Include="StageScene2.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\KamataEngine\DirectXGame\audio\Audio.h">
@@ -220,5 +223,6 @@
     <ClInclude Include="Explosion.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="BlockSteel.h" />
+    <ClInclude Include="StageScene2.h" />
   </ItemGroup>
 </Project>
