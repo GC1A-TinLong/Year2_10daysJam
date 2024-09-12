@@ -109,7 +109,7 @@ void StageScene::Initialize()
 			if (map[i][j] == Block)
 			{
 				blocks_[blockIndex] = new BlockNotDestroyable;
-				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchip, i * (float)spriteSize };
+				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchipX, i * (float)spriteSize + adjustPosForMapchipY };
 				blocks_[blockIndex]->Initialize(blockPos_, isMoss[blockIndex], false);
 				blockIndex++; // Move to the next block
 

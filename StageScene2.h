@@ -74,13 +74,13 @@ private:
 	static inline const float kBlockSize = 48.f;
 	// Destroyable Block
 
-	static inline const uint8_t kDestroyableBlockNum = 47;
+	static inline const uint8_t kDestroyableBlockNum = 48;
 	std::vector<BlockDestroyable*>destroyableBlocks_;
 
 
 #pragma region Normal Block
 	// Normal Block
-	static inline const uint8_t kBlockNum = 87;
+	static inline const uint8_t kBlockNum = 90;
 	std::vector<BlockNotDestroyable*>blocks_;
 
 
@@ -137,14 +137,14 @@ private:
 
 	//Goal
 	Goal* goal_ = nullptr;
-	Vector2 goalPos_{ 192, 2800 };
+	Vector2 goalPos_{ 192, 3100 };
 	bool isStageCleared = false;
 	int waitForCollision = 0;
 
 
 #pragma region Steel Block
 
-	static inline const uint8_t kSteelBlockNum = 93;
+	static inline const uint8_t kSteelBlockNum = 105;
 	std::vector<BlockSteel*>blocksSteel_;
 
 #pragma endregion
@@ -166,7 +166,7 @@ private:
 	int adjustPosForMapchip = 192;
 	int adjustPosForMapchipY = 480;
 	int mapCountX = 25;
-	int mapCountY = 41;
+	int mapCountY = 44;
 	int spriteSize = 48;
 	int blockIndex = 0;
 	int brokenBlockIndex = 0;
@@ -175,7 +175,7 @@ private:
 
 	// 0 = nothing, 1 = block, 2 = broken block, 3 = steel block, 4 = exploding block, 5 = spike
 
-	int map[41][25] =
+	int map[44][25] =
 	{
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -218,6 +218,9 @@ private:
 		0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		0,0,0,0,0,0,0,0,0,0,0,0,2,3,3,3,3,3,3,3,3,3,3,3,3,
+		0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,1,3,3,3,3,3,3,3,3,3,3,3,3,2,
 
 
 
