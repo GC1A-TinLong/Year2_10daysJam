@@ -8,7 +8,7 @@ class UserInterface
 public:
 
 	~UserInterface();
-	void Initialize();
+	void Initialize(int whatStage);
 	void Update(bool isShowingDrillUI, bool isTutorial);
 	void Draw() const;
 
@@ -19,9 +19,11 @@ public:
 
 
 private:
+
+	int whatStage_ = 0;
 	//UI Handles
-	unsigned int stageTextHandle = Novice::LoadTexture("./Resources/StageText/STAGE.png");
-	unsigned int stage1Handle = Novice::LoadTexture("./Resources/StageText/1.png");
+	unsigned int stageTextHandle_ = Novice::LoadTexture("./Resources/StageText/STAGE.png");
+	unsigned int stageNumberHandle;
 	unsigned int controlsHandle = Novice::LoadTexture("./Resources/StageText/CONTROLS.png");
 	unsigned int letterDHandle = Novice::LoadTexture("./Resources/StageText/D.png");
 	unsigned int letterAHandle = Novice::LoadTexture("./Resources/StageText/A.png");

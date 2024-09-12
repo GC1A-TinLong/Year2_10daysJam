@@ -3,10 +3,19 @@
 UserInterface::~UserInterface()
 {
 }
-void UserInterface::Initialize()
+void UserInterface::Initialize(int whatStage)
 {
+	whatStage_ = whatStage;
 	batteryColor = 0x00FF1AFF; //Green
 	batteryA = 0;
+	if (whatStage_ == 1) 
+	{
+		stageNumberHandle = Novice::LoadTexture("./Resources/StageText/1.png");
+	} 
+	else if (whatStage_ == 2) 
+	{
+		stageNumberHandle = Novice::LoadTexture("./Resources/StageText/2.png");
+	}
 }
 
 void UserInterface::Update(bool isShowingDrillUI, bool isTutorial)
@@ -67,8 +76,8 @@ void UserInterface::Draw() const
 	Novice::DrawBox(1440, 0, 1920, 1080, 0.0f, BLACK, kFillModeSolid);
 
 	//UI TEXT
-	Novice::DrawSprite(200, 20, stageTextHandle, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
-	Novice::DrawSprite(420, 15, stage1Handle, 1.0f, 1.0f, 0.0f, WHITE); //1
+	Novice::DrawSprite(200, 20, stageTextHandle_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
+	Novice::DrawSprite(420, 15, stageNumberHandle, 1.0f, 1.0f, 0.0f, WHITE); //1
 	Novice::DrawSprite(1520, 370, controlsHandle, 1.0f, 1.0f, 0.0f, WHITE); //CONROLS
 	Novice::DrawSprite(1520, 470, letterDHandle, 1.0f, 1.0f, 0.0f, WHITE); //D
 	Novice::DrawSprite(1520, 570, letterAHandle, 1.0f, 1.0f, 0.0f, WHITE); //A

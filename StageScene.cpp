@@ -58,7 +58,7 @@ void StageScene::Initialize()
 
 	// UI
 	UI = new UserInterface;
-	UI->Initialize();
+	UI->Initialize(1);
 
 	// Player
 	player_ = new Player;

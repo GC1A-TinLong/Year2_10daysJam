@@ -58,7 +58,7 @@ void StageScene2::Initialize()
 
 	// UI
 	UI = new UserInterface;
-	UI->Initialize();
+	UI->Initialize(2);
 
 	// Player
 	player_ = new Player;
@@ -254,9 +254,10 @@ void StageScene2::Update()
 		break;
 #pragma region Play
 	case StageScene2::Phase::kPlay:
-		if (goal_->GetPos().y <= 880) 
+		if (goal_->GetPos().y <= 780) 
 		{
 			scrollSpeed = 0;
+			
 		}
 		background_->Update(scrollSpeed);
 
