@@ -227,7 +227,7 @@ void StageScene::Initialize()
 				//if (blockIndex < kBlockNum) // Ensure we don't exceed the number of blocks
 				//{
 				blocksSteel_[steelIndex] = new BlockSteel;
-				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchip, i * (float)spriteSize };
+				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchipX, i * (float)spriteSize };
 				blocksSteel_[steelIndex]->Initialize(blockPos_, false);
 				steelIndex++; // Move to the next block
 

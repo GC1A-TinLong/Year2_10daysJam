@@ -84,12 +84,12 @@ void StageScene2::Initialize()
 		{
 			if (map[i][j] == BrokenBlock)
 			{
-				
+
 				destroyableBlocks_[brokenBlockIndex] = new BlockDestroyable;
 				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchip, i * (float)spriteSize + adjustPosForMapchipY };
 				destroyableBlocks_[brokenBlockIndex]->Initialize(blockPos_);
 				brokenBlockIndex++; // Move to the next block
-				
+
 
 			}
 		}
@@ -107,12 +107,12 @@ void StageScene2::Initialize()
 		{
 			if (map[i][j] == Block)
 			{
-				
+
 				blocks_[blockIndex] = new BlockNotDestroyable;
 				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchip, i * (float)spriteSize + adjustPosForMapchipY };
 				blocks_[blockIndex]->Initialize(blockPos_, isMoss[blockIndex], false);
 				blockIndex++; // Move to the next block
-				
+
 
 			}
 		}
@@ -225,14 +225,10 @@ void StageScene2::Initialize()
 		{
 			if (map[i][j] == SteelBlock)
 			{
-				//if (blockIndex < kBlockNum) // Ensure we don't exceed the number of blocks
-				//{
 				blocksSteel_[steelIndex] = new BlockSteel;
 				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchip, i * (float)spriteSize + adjustPosForMapchipY };
-				blocksSteel_[steelIndex]->Initialize(blockPos_);
+				blocksSteel_[steelIndex]->Initialize(blockPos_, false);
 				steelIndex++; // Move to the next block
-
-
 			}
 		}
 	}
@@ -254,10 +250,10 @@ void StageScene2::Update()
 		break;
 #pragma region Play
 	case StageScene2::Phase::kPlay:
-		if (goal_->GetPos().y <= 780) 
+		if (goal_->GetPos().y <= 780)
 		{
 			scrollSpeed = 0;
-			
+
 		}
 		background_->Update(scrollSpeed);
 
