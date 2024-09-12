@@ -73,7 +73,6 @@ private:
 	// Block Size
 	static inline const float kBlockSize = 48.f;
 	// Destroyable Block
-
 	static inline const uint8_t kDestroyableBlockNum = 13;
 	std::vector<BlockDestroyable*>destroyableBlocks_;
 	Vector2 desBlockPos_[kDestroyableBlockNum]
