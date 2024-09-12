@@ -87,7 +87,7 @@ void StageScene::Initialize()
 				//if (blockIndex < kBlockNum) // Ensure we don't exceed the number of blocks
 				//{
 				destroyableBlocks_[brokenBlockIndex] = new BlockDestroyable;
-				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchip, i * (float)spriteSize };
+				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchipX, i * (float)spriteSize + adjustPosForMapchipY };
 				destroyableBlocks_[brokenBlockIndex]->Initialize(blockPos_);
 				brokenBlockIndex++; // Move to the next block
 				//}
@@ -158,7 +158,7 @@ void StageScene::Initialize()
 				//if (blockIndex < kBlockNum) // Ensure we don't exceed the number of blocks
 				//{
 				spikeTrap_[spikeIndex] = new SpikeTrap;
-				Vector2 spikePos_ = { j * (float)spriteSize + adjustPosForMapchip, i * (float)spriteSize };
+				Vector2 spikePos_ = { j * (float)spriteSize + adjustPosForMapchipX, i * (float)spriteSize + adjustPosForMapchipY };
 				spikeTrap_[spikeIndex]->Initialize(spikePos_);
 				spikeIndex++; // Move to the next block
 
@@ -227,7 +227,7 @@ void StageScene::Initialize()
 				//if (blockIndex < kBlockNum) // Ensure we don't exceed the number of blocks
 				//{
 				blocksSteel_[steelIndex] = new BlockSteel;
-				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchip, i * (float)spriteSize };
+				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchipX, i * (float)spriteSize + adjustPosForMapchipY };
 				blocksSteel_[steelIndex]->Initialize(blockPos_);
 				steelIndex++; // Move to the next block
 

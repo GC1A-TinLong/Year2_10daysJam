@@ -62,7 +62,7 @@ void StageScene2::Initialize()
 
 	// Player
 	player_ = new Player;
-	player_->Initialize({ 340.f,400.f });
+	player_->Initialize({ 440.f,350.f });
 
 	// Spike
 	spike_.resize(kSpikeNum);
@@ -75,24 +75,50 @@ void StageScene2::Initialize()
 
 #pragma region Destroyable Blocks
 
+	brokenBlockIndex = 0;
 	destroyableBlocks_.resize(kDestroyableBlockNum);
-	for (int i = 0; i < kDestroyableBlockNum; i++)
+
+	for (int i = 0; i < mapCountY; i++)
 	{
-		destroyableBlocks_[i] = new BlockDestroyable;
-		Vector2 desBlockPos = desBlockPos_[i];
-		destroyableBlocks_[i]->Initialize(desBlockPos);
+		for (int j = 0; j < mapCountX; j++)
+		{
+			if (map[i][j] == BrokenBlock)
+			{
+				
+				destroyableBlocks_[brokenBlockIndex] = new BlockDestroyable;
+				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchip, i * (float)spriteSize + adjustPosForMapchipY };
+				destroyableBlocks_[brokenBlockIndex]->Initialize(blockPos_);
+				brokenBlockIndex++; // Move to the next block
+				
+
+			}
+		}
 	}
 
 #pragma endregion
 
 #pragma region Blocks
-
+	blockIndex = 0;
 	blocks_.resize(kBlockNum);
-	for (int i = 0; i < kBlockNum; i++)
+
+	for (int i = 0; i < mapCountY; i++)
 	{
-		blocks_[i] = new BlockNotDestroyable;
-		blocks_[i]->Initialize(BlockPos_[i], isMoss[i], false);
+		for (int j = 0; j < mapCountX; j++)
+		{
+			if (map[i][j] == Block)
+			{
+				
+				blocks_[blockIndex] = new BlockNotDestroyable;
+				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchip, i * (float)spriteSize + adjustPosForMapchipY };
+				blocks_[blockIndex]->Initialize(blockPos_, isMoss[blockIndex], false);
+				blockIndex++; // Move to the next block
+				
+
+			}
+		}
 	}
+
+
 #pragma endregion
 
 #pragma region LeftWall
@@ -116,15 +142,30 @@ void StageScene2::Initialize()
 		rightWallPos_.y = 48.f * i;
 		rightWallBlocks_[i]->Initialize(rightWallPos_, false, true);
 	}
+
 #pragma endregion
 
 #pragma region Spike Trap
 
+	spikeIndex = 0;
 	spikeTrap_.resize(kSpikeTrapNum);
-	for (int i = 0; i < kSpikeTrapNum; i++)
+
+	for (int i = 0; i < mapCountY; i++)
 	{
-		spikeTrap_[i] = new SpikeTrap;
-		spikeTrap_[i]->Initialize(spikeTrapPos_[i]);
+		for (int j = 0; j < mapCountX; j++)
+		{
+			if (map[i][j] == TrapSpike)
+			{
+				//if (blockIndex < kBlockNum) // Ensure we don't exceed the number of blocks
+				//{
+				spikeTrap_[spikeIndex] = new SpikeTrap;
+				Vector2 spikePos_ = { j * (float)spriteSize + adjustPosForMapchip, i * (float)spriteSize + adjustPosForMapchipY };
+				spikeTrap_[spikeIndex]->Initialize(spikePos_);
+				spikeIndex++; // Move to the next block
+
+
+			}
+		}
 	}
 
 #pragma endregion
@@ -175,12 +216,25 @@ void StageScene2::Initialize()
 
 #pragma region Steel Block
 
+	steelIndex = 0;
 	blocksSteel_.resize(kSteelBlockNum);
-	for (int i = 0; i < kSteelBlockNum; i++)
+
+	for (int i = 0; i < mapCountY; i++)
 	{
-		blocksSteel_[i] = new BlockSteel;
-		//Vector2 blockPos = BlockPos_[i];
-		blocksSteel_[i]->Initialize(steelBlockPos_[i]);
+		for (int j = 0; j < mapCountX; j++)
+		{
+			if (map[i][j] == SteelBlock)
+			{
+				//if (blockIndex < kBlockNum) // Ensure we don't exceed the number of blocks
+				//{
+				blocksSteel_[steelIndex] = new BlockSteel;
+				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchip, i * (float)spriteSize + adjustPosForMapchipY };
+				blocksSteel_[steelIndex]->Initialize(blockPos_);
+				steelIndex++; // Move to the next block
+
+
+			}
+		}
 	}
 
 #pragma endregion
