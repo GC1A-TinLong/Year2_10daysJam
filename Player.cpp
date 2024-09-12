@@ -417,12 +417,11 @@ void Player::Shakeing()
 
 void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 {
-
-	bool tempOnGround = false;	 // temp flag, when its confirmed(ended loop), apply it to the origin flag
+	bool tempOnGround = false;		// temp flag, when its confirmed(ended loop), apply it to the origin flag
 
 	for (BlockNotDestroyable* nonDesBlock : nonDesBlocks) {
 		float playerLeftPos = pos_.x + widthOffset;
-		float playerRightPos = pos_.x + spriteWidth;
+		float playerRightPos = playerLeftPos + size.width;
 		float playerBottom = pos_.y + size.height + velocity_.y;
 		//float playerTop = pos_.y + velocity_.y;
 		float blockTop = nonDesBlock->GetPos().y;
@@ -430,17 +429,15 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 		float leftPosBlock = nonDesBlock->GetPos().x;
 		float rightPosBlock = nonDesBlock->GetPos().x + nonDesBlock->GetSize().width;
 
-		bool isLeftCollision = (playerRightPos > leftPosBlock) && (pos_.x < leftPosBlock) &&
+		bool isLeftCollision = (playerRightPos > leftPosBlock) && (playerLeftPos < leftPosBlock) &&
 			(playerBottom > blockTop) && (pos_.y < blockBottom);
-		bool isRightCollision = (pos_.x < rightPosBlock) && (playerRightPos > rightPosBlock) &&
-			(playerBottom > blockTop) && (pos_.y < blockBottom);
+		bool isRightCollision = (playerLeftPos < rightPosBlock) && (playerRightPos > rightPosBlock) && (playerBottom > blockTop) && (pos_.y < blockBottom);
 
 		// Conditions
-		bool isWithinHorizontalBounds = (playerLeftPos <= rightPosBlock) && (pos_.x + size.width >= leftPosBlock);
+		bool isWithinHorizontalBounds = (playerLeftPos <= rightPosBlock) && (playerRightPos >= leftPosBlock);
 		bool isCloseEnoughVertically = (blockTop - 8 - playerBottom <= kCloseEnoughDistanceWithBlock);	// above block, TEMPORARY FIX FOR GETTING STUCK
 		// player.bot without velocity && blockTop + small amount to prevent falling through
 		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
-
 
 		if (isWithinHorizontalBounds && isCloseEnoughVertically && !isPlayerBelowBlock) {
 			if (velocity_.y > 0) {	// only when falling
@@ -452,11 +449,11 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 			tempOnGround = true;
 		}
 
-		if (isLeftCollision) {	// is Block's left collide with player
+		if (isLeftCollision) {
 			//pos_.x = leftPosBlock - spriteWidth;
 			if (!isOnConveyor)
 			{
-				pos_.x = leftPosBlock - spriteWidth;  // Stop at the block's left edge
+				pos_.x = leftPosBlock - size.width - 12;  // Stop at the block's left edge
 			}
 			else
 			{
@@ -469,7 +466,7 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 		if (isRightCollision) {
 			if (!isOnConveyor)
 			{
-				pos_.x = rightPosBlock;  // Stop at the block's right edge
+				pos_.x = rightPosBlock - 10;  // Stop at the block's right edge
 			}
 			else
 			{
@@ -479,9 +476,12 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 			velocity_.x = 0;  // Stop horizontal movement
 			kLRAcceleration = 0;
 		}
+
 	}
+
 	onGround = tempOnGround;
 }
+
 
 void Player::OnConveyor()
 {
@@ -612,7 +612,7 @@ void Player::CollisionWithDestroyableBlock(std::vector<BlockDestroyable*>& desBl
 
 	for (BlockDestroyable* desBlock : desBlocks) {
 		float playerLeftPos = pos_.x + widthOffset;
-		float playerRightPos = pos_.x + spriteWidth;
+		float playerRightPos = playerLeftPos + size.width;
 		float playerBottom = pos_.y + size.height + velocity_.y;
 		//float playerTop = pos_.y + velocity_.y;
 		float blockTop = desBlock->GetPos().y;
@@ -620,10 +620,15 @@ void Player::CollisionWithDestroyableBlock(std::vector<BlockDestroyable*>& desBl
 		float leftPosBlock = desBlock->GetPos().x;
 		float rightPosBlock = desBlock->GetPos().x + desBlock->GetSize().width;
 
-		bool isLeftCollision = (playerRightPos > leftPosBlock) && (pos_.x < leftPosBlock) &&
+		bool isLeftCollision = (playerRightPos > leftPosBlock) && (playerLeftPos < leftPosBlock) &&
 			(playerBottom > blockTop) && (pos_.y < blockBottom);
 		bool isRightCollision = (playerLeftPos < rightPosBlock) && (playerRightPos > rightPosBlock) && (playerBottom > blockTop) && (pos_.y < blockBottom);
 
+		// Conditions
+		bool isWithinHorizontalBounds = (playerLeftPos <= rightPosBlock) && (playerRightPos >= leftPosBlock);
+		bool isCloseEnoughVertically = (blockTop - 8 - playerBottom <= kCloseEnoughDistanceWithBlock);	// above block, TEMPORARY FIX FOR GETTING STUCK
+		// player.bot without velocity && blockTop + small amount to prevent falling through
+		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
 		if (isLeftCollision) {
 			//pos_.x = leftPosBlock - spriteWidth;
 			if (!isOnConveyor)
@@ -681,7 +686,7 @@ void Player::CollisionWithMetalBlock(std::vector<BlockSteel*>& steelBlocks)
 
 	for (BlockSteel* steelBlock : steelBlocks) {
 		float playerLeftPos = pos_.x + widthOffset;
-		float playerRightPos = pos_.x + spriteWidth;
+		float playerRightPos = playerLeftPos + size.width;
 		float playerBottom = pos_.y + size.height + velocity_.y;
 		//float playerTop = pos_.y + velocity_.y;
 		float blockTop = steelBlock->GetPos().y;
@@ -689,17 +694,15 @@ void Player::CollisionWithMetalBlock(std::vector<BlockSteel*>& steelBlocks)
 		float leftPosBlock = steelBlock->GetPos().x;
 		float rightPosBlock = steelBlock->GetPos().x + steelBlock->GetSize().width;
 
-		bool isLeftCollision = (playerRightPos > leftPosBlock) && (pos_.x < leftPosBlock) &&
+		bool isLeftCollision = (playerRightPos > leftPosBlock) && (playerLeftPos < leftPosBlock) &&
 			(playerBottom > blockTop) && (pos_.y < blockBottom);
-		bool isRightCollision = (pos_.x < rightPosBlock) && (playerRightPos > rightPosBlock) &&
-			(playerBottom > blockTop) && (pos_.y < blockBottom);
+		bool isRightCollision = (playerLeftPos < rightPosBlock) && (playerRightPos > rightPosBlock) && (playerBottom > blockTop) && (pos_.y < blockBottom);
 
 		// Conditions
 		bool isWithinHorizontalBounds = (playerLeftPos <= rightPosBlock) && (playerRightPos >= leftPosBlock);
 		bool isCloseEnoughVertically = (blockTop - 8 - playerBottom <= kCloseEnoughDistanceWithBlock);	// above block, TEMPORARY FIX FOR GETTING STUCK
 		// player.bot without velocity && blockTop + small amount to prevent falling through
 		bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
-
 
 
 		if (isWithinHorizontalBounds && isCloseEnoughVertically && !isPlayerBelowBlock) {
@@ -739,9 +742,7 @@ void Player::CollisionWithMetalBlock(std::vector<BlockSteel*>& steelBlocks)
 			velocity_.x = 0;  // Stop horizontal movement
 			kLRAcceleration = 0;
 		}
-
 	}
-
 	onGround = tempOnGround;
 }
 

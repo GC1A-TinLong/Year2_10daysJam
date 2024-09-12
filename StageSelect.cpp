@@ -27,7 +27,7 @@ void StageSelect::Initialize()
 	background_->Initialize(backgroundHandle_);
 	// UI
 	UI = new UserInterface;
-	UI->Initialize(-1);
+	UI->Initialize(1);
 
 	// Player
 	player_ = new Player;
