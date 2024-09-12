@@ -108,19 +108,16 @@ void StageScene::Initialize()
 		{
 			if (map[i][j] == Block)
 			{
-				//if (blockIndex < kBlockNum) // Ensure we don't exceed the number of blocks
-				//{
-					blocks_[blockIndex] = new BlockNotDestroyable;
-					Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchip, i * (float)spriteSize };
-					blocks_[blockIndex]->Initialize(blockPos_, isMoss[blockIndex], false);
-					blockIndex++; // Move to the next block
-				//}
-				
+				blocks_[blockIndex] = new BlockNotDestroyable;
+				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchip, i * (float)spriteSize };
+				blocks_[blockIndex]->Initialize(blockPos_, isMoss[blockIndex], false);
+				blockIndex++; // Move to the next block
+
 			}
 		}
 	}
-	
-	
+
+
 #pragma endregion
 
 #pragma region LeftWall
@@ -233,7 +230,7 @@ void StageScene::Initialize()
 				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchip, i * (float)spriteSize };
 				blocksSteel_[steelIndex]->Initialize(blockPos_);
 				steelIndex++; // Move to the next block
-				
+
 
 			}
 		}
@@ -251,6 +248,8 @@ void StageScene::Update()
 	{
 	case StageScene::Phase::kFadeIn:
 		fade_->Update();
+		SetPlayerStatus();
+		UI->Update(true, false);
 		break;
 #pragma region Play
 	case StageScene::Phase::kPlay:
@@ -354,7 +353,7 @@ void StageScene::Update()
 
 		UI->Update(true, false);
 
-		if (explosion_->GetIsExploding()) 
+		if (explosion_->GetIsExploding())
 		{
 			explosion_->Update();
 		}
@@ -363,7 +362,7 @@ void StageScene::Update()
 
 		DeleteBlocks();
 		CheckAllCollision();
-		
+
 		break;
 #pragma endregion
 
@@ -451,7 +450,7 @@ void StageScene::Update()
 		player_->Drilling();
 		CheckAllCollision();
 		goal_->Update(scrollSpeed);
-		
+
 		// Spike
 		for (auto* spike : spike_) {
 			spike->Update();
@@ -523,11 +522,8 @@ void StageScene::Update()
 		{
 			explosion_->Update();
 		}
-
-		
-
 		DeleteBlocks();
-		
+
 
 		break;
 #pragma endregion
@@ -556,7 +552,7 @@ void StageScene::ChangePhase()
 		}
 		if (player_->IsDead()) { phase_ = Phase::kDeath; }
 
-		if (isStageCleared) 
+		if (isStageCleared)
 		{
 			phase_ = Phase::kFadeOut;
 
@@ -589,7 +585,7 @@ void StageScene::Draw()
 	// Player
 	player_->Draw();
 
-	
+
 	// Destroyable Blocks
 	for (auto* destroyableBlock : destroyableBlocks_) { destroyableBlock->Draw(); }
 
@@ -614,7 +610,7 @@ void StageScene::Draw()
 		conveyor->Draw();
 	}*/
 
-	if (explosion_->GetIsExploding()) 
+	if (explosion_->GetIsExploding())
 	{
 		explosion_->Draw();
 	}
@@ -871,7 +867,7 @@ void StageScene::CheckAllCollision()
 #pragma region player & item collision
 
 #pragma endregion
-	
+
 }
 
 void StageScene::SetPlayerStatus()

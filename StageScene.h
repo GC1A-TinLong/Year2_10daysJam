@@ -94,7 +94,6 @@ private:
 	static inline const uint8_t kBlockNum = 107;
 	std::vector<BlockNotDestroyable*>blocks_;
 
-
 	//Mapchip
 	int adjustPosForMapchip = 192;
 	int mapCountX = 25;

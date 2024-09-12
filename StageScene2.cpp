@@ -195,6 +195,8 @@ void StageScene2::Update()
 	{
 	case StageScene2::Phase::kFadeIn:
 		fade_->Update();
+		SetPlayerStatus();
+		UI->Update(true, false);
 		break;
 #pragma region Play
 	case StageScene2::Phase::kPlay:
