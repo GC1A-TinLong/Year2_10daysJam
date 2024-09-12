@@ -37,6 +37,17 @@ private:
 	// Scroll
 	float scrollSpeed = 2.f;
 
+	enum Stage 
+	{
+		None,
+		Block,
+		BrokenBlock,
+		SteelBlock,
+		ExplosionBlock,
+		TrapSpike,
+
+	};
+
 	enum class Phase
 	{
 		kFadeIn,
@@ -74,9 +85,9 @@ private:
 	static inline const float kBlockSize = 48.f;
 	// Destroyable Block
 
-	static inline const uint8_t kDestroyableBlockNum = 13;
+	static inline const uint8_t kDestroyableBlockNum = 24;
 	std::vector<BlockDestroyable*>destroyableBlocks_;
-	Vector2 desBlockPos_[kDestroyableBlockNum]
+	/*Vector2 desBlockPos_[kDestroyableBlockNum]
 	{
 		{kBlockSize * 4,  500}, {kBlockSize * 4,  548},{kBlockSize * 4,  596},
 		{kBlockSize * 5,  500}, {kBlockSize * 5,  548},{kBlockSize * 5,  596},
@@ -86,14 +97,66 @@ private:
 		{kBlockSize * 4, 1508}, {kBlockSize * 5, 1508}, {kBlockSize * 27, 1508},
 		{kBlockSize * 28, 1508},
 		
-	};
+	};*/
 
 #pragma region Normal Block
 	// Normal Block
-	static inline const uint8_t kBlockNum = 128;
+	static inline const uint8_t kBlockNum = 107;
 	std::vector<BlockNotDestroyable*>blocks_;
 
-	Vector2 BlockPos_[kBlockNum]
+
+	//Mapchip
+	int adjustPosForMapchip = 192;
+	int mapCountX = 25;
+	int mapCountY = 33;
+	int spriteSize = 48;
+	int blockIndex = 0;
+	int brokenBlockIndex = 0;
+	int spikeIndex = 0;
+	int steelIndex = 0;
+
+	// 0 = nothing, 1 = block, 2 = broken block, 3 = steel block, 4 = exploding block, 5 = spike
+	int map[33][25] =
+	{
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		2,2,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,1,
+		2,2,1,1,1,1,1,1,1,1,1,1,5,5,5,0,0,0,0,0,0,0,0,0,0,
+		2,2,1,1,1,1,1,1,1,1,1,1,3,3,3,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		3,3,3,3,3,3,0,0,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,2,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,5,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		1,2,2,1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,2,2,
+		1,2,2,1,1,1,1,1,1,1,1,1,1,1,2,2,1,1,1,1,1,1,1,2,2,
+		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+
+	};
+
+	
+
+	/*Vector2 BlockPos_[kBlockNum]
 	{
 
 		{kBlockSize * 6,  500}, 
@@ -154,7 +217,7 @@ private:
 		{kBlockSize * 28, 1652}, {kBlockSize * 29, 1652}
 
 
-	};
+	};*/
 
 	bool isMoss[kBlockNum] =
 	{
@@ -168,9 +231,7 @@ private:
 		1, 1, 1, 0, 1, 1, 1, 1, 1, 0,
 		1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
 		0, 0, 0, 1, 0, 0, 0, 0, 1, 1,
-		0, 0, 0, 0, 1, 0, 0, 0, 0, 0,
-		0, 1, 0, 1, 0, 1, 1, 1, 0, 0,
-		0, 0, 0, 0, 1, 1, 1, 0
+		0, 0, 0, 0, 1, 0, 0,
 	};
 #pragma endregion
 
@@ -181,9 +242,9 @@ private:
 	Vector2 rightWallPos_ = { 1392.f,0.f };
 
 	// Spike Trap
-	static inline const uint8_t kSpikeTrapNum = 15;
+	static inline const uint8_t kSpikeTrapNum = 6;
 	std::vector<SpikeTrap*>spikeTrap_;
-	Vector2 spikeTrapPos_[kSpikeTrapNum] =
+	/*Vector2 spikeTrapPos_[kSpikeTrapNum] =
 	{
 		{kBlockSize * 16, 596}, {kBlockSize * 17, 596}, {kBlockSize * 18, 596},
 		{kBlockSize * 19, 596}, {kBlockSize * 20, 596},
@@ -192,7 +253,7 @@ private:
 		{kBlockSize * 13, 1604},  {kBlockSize * 14, 1604},  {kBlockSize * 15, 1604},
 		{kBlockSize * 16, 1604},  {kBlockSize * 17, 1604},  {kBlockSize * 18, 1604},
 		{kBlockSize * 19, 1604},
-	};
+	};*/
 
 	//Exploding Block
 
@@ -232,7 +293,7 @@ private:
 
 	//Goal
 	Goal* goal_ = nullptr;
-	Vector2 goalPos_{ 192, 1900 };
+	Vector2 goalPos_{ 192, 1800 };
 	bool isStageCleared = false;
 	int waitForCollision = 0;
 
@@ -241,14 +302,14 @@ private:
 
 	static inline const uint8_t kSteelBlockNum = 12;
 	std::vector<BlockSteel*>blocksSteel_;
-	Vector2 steelBlockPos_[kSteelBlockNum] =
-	{
-		{kBlockSize * 4,  948},  {kBlockSize * 5,  948}, {kBlockSize * 6,  948},
-		{kBlockSize * 7,  948},  {kBlockSize * 8,  948}, {kBlockSize * 9,  948},
+	//Vector2 steelBlockPos_[kSteelBlockNum] =
+	//{
+	//	{kBlockSize * 4,  948},  {kBlockSize * 5,  948}, {kBlockSize * 6,  948},
+	//	{kBlockSize * 7,  948},  {kBlockSize * 8,  948}, {kBlockSize * 9,  948},
 
-		{kBlockSize * 21,  948},  {kBlockSize * 22,  948}, {kBlockSize * 23,  948},
-		{kBlockSize * 24,  948},  {kBlockSize * 25,  948}, {kBlockSize * 26,  948},
-	};
+	//	{kBlockSize * 21,  948},  {kBlockSize * 22,  948}, {kBlockSize * 23,  948},
+	//	{kBlockSize * 24,  948},  {kBlockSize * 25,  948}, {kBlockSize * 26,  948},
+	//};
 
 #pragma endregion
 

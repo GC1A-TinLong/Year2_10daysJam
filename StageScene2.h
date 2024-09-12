@@ -35,7 +35,7 @@ public:
 
 private:
 	// Scroll
-	float scrollSpeed = 2.f;
+	float scrollSpeed = 0.f;
 
 	enum class Phase
 	{
@@ -181,8 +181,6 @@ private:
 		{kBlockSize * 12,  644}, {kBlockSize * 13,  644},
 		{kBlockSize * 14,  644}, {kBlockSize * 18,  644},
 		{kBlockSize * 19,  644}, 
-		
-
 		
 		{kBlockSize * 25, 644}, 
 		{kBlockSize * 25, 692}, 
