@@ -254,7 +254,10 @@ void StageScene2::Update()
 		break;
 #pragma region Play
 	case StageScene2::Phase::kPlay:
-
+		if (goal_->GetPos().y <= 880) 
+		{
+			scrollSpeed = 0;
+		}
 		background_->Update(scrollSpeed);
 
 		UserInterfaceDepthMeter();

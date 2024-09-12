@@ -585,7 +585,6 @@ void StageScene::Draw()
 	// Player
 	player_->Draw();
 
-
 	// Destroyable Blocks
 	for (auto* destroyableBlock : destroyableBlocks_) { destroyableBlock->Draw(); }
 

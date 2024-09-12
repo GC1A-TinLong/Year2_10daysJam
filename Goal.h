@@ -25,6 +25,14 @@ private:
 	Vector2 scale = { 1.f,1.f };
 	Size size = { 1200 , 300};
 	uint32_t texture_;
+	uint32_t textTexture_;
+
+	//Animation
+	Vector2 animationPos_ = { 0.f, 0.f };
+	float animationFrames = 9600.f;
+	int animationTimer_ = 0;
+
+
 
 };
 
