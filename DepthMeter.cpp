@@ -84,8 +84,5 @@ void DepthMeter::Draw()
 	Novice::DrawSprite(15, 950, goalhandle_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
 	//Novice::ScreenPrintf(0, 0, "%f", depthCounter_);
 	//Novice::ScreenPrintf(0, 20, "%d", units);
-	Novice::ScreenPrintf(0, 40, "%f", t);
-	Novice::ScreenPrintf(0, 00, "goal = %d", goalPos_);
-	Novice::ScreenPrintf(0, 20, "player= %f", playerStartPos_);
 
 }

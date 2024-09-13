@@ -646,8 +646,6 @@ void StageScene2::Draw()
 
 	depthMeter_->Draw();
 
-	Novice::ScreenPrintf(0, 120, " cleartimer %d", clearTimer);
-
 
 	switch (phase_)
 	{

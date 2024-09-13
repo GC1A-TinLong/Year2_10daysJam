@@ -28,8 +28,8 @@ StageScene3::~StageScene3()
 	for (auto* spike : spikeTrap_) { delete spike; }
 	spikeTrap_.clear();
 
-	/*for (auto* explodingBlock : explodingBlocks_) { delete explodingBlock; }
-	explodingBlocks_.clear();*/
+	for (auto* explodingBlock : explodingBlocks_) { delete explodingBlock; }
+	explodingBlocks_.clear();
 
 	for (auto* conveyer : conveyers_) { delete conveyer; }
 	conveyers_.clear();
