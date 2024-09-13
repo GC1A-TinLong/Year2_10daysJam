@@ -40,6 +40,11 @@ StageScene::~StageScene()
 
 void StageScene::Initialize()
 {
+	isStageCleared = false;
+	// Scroll
+	scrollSpeed = 2.f;
+	clearTimer = 0;
+
 #pragma region Fade
 
 	phase_ = Phase::kFadeIn;
@@ -84,14 +89,10 @@ void StageScene::Initialize()
 		{
 			if (map[i][j] == BrokenBlock)
 			{
-				//if (blockIndex < kBlockNum) // Ensure we don't exceed the number of blocks
-				//{
 				destroyableBlocks_[brokenBlockIndex] = new BlockDestroyable;
 				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchipX, i * (float)spriteSize + adjustPosForMapchipY };
 				destroyableBlocks_[brokenBlockIndex]->Initialize(blockPos_);
 				brokenBlockIndex++; // Move to the next block
-				//}
-
 			}
 		}
 	}
@@ -230,8 +231,6 @@ void StageScene::Initialize()
 				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchipX, i * (float)spriteSize + adjustPosForMapchipY };
 				blocksSteel_[steelIndex]->Initialize(blockPos_, false);
 				steelIndex++; // Move to the next block
-
-
 			}
 		}
 	}
@@ -566,13 +565,13 @@ void StageScene::ChangePhase()
 		{
 			fade_->Start(Status::FadeOut, duration_);
 			phase_ = Phase::kFadeOut;
-
 		}
 		break;
 	case StageScene::Phase::kFadeOut:
 		if (fade_->IsFinished() && isStageCleared) {
 			player_->SetIsDrilling(false);
 			sceneNo = STAGESELECT;
+			Initialize();
 		}
 		else if (fade_->IsFinished() && player_->GetDeathAnimationDone())
 		{

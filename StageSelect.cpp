@@ -15,8 +15,8 @@ StageSelect::~StageSelect()
 	brokenBlocks_.clear();
 	for (auto* leftBlocks : leftWallBlocks_) { delete leftBlocks; }
 	leftWallBlocks_.clear();
-	for (auto* rightBlocks : rightWallBlocks_) { delete rightBlocks; }
-	rightWallBlocks_.clear();
+	/*for (auto* rightBlocks : rightWallBlocks_) { delete rightBlocks; }
+	rightWallBlocks_.clear();*/
 }
 
 void StageSelect::Initialize()
@@ -76,13 +76,13 @@ void StageSelect::Initialize()
 		leftWallPos_.y = 48.f * i;
 		leftWallBlocks_[i]->Initialize(leftWallPos_, true);
 	}
-	rightWallBlocks_.resize(kWallBlockNum);
+	/*rightWallBlocks_.resize(kWallBlockNum);
 	for (int i = 0; i < kWallBlockNum; i++)
 	{
 		rightWallBlocks_[i] = new BlockSteel;
 		rightWallPos_.y = 48.f * i;
 		rightWallBlocks_[i]->Initialize(rightWallPos_, true);
-	}
+	}*/
 }
 
 void StageSelect::Update()
@@ -93,7 +93,7 @@ void StageSelect::Update()
 	Animation();
 	// WallBlocks
 	for (auto* wallblock : leftWallBlocks_) { wallblock->Update(scrollSpeed); }
-	for (auto* wallblock : rightWallBlocks_) { wallblock->Update(scrollSpeed); }
+	//for (auto* wallblock : rightWallBlocks_) { wallblock->Update(scrollSpeed); }
 	// Normal Blocks
 	for (auto* blocks : blocks_) {
 		blocks->Update(scrollSpeed);
@@ -139,7 +139,7 @@ void StageSelect::Draw()
 	background_->Draw();
 	// Wall Blocks
 	for (auto* wallblock : leftWallBlocks_) { wallblock->Draw(); }
-	for (auto* wallblock : rightWallBlocks_) { wallblock->Draw(); }
+	//for (auto* wallblock : rightWallBlocks_) { wallblock->Draw(); }
 #pragma region Door and Text
 	/// Tutorial Text ///
 	Novice::DrawSprite(int(tutorialDoorPos.x) - 20, int(tutorialDoorPos.y) - 40, tutorialText, 1.f, 1.f, 0, WHITE);
@@ -153,6 +153,12 @@ void StageSelect::Draw()
 	/// Stage 3 Text ///
 	Novice::DrawSprite(int(stage3DoorPos.x) - 15, int(stage3DoorPos.y) - 40, stage3text, 1.f, 1.f, 0, WHITE);
 	Novice::DrawSpriteRect(int(stage3DoorPos.x), int(stage3DoorPos.y), animationPos_.x, 0, 96, 96, stageDoor, 0.25f, 1.f, 0, WHITE);
+	/// Stage 4 Text ///
+	Novice::DrawSprite(int(stage4DoorPos.x) - 15, int(stage4DoorPos.y) - 40, stage4text, 1.f, 1.f, 0, WHITE);
+	Novice::DrawSpriteRect(int(stage4DoorPos.x), int(stage4DoorPos.y), animationPos_.x, 0, 96, 96, stageDoor, 0.25f, 1.f, 0, WHITE);
+	/// Stage 5 Text ///
+	Novice::DrawSprite(int(stage5DoorPos.x) - 15, int(stage5DoorPos.y) - 40, stage5text, 1.f, 1.f, 0, WHITE);
+	Novice::DrawSpriteRect(int(stage5DoorPos.x), int(stage5DoorPos.y), animationPos_.x, 0, 96, 96, stageDoor, 0.25f, 1.f, 0, WHITE);
 #pragma endregion
 	// Player
 	player_->Draw();
@@ -161,7 +167,7 @@ void StageSelect::Draw()
 	for (auto* block : steelBlocks_) { block->Draw(); }
 	for (auto* block : brokenBlocks_) { block->Draw(); }
 	// letter W text
-	if (isCollideTutorialDoor || isCollideStage1Door || isCollideStage2Door || isCollideStage3Door) {
+	if (isCollideTutorialDoor || isCollideStage1Door || isCollideStage2Door || isCollideStage3Door || isCollideStage4Door || isCollideStage5Door) {
 		Novice::DrawSprite(int(player_->GetPos().x) - 15, int(player_->GetPos().y) - 90, letterW, 1.f, 1.f, 0, color_W);
 	}
 	// UI
@@ -205,6 +211,12 @@ void StageSelect::ChangePhase()
 			else if (isCollideStage3Door) {
 				sceneNo = STAGE3;
 			}
+			else if (isCollideStage4Door) {
+				sceneNo = STAGE4;
+			}
+			else if (isCollideStage5Door) {
+				sceneNo = LAST_STAGE;
+			}
 		}
 		break;
 	}
@@ -213,7 +225,7 @@ void StageSelect::ChangePhase()
 void StageSelect::GoToNextScene()
 {
 	if (Input::GetInstance()->TriggerKey(DIK_W)) {
-		if (isCollideTutorialDoor || isCollideStage1Door || isCollideStage2Door || isCollideStage3Door) {
+		if (isCollideTutorialDoor || isCollideStage1Door || isCollideStage2Door || isCollideStage3Door || isCollideStage4Door || isCollideStage5Door) {
 			fade_->Start(Status::FadeOut, duration_);
 			phase_ = Phase::kFadeOut;
 		}
@@ -273,8 +285,20 @@ void StageSelect::CheckAllCollision()
 		isCollideStage3Door = true;
 	}
 	else { isCollideStage3Door = false; }
+	// Stage 4 Door
+	doorObj = { stage4DoorPos,doorSize };
+	if (isCollideObject(playerObj, doorObj)) {
+		isCollideStage4Door = true;
+	}
+	else { isCollideStage4Door = false; }
+	// Stage 5 Door
+	doorObj = { stage5DoorPos,doorSize };
+	if (isCollideObject(playerObj, doorObj)) {
+		isCollideStage5Door = true;
+	}
+	else { isCollideStage5Door = false; }
 
-	if (isCollideTutorialDoor || isCollideStage1Door || isCollideStage2Door || isCollideStage3Door) {
+	if (isCollideTutorialDoor || isCollideStage1Door || isCollideStage2Door || isCollideStage3Door || isCollideStage4Door || isCollideStage5Door) {
 		if (alpha_W < 240) { alphaSpeed = kMaxAlphaSpeed; }
 		else if (alpha_W >= 240) { alphaSpeed = 1; }
 		alpha_W += alphaSpeed;

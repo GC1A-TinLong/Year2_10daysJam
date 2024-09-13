@@ -10,6 +10,7 @@ GameManager::GameManager()
 	sceneArr_[STAGE2] = std::make_unique<StageScene2>();
 	sceneArr_[STAGE3] = std::make_unique<StageScene3>();
 	sceneArr_[STAGE4] = std::make_unique<StageScene4>();
+	sceneArr_[LAST_STAGE] = std::make_unique<LastStage>();
 	sceneArr_[CLEAR] = std::make_unique<ClearScene>();
 
 	currentSceneNo_ = TITLE;

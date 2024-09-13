@@ -163,7 +163,6 @@ private:
 	static inline const uint8_t kSpikeTrapNum = 6;
 	std::vector<SpikeTrap*>spikeTrap_;
 	
-
 	//Conveyor
 	static inline const uint8_t kConveyorNum = 1;
 	std::vector<Conveyor*> conveyers_;
@@ -176,7 +175,6 @@ private:
 	{
 		1,
 	};
-
 
 	//Depth Meter
 	DepthMeter* depthMeter_ = nullptr;

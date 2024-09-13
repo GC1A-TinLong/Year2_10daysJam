@@ -40,6 +40,10 @@ StageScene2::~StageScene2()
 
 void StageScene2::Initialize()
 {
+	isStageCleared = false;
+	// Scroll
+	scrollSpeed = 2.f;
+	clearTimer = 0;
 #pragma region Fade
 
 	phase_ = Phase::kFadeIn;
@@ -646,7 +650,6 @@ void StageScene2::Draw()
 
 	depthMeter_->Draw();
 
-
 	switch (phase_)
 	{
 	case StageScene2::Phase::kFadeIn:
@@ -661,7 +664,6 @@ void StageScene2::Draw()
 	case StageScene2::Phase::kDeath:
 		break;
 	case StageScene2::Phase::kStageClear:
-		Novice::ScreenPrintf(50, 0, "CLEAR");
 		break;
 	case StageScene2::Phase::kFadeOut:
 
@@ -682,18 +684,6 @@ void StageScene2::DeleteBlocks()
 		}
 		else { i++; }
 	}
-
-	//for (int i = 0; i < explodingBlocks_.size();)
-	//{
-	//	if (explodingBlocks_[i]->IsDestroyed() && player_->GetHasExploded()) //if block is destroyed
-	//	{
-	//		delete explodingBlocks_[i]; //delete block
-	//		explodingBlocks_.erase(explodingBlocks_.begin() + i); //erase it from the vector
-	//		break;
-	//	}
-	//	else { i++; }
-	//}
-
 	for (int i = 0; i < destroyableBlocks_.size();)
 	{
 		if (destroyableBlocks_[i]->IsDestroyed() || destroyableBlocks_[i]->GetIsAboveScreen()) //if block is destroyed

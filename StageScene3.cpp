@@ -44,9 +44,11 @@ StageScene3::~StageScene3()
 
 void StageScene3::Initialize()
 {
-	float scrollSpeed = 5.f;
-	int clearTimer = 0;
 	isStageCleared = false;
+	// Scroll
+	scrollSpeed = 5.f;
+	clearTimer = 0;
+
 #pragma region Fade
 
 	phase_ = Phase::kFadeIn;
@@ -91,7 +93,6 @@ void StageScene3::Initialize()
 		{
 			if (map[i][j] == BrokenBlock)
 			{
-
 				destroyableBlocks_[brokenBlockIndex] = new BlockDestroyable;
 				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchip, i * (float)spriteSize + adjustPosForMapchipY };
 				destroyableBlocks_[brokenBlockIndex]->Initialize(blockPos_);
@@ -554,7 +555,6 @@ case StageScene3::Phase::kCountdown:
 		{
 			explosion_->Update();
 		}
-
 
 
 		DeleteBlocks();

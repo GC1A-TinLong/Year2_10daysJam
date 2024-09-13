@@ -11,6 +11,7 @@
 #include "StageScene2.h"
 #include "StageScene3.h"
 #include "StageScene4.h"
+#include "LastStage.h"
 #include "ClearScene.h"
 
 
@@ -19,7 +20,7 @@ class GameManager
 {
 private:
 	// for maintaining the scene
-	std::unique_ptr<IScene>sceneArr_[8];
+	std::unique_ptr<IScene>sceneArr_[9];
 
 	int currentSceneNo_;
 	int prevSceneNo_;

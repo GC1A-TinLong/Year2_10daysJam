@@ -463,6 +463,7 @@ void StageScene4::Update()
 		{
 			player_->CollisiontWithConveyor(conveyers_);
 		}
+
 		if (!player_->IsOnGround())
 		{
 			player_->CollisionWithGoal(goal_);
@@ -471,6 +472,7 @@ void StageScene4::Update()
 		{
 			clearTimer++;
 		}
+
 		if (!player_->IsOnGround())
 		{
 			player_->CollisionWithDestroyableBlock(destroyableBlocks_);

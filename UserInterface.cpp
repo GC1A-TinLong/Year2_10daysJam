@@ -25,6 +25,10 @@ void UserInterface::Initialize(int currentStage)
 	{
 		stageNumberHandle = Novice::LoadTexture("./Resources/StageText/3.png");
 	}
+	else if (currentStage == 5)
+	{
+		stageNumberHandle = Novice::LoadTexture("./Resources/StageText/thankyou.png");
+	}
 
 	texture_ = Novice::LoadTexture("./Resources/StageText/count.png");
 }

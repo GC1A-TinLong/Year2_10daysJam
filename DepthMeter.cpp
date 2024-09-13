@@ -82,7 +82,5 @@ void DepthMeter::Draw()
 	Novice::DrawSprite(120, (int)posY, mHandle_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
 	Novice::DrawSprite(15, 110, starthandle_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
 	Novice::DrawSprite(15, 950, goalhandle_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
-	//Novice::ScreenPrintf(0, 0, "%f", depthCounter_);
-	//Novice::ScreenPrintf(0, 20, "%d", units);
 
 }

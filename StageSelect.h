@@ -88,6 +88,14 @@ private:
 	unsigned int stage3text = Novice::LoadTexture("./Resources/StageSelect/stage3.png");
 	Vector2 stage3DoorPos = { 288.f + 48 * 7,336.f };
 	bool isCollideStage3Door = false;
+	// Stage 4
+	unsigned int stage4text = Novice::LoadTexture("./Resources/StageSelect/stage4.png");
+	Vector2 stage4DoorPos = { 288.f + 48 * 14,336.f };
+	bool isCollideStage4Door = false;
+	// Stage 5
+	unsigned int stage5text = Novice::LoadTexture("./Resources/StageSelect/last.png");
+	Vector2 stage5DoorPos = { 288.f + 48 * 14,336.f * 2 + 48.f };
+	bool isCollideStage5Door = false;
 
 
 	enum class BlockType
@@ -97,30 +105,30 @@ private:
 		SteelBlock,
 		BrokenBlock,
 	};
-	static inline const uint8_t mapCountX = 25;
+	static inline const uint8_t mapCountX = 21;
 	static inline const uint8_t mapCountY = 20;
 	int map[mapCountY][mapCountX] =
 	{
-		2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-		0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
-		1,1,2,2,1,1,1,1,1,2,2,1,1,1,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
-		3,3,3,3,3,3,1,3,3,3,3,3,3,1,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
-		1,1,2,2,1,1,1,1,1,2,2,1,1,1,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
-		2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+		2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+		1,1,2,2,1,1,1,1,1,2,2,1,1,1,1,1,2,2,1,1,1,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+		3,3,3,3,3,3,1,3,3,3,3,3,3,1,3,3,3,3,3,3,1,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+		1,1,2,2,1,1,1,1,1,2,2,1,1,1,1,1,2,2,1,1,1,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,
+		2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 	};
 	//Mapchip
 	static inline const uint8_t adjustPosForMapchipX = 192;
@@ -129,23 +137,23 @@ private:
 	// Block Size
 	static inline const float kBlockSize = 48.f;
 	// Normal Block
-	static inline const uint8_t kBlockNum = 46;
+	static inline const uint8_t kBlockNum = 72;
 	static inline const uint8_t kRowBlockNum = 25;
 	std::vector<BlockNotDestroyable*>blocks_;
 	uint8_t blockIndex = 0;
 	// Steel Block
-	static inline const uint8_t kSteelBlockNum = 58;
+	static inline const uint8_t kSteelBlockNum = 54;
 	std::vector<BlockSteel*>steelBlocks_;
 	uint8_t steelIndex = 0;
 	// BrokenBlock
-	static inline const uint8_t kBrokenBlockNum = 12;
+	static inline const uint8_t kBrokenBlockNum = 18;
 	std::vector<BlockDestroyable*>brokenBlocks_;
 	uint8_t brokenIndex = 0;
 	// Wall
 	static inline const uint8_t kWallBlockNum = 22;
 	std::vector<BlockSteel*>leftWallBlocks_;
 	Vector2 leftWallPos_ = { 144.f,0.f };
-	std::vector<BlockSteel*>rightWallBlocks_;
-	Vector2 rightWallPos_ = { 1392.f,0.f };
+	/*std::vector<BlockSteel*>rightWallBlocks_;
+	Vector2 rightWallPos_ = { 1392.f,0.f };*/
 };
 
