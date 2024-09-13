@@ -276,6 +276,14 @@ void StageScene::Update()
 		{
 			player_->CollisionWithGoal(goal_);
 		}
+		if (goal_->GetStopMoving())
+		{
+			scrollSpeed = 0.f;
+			if (clearTimer < 105) 
+			{
+				clearTimer++;
+			}
+		}
 		if (!player_->IsOnGround())
 		{
 			player_->CollisionWithDestroyableBlock(destroyableBlocks_);
@@ -511,7 +519,7 @@ void StageScene::ChangePhase()
 		break;
 
 	case StageScene::Phase::kPlay:
-		if (Input::GetInstance()->TriggerKey(DIK_C) || isStageCleared)
+		if (Input::GetInstance()->TriggerKey(DIK_C) || isStageCleared && scrollSpeed == 0.f && clearTimer >= 100)
 		{
 			fade_->Start(Status::FadeOut, duration_);
 			phase_ = Phase::kFadeOut;

@@ -52,53 +52,47 @@ void BasicTutorialScene::Initialize()
 	blocks_.resize(kBlockNum);
 	blockPos_.resize(kBlockNum);
 	int j = 0; // blocks pos & initialize
+	int rowOfBlock = 2;
+	int platformBlockNum = 5;
 	for (int i = 0; i < kBlockNum; i++)
 	{
 		blocks_[i] = new BlockNotDestroyable;
-		if (i < kRowBlockNum) {
-			blockPos_[i] = { (kBlockSize * 4) + (kBlockSize * i),500.f };
-		}
-		else if (i < kRowBlockNum * 2) {
+		blockPos_[i] = { (kBlockSize * 4) + (kBlockSize * i),500.f };
+
+		if (i > kRowBlockNum - 1) {
 			if (i == kRowBlockNum) { j = 0; }
-			else { j++; }
 			blockPos_[i] = { (kBlockSize * 4) + (kBlockSize * j),548.f };
 		}
-		else if (i < kRowBlockNum * 3) {
-			if (i == kRowBlockNum) { j = 0; }
-			else { j++; }
-			blockPos_[i] = { (kBlockSize * 4) + (kBlockSize * j),644.f };
-		}
-		/// ↑ 2 row of blocks ↑ ///
-		else if (i < kRowBlockNum * 3 + 5) {
-			if (i == kRowBlockNum * 3) { j = 0; }
-			else { j++; }
+		// row of block // 
+		if (i > kRowBlockNum * rowOfBlock - 1) {
+			if (i == kRowBlockNum * rowOfBlock) { j = 0; }
 			blockPos_[i] = { (kBlockSize * 14) + (kBlockSize * j),800.f };
 		}
-		else if (i < kRowBlockNum * 3 + 5 * 2) {
-			if (i == kRowBlockNum * 3 + 5) { j = 0; }
-			else { j++; }
+		if (i > kRowBlockNum * rowOfBlock + platformBlockNum - 1) {
+			if (i == kRowBlockNum * rowOfBlock + platformBlockNum) { j = 0; }
 			blockPos_[i] = { (kBlockSize * 21) + (kBlockSize * j),900.f };
 		}
-		else if (i < kRowBlockNum * 3 + 5 * 3) {
-			if (i == kRowBlockNum * 3 + 5 * 2) { j = 0; }
-			else { j++; }
+		if (i > kRowBlockNum * rowOfBlock + platformBlockNum * 2 - 1) {
+			if (i == kRowBlockNum * rowOfBlock + platformBlockNum * 2) { j = 0; }
 			blockPos_[i] = { (kBlockSize * 7) + (kBlockSize * j),1100.f };
 		}
-		else if (i < kRowBlockNum * 3 + 5 * 4) {
-			if (i == kRowBlockNum * 3 + 5 * 3) { j = 0; }
-			else { j++; }
+		if (i > kRowBlockNum * rowOfBlock + platformBlockNum * 3 - 1) {
+			if (i == kRowBlockNum * rowOfBlock + platformBlockNum * 3) { j = 0; }
 			blockPos_[i] = { (kBlockSize * 16) + (kBlockSize * j),1200.f };
 		}
-		else if (i < kRowBlockNum * 2 + 5 * 5) {
-			if (i == kRowBlockNum * 2 + 5 * 4) { j = 0; }
-			else { j++; }
+		if (i > kRowBlockNum * rowOfBlock + platformBlockNum * 4 - 1) {
+			if (i == kRowBlockNum * rowOfBlock + platformBlockNum * 4) { j = 0; }
 			blockPos_[i] = { (kBlockSize * 8) + (kBlockSize * j),1500.f };
 		}
-		else if (i < kRowBlockNum * 2 + 5 * 6) {
-			if (i == kRowBlockNum * 2 + 5 * 5) { j = 0; }
-			else { j++; }
+		if (i > kRowBlockNum * rowOfBlock + platformBlockNum * platformBlockNum - 1) {
+			if (i == kRowBlockNum * rowOfBlock + platformBlockNum * 5) { j = 0; }
 			blockPos_[i] = { (kBlockSize * 16) + (kBlockSize * j),1700.f };
 		}
+		if (i > kRowBlockNum * rowOfBlock + platformBlockNum * 6 - 1) {
+			if (i == kRowBlockNum * rowOfBlock + platformBlockNum * 6) { j = 0; }
+			blockPos_[i] = { (kBlockSize * 7) + (kBlockSize * j),2100.f };
+		}
+		j++;
 
 		blocks_[i]->Initialize(blockPos_[i], false, false);
 	}
@@ -155,7 +149,7 @@ void BasicTutorialScene::Update()
 	for (auto* spike : spike_) { spike->Update(); }
 
 	SetPlayerStatus();
-	if(phase_!=Phase::kPlay){ UI->Update(isShowingDrillUI, true); }	// to hide battery and drill UI
+	if (phase_ != Phase::kPlay) { UI->Update(isShowingDrillUI, true); }	// to hide battery and drill UI
 	switch (phase_)
 	{
 	case BasicTutorialScene::Phase::kFadeIn:
@@ -168,14 +162,14 @@ void BasicTutorialScene::Update()
 
 	case Phase::kPlay:
 		// Player
-		player_->Update(scrollSpeed,false);
+		player_->Update(scrollSpeed, false);
 		player_->CollisionWithBlock(blocks_);
-		if (!player_->IsOnGround()) 
+		if (!player_->IsOnGround())
 		{
 			player_->CollisionWithGoal(goal_);
 		}
 
-		if (player_->GetHasTouchedGoal()) 
+		if (goal_->GetStopMoving())
 		{
 			scrollSpeed = 0.f;
 		}

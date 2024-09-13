@@ -18,6 +18,7 @@ public:
 	Vector2 GetPos() const { return pos_; };
 	Size GetSize() const { return size; };
 	const Object GetObject_() const;
+	bool GetStopMoving()const { return stopMoving; };
 
 private:
 
@@ -31,6 +32,7 @@ private:
 	Vector2 animationPos_ = { 0.f, 0.f };
 	float animationFrames = 9600.f;
 	int animationTimer_ = 0;
+	bool stopMoving = false;
 
 
 

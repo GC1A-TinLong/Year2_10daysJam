@@ -277,6 +277,10 @@ void StageScene2::Update()
 		{
 			player_->CollisionWithGoal(goal_);
 		}
+		if (goal_->GetStopMoving())
+		{
+			scrollSpeed = 0.f;
+		}
 		if (!player_->IsOnGround())
 		{
 			player_->CollisionWithDestroyableBlock(destroyableBlocks_);

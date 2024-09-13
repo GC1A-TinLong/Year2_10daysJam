@@ -37,6 +37,11 @@ void Goal::Update(float scrollSpeed)
 			animationTimer_ = 0;
 		}
 	}
+
+	if (pos_.y < 780) 
+	{
+		stopMoving = true;
+	}
 }
 
 void Goal::Draw()
