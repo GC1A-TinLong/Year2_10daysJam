@@ -33,6 +33,7 @@ int GameManager::Run()
 {
 	while (Novice::ProcessMessage() == 0) {
 		Novice::BeginFrame();
+		Novice::SetWindowMode(kFullscreen);
 
 		// scene check
 		prevSceneNo_ = currentSceneNo_;
@@ -74,12 +75,6 @@ int GameManager::Run()
 
 		if (!pause_->GetIsPaused() && pauseTimer > 0) { pauseTimer++; }
 		if (pauseTimer > 5) { isPaused = false; }
-
-		if (Input::GetInstance()->TriggerKey(DIK_F)) {
-			isFullScreen ^= true;
-		}
-		if (isFullScreen) { Novice::SetWindowMode(kFullscreen); }
-		else { Novice::SetWindowMode(kWindowed); }
 
 		Novice::EndFrame();
 

@@ -591,7 +591,7 @@ void StageScene3::ChangePhase()
 		break;
 
 	case StageScene3::Phase::kPlay:
-		if (Input::GetInstance()->TriggerKey(DIK_C) || isStageCleared && scrollSpeed == 0.f)
+		if (isStageCleared && scrollSpeed == 0.f)
 		{
 			phase_ = Phase::kStageClear;
 		}
