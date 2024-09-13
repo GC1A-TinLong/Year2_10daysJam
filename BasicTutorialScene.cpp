@@ -29,7 +29,7 @@ void BasicTutorialScene::Initialize()
 
 	// Text
 	UI = new UserInterface;
-	UI->Initialize(1);
+	UI->Initialize(0);
 	isPage[0] = true;
 	A = 0;
 	color = (R << 24) | (G << 16) | (B << 8) | A;	// "|" == "or" (for bit calculation)

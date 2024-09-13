@@ -11,7 +11,7 @@ void UserInterface::Initialize(int currentStage)
 		stageNumberHandle = Novice::LoadTexture("./Resources/StageText/SELECT.png");
 	}
 	else if (currentStage == 0) {
-		stageNumberHandle = Novice::LoadTexture("./Resources/StageText/SELECT.png");
+		stageNumberHandle = Novice::LoadTexture("./Resources/StageText/TUTORIAL.png");
 	}
 	else if (currentStage == 1)
 	{
@@ -84,7 +84,7 @@ void UserInterface::Draw() const
 
 	//UI TEXT
 	Novice::DrawSprite(200, 20, stageTextHandle_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
-	Novice::DrawSprite(420, 15, stageNumberHandle, 1.0f, 1.0f, 0.0f, WHITE); //1
+	Novice::DrawSprite(420, 20, stageNumberHandle, 1.0f, 1.0f, 0.0f, WHITE); //1
 	Novice::DrawSprite(1520, 370, controlsHandle, 1.0f, 1.0f, 0.0f, WHITE); //CONROLS
 	Novice::DrawSprite(1520, 470, letterDHandle, 1.0f, 1.0f, 0.0f, WHITE); //D
 	Novice::DrawSprite(1520, 570, letterAHandle, 1.0f, 1.0f, 0.0f, WHITE); //A
