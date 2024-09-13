@@ -7,7 +7,8 @@ void Pause::Initialize()
 	pause1Handle_ = Novice::LoadTexture("./Resources/Pause/pauseText1New.png");
 	pause2Handle_ = Novice::LoadTexture("./Resources/Pause/pauseText2New.png");
 	pauseTextOnlyHandle_ = Novice::LoadTexture("./Resources/Pause/pauseTextOnly1.png");
-
+	movementAudioHandle = Novice::LoadAudio("./Resources/Audio/select.mp3");
+	selectAudioHandle = Novice::LoadAudio("./Resources/Audio/pauseMove.mp3");
 	
 }
 
@@ -15,6 +16,7 @@ void Pause::Update()
 {
 	if (isPaused_) 
 	{
+		Audio();
 		if (!isOnMeny2) 
 		{
 			pauseStatus_ = PauseStatus::PauseMenu1;
@@ -157,6 +159,27 @@ void Pause::PauseMenu2Menuing()
 		closeGame = true;
 	}
 
+}
+
+void Pause::Audio()
+{
+	if (Input::GetInstance()->TriggerKey(DIK_DOWN) || Input::GetInstance()->TriggerKey(DIK_S) || Input::GetInstance()->TriggerKey(DIK_UP) || Input::GetInstance()->TriggerKey(DIK_W))
+	{
+		if (Novice::IsPlayingAudio(movementPlayHandle) == 0 || movementPlayHandle == -1) {
+			movementPlayHandle = Novice::PlayAudio(movementAudioHandle, 0, kMovementAudioVolume);
+		}
+		movementPlayHandle = -1;
+	}
+
+	if (Input::GetInstance()->TriggerKey(DIK_SPACE) && pressTimer >= 5)
+	{
+
+		if (Novice::IsPlayingAudio(selectPlayHandle) == 0 || selectPlayHandle == -1) {
+			selectPlayHandle = Novice::PlayAudio(selectAudioHandle, 0, kSelectAudioVolume);
+		}
+	selectPlayHandle = -1;
+	}
+	
 }
 
 void Pause::Draw()

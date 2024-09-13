@@ -22,6 +22,8 @@ public:
 	void PauseMenu1Menuing();
 	void PauseMenu2Menuing();
 
+	void Audio();
+
 	void Draw();
 
 	bool GetIsPaused() { return isPaused_; };
@@ -48,7 +50,13 @@ private:
 	bool closeGame = false;
 	PauseStatus pauseStatus_ = PauseStatus::None;
 
+	//Audio
+	int movementAudioHandle;
+	int movementPlayHandle = -1;
+	static inline const float kMovementAudioVolume = 0.05f;
 
-
+	int selectAudioHandle;
+	int selectPlayHandle = -1;
+	static inline const float kSelectAudioVolume = 0.05f;
 };
 

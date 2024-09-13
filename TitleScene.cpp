@@ -8,6 +8,8 @@ TitleScene::~TitleScene()
 void TitleScene::Initialize()
 {
 	titleHandle_ = Novice::LoadTexture("./Resources/Title/Title1.png");
+	movementAudioHandle = Novice::LoadAudio("./Resources/Audio/select.mp3");
+	selectAudioHandle = Novice::LoadAudio("./Resources/Audio/pauseMove.mp3");
 	phase_ = Phase::kFadeIn;
 	fade_ = new Fade();
 	fade_->Initialize();
@@ -16,7 +18,7 @@ void TitleScene::Initialize()
 
 void TitleScene::Update()
 {
-
+	Audio();
 	fade_->Update();
 
 	Animation();
@@ -107,6 +109,27 @@ void TitleScene::Menuing()
 	{
 		hasPressedDown = false;
 	}*/
+}
+
+void TitleScene::Audio()
+{
+	if (Input::GetInstance()->TriggerKey(DIK_DOWN) || Input::GetInstance()->TriggerKey(DIK_S) || Input::GetInstance()->TriggerKey(DIK_UP) || Input::GetInstance()->TriggerKey(DIK_W))
+	{
+		if (Novice::IsPlayingAudio(movementPlayHandle) == 0 || movementPlayHandle == -1) {
+			movementPlayHandle = Novice::PlayAudio(movementAudioHandle, 0, kMovementAudioVolume);
+		}
+		movementPlayHandle = -1;
+	}
+
+	if (Input::GetInstance()->TriggerKey(DIK_SPACE) && pressTimer >= 5)
+	{
+
+		if (Novice::IsPlayingAudio(selectPlayHandle) == 0 || selectPlayHandle == -1) {
+			selectPlayHandle = Novice::PlayAudio(selectAudioHandle, 0, kSelectAudioVolume);
+		}
+		selectPlayHandle = -1;
+	}
+
 }
 
 

@@ -533,6 +533,7 @@ void StageScene::ChangePhase()
 		break;
 	case StageScene::Phase::kFadeOut:
 		if (fade_->IsFinished() && isStageCleared) {
+			player_->SetIsDrilling(false);
 			sceneNo = STAGE2;
 		}
 		else if (fade_->IsFinished() && player_->GetDeathAnimationDone())

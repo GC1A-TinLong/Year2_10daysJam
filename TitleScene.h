@@ -13,6 +13,7 @@ public:
 	void Update() override;
 	void Animation();
 	void Menuing();
+	void Audio();
 	void Draw() override;
 
 	//Getter
@@ -44,5 +45,12 @@ private:
 	int pressTimer = 0;
 	bool hasPressedExit = false;
 
+	//Audio
+	int movementAudioHandle;
+	int movementPlayHandle = -1;
+	static inline const float kMovementAudioVolume = 0.05f;
 
+	int selectAudioHandle;
+	int selectPlayHandle = -1;
+	static inline const float kSelectAudioVolume = 0.05f;
 };

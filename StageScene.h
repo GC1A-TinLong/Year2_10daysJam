@@ -18,7 +18,7 @@
 #include "Goal.h"
 #include "BlockSteel.h"
 
-class StageScene :public IScene
+class StageScene : public IScene
 {
 public:
 	~StageScene();
