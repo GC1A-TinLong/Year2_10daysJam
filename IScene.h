@@ -8,7 +8,6 @@ enum Scene {
 	STAGE2,
 	STAGE3,
 	STAGE4,
-	LAST_STAGE,
 	CLEAR 
 };
 

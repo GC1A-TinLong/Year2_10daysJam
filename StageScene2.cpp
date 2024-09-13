@@ -10,15 +10,15 @@ StageScene2::~StageScene2()
 	for (auto* spike : spike_) { delete spike; }
 	spike_.clear();
 
-	for (auto* blocks : destroyableBlocks_) { delete blocks; }
+	for (BlockDestroyable* blocks : destroyableBlocks_) { delete blocks; }
 	destroyableBlocks_.clear();
 
-	for (auto* blocks : blocks_) { delete blocks; }
+	for (BlockNotDestroyable* blocks : blocks_) { delete blocks; }
 	blocks_.clear();
 
-	for (auto* leftBlocks : leftWallBlocks_) { delete leftBlocks; }
+	for (BlockNotDestroyable* leftBlocks : leftWallBlocks_) { delete leftBlocks; }
 	leftWallBlocks_.clear();
-	for (auto* rightBlocks : rightWallBlocks_) { delete rightBlocks; }
+	for (BlockNotDestroyable* rightBlocks : rightWallBlocks_) { delete rightBlocks; }
 	rightWallBlocks_.clear();
 
 	for (auto* spike : spikeTrap_) { delete spike; }
@@ -126,9 +126,9 @@ void StageScene2::Initialize()
 	leftWallBlocks_.resize(kWallBlockNum);
 	for (int i = 0; i < kWallBlockNum; i++)
 	{
-		leftWallBlocks_[i] = new BlockSteel;
+		leftWallBlocks_[i] = new BlockNotDestroyable;
 		leftWallPos_.y = 48.f * i;
-		leftWallBlocks_[i]->Initialize(leftWallPos_, true);
+		leftWallBlocks_[i]->Initialize(leftWallPos_, false, true);
 	}
 
 #pragma endregion
@@ -138,9 +138,9 @@ void StageScene2::Initialize()
 	rightWallBlocks_.resize(kWallBlockNum);
 	for (int i = 0; i < kWallBlockNum; i++)
 	{
-		rightWallBlocks_[i] = new BlockSteel;
+		rightWallBlocks_[i] = new BlockNotDestroyable;
 		rightWallPos_.y = 48.f * i;
-		rightWallBlocks_[i]->Initialize(rightWallPos_, true);
+		rightWallBlocks_[i]->Initialize(rightWallPos_, false, true);
 	}
 
 #pragma endregion
@@ -583,7 +583,7 @@ void StageScene2::ChangePhase()
 		phase_ = Phase::kFadeOut;
 		break;
 	case StageScene2::Phase::kStageClear:
-		if (clearTimer >= 30)
+		if (clearTimer >= 150)
 		{
 			fade_->Start(Status::FadeOut, duration_);
 			phase_ = Phase::kFadeOut;
@@ -592,7 +592,7 @@ void StageScene2::ChangePhase()
 		break;
 	case StageScene2::Phase::kFadeOut:
 		if (fade_->IsFinished() && isStageCleared) {
-			sceneNo = STAGESELECT;
+			sceneNo = STAGE3;
 		}
 		else if (fade_->IsFinished() && player_->GetDeathAnimationDone())
 		{

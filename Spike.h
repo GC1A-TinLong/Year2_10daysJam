@@ -10,7 +10,7 @@ private:
 
 	static inline const uint8_t kSpeed = 5;
 	static inline const uint16_t width = 48;
-	static inline const uint16_t height = 24;
+	static inline const uint16_t height = 48;
 	Size size = { width,height };
 
 	Vector2 pos_;

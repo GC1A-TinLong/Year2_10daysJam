@@ -10,15 +10,15 @@ StageScene::~StageScene()
 	for (auto* spike : spike_) { delete spike; }
 	spike_.clear();
 
-	for (auto* blocks : destroyableBlocks_) { delete blocks; }
+	for (BlockDestroyable* blocks : destroyableBlocks_) { delete blocks; }
 	destroyableBlocks_.clear();
 
-	for (auto* blocks : blocks_) { delete blocks; }
+	for (BlockNotDestroyable* blocks : blocks_) { delete blocks; }
 	blocks_.clear();
 
-	for (auto* leftBlocks : leftWallBlocks_) { delete leftBlocks; }
+	for (BlockNotDestroyable* leftBlocks : leftWallBlocks_) { delete leftBlocks; }
 	leftWallBlocks_.clear();
-	for (auto* rightBlocks : rightWallBlocks_) { delete rightBlocks; }
+	for (BlockNotDestroyable* rightBlocks : rightWallBlocks_) { delete rightBlocks; }
 	rightWallBlocks_.clear();
 
 	for (auto* spike : spikeTrap_) { delete spike; }
@@ -125,9 +125,9 @@ void StageScene::Initialize()
 	leftWallBlocks_.resize(kWallBlockNum);
 	for (int i = 0; i < kWallBlockNum; i++)
 	{
-		leftWallBlocks_[i] = new BlockSteel;
+		leftWallBlocks_[i] = new BlockNotDestroyable;
 		leftWallPos_.y = 48.f * i;
-		leftWallBlocks_[i]->Initialize(leftWallPos_, true);
+		leftWallBlocks_[i]->Initialize(leftWallPos_, false, true);
 	}
 
 #pragma endregion
@@ -137,9 +137,9 @@ void StageScene::Initialize()
 	rightWallBlocks_.resize(kWallBlockNum);
 	for (int i = 0; i < kWallBlockNum; i++)
 	{
-		rightWallBlocks_[i] = new BlockSteel;
+		rightWallBlocks_[i] = new BlockNotDestroyable;
 		rightWallPos_.y = 48.f * i;
-		rightWallBlocks_[i]->Initialize(rightWallPos_, true);
+		rightWallBlocks_[i]->Initialize(rightWallPos_, false, true);
 	}
 
 #pragma endregion
@@ -246,13 +246,13 @@ void StageScene::Update()
 
 	switch (phase_)
 	{
-	case Phase::kFadeIn:
+	case StageScene::Phase::kFadeIn:
 		fade_->Update();
 		SetPlayerStatus();
 		UI->Update(true, false);
 		break;
 #pragma region Play
-	case Phase::kPlay:
+	case StageScene::Phase::kPlay:
 
 		background_->Update(scrollSpeed);
 
@@ -303,6 +303,13 @@ void StageScene::Update()
 		for (int i = 0; i < destroyableBlocks_.size();)
 		{
 			destroyableBlocks_[i]->Update(scrollSpeed);
+
+			if (destroyableBlocks_[i]->GetIsAboveScreen())
+			{
+				delete destroyableBlocks_[i];
+				destroyableBlocks_.erase(destroyableBlocks_.begin() + i);
+			}
+			else { ++i; }
 		}
 
 		//Blocks
@@ -316,6 +323,29 @@ void StageScene::Update()
 		for (auto* spike : spikeTrap_) {
 			spike->Update(scrollSpeed);
 		}
+
+		//Exploding Blocks
+		//for (int i = 0; i < explodingBlocks_.size();)
+		//{
+		//	explodingBlocks_[i]->Update(scrollSpeed);
+
+		//	if (explodingBlocks_[i]->IsDestroyed()) 
+		//	{
+		//		explosion_->SetIsExploding(true); 
+		//		explosion_->Initialize({ explodingBlocks_[i]->GetPos().x, explodingBlocks_[i]->GetPos().y -15}); //make the explosion the position of the destroyed block
+		//	}
+		//	if (explodingBlocks_[i]->GetIsAboveScreen())
+		//	{
+		//		delete explodingBlocks_[i];
+		//		explodingBlocks_.erase(explodingBlocks_.begin() + i);
+		//	}
+		//	else { ++i; }
+		//}
+
+		/*for (auto* conveyor : conveyers_) {
+			conveyor->Update(scrollSpeed);
+		}*/
+
 		//Steel Blocks
 		for (int i = 0; i < blocksSteel_.size();)
 		{
@@ -345,14 +375,15 @@ void StageScene::Update()
 #pragma endregion
 
 #pragma region Countdown
-case Phase::kCountdown:
+
+case StageScene::Phase::kCountdown:
 	UI->Countdown();
 	break;
 
 #pragma endregion
 
 #pragma region kDeath
-	case Phase::kDeath:
+	case StageScene::Phase::kDeath:
 		SetPlayerStatus();
 
 		player_->Update(scrollSpeed, false, goal_->GetPos().y);
@@ -363,7 +394,7 @@ case Phase::kCountdown:
 #pragma endregion
 
 #pragma region kStageClear
-	case Phase::kStageClear:
+	case StageScene::Phase::kStageClear:
 
 		scrollSpeed = 0.f;
 
@@ -436,6 +467,29 @@ case Phase::kCountdown:
 		for (auto* spike : spikeTrap_) {
 			spike->Update(scrollSpeed);
 		}
+
+		//Exploding Blocks
+		//for (int i = 0; i < explodingBlocks_.size();)
+		//{
+		//	explodingBlocks_[i]->Update(scrollSpeed);
+
+		//	if (explodingBlocks_[i]->IsDestroyed())
+		//	{
+		//		explosion_->SetIsExploding(true);
+		//		explosion_->Initialize({ explodingBlocks_[i]->GetPos().x, explodingBlocks_[i]->GetPos().y - 15 }); //make the explosion the position of the destroyed block
+		//	}
+		//	if (explodingBlocks_[i]->GetIsAboveScreen())
+		//	{
+		//		delete explodingBlocks_[i];
+		//		explodingBlocks_.erase(explodingBlocks_.begin() + i);
+		//	}
+		//	else { ++i; }
+		//}
+
+		/*for (auto* conveyor : conveyers_) {
+			conveyor->Update(scrollSpeed);
+		}*/
+
 		//Steel Blocks
 		for (int i = 0; i < blocksSteel_.size();)
 		{
@@ -461,7 +515,7 @@ case Phase::kCountdown:
 		break;
 #pragma endregion
 
-	case Phase::kFadeOut:
+	case StageScene::Phase::kFadeOut:
 		fade_->Update();
 		break;
 	}
@@ -508,7 +562,7 @@ void StageScene::ChangePhase()
 		phase_ = Phase::kFadeOut;
 		break;
 	case StageScene::Phase::kStageClear:
-		if (clearTimer >= 30) 
+		if (clearTimer >= 150) 
 		{
 			fade_->Start(Status::FadeOut, duration_);
 			phase_ = Phase::kFadeOut;
@@ -518,7 +572,7 @@ void StageScene::ChangePhase()
 	case StageScene::Phase::kFadeOut:
 		if (fade_->IsFinished() && isStageCleared) {
 			player_->SetIsDrilling(false);
-			sceneNo = STAGESELECT;
+			sceneNo = STAGE2;
 		}
 		else if (fade_->IsFinished() && player_->GetDeathAnimationDone())
 		{
@@ -588,7 +642,7 @@ void StageScene::Draw()
 		player_->Draw();
 		break;
 	case Phase::kStageClear:
-		//Novice::ScreenPrintf(50, 0, "CLEAR");
+		Novice::ScreenPrintf(50, 0, "CLEAR");
 		break;
 	case Phase::kFadeOut:
 
