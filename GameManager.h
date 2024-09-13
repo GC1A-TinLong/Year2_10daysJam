@@ -11,6 +11,7 @@
 #include "StageScene2.h"
 #include "StageScene3.h"
 #include "StageScene4.h"
+#include "LastStage.h"
 #include "ClearScene.h"
 
 

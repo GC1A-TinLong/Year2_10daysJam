@@ -154,9 +154,9 @@ private:
 #pragma endregion
 
 	static inline const uint8_t kWallBlockNum = 22;
-	std::vector<BlockNotDestroyable*>leftWallBlocks_;
+	std::vector<BlockSteel*>leftWallBlocks_;
 	Vector2 leftWallPos_ = { 144.f,0.f };
-	std::vector<BlockNotDestroyable*>rightWallBlocks_;
+	std::vector<BlockSteel*>rightWallBlocks_;
 	Vector2 rightWallPos_ = { 1392.f,0.f };
 
 	// Spike Trap
@@ -186,7 +186,7 @@ private:
 
 	//Goal
 	Goal* goal_ = nullptr;
-	Vector2 goalPos_{ 192, 1800 };
+	Vector2 goalPos_{ 192.f, 1800.f };
 	bool isStageCleared = false;
 	int waitForCollision = 0;
 
