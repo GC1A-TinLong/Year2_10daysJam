@@ -207,7 +207,7 @@ void Player::Drilling()
 {
 	DrillingSparks();
 
-	if (Input::GetInstance()->PushKey(DIK_S) && onGround && !drillFatigue)
+	if (Input::GetInstance()->PushKey(DIK_S) && onGround && !drillFatigue && !touchedGoal)
 	{
 		isDrilling = true;
 	}
@@ -641,6 +641,7 @@ void Player::CollisionWithGoal(Goal* goal)
 		}
 		// within the 3 conditions
 		tempOnGround = true;
+		touchedGoal = true;
 	}
 	onGround = tempOnGround;
 

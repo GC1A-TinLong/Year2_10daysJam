@@ -103,6 +103,7 @@ private:
 	bool isPressingSpace = false;
 	bool isJump = false;
 	bool isHitGround = true;
+	bool touchedGoal = false;
 	// OnGround
 	bool onGround = true;
 	float kLRAcceleration = 0.8f;
