@@ -13,6 +13,7 @@ public:
 	/// </summary>
 	void Initialize(int currentStage);
 	void Update(bool isShowingDrillUI, bool isTutorial);
+	void Countdown();
 	void Draw() const;
 
 	//Setter

@@ -104,13 +104,14 @@ private:
 	// Movement Flag
 	bool isPressingSpace = false;
 	bool isJump = false;
-	bool isHitGround = true;
 	bool touchedGoal = false;
 	// OnGround
-	bool onGround = true;
+	bool onGround = false;
 	float kLRAcceleration = 0.8f;
 	static inline const float kAttenuation = 0.15f; // reduce speed (sliding)
-	static inline float kMaxVelocity = 12.5f;
+	static inline const float kOrignialMaxVelocity = 8.5f; // reduce speed (sliding)
+	static inline float kMaxVelocity = kOrignialMaxVelocity;
+
 
 	/// Airborne ///
 	// Gravity

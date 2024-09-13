@@ -225,7 +225,7 @@ void Player::Drilling()
 	}
 	else
 	{
-		kMaxVelocity = 12.5f;
+		kMaxVelocity = kOrignialMaxVelocity;
 		if (drillPower < maxDrillPower)
 		{
 			drillPower += drillEnergyRestorationSpeed;

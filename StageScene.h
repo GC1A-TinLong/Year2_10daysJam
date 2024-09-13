@@ -35,7 +35,7 @@ public:
 
 private:
 	// Scroll
-	float scrollSpeed = 2.f;
+	float scrollSpeed = 0.f;
 	int clearTimer = 0;
 
 	enum BlockType

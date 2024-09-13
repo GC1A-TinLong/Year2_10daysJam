@@ -72,6 +72,11 @@ void UserInterface::Update(bool isShowingDrillUI, bool isTutorial)
 	batteryColor = (batteryR << 24) | (batteryG << 16) | (batteryB << 8) | batteryA;
 }
 
+void UserInterface::Countdown()
+{
+
+}
+
 void UserInterface::Draw() const
 {
 	//UI
