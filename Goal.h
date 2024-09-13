@@ -1,6 +1,8 @@
 #pragma once
 #include "MathFunction.h"
 
+class Player;
+
 class Goal
 {
 public:
@@ -10,6 +12,10 @@ public:
 	~Goal();
 
 	void Initialize(Vector2 pos);
+
+	void CollisionPlayer(Player* player);
+
+	void FireWorks();
 
 	void Update(float scrollSpeed);
 
@@ -33,8 +39,14 @@ private:
 	float animationFrames = 9600.f;
 	int animationTimer_ = 0;
 	bool stopMoving = false;
-
-
+	
+	uint32_t fireworksTexture_;
+	Vector2 fireworksAnimationPos_ = { 0.f, 0.f };
+	float fireworksAnimationFrames = 9600.f;
+	int fireworksAnimationTimer_ = 0;
+	bool startFireworks = false;
+	bool isWaitTimer = false;
+	int waitTimer = 0;
 
 };
 

@@ -262,7 +262,7 @@ void StageScene::Update()
 		// Player
 		SetPlayerStatus();
 
-		player_->Update(scrollSpeed, false);
+		player_->Update(scrollSpeed, false, goal_->GetPos().y);
 		SetPlayerStatus();
 		player_->CollisionWithBlock(blocks_);
 		/*if (!player_->IsOnGround()) {
@@ -279,7 +279,7 @@ void StageScene::Update()
 		if (goal_->GetStopMoving())
 		{
 			scrollSpeed = 0.f;
-			if (clearTimer < 105) 
+			if (clearTimer < 205 && player_->GetHasTouchedGoal()) 
 			{
 				clearTimer++;
 			}
@@ -378,7 +378,7 @@ void StageScene::Update()
 	case StageScene::Phase::kDeath:
 		SetPlayerStatus();
 
-		player_->Update(scrollSpeed, false);
+		player_->Update(scrollSpeed, false, goal_->GetPos().y);
 		player_->DeathAnimation();
 		background_->Update(scrollSpeed);
 		CheckAllCollision();
@@ -399,7 +399,7 @@ void StageScene::Update()
 		// Player
 		SetPlayerStatus();
 
-		player_->Update(scrollSpeed, false);
+		player_->Update(scrollSpeed, false, goal_->GetPos().y);
 		SetPlayerStatus();
 		player_->CollisionWithBlock(blocks_);
 		/*if (!player_->IsOnGround()) {
@@ -519,7 +519,7 @@ void StageScene::ChangePhase()
 		break;
 
 	case StageScene::Phase::kPlay:
-		if (Input::GetInstance()->TriggerKey(DIK_C) || isStageCleared && scrollSpeed == 0.f && clearTimer >= 100)
+		if (Input::GetInstance()->TriggerKey(DIK_C) || isStageCleared && scrollSpeed == 0.f && clearTimer >= 150)
 		{
 			fade_->Start(Status::FadeOut, duration_);
 			phase_ = Phase::kFadeOut;
@@ -588,13 +588,13 @@ void StageScene::Draw()
 	{
 		explosion_->Draw();
 	}
+	
 
 	goal_->Draw();
 
 	UI->Draw();
 
 	depthMeter_->Draw();
-
 
 	switch (phase_)
 	{
@@ -828,6 +828,7 @@ void StageScene::CheckAllCollision()
 	if (isCollideObject(obj3, obj7))
 	{
 		isStageCleared = true;
+		goal_->CollisionPlayer(player_);
 		//Initialize();
 	}
 

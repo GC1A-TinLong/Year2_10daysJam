@@ -18,6 +18,8 @@ private:
 	uint32_t plainTexture_;
 	uint32_t bloodTexture_;
 
+	bool startFalling = false;
+
 public:
 	void Initialize(const Vector2& pos);
 	void Update();

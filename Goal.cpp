@@ -14,10 +14,47 @@ void Goal::Initialize(Vector2 pos)
 	pos_ = pos;
 	texture_ = Novice::LoadTexture("./Resources/Goal/Goal.png");
 	textTexture_ = Novice::LoadTexture("./Resources/Goal/GoalText.png");
+	fireworksTexture_ = Novice::LoadTexture("./Resources/Goal/fireworks.png");
+}
+
+void Goal::CollisionPlayer(Player* player)
+{
+	(void)player;
+	startFireworks = true;
+}
+
+void Goal::FireWorks()
+{
+		fireworksAnimationTimer_++;
+
+		if (fireworksAnimationPos_.x >= fireworksAnimationFrames - size.width && fireworksAnimationTimer_ >= 5)
+		{
+			isWaitTimer = true;
+		}
+		if (isWaitTimer) 
+		{
+			waitTimer++;
+		}
+		
+
+		if (waitTimer >= 20)
+		{
+			fireworksAnimationPos_.x = 0;
+			fireworksAnimationTimer_ = 0;
+			isWaitTimer = false;
+			waitTimer = 0;
+		}
+
+		if (fireworksAnimationTimer_ >= 5)
+		{
+			fireworksAnimationPos_.x += size.width;
+			fireworksAnimationTimer_ = 0;
+		}
 }
 
 void Goal::Update(float scrollSpeed)
 {
+	FireWorks();
 	pos_.y -= scrollSpeed;
 
 	if (pos_.y <= 1080)
@@ -52,6 +89,8 @@ void Goal::Draw()
 		Novice::DrawSpriteRect((int)pos_.x, (int)pos_.y, (int)animationPos_.x, (int)animationPos_.y, size.width, size.height, textTexture_,
 			(size.width / animationFrames), 1.f, 0.0f, WHITE);
 	}
+	Novice::DrawSpriteRect((int)pos_.x, (int)pos_.y - 300 , (int)fireworksAnimationPos_.x, (int)fireworksAnimationPos_.y, size.width, size.height, fireworksTexture_,
+		(size.width / fireworksAnimationFrames), 1.f, 0.0f, WHITE);
 }
 
 const Object Goal::GetObject_() const

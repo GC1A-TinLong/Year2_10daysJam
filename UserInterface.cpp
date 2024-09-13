@@ -101,7 +101,7 @@ void UserInterface::Draw() const
 	Novice::DrawSprite(1560, 30, batteryText, 1.0f, 1.0f, 0.0f, batteryColor); //BATTERY text
 	//Drill
 	Novice::DrawBox(1500, 780, 340, 235, 0, drillBoxColor, kFillModeSolid);	// Drill Box Blink
-	Novice::DrawSprite(1500, 780, blackEdge, 1.f, 1.f, 0, WHITE);	// Black Edge for drill box blink
+	//Novice::DrawSprite(1500, 780, blackEdge, 1.f, 1.f, 0, WHITE);	// Black Edge for drill box blink
 	Novice::DrawSprite(1540, 800, drillText, 1.0f, 1.0f, 0.0f, batteryColor); //DRILL
 	Novice::DrawSprite(1520, 900, letterSHandle, 1.0f, 1.0f, 0.0f, batteryColor); //S
 	Novice::DrawSprite(1725, 885, drillingPlayer, 1.0f, 1.0f, 0.0f, batteryColor); //Drilling Player

@@ -250,11 +250,7 @@ void StageScene2::Update()
 		break;
 #pragma region Play
 	case StageScene2::Phase::kPlay:
-		if (goal_->GetPos().y <= 780)
-		{
-			scrollSpeed = 0;
-
-		}
+	
 		background_->Update(scrollSpeed);
 
 		UserInterfaceDepthMeter();
@@ -263,7 +259,7 @@ void StageScene2::Update()
 		// Player
 		SetPlayerStatus();
 
-		player_->Update(scrollSpeed, false);
+		player_->Update(scrollSpeed, false, goal_->GetPos().y);
 		SetPlayerStatus();
 		player_->CollisionWithBlock(blocks_);
 		/*if (!player_->IsOnGround()) {
@@ -280,6 +276,10 @@ void StageScene2::Update()
 		if (goal_->GetStopMoving())
 		{
 			scrollSpeed = 0.f;
+			if (clearTimer < 205 && player_->GetHasTouchedGoal())
+			{
+				clearTimer++;
+			}
 		}
 		if (!player_->IsOnGround())
 		{
@@ -430,7 +430,7 @@ void StageScene2::Update()
 		// Player
 		SetPlayerStatus();
 
-		player_->Update(scrollSpeed, false);
+		player_->Update(scrollSpeed, false, goal_->GetPos().y);
 		SetPlayerStatus();
 		player_->CollisionWithBlock(blocks_);
 		/*if (!player_->IsOnGround()) {
@@ -553,7 +553,7 @@ void StageScene2::ChangePhase()
 		break;
 
 	case StageScene2::Phase::kPlay:
-		if (Input::GetInstance()->TriggerKey(DIK_C) || isStageCleared)
+		if (Input::GetInstance()->TriggerKey(DIK_C) || isStageCleared && scrollSpeed == 0.f && clearTimer >= 150)
 		{
 			fade_->Start(Status::FadeOut, duration_);
 			phase_ = Phase::kFadeOut;
@@ -568,7 +568,7 @@ void StageScene2::ChangePhase()
 	case StageScene2::Phase::kStageClear:
 		break;
 	case StageScene2::Phase::kFadeOut:
-		if (fade_->IsFinished() && !player_->IsDead()) {
+		if (fade_->IsFinished() && isStageCleared) {
 			sceneNo = CLEAR;
 		}
 		else if (fade_->IsFinished() && player_->GetDeathAnimationDone())
@@ -621,6 +621,8 @@ void StageScene2::Draw()
 	UI->Draw();
 
 	depthMeter_->Draw();
+
+	Novice::ScreenPrintf(0, 120, " cleartimer %d", clearTimer);
 
 
 	switch (phase_)
@@ -854,6 +856,7 @@ void StageScene2::CheckAllCollision()
 	if (isCollideObject(obj3, obj7))
 	{
 		isStageCleared = true;
+		goal_->CollisionPlayer(player_);
 		//Initialize();
 	}
 

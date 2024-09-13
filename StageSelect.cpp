@@ -97,7 +97,7 @@ void StageSelect::Update()
 
 	case Phase::kPlay:
 		// Player
-		player_->Update(0.f, true);
+		player_->Update(0.f, true, 1300.f);
 		player_->CollisionWithBlock(blocks_);
 		Novice::ScreenPrintf(0, 200, "onground %d", player_->IsOnGround());
 		if (!player_->IsOnGround()) { player_->CollisionWithMetalBlock(steelBlocks_); }

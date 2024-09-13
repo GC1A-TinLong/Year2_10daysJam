@@ -162,7 +162,7 @@ void BasicTutorialScene::Update()
 
 	case Phase::kPlay:
 		// Player
-		player_->Update(scrollSpeed, false);
+		player_->Update(scrollSpeed, false, goal_->GetPos().y);
 		player_->CollisionWithBlock(blocks_);
 		if (!player_->IsOnGround())
 		{

@@ -7,6 +7,7 @@
 Player::~Player()
 {
 	delete shake_;
+	delete goal_;
 }
 
 void Player::Initialize(const Vector2& pos)
@@ -31,8 +32,9 @@ void Player::Initialize(const Vector2& pos)
 }
 
 
-void Player::Update(float scrollSpeed, bool isStageSelect)
+void Player::Update(float scrollSpeed, bool isStageSelect, float goalY)
 {
+	ClampPlayer(goalY);
 	Audio();
 	AnimationHolder();
 
@@ -831,6 +833,14 @@ void Player::TakingDamage()
 	else { color = WHITE; }*/
 
 	if (hp <= 0) { isDead = true; }
+}
+
+void Player::ClampPlayer(float goalY)
+{
+	if (pos_.y > goalY + size.height) 
+	{
+		pos_.y = goalY + size.height;
+	}
 }
 
 Object Player::GetDrillPointObject_() const

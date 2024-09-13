@@ -9,6 +9,7 @@
 #include "Goal.h"
 #include "BlockDestroyable.h"
 #include "BlockSteel.h"
+#include "Goal.h"
 
 class SpikeTrap;
 
@@ -19,7 +20,7 @@ public:
 	~Player();
 
 	void Initialize(const Vector2& pos);
-	void Update(float scrollSpeed, bool isStageSelect);
+	void Update(float scrollSpeed, bool isStageSelect, float goalY);
 	void Draw();
 	void Audio();
 
@@ -45,6 +46,7 @@ public:
 	Vector2 CameraOffset();
 	void Shakeing();
 	void TakingDamage();
+	void ClampPlayer(float goalY);
 
 	// Getter
 	bool IsHit() const { return isHit; }
@@ -225,5 +227,6 @@ private:
 
 	//Goal
 	bool hasTouchedGoal = false;
+	Goal* goal_ = nullptr;
 };
 

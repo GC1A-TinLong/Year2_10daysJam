@@ -36,6 +36,7 @@ public:
 private:
 	// Scroll
 	float scrollSpeed = 2.f;
+	int clearTimer = 0;
 
 	enum class Phase
 	{
