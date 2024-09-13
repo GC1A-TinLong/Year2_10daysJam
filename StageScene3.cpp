@@ -44,6 +44,9 @@ StageScene3::~StageScene3()
 
 void StageScene3::Initialize()
 {
+	float scrollSpeed = 5.f;
+	int clearTimer = 0;
+	isStageCleared = false;
 #pragma region Fade
 
 	phase_ = Phase::kFadeIn;
