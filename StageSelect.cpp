@@ -7,8 +7,12 @@ StageSelect::~StageSelect()
 	delete fade_;
 	delete player_;
 
-	for (BlockNotDestroyable* blocks : blocks_) { delete blocks; }
+	for (auto* blocks : blocks_) { delete blocks; }
 	blocks_.clear();
+	for (auto* blocks : steelBlocks_) { delete blocks; }
+	steelBlocks_.clear();
+	for (auto* blocks : brokenBlocks_) { delete blocks; }
+	brokenBlocks_.clear();
 	for (auto* leftBlocks : leftWallBlocks_) { delete leftBlocks; }
 	leftWallBlocks_.clear();
 	for (auto* rightBlocks : rightWallBlocks_) { delete rightBlocks; }
@@ -53,6 +57,12 @@ void StageSelect::Initialize()
 				steelBlocks_[steelIndex] = new BlockSteel;
 				steelBlocks_[steelIndex]->Initialize(blockPos_, false);
 				steelIndex++; // Move to the next block
+			}
+			else if (map[y][x] == (int)BlockType::BrokenBlock) {
+				Vector2 blockPos_ = { x * kSpriteSize + adjustPosForMapchipX, y * kSpriteSize + adjustPosForMapchipY };
+				brokenBlocks_[brokenIndex] = new BlockDestroyable;
+				brokenBlocks_[brokenIndex]->Initialize(blockPos_);
+				brokenIndex++; // Move to the next block
 			}
 		}
 	}
@@ -120,20 +130,24 @@ void StageSelect::Draw()
 	// Wall Blocks
 	for (auto* wallblock : leftWallBlocks_) { wallblock->Draw(); }
 	for (auto* wallblock : rightWallBlocks_) { wallblock->Draw(); }
-
-	// Door
-	Novice::DrawSpriteRect(int(tutorialDoorPos.x), int(tutorialDoorPos.y), animationPos_.x, 0, 96, 96, stageDoor, 0.25f, 1.f, 0, WHITE);
-	// Tutorial Text
-	Novice::DrawSprite(int(tutorialDoorPos.x) - 20, int(tutorialDoorPos.y) - 120, tutorialText, 1.f, 1.f, 0, WHITE);
-	if (isCollideTutorialDoor) {
-		Novice::DrawSprite(int(tutorialDoorPos.x) + 26, int(tutorialDoorPos.y) - 55, letterW, 1.f, 1.f, 0, color_W); // letter W
+#pragma region Door and Text
+	// letter W text
+	if (isCollideTutorialDoor || isCollideStage1Door) {
+		Novice::DrawSprite(int(player_->GetPos().x) - 1, int(player_->GetPos().y) - 90, letterW, 1.f, 1.f, 0, color_W); 
 	}
-
+	/// Tutorial Text ///
+	Novice::DrawSprite(int(tutorialDoorPos.x) - 20, int(tutorialDoorPos.y) - 120, tutorialText, 1.f, 1.f, 0, WHITE);
+	Novice::DrawSpriteRect(int(tutorialDoorPos.x), int(tutorialDoorPos.y), animationPos_.x, 0, 96, 96, stageDoor, 0.25f, 1.f, 0, WHITE);
+	/// Stage 1 Text ///
+	Novice::DrawSprite(int(stage1DoorPos.x) - 15, int(stage1DoorPos.y) - 120, stage1text, 1.f, 1.f, 0, WHITE);
+	Novice::DrawSpriteRect(int(stage1DoorPos.x), int(stage1DoorPos.y), animationPos_.x, 0, 96, 96, stageDoor, 0.25f, 1.f, 0, WHITE);
+#pragma endregion
 	// Player
 	player_->Draw();
 	// Blocks
 	for (auto* block : blocks_) { block->Draw(); }
 	for (auto* block : steelBlocks_) { block->Draw(); }
+	for (auto* block : brokenBlocks_) { block->Draw(); }
 	// UI
 	UI->Draw();
 
@@ -160,23 +174,15 @@ void StageSelect::ChangePhase()
 
 	case Phase::kPlay:
 		GoToNextScene();
-		if (Input::GetInstance()->TriggerKey(DIK_C)) // DEBUG
-		{
-			fade_->Start(Status::FadeOut, duration_);
-			phase_ = Phase::kFadeOut;
-		}
 		break;
 
 	case Phase::kFadeOut:
 		if (fade_->IsFinished()) {
-			if (!player_->IsDead()) {
+			if (isCollideTutorialDoor) {
 				sceneNo = BASIC_TUTORIAL;
 			}
-			else if (player_->IsDead()) {
-				Initialize();
-			}
-			else if (isCollideTutorialDoor) {
-				sceneNo = BASIC_TUTORIAL;
+			else if (isCollideStage1Door) {
+				sceneNo = STAGE;
 			}
 		}
 		break;
@@ -185,9 +191,11 @@ void StageSelect::ChangePhase()
 
 void StageSelect::GoToNextScene()
 {
-	if (isCollideTutorialDoor && Input::GetInstance()->TriggerKey(DIK_W)) {
-		fade_->Start(Status::FadeOut, duration_);
-		phase_ = Phase::kFadeOut;
+	if (Input::GetInstance()->TriggerKey(DIK_W)) {
+		if (isCollideTutorialDoor || isCollideStage1Door) {
+			fade_->Start(Status::FadeOut, duration_);
+			phase_ = Phase::kFadeOut;
+		}
 	}
 }
 
@@ -214,6 +222,16 @@ void StageSelect::DeleteBlocks()
 		}
 		else { ++i; }
 	}
+	for (int i = 0; i < brokenBlocks_.size();)
+	{
+		if (brokenBlocks_[i]->IsDestroyed() || brokenBlocks_[i]->GetIsAboveScreen()) // if block is destroyed
+		{
+			delete brokenBlocks_[i]; //delete block
+			brokenBlocks_.erase(brokenBlocks_.begin() + i); //erase it from the vector
+			break;
+		}
+		else { i++; }
+	}
 }
 
 void StageSelect::CheckAllCollision()
@@ -225,21 +243,27 @@ void StageSelect::CheckAllCollision()
 		isCollideTutorialDoor = true;
 	}
 	else { isCollideTutorialDoor = false; }
+	doorObj = { stage1DoorPos,doorSize };
+	if (isCollideObject(playerObj, doorObj)) {
+		isCollideStage1Door = true;
+	}
+	else { isCollideStage1Door = false; }
 
-	if (isCollideTutorialDoor) {
+	if (isCollideTutorialDoor || isCollideStage1Door) {
 		alphaSpeed = kMaxAlphaSpeed;
 		Novice::ScreenPrintf(0, 0, "alpha = %u", alpha_W);
 		alpha_W += alphaSpeed;
 		if (alpha_W >= 255) { alpha_W = 20; }
 	}
 	else { alpha_W = 20; }
+
 	color_W = RGB_W + alpha_W;
 
 #pragma endregion
 
 #pragma region player & block collision
-	Object obj3 = player_->GetDrillPointObject_();	// collision on the drill
-	Object obj4;
+	Object playerDrillPointObj = player_->GetDrillPointObject_();	// collision on the drill
+	Object blockObj;
 
 	for (int i = 0; i < blocks_.size(); ++i) //reset all blocks to not being touched
 	{
@@ -249,8 +273,8 @@ void StageSelect::CheckAllCollision()
 
 	for (int i = 0; i < blocks_.size();)
 	{
-		obj4 = blocks_[i]->GetObject_();
-		if (isCollideObject(obj3, obj4) && !blocks_[i]->IsDestroyed())
+		blockObj = blocks_[i]->GetObject_();
+		if (isCollideObject(playerDrillPointObj, blockObj) && !blocks_[i]->IsDestroyed())
 		{
 			blocks_[i]->OnCollision(player_);
 
@@ -277,8 +301,50 @@ void StageSelect::CheckAllCollision()
 		}
 		++i; // Increment if no collision or block was not removed
 	}
+#pragma endregion
+
+#pragma region player & broken block collision
+	Object obj8;
+
+	for (int i = 0; i < brokenBlocks_.size(); ++i) //reset all blocks to not being touched
+	{
+		brokenBlocks_[i]->SetIsTouched(false);
+		brokenBlocks_[i]->SetStartShake(false);
+	}
+
+	for (int i = 0; i < brokenBlocks_.size();)
+	{
+		blockObj = brokenBlocks_[i]->GetObject_();
+		if (isCollideObject(playerDrillPointObj, obj8) && !brokenBlocks_[i]->IsDestroyed())
+		{
+			brokenBlocks_[i]->OnCollision(player_);
+			brokenBlocks_[i]->SetStartShake(true);
+
+			if (player_->GetIsDrilling()) //if we're drilling
+			{
+				brokenBlocks_[i]->SetTakenDamage(5); //damage is 5
+			}
+			else
+			{
+				brokenBlocks_[i]->SetTakenDamage(1); //damage is 1
+			}
+
+			if (brokenBlocks_.empty() || brokenBlocks_[i] == nullptr) {
+				continue;	// If block was destroyed or blocks_ changed, avoid incrementing "i"
+			}
+			//break;
+		}
+		else
+		{
+			brokenBlocks_[i]->SetIsTouched(false); //not on top of the block anymore
+			brokenBlocks_[i]->SetStartShake(false);
+
+		}
+		++i; // Increment if no collision or block was not removed
+	}
 
 #pragma endregion
+
 }
 
 void StageSelect::SetPlayerStatus()

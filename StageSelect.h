@@ -76,6 +76,10 @@ private:
 	unsigned int tutorialText = Novice::LoadTexture("./Resources/StageSelect/tutorialText.png");
 	Vector2 tutorialDoorPos = { 288.f,336.f };
 	bool isCollideTutorialDoor = false;
+	// Stage 1
+	unsigned int stage1text = Novice::LoadTexture("./Resources/StageSelect/stage1.png");
+	Vector2 stage1DoorPos = { 288.f,336.f * 2 + 48.f };
+	bool isCollideStage1Door = false;
 
 
 	enum class BlockType
@@ -125,6 +129,10 @@ private:
 	static inline const uint8_t kSteelBlockNum = 58;
 	std::vector<BlockSteel*>steelBlocks_;
 	uint8_t steelIndex = 0;
+	// BrokenBlock
+	static inline const uint8_t kBrokenBlockNum = 12;
+	std::vector<BlockDestroyable*>brokenBlocks_;
+	uint8_t brokenIndex = 0;
 	// Wall
 	static inline const uint8_t kWallBlockNum = 22;
 	std::vector<BlockSteel*>leftWallBlocks_;
