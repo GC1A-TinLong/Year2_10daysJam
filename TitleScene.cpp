@@ -125,7 +125,7 @@ void TitleScene::Audio()
 			movementPlayHandle = -1;
 		}
 
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE) && pressTimer >= 5)
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE) && pressTimer >= 5 && !isSpaceClicked)
 		{
 
 			if (Novice::IsPlayingAudio(selectPlayHandle) == 0 || selectPlayHandle == -1) {
