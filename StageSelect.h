@@ -20,6 +20,8 @@ public:
 	void Draw() override;
 	void ChangePhase();
 
+	void GoToNextScene();
+
 	void DeleteBlocks();
 	void CheckAllCollision();
 	void SetPlayerStatus();
@@ -62,9 +64,9 @@ private:
 	// "W" text
 	unsigned int letterW = Novice::LoadTexture("./Resources/StageSelect/W.png");
 	uint32_t RGB_W = 0xFFFFFF00;
-	uint32_t alpha_W = 0;
-	int8_t alphaSpeed;
-	static inline const uint8_t kMaxAlphaSpeed = 8;
+	uint32_t alpha_W = 20;
+	int32_t alphaSpeed;
+	static inline const int32_t kMaxAlphaSpeed = 3;
 	bool isMaxAlpha = false;
 	uint32_t color_W;
 	// Stage Door

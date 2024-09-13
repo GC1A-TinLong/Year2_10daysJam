@@ -598,20 +598,20 @@ void StageScene::Draw()
 
 	switch (phase_)
 	{
-	case StageScene::Phase::kFadeIn:
+	case Phase::kFadeIn:
 		// Fade
 		fade_->Draw();
 		break;
 
-	case StageScene::Phase::kPlay:
+	case Phase::kPlay:
 		break;
-	case StageScene::Phase::kDeath:
+	case Phase::kDeath:
 		player_->Draw();
 		break;
-	case StageScene::Phase::kStageClear:
+	case Phase::kStageClear:
 		Novice::ScreenPrintf(50, 0, "CLEAR");
 		break;
-	case StageScene::Phase::kFadeOut:
+	case Phase::kFadeOut:
 
 		fade_->Draw();
 		break;

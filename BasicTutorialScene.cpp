@@ -245,6 +245,10 @@ void BasicTutorialScene::Draw()
 
 	case Phase::kPlay:
 		break;
+	case Phase::kFadeOut:
+
+		fade_->Draw();
+		break;
 	}
 }
 

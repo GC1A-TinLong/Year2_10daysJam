@@ -143,6 +143,10 @@ void StageSelect::Draw()
 		// Fade
 		fade_->Draw();
 		break;
+	case Phase::kFadeOut:
+
+		fade_->Draw();
+		break;
 	}
 }
 
@@ -155,6 +159,7 @@ void StageSelect::ChangePhase()
 		break;
 
 	case Phase::kPlay:
+		GoToNextScene();
 		if (Input::GetInstance()->TriggerKey(DIK_C)) // DEBUG
 		{
 			fade_->Start(Status::FadeOut, duration_);
@@ -163,13 +168,26 @@ void StageSelect::ChangePhase()
 		break;
 
 	case Phase::kFadeOut:
-		if (fade_->IsFinished() && !player_->IsDead()) {
-			sceneNo = BASIC_TUTORIAL;
-		}
-		else if (fade_->IsFinished() && player_->IsDead()) {
-			Initialize();
+		if (fade_->IsFinished()) {
+			if (!player_->IsDead()) {
+				sceneNo = BASIC_TUTORIAL;
+			}
+			else if (player_->IsDead()) {
+				Initialize();
+			}
+			else if (isCollideTutorialDoor) {
+				sceneNo = BASIC_TUTORIAL;
+			}
 		}
 		break;
+	}
+}
+
+void StageSelect::GoToNextScene()
+{
+	if (isCollideTutorialDoor && Input::GetInstance()->TriggerKey(DIK_W)) {
+		fade_->Start(Status::FadeOut, duration_);
+		phase_ = Phase::kFadeOut;
 	}
 }
 
@@ -209,18 +227,12 @@ void StageSelect::CheckAllCollision()
 	else { isCollideTutorialDoor = false; }
 
 	if (isCollideTutorialDoor) {
-		if (alpha_W >= 255) {
-			alphaSpeed = -kMaxAlphaSpeed;
-		}
-		else if (alpha_W <= 0) {
-			alphaSpeed = kMaxAlphaSpeed;
-		}
-		alpha_W = std::clamp(alpha_W, (uint32_t)0, (uint32_t)255);
-		/*if (isMaxAlpha) { alphaSpeed = -kMaxAlphaSpeed; }
-		else { alphaSpeed = kMaxAlphaSpeed; }*/
+		alphaSpeed = kMaxAlphaSpeed;
+		Novice::ScreenPrintf(0, 0, "alpha = %u", alpha_W);
 		alpha_W += alphaSpeed;
+		if (alpha_W >= 255) { alpha_W = 20; }
 	}
-	else { alpha_W = 0; }
+	else { alpha_W = 20; }
 	color_W = RGB_W + alpha_W;
 
 #pragma endregion
