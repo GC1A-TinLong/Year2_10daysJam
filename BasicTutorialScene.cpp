@@ -46,7 +46,7 @@ void BasicTutorialScene::Initialize()
 	}
 	// Player
 	player_ = new Player;
-	player_->Initialize({ 780.f,500.f - player_->GetSize().height });
+	player_->Initialize({ 780.f,499.f - player_->GetSize().height });
 
 	// Normal Blocks
 	blocks_.resize(kBlockNum);
@@ -216,10 +216,10 @@ void BasicTutorialScene::Draw()
 	for (auto* wallblock : leftWallBlocks_) { wallblock->Draw(); }
 	for (auto* wallblock : rightWallBlocks_) { wallblock->Draw(); }
 
-	//Blocks
-	for (auto* block : blocks_) { block->Draw(); }
 	// Player
 	player_->Draw();
+	//Blocks
+	for (auto* block : blocks_) { block->Draw(); }
 
 	// Spike
 	for (auto* spike : spike_) { spike->Draw(); }

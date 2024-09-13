@@ -146,6 +146,12 @@ void StageSelect::Draw()
 	/// Stage 1 Text ///
 	Novice::DrawSprite(int(stage1DoorPos.x) - 15, int(stage1DoorPos.y) - 40, stage1text, 1.f, 1.f, 0, WHITE);
 	Novice::DrawSpriteRect(int(stage1DoorPos.x), int(stage1DoorPos.y), animationPos_.x, 0, 96, 96, stageDoor, 0.25f, 1.f, 0, WHITE);
+	/// Stage 2 Text ///
+	Novice::DrawSprite(int(stage2DoorPos.x) - 15, int(stage2DoorPos.y) - 40, stage2text, 1.f, 1.f, 0, WHITE);
+	Novice::DrawSpriteRect(int(stage2DoorPos.x), int(stage2DoorPos.y), animationPos_.x, 0, 96, 96, stageDoor, 0.25f, 1.f, 0, WHITE);
+	/// Stage 3 Text ///
+	Novice::DrawSprite(int(stage3DoorPos.x) - 15, int(stage3DoorPos.y) - 40, stage3text, 1.f, 1.f, 0, WHITE);
+	Novice::DrawSpriteRect(int(stage3DoorPos.x), int(stage3DoorPos.y), animationPos_.x, 0, 96, 96, stageDoor, 0.25f, 1.f, 0, WHITE);
 #pragma endregion
 	// Player
 	player_->Draw();
@@ -154,7 +160,7 @@ void StageSelect::Draw()
 	for (auto* block : steelBlocks_) { block->Draw(); }
 	for (auto* block : brokenBlocks_) { block->Draw(); }
 	// letter W text
-	if (isCollideTutorialDoor || isCollideStage1Door) {
+	if (isCollideTutorialDoor || isCollideStage1Door || isCollideStage2Door || isCollideStage3Door) {
 		Novice::DrawSprite(int(player_->GetPos().x) - 15, int(player_->GetPos().y) - 90, letterW, 1.f, 1.f, 0, color_W);
 	}
 	// UI
@@ -192,6 +198,12 @@ void StageSelect::ChangePhase()
 			else if (isCollideStage1Door) {
 				sceneNo = STAGE;
 			}
+			else if (isCollideStage2Door) {
+				sceneNo = STAGE2;
+			}
+			else if (isCollideStage3Door) {
+				sceneNo = STAGE3;
+			}
 		}
 		break;
 	}
@@ -200,7 +212,7 @@ void StageSelect::ChangePhase()
 void StageSelect::GoToNextScene()
 {
 	if (Input::GetInstance()->TriggerKey(DIK_W)) {
-		if (isCollideTutorialDoor || isCollideStage1Door) {
+		if (isCollideTutorialDoor || isCollideStage1Door || isCollideStage2Door || isCollideStage3Door) {
 			fade_->Start(Status::FadeOut, duration_);
 			phase_ = Phase::kFadeOut;
 		}
@@ -237,17 +249,31 @@ void StageSelect::CheckAllCollision()
 #pragma region player & stage door collision
 	Object playerObj = player_->GetObject_();
 	Object doorObj = { tutorialDoorPos,doorSize };
+	// Tutorial Door
 	if (isCollideObject(playerObj, doorObj)) {
 		isCollideTutorialDoor = true;
 	}
 	else { isCollideTutorialDoor = false; }
+	// Stage 1 Door
 	doorObj = { stage1DoorPos,doorSize };
 	if (isCollideObject(playerObj, doorObj)) {
 		isCollideStage1Door = true;
 	}
 	else { isCollideStage1Door = false; }
+	// Stage 2 Door
+	doorObj = { stage2DoorPos,doorSize };
+	if (isCollideObject(playerObj, doorObj)) {
+		isCollideStage2Door = true;
+	}
+	else { isCollideStage2Door = false; }
+	// Stage 3 Door
+	doorObj = { stage3DoorPos,doorSize };
+	if (isCollideObject(playerObj, doorObj)) {
+		isCollideStage3Door = true;
+	}
+	else { isCollideStage3Door = false; }
 
-	if (isCollideTutorialDoor || isCollideStage1Door) {
+	if (isCollideTutorialDoor || isCollideStage1Door || isCollideStage2Door || isCollideStage3Door) {
 		if (alpha_W < 240) { alphaSpeed = kMaxAlphaSpeed; }
 		else if (alpha_W >= 240) { alphaSpeed = 1; }
 		alpha_W += alphaSpeed;
@@ -257,7 +283,6 @@ void StageSelect::CheckAllCollision()
 	else { alpha_W = 20; }
 
 	color_W = RGB_W + alpha_W;
-
 #pragma endregion
 
 #pragma region player & block collision

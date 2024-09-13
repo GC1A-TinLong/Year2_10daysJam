@@ -80,6 +80,14 @@ private:
 	unsigned int stage1text = Novice::LoadTexture("./Resources/StageSelect/stage1.png");
 	Vector2 stage1DoorPos = { 288.f,336.f * 2 + 48.f };
 	bool isCollideStage1Door = false;
+	// Stage 2
+	unsigned int stage2text = Novice::LoadTexture("./Resources/StageSelect/stage2.png");
+	Vector2 stage2DoorPos = { 288.f + 48 * 7,336.f * 2 + 48.f };
+	bool isCollideStage2Door = false;
+	// Stage 3
+	unsigned int stage3text = Novice::LoadTexture("./Resources/StageSelect/stage3.png");
+	Vector2 stage3DoorPos = { 288.f + 48 * 7,336.f };
+	bool isCollideStage3Door = false;
 
 
 	enum class BlockType

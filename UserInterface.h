@@ -45,8 +45,10 @@ private:
 
 	//Drill
 	unsigned int drillText = Novice::LoadTexture("./Resources/StageText/DRILL.png");
-	unsigned int drillingPlayer = Novice::LoadTexture("./Resources/StageText/drillingUI.png");
+	unsigned int drillingPlayer = Novice::LoadTexture("./Resources/StageText/drillingUI.png");/*
 	unsigned int blackEdge = Novice::LoadTexture("./Resources/StageText/blackEdge.png");
+	unsigned int transparentEdge = Novice::LoadTexture("./Resources/StageText/transparentEdge.png");*/
+	unsigned int yellow = Novice::LoadTexture("./Resources/StageText/yellow.png");
 
 	//Life
 	unsigned int lifeTextHandle = Novice::LoadTexture("./Resources/StageText/HP.png");
@@ -74,9 +76,9 @@ private:
 
 	// Drill
 	uint32_t drillBoxColor;
-	uint32_t drillBoxR = 235;
+	uint32_t drillBoxR = 255;
 	uint32_t drillBoxG = 255;
-	uint32_t drillBoxB = 41;
+	uint32_t drillBoxB = 255;
 	uint32_t drillBoxA = 0;
 	int alphaSpeed = 3;
 	bool isStartBlinking = false;
