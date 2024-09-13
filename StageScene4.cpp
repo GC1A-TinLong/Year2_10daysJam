@@ -45,8 +45,8 @@ StageScene4::~StageScene4()
 void StageScene4::Initialize()
 {
 	isStageCleared = false;
-	float scrollSpeed = 3.f;
-	int clearTimer = 0;
+	scrollSpeed = 3.f;
+	clearTimer = 0;
 
 #pragma region Fade
 
