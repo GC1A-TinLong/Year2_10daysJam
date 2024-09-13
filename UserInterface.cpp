@@ -3,16 +3,21 @@
 UserInterface::~UserInterface()
 {
 }
-void UserInterface::Initialize(int whatStage)
+void UserInterface::Initialize(int currentStage)
 {
-	whatStage_ = whatStage;
 	batteryColor = 0x00FF1AFF; //Green
 	batteryA = 0;
-	if (whatStage_ == 1) 
+	if (currentStage == -1) {
+		stageNumberHandle = Novice::LoadTexture("./Resources/StageText/SELECT.png");
+	}
+	else if (currentStage == 0) {
+		stageNumberHandle = Novice::LoadTexture("./Resources/StageText/SELECT.png");
+	}
+	else if (currentStage == 1)
 	{
 		stageNumberHandle = Novice::LoadTexture("./Resources/StageText/1.png");
 	} 
-	else if (whatStage_ == 2) 
+	else if (currentStage == 2)
 	{
 		stageNumberHandle = Novice::LoadTexture("./Resources/StageText/2.png");
 	}

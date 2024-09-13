@@ -27,11 +27,12 @@ void StageSelect::Initialize()
 	background_->Initialize(backgroundHandle_);
 	// UI
 	UI = new UserInterface;
-	UI->Initialize(1);
+	UI->Initialize(-1);
+	alphaSpeed = kMaxAlphaSpeed;
 
 	// Player
 	player_ = new Player;
-	player_->Initialize({ 96.f,72.f });
+	player_->Initialize({ 96.f,360.f });
 
 	blocks_.resize(kBlockNum);
 	steelBlocks_.resize(kSteelBlockNum);
@@ -77,6 +78,7 @@ void StageSelect::Update()
 	ChangePhase();
 
 	background_->Update(scrollSpeed);
+	Animation();
 	// WallBlocks
 	for (auto* wallblock : leftWallBlocks_) { wallblock->Update(scrollSpeed); }
 	for (auto* wallblock : rightWallBlocks_) { wallblock->Update(scrollSpeed); }
@@ -115,9 +117,17 @@ void StageSelect::Draw()
 {
 	// Background
 	background_->Draw();
-	//Wall Blocks
+	// Wall Blocks
 	for (auto* wallblock : leftWallBlocks_) { wallblock->Draw(); }
 	for (auto* wallblock : rightWallBlocks_) { wallblock->Draw(); }
+
+	// Door
+	Novice::DrawSpriteRect(int(tutorialDoorPos.x), int(tutorialDoorPos.y), animationPos_.x, 0, 96, 96, stageDoor, 0.25f, 1.f, 0, WHITE);
+	// Tutorial Text
+	Novice::DrawSprite(int(tutorialDoorPos.x) - 20, int(tutorialDoorPos.y) - 120, tutorialText, 1.f, 1.f, 0, WHITE);
+	if (isCollideTutorialDoor) {
+		Novice::DrawSprite(int(tutorialDoorPos.x) + 26, int(tutorialDoorPos.y) - 55, letterW, 1.f, 1.f, 0, color_W); // letter W
+	}
 
 	// Player
 	player_->Draw();
@@ -191,6 +201,27 @@ void StageSelect::DeleteBlocks()
 void StageSelect::CheckAllCollision()
 {
 #pragma region player & stage door collision
+	Object playerObj = player_->GetObject_();
+	Object doorObj = { tutorialDoorPos,doorSize };
+	if (isCollideObject(playerObj, doorObj)) {
+		isCollideTutorialDoor = true;
+	}
+	else { isCollideTutorialDoor = false; }
+
+	if (isCollideTutorialDoor) {
+		if (alpha_W >= 255) {
+			alphaSpeed = -kMaxAlphaSpeed;
+		}
+		else if (alpha_W <= 0) {
+			alphaSpeed = kMaxAlphaSpeed;
+		}
+		alpha_W = std::clamp(alpha_W, (uint32_t)0, (uint32_t)255);
+		/*if (isMaxAlpha) { alphaSpeed = -kMaxAlphaSpeed; }
+		else { alphaSpeed = kMaxAlphaSpeed; }*/
+		alpha_W += alphaSpeed;
+	}
+	else { alpha_W = 0; }
+	color_W = RGB_W + alpha_W;
 
 #pragma endregion
 
@@ -248,4 +279,17 @@ void StageSelect::SetPlayerStatus()
 
 	int playerHP = player_->GetUIHP();
 	UI->SetPlayerHP(playerHP);
+}
+
+void StageSelect::Animation()
+{
+	animationTimer_++;
+	if (animationTimer_ >= 10) {
+		animationTimer_ = 0;
+		animationPos_.x += animeWidth;
+	}
+	if (animationPos_.x >= float(96 * 3)) {
+		animationPos_.x = 0;
+		animationTimer_ = 0;
+	}
 }

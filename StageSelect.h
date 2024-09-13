@@ -5,6 +5,7 @@
 #include "Fade.h"
 #include "Player.h"
 #include "BlockNotDestroyable.h"
+#include "BlockDestroyable.h"
 #include "BlockSteel.h"
 #include "UserInterface.h"
 #include "Input.h"
@@ -22,6 +23,9 @@ public:
 	void DeleteBlocks();
 	void CheckAllCollision();
 	void SetPlayerStatus();
+
+	void Animation();
+
 private:
 	// Scroll
 	float scrollSpeed = 0.f;
@@ -51,6 +55,26 @@ private:
 	// Player
 	Player* player_ = nullptr;
 
+	// Animation
+	Vector2Int animationPos_ = { 0, 0 };
+	int animationTimer_ = 0;
+	int animeWidth = 96;
+	// "W" text
+	unsigned int letterW = Novice::LoadTexture("./Resources/StageSelect/W.png");
+	uint32_t RGB_W = 0xFFFFFF00;
+	uint32_t alpha_W = 0;
+	int8_t alphaSpeed;
+	static inline const uint8_t kMaxAlphaSpeed = 8;
+	bool isMaxAlpha = false;
+	uint32_t color_W;
+	// Stage Door
+	Size doorSize = { 96,96 };
+	unsigned int stageDoor = Novice::LoadTexture("./Resources/StageSelect/stageDoor.png");
+	// Tutorial
+	unsigned int tutorialText = Novice::LoadTexture("./Resources/StageSelect/tutorialText.png");
+	Vector2 tutorialDoorPos = { 288.f,336.f };
+	bool isCollideTutorialDoor = false;
+
 
 	enum class BlockType
 	{
@@ -64,24 +88,24 @@ private:
 	int map[mapCountY][mapCountX] =
 	{
 		2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-		0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,
-		1,1,2,2,1,1,2,1,1,2,2,1,1,2,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,
-		3,3,3,3,3,3,2,3,3,3,3,3,3,2,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,
-		1,1,2,2,1,1,2,1,1,2,2,1,1,2,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
+		1,1,2,2,1,1,1,1,1,2,2,1,1,1,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
+		3,3,3,3,3,3,1,3,3,3,3,3,3,1,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
+		1,1,2,2,1,1,1,1,1,2,2,1,1,1,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,
 		2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 	};
 	//Mapchip
@@ -91,12 +115,12 @@ private:
 	// Block Size
 	static inline const float kBlockSize = 48.f;
 	// Normal Block
-	static inline const uint8_t kBlockNum = 16;
+	static inline const uint8_t kBlockNum = 46;
 	static inline const uint8_t kRowBlockNum = 25;
 	std::vector<BlockNotDestroyable*>blocks_;
 	uint8_t blockIndex = 0;
 	// Steel Block
-	static inline const uint8_t kSteelBlockNum = 88;
+	static inline const uint8_t kSteelBlockNum = 58;
 	std::vector<BlockSteel*>steelBlocks_;
 	uint8_t steelIndex = 0;
 	// Wall

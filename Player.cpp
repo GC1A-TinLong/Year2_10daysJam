@@ -701,12 +701,6 @@ void Player::CollisionWithDestroyableBlock(std::vector<BlockDestroyable*>& desBl
 		if (velocity_.y < 0) {
 			continue;
 		}
-		// Conditions
-		//bool isWithinHorizontalBounds = (playerLeftPos <= rightPosBlock) && (pos_.x + size.width >= leftPosBlock);
-		//bool isCloseEnoughVertically = (blockTop - playerBottom <= kCloseEnoughDistanceWithBlock);	// above block
-		// player.bot without velocity && blockTop + small amount to prevent falling through
-		//bool isPlayerBelowBlock = (playerBottom - velocity_.y >= blockTop + 1.f);
-
 		if (isWithinHorizontalBounds && isCloseEnoughVertically && !isPlayerBelowBlock) {
 			if (velocity_.y > 0) {	// only when falling
 				pos_.y = blockTop - size.height;

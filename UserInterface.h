@@ -8,7 +8,10 @@ class UserInterface
 public:
 
 	~UserInterface();
-	void Initialize(int whatStage);
+	/// <summary>
+	/// -1 = StageSelect, 0 = Tutorial
+	/// </summary>
+	void Initialize(int currentStage);
 	void Update(bool isShowingDrillUI, bool isTutorial);
 	void Draw() const;
 
@@ -20,7 +23,6 @@ public:
 
 private:
 
-	int whatStage_ = 0;
 	//UI Handles
 	unsigned int stageTextHandle_ = Novice::LoadTexture("./Resources/StageText/STAGE.png");
 	unsigned int stageNumberHandle;
