@@ -5,6 +5,7 @@ void Fade::Initialize()
 {
 	textureHandle_ = Novice::LoadTexture("./Resources/Fade/blackfade.png");
 	seethrough_ = 0xFFFFFF00;
+	counter_ = 0;
 }
 
 void Fade::Update()

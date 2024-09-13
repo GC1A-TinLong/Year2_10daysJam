@@ -42,6 +42,9 @@ void StageSelect::Initialize()
 	blocks_.resize(kBlockNum);
 	steelBlocks_.resize(kSteelBlockNum);
 	brokenBlocks_.resize(kBrokenBlockNum);
+	blockIndex = 0;
+	steelIndex = 0;
+	brokenIndex = 0;
 	for (int y = 0; y < mapCountY; y++) {
 		for (int x = 0; x < mapCountX; x++) {
 			if (map[y][x] == (int)BlockType::None) { continue; }
