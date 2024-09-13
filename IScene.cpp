@@ -4,4 +4,5 @@ int IScene::sceneNo = STAGESELECT;
 
 IScene::~IScene()
 {
+
 }

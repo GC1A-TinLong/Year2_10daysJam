@@ -279,10 +279,10 @@ void StageScene::Update()
 		if (goal_->GetStopMoving())
 		{
 			scrollSpeed = 0.f;
-			if (clearTimer < 205 && player_->GetHasTouchedGoal()) 
-			{
-				clearTimer++;
+			for (auto* spike : spike_) {
+				spike->SetIsStart(true);
 			}
+			
 		}
 		if (!player_->IsOnGround())
 		{
@@ -374,6 +374,14 @@ void StageScene::Update()
 		break;
 #pragma endregion
 
+#pragma region Countdown
+
+case StageScene::Phase::kCountdown:
+	UI->Countdown();
+	break;
+
+#pragma endregion
+
 #pragma region kDeath
 	case StageScene::Phase::kDeath:
 		SetPlayerStatus();
@@ -413,6 +421,10 @@ void StageScene::Update()
 		{
 			player_->CollisionWithGoal(goal_);
 		}
+		if (clearTimer < 205 && player_->GetHasTouchedGoal())
+		{
+			clearTimer++;
+		}
 		if (!player_->IsOnGround())
 		{
 			player_->CollisionWithDestroyableBlock(destroyableBlocks_);
@@ -428,6 +440,7 @@ void StageScene::Update()
 		// Spike
 		for (auto* spike : spike_) {
 			spike->Update();
+			spike->SetIsStart(false);
 		}
 
 		//Destroyable Blocks
@@ -501,6 +514,7 @@ void StageScene::Update()
 
 		break;
 #pragma endregion
+
 	case StageScene::Phase::kFadeOut:
 		fade_->Update();
 		break;
@@ -512,17 +526,27 @@ void StageScene::ChangePhase()
 	switch (phase_)
 	{
 	case StageScene::Phase::kFadeIn:
-		if (fade_->IsFinished())
+		if (fade_->IsFinished() && !UI->GetStartGame())
+		{
+			phase_ = Phase::kCountdown;
+		}
+		if (fade_->IsFinished() && UI->GetStartGame())
+		{
+			phase_ = Phase::kPlay;
+		}
+		break;
+
+	case StageScene::Phase::kCountdown:
+		if (UI->GetStartGame()) 
 		{
 			phase_ = Phase::kPlay;
 		}
 		break;
 
 	case StageScene::Phase::kPlay:
-		if (Input::GetInstance()->TriggerKey(DIK_C) || isStageCleared && scrollSpeed == 0.f && clearTimer >= 150)
+		if (Input::GetInstance()->TriggerKey(DIK_C) || isStageCleared && scrollSpeed == 0.f)
 		{
-			fade_->Start(Status::FadeOut, duration_);
-			phase_ = Phase::kFadeOut;
+			phase_ = Phase::kStageClear;
 		}
 		if (player_->GetDeathAnimationDone()) { phase_ = Phase::kDeath; }
 
@@ -538,6 +562,12 @@ void StageScene::ChangePhase()
 		phase_ = Phase::kFadeOut;
 		break;
 	case StageScene::Phase::kStageClear:
+		if (clearTimer >= 150) 
+		{
+			fade_->Start(Status::FadeOut, duration_);
+			phase_ = Phase::kFadeOut;
+
+		}
 		break;
 	case StageScene::Phase::kFadeOut:
 		if (fade_->IsFinished() && isStageCleared) {
@@ -547,6 +577,7 @@ void StageScene::ChangePhase()
 		else if (fade_->IsFinished() && player_->GetDeathAnimationDone())
 		{
 			Initialize();
+			UI->SetStartGame(true);
 		}
 		break;
 	}
@@ -605,6 +636,8 @@ void StageScene::Draw()
 
 	case Phase::kPlay:
 		break;
+	case Phase::kCountdown:
+		//UI->Draw();
 	case Phase::kDeath:
 		player_->Draw();
 		break;
@@ -663,7 +696,14 @@ void StageScene::CheckAllCollision()
 	{
 		obj2 = spike_[i]->GetObject_();
 		if (isCollideObject(obj1, obj2)) {
-			player_->OnCollision();
+			if (!spike_[i]->GetIsStart()) 
+			{
+				player_->OnCollision();
+			}
+			else 
+			{
+				player_->SetIsDead(true);
+			}
 			break;
 		}
 	}

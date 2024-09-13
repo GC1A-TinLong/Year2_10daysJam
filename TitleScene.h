@@ -39,6 +39,7 @@ private:
 	float animationFrames = 7680.f;
 	int animationTimer_ = 0;
 	int titleHandle_;
+	int titleHandle1_;
 	bool hasPressedDown = false;
 	int animationTimer = 0;
 	int maxFrames = 60;

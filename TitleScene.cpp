@@ -8,6 +8,7 @@ TitleScene::~TitleScene()
 void TitleScene::Initialize()
 {
 	titleHandle_ = Novice::LoadTexture("./Resources/Title/Title1.png");
+	titleHandle1_ = Novice::LoadTexture("./Resources/Title/Space1.png");
 	movementAudioHandle = Novice::LoadAudio("./Resources/Audio/select.mp3");
 	selectAudioHandle = Novice::LoadAudio("./Resources/Audio/pauseMove.mp3");
 	phase_ = Phase::kFadeIn;
@@ -141,5 +142,6 @@ void TitleScene::Audio()
 void TitleScene::Draw()
 {
 	Novice::DrawSpriteRect((int)pos_.x, (int)pos_.y, (int)animationPos_.x, (int)animationPos_.y, 1920, 1080, titleHandle_, 1920.f / animationFrames, 1.0f, 0.0f, WHITE);
+	Novice::DrawSprite((int)pos_.x, (int)pos_.y, titleHandle1_, 1.f, 1.f, 0.f, WHITE);
 	fade_->Draw();
 }

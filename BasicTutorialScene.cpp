@@ -30,6 +30,7 @@ void BasicTutorialScene::Initialize()
 	// Text
 	UI = new UserInterface;
 	UI->Initialize(0);
+	UI->SetStartGame(true);
 	isPage[0] = true;
 	A = 0;
 	color = (R << 24) | (G << 16) | (B << 8) | A;	// "|" == "or" (for bit calculation)
@@ -172,6 +173,9 @@ void BasicTutorialScene::Update()
 		if (goal_->GetStopMoving())
 		{
 			scrollSpeed = 0.f;
+			for (auto* spike : spike_) {
+				spike->SetIsStart(true);
+			}
 		}
 
 		goal_->Update(scrollSpeed);
@@ -196,6 +200,54 @@ void BasicTutorialScene::Update()
 		break;
 
 	case Phase::kStageClear:
+
+		scrollSpeed = 0.f;
+
+
+		background_->Update(scrollSpeed);
+
+		UserInterfaceDepthMeter();
+		depthMeter_->Update(scrollSpeed);
+
+		// Player
+		SetPlayerStatus();
+
+		player_->Update(scrollSpeed, false, goal_->GetPos().y);
+		SetPlayerStatus();
+		player_->CollisionWithBlock(blocks_);
+		/*if (!player_->IsOnGround()) {
+			player_->CollisionWithExplodingBlock(explodingBlocks_);
+		}*/
+		if (!player_->IsOnGround())
+		{
+			player_->CollisionWithGoal(goal_);
+		}
+		if (clearTimer < 205 && player_->GetHasTouchedGoal())
+		{
+			clearTimer++;
+		}
+	
+		
+		player_->Drilling();
+		CheckAllCollision();
+		goal_->Update(scrollSpeed);
+
+		// Spike
+		for (auto* spike : spike_) {
+			spike->Update();
+			spike->SetIsStart(false);
+		}
+
+		//Blocks
+		for (auto* blocks : blocks_) { blocks->Update(scrollSpeed); }
+
+		// WallBlocks
+		for (auto* wallblock : leftWallBlocks_) { wallblock->Update(scrollSpeed); }
+		for (auto* wallblock : rightWallBlocks_) { wallblock->Update(scrollSpeed); }
+
+		UI->Update(true, false);
+
+		DeleteBlocks();
 		break;
 
 	case Phase::kFadeOut:
@@ -269,10 +321,9 @@ void BasicTutorialScene::ChangePhase()
 		break;
 
 	case Phase::kPlay:
-		if (Input::GetInstance()->TriggerKey(DIK_C)) // DEBUG
+		if (Input::GetInstance()->TriggerKey(DIK_C) || isStageCleared && scrollSpeed == 0.f)
 		{
-			fade_->Start(Status::FadeOut, duration_);
-			phase_ = Phase::kFadeOut;
+			phase_ = Phase::kStageClear;
 		}
 		// Let player try basic movement for 5 seconds
 		if (Input::GetInstance()->TriggerKey(DIK_SPACE) && !isAbleToDrill) { isStartMovement = true; }
@@ -292,6 +343,12 @@ void BasicTutorialScene::ChangePhase()
 		phase_ = Phase::kFadeOut;
 		break;
 	case Phase::kStageClear:
+		if (clearTimer >= 150)
+		{
+			fade_->Start(Status::FadeOut, duration_);
+			phase_ = Phase::kFadeOut;
+
+		}
 		break;
 	case Phase::kFadeOut:
 		if (fade_->IsFinished() && !player_->IsDead()) {
@@ -481,6 +538,18 @@ void BasicTutorialScene::CheckAllCollision()
 			blocks_[i]->SetStartShake(false);
 		}
 		++i; // Increment if no collision or block was not removed
+	}
+
+#pragma endregion
+
+#pragma region player & goal
+
+	Object obj7 = goal_->GetObject_();
+
+	if (isCollideObject(obj3, obj7))
+	{
+		isStageCleared = true;
+		goal_->CollisionPlayer(player_);
 	}
 
 #pragma endregion

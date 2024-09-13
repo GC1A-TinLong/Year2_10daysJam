@@ -21,10 +21,17 @@ void UserInterface::Initialize(int currentStage)
 	{
 		stageNumberHandle = Novice::LoadTexture("./Resources/StageText/2.png");
 	}
+	else if (currentStage == 3)
+	{
+		stageNumberHandle = Novice::LoadTexture("./Resources/StageText/3.png");
+	}
+
+	texture_ = Novice::LoadTexture("./Resources/StageText/count.png");
 }
 
 void UserInterface::Update(bool isShowingDrillUI, bool isTutorial)
 {
+
 	if (isDrilling_) { length_ -= drillEnergyReductionSpeed; }
 	else { length_ += drillEnergyRestorationSpeed; }
 
@@ -74,7 +81,29 @@ void UserInterface::Update(bool isShowingDrillUI, bool isTutorial)
 
 void UserInterface::Countdown()
 {
+	if (!startGame_)
+	{
+		animationTimer_++;
 
+		if (animationPos_.x >= animationFrames - size_.width && animationTimer_ >= 30)
+		{
+			animationPos_.x = 0;
+			animationTimer_ = 0;
+			startGame_ = true;
+		}
+
+		if (animationTimer_ >= 30)
+		{
+			animationPos_.x += size_.width;
+			animationTimer_ = 0;
+		}
+	}
+	else
+	{
+		animationPos_.x = 0;
+		animationTimer_ = 0;
+	}
+	
 }
 
 void UserInterface::Draw() const
@@ -114,10 +143,14 @@ void UserInterface::Draw() const
 	//Life
 	Novice::DrawSprite(1570, 205, lifeTextHandle, 1.0f, 1.0f, 0.0f, WHITE); //LIFE
 	Novice::DrawSprite(1500, 270, lifeHandle[playerHP_], 1.0f, 1.0f, 0.0f, WHITE); //LIFE
-	//Novice::DrawSpriteRect(1500, 300, (int)animationPos_.x, (int)animationPos_.y, size_.width, size_.height, lifeHandle, size_.width / animationFrames, 1.f, 0.0f, WHITE);
+	
+	
+	if (!startGame_) 
+	{
+		Novice::DrawSpriteRect((int)pos_.x, (int)pos_.y, (int)animationPos_.x, (int)animationPos_.y, size_.width, size_.height, texture_, size_.width / animationFrames, 1.f, 0.0f, WHITE);
 
-	//Novice::ScreenPrintf(0, 0, "%f", length_);
-	//Novice::ScreenPrintf(0, 20, "%d", playerHP_);
+	}
+
 
 
 

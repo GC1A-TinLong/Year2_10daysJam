@@ -9,12 +9,16 @@ void Explosion::Initialize(Vector2 pos)
 {
 	pos_ = pos;
 	texture_ = Novice::LoadTexture("./Resources/Explosion/Bomb.png");
+	audioHandle = Novice::LoadAudio("./Resources/Audio/explodingBlock.mp3");
 }
 
 void Explosion::Update()
 {
 	if (isExploding_) //This is set in gamescene
 	{
+		if (Novice::IsPlayingAudio(playHandle) == 0 || playHandle == -1) {
+			playHandle = Novice::PlayAudio(audioHandle, 0, kAudioVolume);
+		}
 		animationTimer_++;
 
 		if (animationPos_.x >= animationFrames - size_.width && animationTimer_ >= 2)
@@ -35,6 +39,11 @@ void Explosion::Update()
 		animationPos_.x = 0;
 		animationTimer_ = 0;
 	}
+}
+
+void Explosion::Audio()
+{
+
 }
 
 void Explosion::Draw()

@@ -6,7 +6,7 @@ class Spike
 {
 private:
 	bool isHit = false;
-	bool isStart = false;
+	bool isStart_ = false;
 
 	static inline const uint8_t kSpeed = 5;
 	static inline const uint16_t width = 48;
@@ -29,5 +29,9 @@ public:
 	Vector2 GetPos() const { return pos_; }
 	Size GetSize() const { return size; }
 	const Object GetObject_() const;
+	bool GetIsStart()const { return isStart_; };
+
+	//Setter
+	void SetIsStart(bool isStart) { isStart_ = isStart; };
 };
 

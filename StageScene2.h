@@ -41,6 +41,7 @@ private:
 	enum class Phase
 	{
 		kFadeIn,
+		kCountdown,
 		kPlay,
 		kDeath,
 		kStageClear,

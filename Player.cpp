@@ -490,7 +490,6 @@ void Player::CollisionWithBlock(std::vector<BlockNotDestroyable*>& nonDesBlocks)
 	onGround = tempOnGround;
 }
 
-
 void Player::OnConveyor()
 {
 	if (isRightConveyor)

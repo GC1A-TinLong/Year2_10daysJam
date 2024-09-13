@@ -8,6 +8,7 @@ public:
 	~Explosion();
 	void Initialize(Vector2 pos);
 	void Update();
+	void Audio();
 	void Draw();
 
 	//Setter
@@ -29,5 +30,11 @@ private:
 	uint32_t texture_;
 
 	bool isExploding_ = false;
+
+
+	//Audio
+	int audioHandle;
+	int playHandle = -1;
+	static inline const float kAudioVolume = 0.05f;
 };
 

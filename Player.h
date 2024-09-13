@@ -70,6 +70,7 @@ public:
 	void SetVelocity(Vector2 velocity) { velocity_ = velocity; };
 	void SetHasExploded(bool isExploding) { isExploding_ = isExploding; };
 	void SetIsDrilling(bool drilling) { isDrilling = drilling; };
+	void SetIsDead(bool dead) { isDead = dead; };
 
 private:
 	enum class LRDirection {

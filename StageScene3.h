@@ -43,10 +43,13 @@ private:
 
 	// Scroll
 	float scrollSpeed = 5.f;
+	int clearTimer = 0;
+
 
 	enum class Phase
 	{
 		kFadeIn,
+		kCountdown,
 		kPlay,
 		kDeath,
 		kStageClear,
@@ -95,7 +98,7 @@ private:
 
 	//Goal
 	Goal* goal_ = nullptr;
-	Vector2 goalPos_{ 192, 5100 };
+	Vector2 goalPos_{ 192, 6100 };
 	bool isStageCleared = false;
 	int waitForCollision = 0;
 
@@ -111,7 +114,7 @@ private:
 	static inline const float kBlockSize = 48.f;
 	// Destroyable Block
 
-	static inline const uint8_t kDestroyableBlockNum = 66;
+	static inline const uint8_t kDestroyableBlockNum = 166;
 	std::vector<BlockDestroyable*>destroyableBlocks_;
 
 
@@ -141,12 +144,12 @@ private:
 	Vector2 rightWallPos_ = { 1392.f,0.f };
 
 	// Spike Trap
-	static inline const uint8_t kSpikeTrapNum = 69;
+	static inline const uint8_t kSpikeTrapNum = 78;
 	std::vector<SpikeTrap*>spikeTrap_;
 	//Exploding Block
 
 
-	static inline const uint8_t kExplodingBlockNum = 18;
+	static inline const uint8_t kExplodingBlockNum = 40;
 	std::vector<BlockExplodingTrap*>explodingBlocks_;
 
 	bool isExplodingBlockMoss[kExplodingBlockNum] =
@@ -157,7 +160,7 @@ private:
 
 #pragma region Steel Block
 
-	static inline const uint8_t kSteelBlockNum = 69;
+	static inline const uint8_t kSteelBlockNum = 78;
 	std::vector<BlockSteel*>blocksSteel_;
 
 #pragma endregion
@@ -179,7 +182,7 @@ private:
 	int adjustPosForMapchip = 192;
 	int adjustPosForMapchipY = 480;
 	int mapCountX = 25;
-	int mapCountY = 76;
+	int mapCountY = 96;
 	int spriteSize = 48;
 	int blockIndex = 0;
 	int brokenBlockIndex = 0;
@@ -189,7 +192,7 @@ private:
 
 	// 0 = nothing, 1 = block, 2 = broken block, 3 = steel block, 4 = exploding block, 5 = spike
 
-	int map[76][25] =
+	int map[96][25] =
 	{
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -262,8 +265,28 @@ private:
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		5,5,5,0,0,0,0,0,0,5,5,5,0,0,0,0,0,0,0,5,5,5,0,0,0,
+		3,3,3,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,3,3,3,0,0,0,
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+		2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+		2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+		2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		4,0,4,4,4,4,4,4,4,4,0,4,4,4,4,4,4,4,4,0,4,4,4,4,4,
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

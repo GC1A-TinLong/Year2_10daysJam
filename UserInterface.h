@@ -20,7 +20,11 @@ public:
 	void SetDrillPower(float drillPower) { drillPower_ = drillPower; };
 	void SetIsDrilling(bool isDrilling) { isDrilling_ = isDrilling; };
 	void SetPlayerHP(int playerHP) { playerHP_ = playerHP; };
+	void SetStartGame(bool startGame) { startGame_ = startGame; };
 
+	//Getter
+	bool GetStartGame()const { return startGame_; };
+	
 
 private:
 
@@ -91,10 +95,18 @@ private:
 	uint32_t batteryA = 0;
 	bool isStartIncreaseAlpha = false;
 	
-	//HP
-	/*Size size_ = { 348,90 };
-	float animationFrames = 2088.f;
-	Vector2 animationPos_ = { 0.f, 0.f };*/
+	//Countdown
+	Vector2 pos_{ 0.f,0.f };
+	Size size_ = { 1920,1080 };
+	Vector2 scale = { 1.f,1.f };
+
+	//Animation
+	Vector2 animationPos_ = { 0.f, 0.f };
+	float animationFrames = 7680.f;
+	int animationTimer_ = 0;
+	uint32_t texture_;
+	bool startGame_ = false;
+	bool isExploding_ = false;
 
 
 

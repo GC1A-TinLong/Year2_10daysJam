@@ -35,7 +35,7 @@ public:
 
 private:
 	// Scroll
-	float scrollSpeed = 0.f;
+	float scrollSpeed = 2.f;
 	int clearTimer = 0;
 
 	enum BlockType
@@ -51,6 +51,7 @@ private:
 	enum class Phase
 	{
 		kFadeIn,
+		kCountdown,
 		kPlay,
 		kDeath,
 		kStageClear,

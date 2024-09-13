@@ -32,6 +32,7 @@ public:
 private:
 	//Scroll
 	float scrollSpeed = 0.f;
+	int clearTimer = 0;
 
 	enum class Phase
 	{
@@ -133,6 +134,7 @@ private:
 	//Goal
 	Goal* goal_ = nullptr;
 	Vector2 goalPos_ = { 192, 2000 };
+	bool isStageCleared = false;
 
 	//Depth Meter
 
