@@ -88,13 +88,10 @@ void StageScene4::Initialize()
 		{
 			if (map[i][j] == BrokenBlock)
 			{
-
 				destroyableBlocks_[brokenBlockIndex] = new BlockDestroyable;
 				Vector2 blockPos_ = { j * (float)spriteSize + adjustPosForMapchip, i * (float)spriteSize + adjustPosForMapchipY };
 				destroyableBlocks_[brokenBlockIndex]->Initialize(blockPos_);
 				brokenBlockIndex++; // Move to the next block
-
-
 			}
 		}
 	}
