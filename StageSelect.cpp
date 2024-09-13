@@ -32,6 +32,7 @@ void StageSelect::Initialize()
 	// UI
 	UI = new UserInterface;
 	UI->Initialize(-1);
+	UI->SetStartGame(true);
 	alphaSpeed = kMaxAlphaSpeed;
 
 	// Player

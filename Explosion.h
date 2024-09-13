@@ -35,6 +35,6 @@ private:
 	//Audio
 	int audioHandle;
 	int playHandle = -1;
-	static inline const float kAudioVolume = 0.05f;
+	static inline const float kAudioVolume = 0.02f;
 };
 

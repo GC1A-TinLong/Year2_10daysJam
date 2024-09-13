@@ -19,6 +19,7 @@ void Player::Initialize(const Vector2& pos)
 
 	jumpAudioHandle = Novice::LoadAudio("./Resources/Audio/jump2.wav");
 	drillAudioHandle = Novice::LoadAudio("./Resources/Audio/drillSound.wav");
+	diedAudioHandle = Novice::LoadAudio("./Resources/Audio/explodingPlayer.mp3");
 
 	sparkHandle_ = Novice::LoadTexture("./Resources/Player/spark1.png");
 
@@ -119,6 +120,13 @@ void Player::Audio()
 	{
 		Novice::StopAudio(drillPlayHandle);
 		drillPlayHandle = -1;
+	}
+
+	if (isDead) 
+	{
+		if (Novice::IsPlayingAudio(diedPlayHandle) == 0 || diedPlayHandle == -1) {
+			diedPlayHandle = Novice::PlayAudio(diedAudioHandle, 0, kDiedAudioVolume);
+		}
 	}
 }
 

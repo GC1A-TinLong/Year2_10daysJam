@@ -187,6 +187,10 @@ private:
 	int drillPlayHandle = -1;
 	static inline const float kDrillAudioVolume = 0.05f;
 
+	int diedAudioHandle;
+	int diedPlayHandle = -1;
+	static inline const float kDiedAudioVolume = 0.02f;
+
 
 	//Shake
 	Shake* shake_ = nullptr;
