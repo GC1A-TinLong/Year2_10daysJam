@@ -279,7 +279,7 @@ void StageSelect::CheckAllCollision()
 		else if (alpha_W >= 240) { alphaSpeed = 1; }
 		alpha_W += alphaSpeed;
 		if (alpha_W >= 255) { alpha_W = 20; }
-		Novice::ScreenPrintf(0, 0, "alpha %u", alpha_W);
+		//Novice::ScreenPrintf(0, 0, "alpha %u", alpha_W);
 	}
 	else { alpha_W = 20; }
 

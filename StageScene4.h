@@ -98,7 +98,7 @@ private:
 
 	//Goal
 	Goal* goal_ = nullptr;
-	Vector2 goalPos_{ 192, 7100 };
+	Vector2 goalPos_{ 192, 4300 };
 	bool isStageCleared = false;
 	int waitForCollision = 0;
 

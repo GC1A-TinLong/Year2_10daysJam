@@ -39,7 +39,7 @@ void TitleScene::Update()
 	if (fade_->IsFinished() && isSpaceClicked) {
 		finished_ = true;
 		isSpaceClicked = false;
-		sceneNo = BASIC_TUTORIAL;
+		sceneNo = STAGESELECT;
 	}
 
 

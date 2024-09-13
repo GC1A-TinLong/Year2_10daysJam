@@ -642,7 +642,6 @@ void StageScene::Draw()
 		player_->Draw();
 		break;
 	case Phase::kStageClear:
-		Novice::ScreenPrintf(50, 0, "CLEAR");
 		break;
 	case Phase::kFadeOut:
 
