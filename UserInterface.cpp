@@ -70,10 +70,12 @@ void UserInterface::Update(bool isShowingDrillUI, bool isTutorial)
 void UserInterface::Draw() const
 {
 	//UI
-	Novice::DrawBox(0, 0, 144, 1080, 0.0f, BLACK, kFillModeSolid);
+	/*Novice::DrawBox(0, 0, 144, 1080, 0.0f, BLACK, kFillModeSolid);
 	Novice::DrawBox(0, 1056, 1440, 50, 0.0f, BLACK, kFillModeSolid);
 	Novice::DrawBox(0, 0, 1440, 96, 0.0f, BLACK, kFillModeSolid);
-	Novice::DrawBox(1440, 0, 1920, 1080, 0.0f, BLACK, kFillModeSolid);
+	Novice::DrawBox(1440, 0, 1920, 1080, 0.0f, BLACK, kFillModeSolid);*/
+	Novice::DrawSprite(0, 0, UIHandle, 1.0f, 1.0f, 0.0f, WHITE); //STAGE
+
 
 	//UI TEXT
 	Novice::DrawSprite(200, 20, stageTextHandle_, 1.0f, 1.0f, 0.0f, WHITE); //STAGE

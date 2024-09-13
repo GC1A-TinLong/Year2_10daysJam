@@ -33,6 +33,7 @@ private:
 	unsigned int jumpPlayer = Novice::LoadTexture("./Resources/Player/player.gif");
 	unsigned int jumpLines = Novice::LoadTexture("./Resources/StageText/fakejump.png");
 	unsigned int letterSHandle = Novice::LoadTexture("./Resources/StageText/S.png");
+	unsigned int UIHandle = Novice::LoadTexture("./Resources/StageText/UI.png");
 
 	//Battery
 	unsigned int EnergyHandle = Novice::LoadTexture("./Resources/HP/energy1.png");
