@@ -56,7 +56,7 @@ int GameManager::Run()
 		}
 		else 
 		{
-			Novice::SetAudioVolume(BGMPlayHandle, 0.05f);
+			Novice::SetAudioVolume(BGMPlayHandle, 0.015f);
 
 		}
 
