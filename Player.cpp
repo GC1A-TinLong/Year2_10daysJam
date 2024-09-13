@@ -116,7 +116,7 @@ void Player::Audio()
 			drillPlayHandle = Novice::PlayAudio(drillAudioHandle, 1, kDrillAudioVolume);
 		}
 	}
-	else
+	else if(!isDrilling)
 	{
 		Novice::StopAudio(drillPlayHandle);
 		drillPlayHandle = -1;
@@ -217,7 +217,7 @@ void Player::Drilling()
 {
 	DrillingSparks();
 
-	if (Input::GetInstance()->PushKey(DIK_S) && onGround && !drillFatigue && !touchedGoal)
+	if (Input::GetInstance()->PushKey(DIK_S) && onGround && !drillFatigue && !touchedGoal && !isDead)
 	{
 		isDrilling = true;
 	}
