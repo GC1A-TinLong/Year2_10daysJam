@@ -15,6 +15,8 @@ public:
 	void Shakeing();
 	void OnCollision(Player* player);
 
+	void Respawn();
+
 	//Getter
 	bool GetIsAboveScreen() const { return isAboveScreen_; };
 	Vector2 GetPos() { return pos_; };
@@ -44,13 +46,14 @@ private:
 
 	bool isAboveScreen_ = false;
 
-	int hpMax = 50;
-	int hp = hpMax;
+	static inline const int kHpMax = 50;
+	int hp = kHpMax;
 	int takenDamage_ = 1;
 	int hpLow = 990;
 	bool startShake_ = false;
 
 	Shake* shake_ = nullptr;
 
+	uint8_t respawnTimer = 0;
 };
 

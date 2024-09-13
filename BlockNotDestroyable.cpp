@@ -37,6 +37,7 @@ void BlockNotDestroyable::Update(float scrollSpeed)
 		HP();
 		Shakeing();
 	}
+
 	pos_.y -= scrollSpeed;
 }
 
@@ -58,23 +59,29 @@ void BlockNotDestroyable::HP()
 
 	//Return to respective HP
 	if (takenDamage_ == 0 || !isTouched_) {
-		if (hp > hp70percent) { hp = hpMax; }
+		if (hp > hp70percent) { hp = kHpMax; }
 		else if (hp <= hp70percent && hp > hpHalf) { hp = hp70percent; }
 		else if (hp <= hpHalf && hp > hp30percent) { hp = hpHalf; }
 		else if (hp <= hp30percent && hp > 0) { hp = hp30percent; }
 	}
 
-	if (hp < hpHalf)
-	{
-		if (isMoss_)
-		{
-			blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/GrassTrapBlock.png"); //ask Kouta to make broken moss block
+	if (hp > hpHalf) {
+		if (isMoss_) {
+			blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/MossBlock.png");
 		}
-		else
-		{
+		else if (!isMoss_) {
+			blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/Block.png");
+		}
+	}
+	else if (hp <= hpHalf) {
+		if (isMoss_) {
+			blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/GrassTrapBlock.png");
+		}
+		else if (!isMoss_) {
 			blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/BrokenBlock.png");
 		}
 	}
+
 	if (hp <= 0) { hp = 0; /*Block destroyed animation handle?*/ }
 }
 
@@ -97,6 +104,17 @@ void BlockNotDestroyable::LoopWall()
 	if (pos_.y <= wallMinY)
 	{
 		pos_.y = wallMaxY;
+	}
+}
+
+void BlockNotDestroyable::Respawn()
+{
+	if (hp <= 0) {
+		respawnTimer++;
+		if (respawnTimer >= 90) {
+			respawnTimer = 0;
+			hp = kHpMax;
+		}
 	}
 }
 

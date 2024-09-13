@@ -62,11 +62,11 @@ private:
 	int animationTimer_ = 0;
 	int animeWidth = 96;
 	// "W" text
-	unsigned int letterW = Novice::LoadTexture("./Resources/StageSelect/W.png");
+	unsigned int letterW = Novice::LoadTexture("./Resources/StageSelect/keyW.png");
 	uint32_t RGB_W = 0xFFFFFF00;
 	uint32_t alpha_W = 20;
 	int32_t alphaSpeed;
-	static inline const int32_t kMaxAlphaSpeed = 3;
+	static inline const int32_t kMaxAlphaSpeed = 4;
 	bool isMaxAlpha = false;
 	uint32_t color_W;
 	// Stage Door

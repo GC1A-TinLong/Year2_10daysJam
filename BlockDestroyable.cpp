@@ -9,7 +9,7 @@ BlockDestroyable::~BlockDestroyable()
 void BlockDestroyable::Initialize(Vector2 pos)
 {
 	pos_ = pos;
-	blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/BrokenBlock.png");
+	blockHandle_ = Novice::LoadTexture("./Resources/StageAssets/BrokenMossBlock.png");
 	shake_ = new Shake();
 	shake_->Initialize();
 }
@@ -40,7 +40,7 @@ void BlockDestroyable::HP()
 
 	if (!isTouched_ && hp > 0)
 	{
-		hp = hpMax;
+		hp = kHpMax;
 	}
 
 	if (hp <= 0)
@@ -62,6 +62,17 @@ void BlockDestroyable::OnCollision(Player* player)
 {
 	(void)player;
 	isTouched_ = true;
+}
+
+void BlockDestroyable::Respawn()
+{
+	if (hp <= 0) {
+		respawnTimer++;
+		if (respawnTimer >= 60) {
+			respawnTimer = 0;
+			hp = kHpMax;
+		}
+	}
 }
 
 const Object BlockDestroyable::GetObject_() const

@@ -36,13 +36,14 @@ void StageSelect::Initialize()
 
 	// Player
 	player_ = new Player;
-	player_->Initialize({ 96.f,360.f });
+	player_->Initialize({ 96.f,96.f + 48 * 7 - 73.f });
 
 	blocks_.resize(kBlockNum);
 	steelBlocks_.resize(kSteelBlockNum);
+	brokenBlocks_.resize(kBrokenBlockNum);
 	for (int y = 0; y < mapCountY; y++) {
 		for (int x = 0; x < mapCountX; x++) {
-			if (map[y][x] == (int)BlockType::None || map[y][x] == (int)BlockType::BrokenBlock) { continue; }
+			if (map[y][x] == (int)BlockType::None) { continue; }
 
 			if (map[y][x] == (int)BlockType::Block)
 			{
@@ -93,9 +94,17 @@ void StageSelect::Update()
 	for (auto* wallblock : leftWallBlocks_) { wallblock->Update(scrollSpeed); }
 	for (auto* wallblock : rightWallBlocks_) { wallblock->Update(scrollSpeed); }
 	// Normal Blocks
-	for (auto* blocks : blocks_) { blocks->Update(scrollSpeed); }
+	for (auto* blocks : blocks_) {
+		blocks->Update(scrollSpeed);
+		blocks->Respawn();
+	}
 	// Steel Blocks
 	for (auto* blocks : steelBlocks_) { blocks->Update(scrollSpeed); }
+	// Broken Blocks
+	for (auto* blocks : brokenBlocks_) {
+		blocks->Update(scrollSpeed);
+		blocks->Respawn();
+	}
 
 	SetPlayerStatus();
 	UI->Update(true, false);
@@ -108,12 +117,12 @@ void StageSelect::Update()
 	case Phase::kPlay:
 		// Player
 		player_->Update(0.f, true, 1300.f);
+		//Novice::ScreenPrintf(0, 200, "onground %d", player_->IsOnGround());
 		player_->CollisionWithBlock(blocks_);
-		Novice::ScreenPrintf(0, 200, "onground %d", player_->IsOnGround());
 		if (!player_->IsOnGround()) { player_->CollisionWithMetalBlock(steelBlocks_); }
+		if (!player_->IsOnGround()) { player_->CollisionWithDestroyableBlock(brokenBlocks_); }
 		player_->Drilling();
 
-		DeleteBlocks();
 		CheckAllCollision();
 		break;
 
@@ -131,15 +140,11 @@ void StageSelect::Draw()
 	for (auto* wallblock : leftWallBlocks_) { wallblock->Draw(); }
 	for (auto* wallblock : rightWallBlocks_) { wallblock->Draw(); }
 #pragma region Door and Text
-	// letter W text
-	if (isCollideTutorialDoor || isCollideStage1Door) {
-		Novice::DrawSprite(int(player_->GetPos().x) - 1, int(player_->GetPos().y) - 90, letterW, 1.f, 1.f, 0, color_W); 
-	}
 	/// Tutorial Text ///
-	Novice::DrawSprite(int(tutorialDoorPos.x) - 20, int(tutorialDoorPos.y) - 120, tutorialText, 1.f, 1.f, 0, WHITE);
+	Novice::DrawSprite(int(tutorialDoorPos.x) - 20, int(tutorialDoorPos.y) - 40, tutorialText, 1.f, 1.f, 0, WHITE);
 	Novice::DrawSpriteRect(int(tutorialDoorPos.x), int(tutorialDoorPos.y), animationPos_.x, 0, 96, 96, stageDoor, 0.25f, 1.f, 0, WHITE);
 	/// Stage 1 Text ///
-	Novice::DrawSprite(int(stage1DoorPos.x) - 15, int(stage1DoorPos.y) - 120, stage1text, 1.f, 1.f, 0, WHITE);
+	Novice::DrawSprite(int(stage1DoorPos.x) - 15, int(stage1DoorPos.y) - 40, stage1text, 1.f, 1.f, 0, WHITE);
 	Novice::DrawSpriteRect(int(stage1DoorPos.x), int(stage1DoorPos.y), animationPos_.x, 0, 96, 96, stageDoor, 0.25f, 1.f, 0, WHITE);
 #pragma endregion
 	// Player
@@ -148,6 +153,10 @@ void StageSelect::Draw()
 	for (auto* block : blocks_) { block->Draw(); }
 	for (auto* block : steelBlocks_) { block->Draw(); }
 	for (auto* block : brokenBlocks_) { block->Draw(); }
+	// letter W text
+	if (isCollideTutorialDoor || isCollideStage1Door) {
+		Novice::DrawSprite(int(player_->GetPos().x) - 15, int(player_->GetPos().y) - 90, letterW, 1.f, 1.f, 0, color_W);
+	}
 	// UI
 	UI->Draw();
 
@@ -158,7 +167,6 @@ void StageSelect::Draw()
 		fade_->Draw();
 		break;
 	case Phase::kFadeOut:
-
 		fade_->Draw();
 		break;
 	}
@@ -222,16 +230,6 @@ void StageSelect::DeleteBlocks()
 		}
 		else { ++i; }
 	}
-	for (int i = 0; i < brokenBlocks_.size();)
-	{
-		if (brokenBlocks_[i]->IsDestroyed() || brokenBlocks_[i]->GetIsAboveScreen()) // if block is destroyed
-		{
-			delete brokenBlocks_[i]; //delete block
-			brokenBlocks_.erase(brokenBlocks_.begin() + i); //erase it from the vector
-			break;
-		}
-		else { i++; }
-	}
 }
 
 void StageSelect::CheckAllCollision()
@@ -250,10 +248,11 @@ void StageSelect::CheckAllCollision()
 	else { isCollideStage1Door = false; }
 
 	if (isCollideTutorialDoor || isCollideStage1Door) {
-		alphaSpeed = kMaxAlphaSpeed;
-		Novice::ScreenPrintf(0, 0, "alpha = %u", alpha_W);
+		if (alpha_W < 240) { alphaSpeed = kMaxAlphaSpeed; }
+		else if (alpha_W >= 240) { alphaSpeed = 1; }
 		alpha_W += alphaSpeed;
 		if (alpha_W >= 255) { alpha_W = 20; }
+		Novice::ScreenPrintf(0, 0, "alpha %u", alpha_W);
 	}
 	else { alpha_W = 20; }
 
@@ -304,7 +303,7 @@ void StageSelect::CheckAllCollision()
 #pragma endregion
 
 #pragma region player & broken block collision
-	Object obj8;
+	Object brokenBlockObj;
 
 	for (int i = 0; i < brokenBlocks_.size(); ++i) //reset all blocks to not being touched
 	{
@@ -314,8 +313,8 @@ void StageSelect::CheckAllCollision()
 
 	for (int i = 0; i < brokenBlocks_.size();)
 	{
-		blockObj = brokenBlocks_[i]->GetObject_();
-		if (isCollideObject(playerDrillPointObj, obj8) && !brokenBlocks_[i]->IsDestroyed())
+		brokenBlockObj = brokenBlocks_[i]->GetObject_();
+		if (isCollideObject(playerDrillPointObj, brokenBlockObj) && !brokenBlocks_[i]->IsDestroyed())
 		{
 			brokenBlocks_[i]->OnCollision(player_);
 			brokenBlocks_[i]->SetStartShake(true);

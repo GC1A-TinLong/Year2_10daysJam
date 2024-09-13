@@ -19,6 +19,8 @@ public:
 	void OnCollision(Player* player);
 	void LoopWall();
 
+	void Respawn();
+
 	// Setter
 	void SetIsTouched(bool isTouched) { isTouched_ = isTouched; };
 	void SetTakenDamage(int takenDamage) { takenDamage_ = takenDamage; };
@@ -49,8 +51,8 @@ private:
 	bool isMoss_ = false;
 	bool isWall_ = false;
 
-	int hpMax = 150;
-	int hp = hpMax;
+	int kHpMax = 150;
+	int hp = kHpMax;
 	int hp70percent = 110;
 	int hpHalf = 75;
 	int hp30percent = 40;
@@ -58,7 +60,8 @@ private:
 	int hpLow = 90;
 	bool startShake_ = false;
 
-	Shake* shake_ = nullptr;
+	uint8_t respawnTimer = 0;
 
+	Shake* shake_ = nullptr;
 };
 
