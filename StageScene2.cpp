@@ -583,7 +583,7 @@ void StageScene2::ChangePhase()
 		phase_ = Phase::kFadeOut;
 		break;
 	case StageScene2::Phase::kStageClear:
-		if (clearTimer >= 150)
+		if (clearTimer >= 30)
 		{
 			fade_->Start(Status::FadeOut, duration_);
 			phase_ = Phase::kFadeOut;
@@ -592,7 +592,7 @@ void StageScene2::ChangePhase()
 		break;
 	case StageScene2::Phase::kFadeOut:
 		if (fade_->IsFinished() && isStageCleared) {
-			sceneNo = STAGE3;
+			sceneNo = STAGESELECT;
 		}
 		else if (fade_->IsFinished() && player_->GetDeathAnimationDone())
 		{

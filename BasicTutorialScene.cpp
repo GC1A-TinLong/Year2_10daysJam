@@ -343,7 +343,7 @@ void BasicTutorialScene::ChangePhase()
 		phase_ = Phase::kFadeOut;
 		break;
 	case Phase::kStageClear:
-		if (clearTimer >= 150)
+		if (clearTimer >= 30)
 		{
 			fade_->Start(Status::FadeOut, duration_);
 			phase_ = Phase::kFadeOut;
@@ -353,7 +353,7 @@ void BasicTutorialScene::ChangePhase()
 	case Phase::kFadeOut:
 		if (fade_->IsFinished() && !player_->IsDead()) {
 			player_->SetIsDrilling(false);
-			sceneNo = STAGE;
+			sceneNo = STAGESELECT;
 		}
 		else if (fade_->IsFinished() && player_->IsDead()) {
 			Initialize();
