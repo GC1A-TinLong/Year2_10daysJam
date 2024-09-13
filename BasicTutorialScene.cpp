@@ -297,6 +297,7 @@ void BasicTutorialScene::ChangePhase()
 		break;
 	case Phase::kFadeOut:
 		if (fade_->IsFinished() && !player_->IsDead()) {
+			player_->SetIsDrilling(false);
 			sceneNo = STAGE;
 		}
 		else if (fade_->IsFinished() && player_->IsDead()) {
