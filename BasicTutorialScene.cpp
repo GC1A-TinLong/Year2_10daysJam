@@ -329,7 +329,7 @@ void BasicTutorialScene::ChangePhase()
 		if (Input::GetInstance()->TriggerKey(DIK_SPACE) && !isAbleToDrill) { isStartMovement = true; }
 		if (isStartMovement) {
 			tryMovementTimer++;
-			if (tryMovementTimer >= 30) {
+			if (tryMovementTimer >= 90) {
 				isStartMovement = false;
 				isTriedMovement = true;	// go back to text explanation
 				phase_ = Phase::kTextExplanation;
